@@ -9,6 +9,9 @@
   </tr>
 </table>
 
+[Dotty][dotty_examples], [GraalSqueak][graalsqueak_examples], [GraalVM][graalvm_examples] and [LLVM][llvm_examples] are other topics we are currently investigating.
+
+
 ## <span id="proj_deps">Project dependencies</span>
 
 This project depends on the following external software for the **Microsoft Windows** platform:
@@ -19,7 +22,7 @@ This project depends on the following external software for the **Microsoft Wind
 
 Optionally one may also install the following software:
 
-- [Gradle 5.6][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 6.0][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
 For instance our development environment looks as follows (*November 2019*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
@@ -167,9 +170,12 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 <!-- link refs -->
 
+[dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
 [git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.24.0.txt
+[graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
+[graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
 [gradle_relnotes]: https://docs.gradle.org/6.0.1/release-notes.html
@@ -183,6 +189,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
 [ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.35.0
 [linux_opt]: http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
+[llvm_examples]: https://github.com/michelou/llvm-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/
