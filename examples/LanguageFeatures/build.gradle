@@ -1,0 +1,61 @@
+plugins {
+    id "java"
+    id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
+}
+
+group = "$appGroup"
+version = "$appVersion"
+
+description = """Kotlin/JVM code example"""
+
+sourceSets {
+    // Default: srcDirs "src/main/kotlin"
+	main.kotlin.srcDirs "src/main/kotlin"
+}
+// Default: buildDir = "build"
+buildDir = "target"
+
+ext {
+    ktLintOpts = [
+        "--reporter=plain",
+        "--reporter=checkstyle,output=$buildDir\\ktlint-report.xml"
+    ]
+}
+
+task lint(type: JavaExec) {
+    main = "-jar"
+    args = files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
+}
+
+compileKotlin {
+    // dependsOn lint
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlinOptions {
+        // Tool options
+        // suppressWarnings = true
+        // verbose = false
+        // Common options
+        apiVersion = "1.3"
+        languageVersion = "1.3"
+        // JVM options
+        jvmTarget = "1.8"
+    }
+}
+
+task run(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main mainClassName
+    args ''
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation “org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion”
+}
