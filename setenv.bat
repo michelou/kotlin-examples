@@ -70,6 +70,7 @@ goto :eof
 
 rem input parameter: %*
 :args
+set _HELP=0
 set _VERBOSE=0
 set __N=0
 :args_loop
