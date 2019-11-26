@@ -36,5 +36,4 @@ hs_err_pid*
 
 # kotlin-examples project
 *_LOCAL/
-kotlin/
 target/

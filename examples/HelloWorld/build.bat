@@ -62,8 +62,10 @@ set _CLASSES_DIR=%_TARGET_DIR%\classes
 set _SOURCE_FILES=
 for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
 
+set _PKG_NAME=org.example.main
+
 set _MAIN=HelloWorld
-set _MAIN_CLASS=%_MAIN%Kt
+set _MAIN_CLASS=%_PKG_NAME%.%_MAIN%Kt
 set _EXE_FILE=%_TARGET_DIR%\%_MAIN%.exe
 
 set _KTLINT_CMD=ktlint.bat
@@ -76,7 +78,7 @@ set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp %_CLASSES_DIR%
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%"
+set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%" -e "%_PKG_NAME%.main"
 goto :eof
 
 rem input parameter: %*
@@ -200,7 +202,7 @@ goto :eof
 :run_jvm
 set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
-    echo %_ERROR_LABEL% Main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
+    echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
     goto :eof
 )

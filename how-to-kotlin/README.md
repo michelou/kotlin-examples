@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-In this document we present the following [Kotlin](https://kotlinlang.org/) code examples:
+In this document we present the following [Kotlin] code examples:
 
 - [01_bean](01_bean/) - [Bean](#bean)
 - [02_properties](02_properties/) - [Properties](#properties)
@@ -22,9 +22,9 @@ In this document we present the following [Kotlin](https://kotlinlang.org/) code
 - [07_conventions](07_conventions) - [Conventions](#conventions)
 - [08_DSLs](09_DSLs) - [LocalSealedCasts](#local_sealed_casts)
 
-We actually provide two ways to build our Kotlin code examples:
+We actually provide two ways to build/run our [Kotlin] code examples:
 - **`build.bat`**
-- **`gradle.exe`**
+- [**`gradle.bat`**][gradle_bat]
 
 <pre style="font-size:80%;">
 <b>&gt; build</b>
@@ -45,6 +45,19 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 </pre>
 
 ## <span id="bean">Bean</span>
+
+Command [**`build clean run`**](01_bean/build.bat) compiles source file [**`Bean.kt`**](01_bean/src/main/kotlin/Bean.kt) and executes the generated Java class files:
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+fist=Jane, last=Doe
+</pre>
+
+Command [**`gradle -q clean run`**][gradle_bat] (build script [**`build.gradle`**](01_bean/build.gradle) and property file [**`gradle.properties`**](01_bean/gradle.properties)) performs the same operations:
+
+<pre style="font-size:80%;">
+<b>&gt; gradle -q clean run</b>
+fist=Jane, last=Doe
+</pre>
 
 ## <span id="properties">Properties</span>
 
@@ -77,3 +90,6 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 *[mics](http://lampwww.epfl.ch/~michelou/)/November 2019* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
+
+[gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
+[kotlin]: https://kotlinlang.org/

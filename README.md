@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
+  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -48,7 +48,8 @@ This project is organized as follows:
 bin\
 bin\kotlin\build.bat
 docs\
-examples\README.md
+examples\
+how-to-kotlin\
 <a href="https://github.com/JetBrains/kotlin">kotlin\</a>             <i>(Github submodule)</i>
 BUILD.md
 README.md
@@ -61,8 +62,9 @@ where
 - file [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) is the batch script for generating the [Kotlin] software distribution on a Windows machine.
 - directory [**`docs\`**](docs/) contains [Kotlin] related papers/articles.
 - directory [**`examples\`**](examples/) contains [Kotlin] code examples (see [**`examples\README.md`**](examples/README.md)).
+- directory [**`how-to-kotlin\`**](how-to-kotlin/) contains [Kotlin] code examples (see [**`how-to-kotlin\README.md`**](how-to-kotlin/README.md)).
 - directory **`kotlin\`** contains a copy of the [JetBrains/kotlin][jetbrains_kotlin] repository as a [Github submodule](.gitmodules).
-- file [**`BUILD.md`**](BUILD.md) is the Markdown document presenting the generation of the [Kotlin] software.
+- file [**`BUILD.md`**](BUILD.md) is the [Markdown][github_markdown] document presenting the generation of the [Kotlin] software.
 - file [**`README.md`**](README.md) is the Markdown document for this page.
 - file [**`setenv.bat`**](setenv.bat) is the batch script for setting up our environment.
 
@@ -101,11 +103,7 @@ We distinguish different sets of batch commands:
       C:\opt\Git-2.24.0\usr\bin\diff.exe
    </pre>
 
-2. [**`bin\kotlinc.bat`**](bin/kotlinc.bat) - This batch command provides several improvements over the batch command of the same name found in the [Kotlin] binary distribution.
-
-3. [**`bin\ktlint.bat`**](bin/ktlint.bat) - This batch command makes it possible to use the [KtLint] library on a Windows machine.
-
-4. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
+2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
 
 ## <span id="footnotes">Footnotes</span>
 
@@ -120,13 +118,13 @@ Kotlin/Native is an LLVM backend (based on <a href="https://releases.llvm.org/8.
 <p style="margin:0 0 1em 20px;">
 No Windows distribution is available from the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> repository.
 </p>
-<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we can create a Windows installation of <a href="https://github.com/pinterest/ktlint/releases">KtLint</a>. In our case we proceeded as follows:
+<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a Windows installation of <a href="https://github.com/pinterest/ktlint/releases">KtLint</a>:
 </p>
 <ul style="margin:0 0 1em 20px;">
-<li>create an installation directory <b><code>c:\opt\ktlint-0.35.0\</code></b>.</li>
-<li>download the shell script from the <a href="https://github.com/pinterest/ktlint">Github repository</a>.</i>
-<li>extract the JAR file from the bash script (and check it with command <b><code>jar tf</code></b>).</li>
-<li>add the batch file <a href="bin/ktlint.bat"><b><code>ktlint.bat</code></b></a> we  created to our installation directory.</li>
+<li>we create an installation directory <b><code>c:\opt\ktlint-0.35.0\</code></b>.</li>
+<li>we download the shell script from the <a href="https://github.com/pinterest/ktlint">Github repository</a>.</i>
+<li>we extract the JAR file from the bash script (and check it with command <b><code>jar tf</code></b>).</li>
+<li>we add our batch file <a href="bin/ktlint.bat"><b><code>ktlint.bat</code></b></a>  to the installation directory.</li>
 </ul>
 <p style="margin:0 0 1em 20px;">
 Here are the operations we performed on the command prompt:
@@ -142,7 +140,7 @@ com/pinterest/ktlint/Main.class
 <b>&gt; copy &lt;kotlin-examples-dir&gt;\bin\ktlint.bat .</b>
 </pre>
 <p style="margin:0 0 1em 20px;">
-The installation directory should have the following layout:
+The installation directory has the following layout:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <b>&gt; dir /b c:\opt\ktlint-0.35.0</b>
@@ -174,6 +172,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
 [git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.24.0.txt
+[github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
@@ -185,7 +184,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019
 [kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.60
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
-[klint]: https://github.com/pinterest/ktlint
+[ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
 [ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.35.0
 [linux_opt]: http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html

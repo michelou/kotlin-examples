@@ -4,51 +4,187 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
+  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
 
 In this document we present the following [Kotlin] code examples:
 
-- [HelloWorld](#hello-jvm) (JVM)
-- [HelloWorld](#hello-native) (Native)
-- [Reflection](#reflection)
+- [HelloWorld](#hello-jvm) (JVM/native)
+- [JavaToKotlin](#java_kotlin) (JVM only)
+- [KotlinToJava](#kotlin_java) (JVM only)
+- [LanguageFeatures](#features) (JVM/native)
+- [Reflection](#reflection) (JVM only)
 
-There are three Kotlin compilers:
-- The [Kotlin/JVM][kotlin_jvm] compiler generates class/JAR files.
-- The [Kotlin/JS][kotlin_js] compiler generates JavaScript code.
-- The [Kotlin/Native][kotlin_native] compiler generates native codefor the supported targets <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.
+> **:mag_right:** There exist three Kotlin compilers and some code examples are only valid with one of them:
+> - The [Kotlin/JVM][kotlin_jvm] compiler generates class/JAR files.
+> - The [Kotlin/JS][kotlin_js] compiler generates JavaScript code.
+> - The [Kotlin/Native][kotlin_native] compiler generates native codefor the supported targets <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.
 
-## <span id="hello-jvm">HelloWorld (JVM)</span>
+We provide three different ways to build/run the code examples:
+- **`build.bat`** is the old-fashioned batch file.
+- **`build.gradle`** is the Gradle build script written in Groovy DSL.
+- **`build.gradle.kts`** is the Gradle build script written in Kotlin DSL.
 
-Let's take as a first example the [**`HelloWorld`**](HelloWorld/) program.
-
-<pre style="font-size:80%;">
-<b>&gt; cd HelloWorld</b>
-<b>&gt; type src\HelloWorld.kt</b>
-<b>fun</b> main(args: Array&lt;String&gt;) {
-    println(<span style="color:#990000;">"Hello World!"</span>)
-}
+> **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
+> <pre style="font-size:80%;">
+> <b>&gt; build help</b>
+> Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
+> &nbsp;
+>  Options:
+>    -debug      show commands executed by this script
+>    -native     generated native executable
+>    -timer      display total elapsed time
+>    -verbose    display progress messages
+> &nbsp;
+>  Subcommands:
+>    clean       delete generated files
+>    compile     generate class files
+>    help        display this help message
+>    lint        analyze Kotlin source files with KtLint
+>    run         execute the generated program
 </pre>
 
-The [Kotlin/JVM](https://kotlinlang.org/) compiler generates Java class files if the **`-d`** option argument *does not* end with **`.jar`** (in our case **`target\classes`**).
+## <span id="hello-jvm">HelloWorld (JVM/native)</span>
+
+Command [**`build clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup>:
 
 <pre style="font-size:80%;">
-<b>&gt; mkdir target\classes\</b>
-<b>&gt; kotlinc -d target\classes src\HelloWorld.kt</b>
+<b>&gt; build clean run</b>
+Hello World!
+&nbsp;
 <b>&gt; tree /a /f target\classes | findstr /v "^[A-Z]"</b>
-|   HelloWorldKt.class
++---META-INF
+|       main.kotlin_module
 |
-\---META-INF
-         main.kotlin_module
+\---org
+    \---example
+        \---main
+                HelloWorldKt.class
 </pre>
 
 > **:mag_right:** We observe the naming convention for generated class files: **`HelloWorldKt.class`** is generated for source file **`HelloWorld.kt`**.
 
-The [Kotlin/JVM](https://kotlinlang.org/) compiler generates a single Java archive file if the **`-d`** option argument ends with **`.jar`** (in our case **`target\HelloWorld.jar`**).
+Command **`build -native clean run`** generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>:
 
 <pre style="font-size:80%;">
+<b>&gt; $ build -native clean run</b>
+Hello World!
+&nbsp;
+<b>&gt; tree /a /f target | findstr /v "^[A-Z]"</b>
+    HelloWorld.exe
+    ktlint-report.xml
+</pre>
+
+> **:mag_right:** The [**`pelook`**](http://bytepointer.com/tools/index.htm#pelook) utility can help us getting more information about the native executable:
+> <pre style="font-size:80%;">
+> <b>&gt; pelook.exe -h target\HelloWorld.exe | head -7</b>
+> loaded "target\HelloWorld.exe" / 478599 (0x74D87) bytes
+> signature/type:       PE64 EXE image for amd64
+> image checksum:       0x0007FD9A (OK)
+> machine:              0x8664 (amd64)
+> subsystem:            3 (Windows Console)
+> minimum os:           4.0 (Win95/NT4)
+> linkver:              2.32
+</pre>
+
+## <span id="java_kotlin">JavaToKotlin (JVM only)</span>
+
+## <span id="kotlin_java">KotlinToJava (JVM only)</span>
+
+## <span id="features">LanguageFeatures (JVM/native)</span>
+
+## <span id="reflection">Reflection (JVM only)</span>
+
+Command [**`build -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
+<pre style="font-size:80%;">
+<b>&gt; build -timer clean run</b>
+Source code:
+    data class Person(
+        val name: String,
+        var age: Int
+    )
+
+Methods:
+    fun equals: boolean
+    fun toString: class java.lang.String
+    fun hashCode: int
+    fun getName: class java.lang.String
+    fun copy: class Person
+    fun component1: class java.lang.String
+    fun component2: int
+    fun getAge: int
+    fun copy$default: class Person
+    fun setAge: void
+
+Members:
+    var age: kotlin.Int
+    val name: kotlin.String
+Elapsed time: 00:00:06
+</pre>
+
+Alternatively command [**`gradle -q clean run`**][gradle_bat] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
+
+<pre style="font-size:80%;">
+<b>&gt; gradle clean run</b>
+
+&gt; Task :run
+Source code:
+    data class Person(
+        val name: String,
+        var age: Int
+    )
+
+Methods:
+    fun equals: boolean
+    fun toString: class java.lang.String
+    fun hashCode: int
+    fun getName: class java.lang.String
+    fun copy: class Person
+    fun component2: int
+    fun copy$default: class Person
+    fun getAge: int
+    fun setAge: void
+    fun component1: class java.lang.String
+
+Members:
+    var age: kotlin.Int
+    val name: kotlin.String
+
+BUILD SUCCESSFUL in 3s
+3 actionable tasks: 3 executed
+</pre>
+
+> **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_bat] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
+
+## <span id="footnotes">Footnotes</span>
+
+<a name="footnote_01">[1]</a> ***Available targets*** [↩](#anchor_01)
+
+<p style="margin:0 0 1em 20px;">
+Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
+</p>
+<pre style="margin:0 0 1em 20px;font-size:80%;">
+<b>&gt; kotlinc-native -list-targets</b>
+mingw_x64:                    (default) mingw
+mingw_x86:
+linux_x64:                              linux
+linux_arm32_hfp:                        raspberrypi
+linux_arm64:
+android_x86:
+android_x64:
+android_arm32:
+android_arm64:
+wasm32:
+</pre>
+
+<a name="footnote_02">[2]</a> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
+
+<p style="margin:0 0 1em 20px;">
+The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single Java archive file if the <b><code>-d</code></b> option argument ends with <b><code>.jar</code></b> (in our case <b><code>target\HelloWorld.jar</code></b>).
+</p>
+<pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; kotlinc -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; dir target | findstr HelloWorld.jar</b>
 02.11.2019  16:45             1 164 HelloWorld.jar
@@ -58,81 +194,43 @@ HelloWorldKt.class
 META-INF/main.kotlin_module
 </pre>
 
-> **:mag_right:** Specifying option **`-include-runtime`** will add the [Kotlin](https://kotlinlang.org/) runtime to the generated JAR file:
-> <pre style="font-size:80%;">
-> <b>&gt; kotlinc -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
-> <b>&gt; dir target | findstr HelloWorld.jar</b>
-> 02.11.2019  16:40         1 309 824 HelloWorld.jar
-> <b>&gt; jar tf target\HelloWorld.jar</b>
-> META-INF/MANIFEST.MF
-> HelloWorldKt.class
-> META-INF/main.kotlin_module
-> kotlin/collections/ArraysUtilJVM.class
-> kotlin/jvm/internal/CallableReference$NoReceiver.class
-> kotlin/jvm/internal/CallableReference.class
-> [..]
-> kotlin/coroutines/EmptyCoroutineContext.class
-> kotlin/coroutines/intrinsics/CoroutineSingletons.class
-> </pre>
-
-
-On the JVM platform a [Kotlin](https://kotlinlang.org/) program can be executed in several ways depending on two factors:
-- We run command **`kotlin.bat`** or command **`java.exe`**.
-- We generated either class files or a single JAR file for our **`HelloWorld`** program.
-
-<table>
-<tr><th>Command</th><th>Class/JAR file</th><th>Session example</th></tr>
-<tr><td><code>kotlin.bat</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; kotlin -cp target\classes HelloWorldKt</b></br>Hello World!</code></tr>
-<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><code><b>&gt; set BCPATH=c:\opt\kotlinc-1.3.50\lib\kotlin-stdlib.jar</br>&gt; kotlin -J-Xbootclasspath/a:%BCPATH% -jar target\HelloWorld.jar</b></br>Hello World!</code></td></tr>
-<tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; set CPATH=c:\opt\kotlinc-1.3.50\lib\kotlin-stdlib.jar;target\classes<br/>&gt; java -cp %CPATH% HelloWorldKt</b></br>Hello World!</code></td></tr>
-<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><code><b>&gt; set BCPATH=c:\opt\kotlinc-1.3.50\lib\kotlin-stdlib.jar</br>&gt; java -Xbootclasspath/a:%BCPATH% -jar target\HelloWorld.jar</code></b></br>Hello World!</code></td></tr>
-</table>
-
-> **:mag_right:** We can write a shorter command line if the [Kotlin](https://kotlinlang.org/) runtime is included in archive file **`HelloWorld.jar`** (option **`-include-runtime`**): 
-> <pre style="font-size:80%;">
-> <b>&gt; java -jar target\HelloWorld.jar</b>
-> Hello World!
-> </pre>
-
-## <span id="hello-native">HelloWorld (Native)</span>
-
-Command **`kotlinc-native -o <exe_file> <kt_files>`** generates the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> (default target on Windows: **`mingw_x64`**).
-
-<pre style="font-size:80%;"> 
-<b>&gt; mkdir target\</b>
-<b>&gt; kotlinc-native -o target\HelloWorld.exe src\main\kotlin\HelloWorld.kt</b>
-&nbsp;
-<b>&gt; tree /a /f target | findstr /v "^[A-Z]"</b>
-|   HelloWorld.exe
-|   HelloWorld.jar
-|   ktlint-report.xml
-|
-\---classes
-    |   HelloWorldKt.class
-    |
-    \---META-INF
-            main.kotlin_module
-</pre>
-
-## <span id="reflection">Reflection</span>
-
-
-## <span id="footnotes">Footnotes</span>
-
-<a name="footnote_01">[1]</a> ***Available targets*** [↩](#anchor_01)
+<a name="footnote_03">[3]</a> ***Execution on JVM*** [↩](#anchor_03)
 
 <p style="margin:0 0 1em 20px;">
-Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
+On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can be executed in several ways depending on two parameters:
+- We run command <b><code>kotlin.bat</code></b> or command <b><code>java.exe</code></b>.
+- We generated either class files or a single JAR file for our <b><code>HelloWorld</code></b> program.
 </p>
-<pre style="font-size:80%;">
-<b>&gt; kotlinc-native -list-targets</b>
-mingw_x64:                    (default) mingw
-mingw_x86:
-linux_x64:                              linux
-linux_arm32_hfp:                        raspberrypi
-linux_arm64:
-android_arm32:
-wasm32:
+<table style="margin:0 0 1em 20px;">
+<tr><th>Command</th><th>Class/JAR file</th><th>Session example</th></tr>
+<tr><td><code>kotlin.bat</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; kotlin -cp target\classes HelloWorldKt</b><br/>Hello World!</code></tr>
+<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><b><code>&gt; kotlin -J-Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></br>Hello World!</code></td></tr>
+<tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b><br/>Hello World!</code></td></tr>
+<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b><br/>Hello World!</code></td></tr>
+</table>
+<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.3.50\lib\kotlin-stdlib.jar</code></b></span>
+
+<p style="margin:0 0 1em 20px;">
+The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
+</p>
+<pre style="margin:0 0 1em 20px;font-size:80%;">
+<b>&gt; kotlinc -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
+<b>&gt; dir target | findstr HelloWorld.jar</b>
+02.11.2019  16:40         1 309 824 HelloWorld.jar
+&nbsp;
+<b>&gt; jar tf target\HelloWorld.jar</b>
+META-INF/MANIFEST.MF
+HelloWorldKt.class
+META-INF/main.kotlin_module
+kotlin/collections/ArraysUtilJVM.class
+kotlin/jvm/internal/CallableReference$NoReceiver.class
+kotlin/jvm/internal/CallableReference.class
+[..]
+kotlin/coroutines/EmptyCoroutineContext.class
+kotlin/coroutines/intrinsics/CoroutineSingletons.class
+&nbsp;
+<b>&gt; java -jar target\HelloWorld.jar</b>
+Hello World!
 </pre>
 
 ***
@@ -142,6 +240,8 @@ wasm32:
 
 <!-- link refs -->
 
+[gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
+[gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
 [kotlin]: https://kotlinlang.org/
 [kotlin_js]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjs-compiler-options
 [kotlin_jvm]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjvm-compiler-options
