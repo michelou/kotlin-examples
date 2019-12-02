@@ -168,7 +168,7 @@ goto :eof
 :lint
 rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
 call %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (

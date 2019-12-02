@@ -299,7 +299,7 @@ if not exist "%_EXE_FILE%" (
 	goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_EXE_FILE% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin native !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin native application !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
 )
 %_EXE_FILE%
 if not %ERRORLEVEL%==0 (
@@ -317,6 +317,7 @@ if not exist "%__MAIN_CLASS_FILE%" (
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_JAVA_CMD% %_JAVA_OPTS% %_JAVA_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_JAVA_MAIN_CLASS%  1>&2
+) else ( echo.
 )
 call %_JAVA_CMD% %_JAVA_OPTS% %_JAVA_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (

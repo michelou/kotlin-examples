@@ -55,9 +55,9 @@ compileKotlin {
 
 task run(type: JavaExec) {
     dependsOn compileKotlin
-    description "Execute Kotlin main class $mainClassName"
+    description "Execute Kotlin main class $kotlinMainClassName"
     classpath sourceSets.main.runtimeClasspath
-    main mainClassName
+    main kotlinMainClassName
     args ""
 }
 

@@ -62,8 +62,10 @@ set _CLASSES_DIR=%_TARGET_DIR%\classes
 set _SOURCE_FILES=
 for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
 
-set _MAIN_NAME=KotlinFeatures
-set _MAIN_CLASS=%_MAIN_NAME%Kt
+set _PKG_NAME=org.example.main
+
+set _MAIN_NAME=LanguageFeatures
+set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
 set _EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe
 
 set _KTLINT_CMD=ktlint.bat

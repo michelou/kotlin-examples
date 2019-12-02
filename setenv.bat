@@ -32,6 +32,7 @@ set _JAVA_PATH=
 set _KOTLIN_PATH=
 set _KOTLINE_NATIVE_PATH=
 set _KTLINT_PATH=
+set _MAVEN_PATH=
 set _GIT_PATH=
 
 call :gradle
@@ -47,6 +48,9 @@ call :kotlinc-native
 if not %_EXITCODE%==0 goto end
 
 call :ktlint
+if not %_EXITCODE%==0 goto end
+
+call :maven
 if not %_EXITCODE%==0 goto end
 
 call :git
@@ -280,6 +284,34 @@ if defined __KTLINT_CMD (
 set "_KTLINT_PATH=;%_KTLINT_HOME%"
 goto :eof
 
+:maven
+set _MAVEN_PATH=
+
+set __MAVEN_HOME=
+set __MVN_CMD=
+for /f %%f in ('where /q mvn.cmd 2^>NUL') do set "__MVN_CMD=%%f"
+if defined __MVN_CMD (
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Maven executable found in PATH 1>&2
+    rem keep _MAVEN_PATH undefined since executable already in path
+    goto :eof
+) else if defined MAVEN_HOME (
+    set "__MAVEN_HOME=%MAVEN_HOME%"
+    if %_DEBUG%==1 echo [%_BASENAME%] Using environment variable MAVEN_HOME
+) else (
+    set _PATH=C:\opt
+    for /f %%f in ('dir /ad /b "!_PATH!\apache-maven-*" 2^>NUL') do set __MAVEN_HOME=!_PATH!\%%f
+    if defined __MAVEN_HOME (
+        if %_DEBUG%==1 echo [%_BASENAME%] Using default Maven installation directory !__MAVEN_HOME!
+    )
+)
+if not exist "%__MAVEN_HOME%\bin\mvn.cmd" (
+    echo %_ERROR_LABEL% Maven executable not found ^(%__MAVEN_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set "_MAVEN_PATH=;%__MAVEN_HOME%\bin"
+goto :eof
+
 rem output parameter(s): _GIT_HOME, _GIT_PATH
 :git
 set _GIT_HOME=
@@ -348,6 +380,11 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=*" %%i in ('ktlint --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
     set __WHERE_ARGS=%__WHERE_ARGS% ktlint.bat
 )
+where /q mvn.cmd
+if %ERRORLEVEL%==0 (
+    for /f "tokens=1,2,3,*" %%i in ('mvn.cmd -version ^| findstr Apache') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% mvn %%k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% mvn.cmd
+)
 where /q git.exe
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,2,*" %%i in ('git.exe --version') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% git %%k,"
@@ -378,7 +415,7 @@ endlocal & (
     if not defined JAVA_HOME set JAVA_HOME=%_JAVA_HOME%
     if not defined KOTLIN_HOME set KOTLIN_HOME=%_KOTLIN_HOME%
     if not defined KOTLIN_NATIVE_HOME set KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%
-    set "PATH=%_JAVA_PATH%%PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_KTLINT_PATH%%_GIT_PATH%"
+    set "PATH=%_JAVA_PATH%%PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_KTLINT_PATH%%_MAVEN_PATH%%_GIT_PATH%"
     call :print_env %_VERBOSE%
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

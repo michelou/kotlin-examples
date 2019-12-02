@@ -29,10 +29,6 @@ task lint(type: JavaExec) {
     args files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
 }
 
-checkstyle {
-    maxErrors = 10
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -55,9 +51,9 @@ compileKotlin {
 
 task run(type: JavaExec) {
     dependsOn compileKotlin
-    description "Execute Kotlin main class $mainClassName"
+    description "Execute Kotlin main class $kotlinMainClassName"
     classpath sourceSets.main.runtimeClasspath
-    main mainClassName
+    main kotlinMainClassName
     args ""
 }
 

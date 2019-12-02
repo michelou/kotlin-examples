@@ -64,9 +64,9 @@ for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do 
 
 set _PKG_NAME=org.example.main
 
-set _MAIN=HelloWorld
-set _MAIN_CLASS=%_PKG_NAME%.%_MAIN%Kt
-set _EXE_FILE=%_TARGET_DIR%\%_MAIN%.exe
+set _MAIN_NAME=HelloWorld
+set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
+set _EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe
 
 set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml

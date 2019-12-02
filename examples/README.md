@@ -22,10 +22,15 @@ In this document we present the following [Kotlin] code examples:
 > - The [Kotlin/JS][kotlin_js] compiler generates JavaScript code.
 > - The [Kotlin/Native][kotlin_native] compiler generates native codefor the supported targets <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.
 
-We provide three different ways to build/run the code examples:
+<!--
+**`kotlin-stdlib`** contains most of the functionality: Collections, Ranges, Math, Regex, File extensions, Locks, etc... Most of what you use daily is in kotlin-stdlib
+-->
+
+We provide 4 different ways to build/run the code examples:
 - **`build.bat`** is the old-fashioned batch file.
 - **`build.gradle`** is the Gradle build script written in Groovy DSL.
 - **`build.gradle.kts`** is the Gradle build script written in Kotlin DSL.
+- **`pom.xml`** is the Maven build script written in XML.
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
 > <pre style="font-size:80%;">
@@ -91,13 +96,75 @@ Hello World!
 
 ## <span id="java_kotlin">JavaToKotlin (JVM only)</span>
 
+Either command [**`build clean run`**](JavaToKotlin/build.bat) or command [**`gradle -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+name=&lt;name&gt; active=true
+name=Bob active=true
+three=3
+&nbsp;
+<b>&gt; gradle -q clean run</b>
+name=&lt;name&gt; active=true
+name=Bob active=true
+three=3
+</pre>
+
+See Kotlin reference documentation: [Calling Java code from Kotlin][java_kotlin].
+
 ## <span id="kotlin_java">KotlinToJava (JVM only)</span>
 
+Either command [**`build clean run`**](KotlinToJava/build.bat) or command [**`gradle -q clean run runJava`**](KotlinToJava/build.gradle) compiles the source files [**`JavaInteropt.java`**](KotlinToJava/src/main/java/JavaInteropt.java) and [**`JavaInterop.kt`**](KotlinToJava/src/main/kotlin/JavaInterop.kt) and produces the following output (Kotlin output first and then Java output):
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+[kt] this is a message: a message
+[kt] another message: a message
+&nbsp;
+[kt] call callback function
+[java] Hello, hi!
+[kt] call companion function
+&nbsp;
+<b>&gt; gradle -q clean run runJava</b>
+[kt] this is a message: a message
+[kt] another message: a message
+&nbsp;
+[kt] call callback function
+[java] Hello, hi!
+[kt] call companion function
+</pre>
+
+See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
+
 ## <span id="features">LanguageFeatures (JVM/native)</span>
+
+Either command [**`build clean run`**](LanguageFeatures/build.bat) or command [**`gradle -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
+
+<pre style="font-size:80%;">
+<b>&gt; gradle -q clean run</b>
+int a: 2
+penDown
+forward 100.0
+turn 90.0
+forward 100.0
+turn 90.0
+forward 100.0
+turn 90.0
+forward 100.0
+turn 90.0
+penUp
+250
+John we welcome you!
+200
+-10
+4
+null
+</pre>
 
 ## <span id="reflection">Reflection (JVM only)</span>
 
 Command [**`build -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
+
 <pre style="font-size:80%;">
 <b>&gt; build -timer clean run</b>
 Source code:
@@ -242,7 +309,9 @@ Hello World!
 
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
+[java_kotlin]: https://kotlinlang.org/docs/reference/java-interop.html#calling-java-code-from-kotlin
 [kotlin]: https://kotlinlang.org/
+[kotlin_java]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#calling-kotlin-from-java
 [kotlin_js]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjs-compiler-options
 [kotlin_jvm]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjvm-compiler-options
 [kotlin_native]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options

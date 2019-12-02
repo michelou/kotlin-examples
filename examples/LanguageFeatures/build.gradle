@@ -3,17 +3,17 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
 }
 
-group = "$appGroup"
-version = "$appVersion"
+group "$appGroup"
+version "$appVersion"
 
-description = """Kotlin/JVM code example"""
+description """Kotlin/JVM code example"""
 
 sourceSets {
     // Default: srcDirs "src/main/kotlin"
 	main.kotlin.srcDirs "src/main/kotlin"
 }
-// Default: buildDir = "build"
-buildDir = "target"
+
+buildDir "target"  // Default: buildDir = "build"
 
 ext {
     ktLintOpts = [
@@ -23,14 +23,18 @@ ext {
 }
 
 task lint(type: JavaExec) {
-    main = "-jar"
-    args = files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
+    description "Analyze Kotlin source files with KtLint"
+    main "-jar"
+    args files("$ktLintJarFile") + ktLintOpts + sourceSets.main.allSource.files
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 compileKotlin {
     // dependsOn lint
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
 
     kotlinOptions {
         // Tool options
@@ -45,9 +49,11 @@ compileKotlin {
 }
 
 task run(type: JavaExec) {
+    dependsOn compileKotlin
+    description "Execute Kotlin main class $kotlinMainClassName"
     classpath sourceSets.main.runtimeClasspath
-    main mainClassName
-    args ''
+    main kotlinMainClassName
+    args ""
 }
 
 repositories {
@@ -56,6 +62,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    api "junit:junit:$junitVersion"
     testImplementation "junit:junit:$junitVersion"
-    testImplementation “org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion”
 }
