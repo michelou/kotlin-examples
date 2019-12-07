@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> (9:30 am) at <a href="https://events.google.com/io2018/schedule/?section=may-10">Google I/O 2018</a>.<br/>
-  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
+  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -24,7 +24,7 @@ In this document we present the following [Kotlin] code examples:
 
 We actually provide two ways to build/run our [Kotlin] code examples:
 - **`build.bat`**
-- [**`gradle.bat`**][gradle_bat]
+- [**`gradle.bat`**][gradle_cli] *(which executes* **`build.gradle`***)*
 
 <pre style="font-size:80%;">
 <b>&gt; build</b>
@@ -46,13 +46,16 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 ## <span id="bean">Bean</span>
 
+This example is about [data classes][kotlin_data_classes] whose main purpose is to hold data.
+
 Command [**`build clean run`**](01_bean/build.bat) compiles source file [**`Bean.kt`**](01_bean/src/main/kotlin/Bean.kt) and executes the generated Java class files:
+
 <pre style="font-size:80%;">
 <b>&gt; build clean run</b>
 fist=Jane, last=Doe
 </pre>
 
-Command [**`gradle -q clean run`**][gradle_bat] (build script [**`build.gradle`**](01_bean/build.gradle) and property file [**`gradle.properties`**](01_bean/gradle.properties)) performs the same operations:
+Command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`**](01_bean/build.gradle) and property file [**`gradle.properties`**](01_bean/gradle.properties)) performs the same operations:
 
 <pre style="font-size:80%;">
 <b>&gt; gradle -q clean run</b>
@@ -60,6 +63,22 @@ fist=Jane, last=Doe
 </pre>
 
 ## <span id="properties">Properties</span>
+
+This example is about [lazy properties][kotlin_lazy_props] whose value is initialized at the moment of the first access.
+
+Command [**`build clean run`**](02_properties/build.bat) compiles source file [**`Properties.kt`**](02_properties/src/main/kotlin/Properties.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+Computing...
+Windows 10 v10.0 (amd64)
+Windows 10 v10.0 (amd64)
+Windows 10 v10.0 (amd64)
+Computing...
+Windows 10 v10.0 (amd64)
+Windows 10 v10.0 (amd64)
+Windows 10 v10.0 (amd64)
+</pre>
 
 ## <span id="functions">Functions</span>
 
@@ -88,8 +107,10 @@ fist=Jane, last=Doe
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/November 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/December 2019* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
-[gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
+[gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [kotlin]: https://kotlinlang.org/
+[kotlin_data_classes]: https://kotlinlang.org/docs/reference/data-classes.html
+[kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/

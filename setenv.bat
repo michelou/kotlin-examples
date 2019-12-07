@@ -296,10 +296,10 @@ if defined __MVN_CMD (
     goto :eof
 ) else if defined MAVEN_HOME (
     set "__MAVEN_HOME=%MAVEN_HOME%"
-    if %_DEBUG%==1 echo [%_BASENAME%] Using environment variable MAVEN_HOME
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable MAVEN_HOME 1>&2
 ) else (
     set _PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!_PATH!\apache-maven-*" 2^>NUL') do set __MAVEN_HOME=!_PATH!\%%f
+    for /f %%f in ('dir /ad /b "!_PATH!\apache-maven-*" 2^>NUL') do set "__MAVEN_HOME=!_PATH!\%%f"
     if defined __MAVEN_HOME (
         if %_DEBUG%==1 echo [%_BASENAME%] Using default Maven installation directory !__MAVEN_HOME!
     )
@@ -377,7 +377,7 @@ if %ERRORLEVEL%==0 (
 )
 where /q ktlint.bat
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('ktlint --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
+    for /f "tokens=*" %%i in ('ktlint.bat --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
     set __WHERE_ARGS=%__WHERE_ARGS% ktlint.bat
 )
 where /q mvn.cmd

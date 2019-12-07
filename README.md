@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
+  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -34,7 +34,7 @@ C:\opt\Git-2.24.0\                     <i>(271 MB)</i>
 C:\opt\gradle-6.0.1                    <i>(103 MB)</i>
 C:\opt\kotlinc-1.3.61\                 <i>( 56 MB)</i>
 C:\opt\kotlin-native-windows-1.3.61\   <i>(378 MB)</i>
-C:\opt\ktlint-0.35.0\                  <i>( 42 MB)</i>
+C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
 </pre>
 <!--
 C:\opt\<a href="https://github.com/pinterest/ktlint/releases/">ktlint-0.35\</a>
@@ -90,7 +90,7 @@ We distinguish different sets of batch commands:
    <b>&gt; setenv -verbose</b>
    Tool versions:
       gradle 6.0.1, java 1.8.0_232,
-      kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.35.0
+      kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.36.0
       mvn 3.6.3, git 2.24.0.windows.1, diff 3.7
    Tool paths:
       C:\opt\gradle-6.0.1\bin\gradle.bat
@@ -99,7 +99,7 @@ We distinguish different sets of batch commands:
       C:\opt\kotlinc-1.3.61\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc-native.bat
-      C:\opt\ktlint-0.35.0\ktlint.bat
+      C:\opt\ktlint-0.36.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
       C:\opt\Git-2.24.0\bin\git.exe
       C:\opt\Git-2.24.0\mingw64\bin\git.exe
@@ -121,35 +121,37 @@ Kotlin/Native is an LLVM backend (based on <a href="https://releases.llvm.org/8.
 <p style="margin:0 0 1em 20px;">
 No Windows distribution is available from the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> repository.
 </p>
-<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a Windows installation of <a href="https://github.com/pinterest/ktlint/releases">KtLint</a>:
+<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as <a href="http://www.lihaoyi.com/mill/index.html#windows">Mill assembly</a> distribution):
 </p>
 <ul style="margin:0 0 1em 20px;">
-<li>we create an installation directory <b><code>c:\opt\ktlint-0.35.0\</code></b>.</li>
+<li>we create an installation directory <b><code>c:\opt\ktlint-0.36.0\</code></b>.</li>
 <li>we download the shell script from the <a href="https://github.com/pinterest/ktlint">Github repository</a>.</i>
 <li>we extract the JAR file from the bash script (and check it with command <b><code>jar tf</code></b>).</li>
-<li>we add our batch file <a href="bin/ktlint.bat"><b><code>ktlint.bat</code></b></a>  to the installation directory.</li>
+<li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.txt"><b><code>ktlint_header.txt</code></b></a> and the extracted JAR file.</li>
 </ul>
 <p style="margin:0 0 1em 20px;">
-Here are the operations we performed on the command prompt:
+Here are the performed operations:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<b>&gt; mkdir c:\opt\ktlint-0.35.0</b>
-<b>&gt; cd c:\opt\ktlint-0.35.0</b>
+<b>&gt; mkdir c:\opt\ktlint-0.36.0</b>
+<b>&gt; cd c:\opt\ktlint-0.36.0</b>
 &nbsp;
-<b>&gt; curl -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.35.0/ktlint</b>
+<b>&gt; curl -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.36.0/ktlint</b>
 <b>&gt; tail -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; jar tf ktlint.jar | findstr ktlint/Main</b>
 com/pinterest/ktlint/Main.class
-<b>&gt; copy &lt;kotlin-examples-dir&gt;\bin\ktlint.bat .</b>
+<b>&gt; copy /y /b o:\bin\ktlint_header.txt + /b ktlint.jar ktlint.bat</b>
+<b>&gt; del ktlint.jar ktlint.sh</b>
 </pre>
 <p style="margin:0 0 1em 20px;">
-The installation directory has the following layout:
+The installation directory now contains one single file, namely <b><code>ktlint.bat</code></b>:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<b>&gt; dir /b c:\opt\ktlint-0.35.0</b>
-ktlint
+<b>&gt; dir /b c:\opt\ktlint-0.36.0</b>
 ktlint.bat
-ktlint.jar
+&nbsp;
+<b>&gt; c:\opt\ktlint-0.36.0\ktlint.bat --version</b>
+0.36.0
 </pre>
 
 <a name="footnote_03">[3]</a> ***Downloads*** [↩](#anchor_03)
@@ -190,7 +192,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.35.0
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.36.0
 [linux_opt]: http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://github.com/JetBrains/kotlin/releases/latest

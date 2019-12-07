@@ -10,12 +10,14 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Using Gradle Kotlin DSL with JUnit 5](https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/) by Juan Ara, August 7, 2019.
+- [Advanced Kotlin - Part 1 - Delegates](https://americanexpress.io/advanced-kotlin-delegates/) by Brent Watson, July 1, 2019.
 - [Stone Soup Programming](https://stonesoupprogramming.com/) - [Kotlin](https://stonesoupprogramming.com/category/kotlin/), 2019.
 
 ## <span id="books">Books</span>
 
-- [Kotlin Cookbook](https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/) by Ken Kousen, O'Reilly, November 2019 (ISBN: 9781492046660).
+- [Kotlin Cookbook][book_kotlin_cookbook] by Ken Kousen, O'Reilly, November 2019 (ISBN: 9781492046660).
 
 ## <span id="tools">Tools</span>
 
@@ -29,5 +31,9 @@
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/November 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/December 2019* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
+
+<!-- link refs -->
+
+[book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/

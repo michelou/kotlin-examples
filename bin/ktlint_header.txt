@@ -1,0 +1,18 @@
+@ 2>/dev/null # 2>nul & echo off & goto BOF
+:
+if [ -z "$JAVA_HOME" ] ; then
+  JAVACMD="java"
+else
+  JAVACMD="$JAVA_HOME/bin/java"
+fi
+exec $JAVACMD -Xmx512m -jar "$0" "$@"
+
+exit
+
+:BOF
+@echo off
+if "%JAVA_HOME%"=="" ( set "JAVACMD=java.exe"
+) else ( set "JAVACMD=%JAVA_HOME%\bin\java.exe"
+)
+"%JAVACMD%" -Xmx512m -jar "%~dpnx0" %*
+exit /B %errorlevel%
