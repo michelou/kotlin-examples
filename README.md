@@ -127,7 +127,7 @@ No Windows distribution is available from the <a href="https://github.com/pinter
 <li>we create an installation directory <b><code>c:\opt\ktlint-0.36.0\</code></b>.</li>
 <li>we download the shell script from the <a href="https://github.com/pinterest/ktlint">Github repository</a>.</i>
 <li>we extract the JAR file from the bash script (and check it with command <b><code>jar tf</code></b>).</li>
-<li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.txt"><b><code>ktlint_header.txt</code></b></a> and the extracted JAR file.</li>
+<li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.bin"><b><code>ktlint_header.bin</code></b></a> and the extracted JAR file.</li>
 </ul>
 <p style="margin:0 0 1em 20px;">
 Here are the performed operations:
@@ -140,7 +140,7 @@ Here are the performed operations:
 <b>&gt; tail -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; jar tf ktlint.jar | findstr ktlint/Main</b>
 com/pinterest/ktlint/Main.class
-<b>&gt; copy /y /b o:\bin\ktlint_header.txt + /b ktlint.jar ktlint.bat</b>
+<b>&gt; copy /y /b o:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
 <b>&gt; del ktlint.jar ktlint.sh</b>
 </pre>
 <p style="margin:0 0 1em 20px;">
