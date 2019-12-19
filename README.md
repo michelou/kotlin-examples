@@ -30,8 +30,8 @@ For instance our development environment looks as follows (*November 2019*) <sup
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\Git-2.24.0\                     <i>(271 MB)</i>
-C:\opt\gradle-6.0.1                    <i>(103 MB)</i>
+C:\opt\Git-2.24.1\                     <i>(277 MB)</i>
+C:\opt\gradle-6.0.1\                   <i>(103 MB)</i>
 C:\opt\kotlinc-1.3.61\                 <i>( 56 MB)</i>
 C:\opt\kotlin-native-windows-1.3.61\   <i>(378 MB)</i>
 C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
@@ -53,6 +53,7 @@ docs\
 examples\
 how-to-kotlin\
 <a href="https://github.com/JetBrains/kotlin">kotlin\</a>             <i>(Github submodule)</i>
+learn-kotlin\
 BUILD.md
 README.md
 setenv.bat
@@ -66,6 +67,7 @@ where
 - directory [**`examples\`**](examples/) contains [Kotlin] code examples (see [**`examples\README.md`**](examples/README.md)).
 - directory [**`how-to-kotlin\`**](how-to-kotlin/) contains [Kotlin] code examples (see [**`how-to-kotlin\README.md`**](how-to-kotlin/README.md)).
 - directory **`kotlin\`** contains a copy of the [JetBrains/kotlin][jetbrains_kotlin] repository as a [Github submodule](.gitmodules).
+- directory [**`learn-kotlin\`**](learn-kotlin/) contains [Kotlin] code examples (see [**`learn-kotlin\README.md`**](learn-kotlin/README.md)).
 - file [**`BUILD.md`**](BUILD.md) is the [Markdown][github_markdown] document presenting the generation of the [Kotlin] software.
 - file [**`README.md`**](README.md) is the Markdown document for this page.
 - file [**`setenv.bat`**](setenv.bat) is the batch script for setting up our environment.
@@ -91,7 +93,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       gradle 6.0.1, java 1.8.0_232,
       kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.36.0
-      mvn 3.6.3, git 2.24.0.windows.1, diff 3.7
+      mvn 3.6.3, git 2.24.1.windows.2, diff 3.7
    Tool paths:
       C:\opt\gradle-6.0.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_232-b09\bin\java.exe
@@ -101,9 +103,9 @@ We distinguish different sets of batch commands:
       C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc-native.bat
       C:\opt\ktlint-0.36.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.24.0\bin\git.exe
-      C:\opt\Git-2.24.0\mingw64\bin\git.exe
-      C:\opt\Git-2.24.0\usr\bin\diff.exe
+      C:\opt\Git-2.24.1\bin\git.exe
+      C:\opt\Git-2.24.1\mingw64\bin\git.exe
+      C:\opt\Git-2.24.1\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -164,7 +166,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-6.0.1-bin.zip</a>                 <i>( 90 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-compiler-1.3.61.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-native-windows-1.3.61.zip</a>     <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.24.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.24.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
@@ -177,7 +179,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.24.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.24.1.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
