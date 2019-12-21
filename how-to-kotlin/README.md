@@ -1,9 +1,9 @@
-# <span id="top">How to Kotlin code examples</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
+# <span id="top">*How to Kotlin* code examples</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> (9:30 am) at <a href="https://events.google.com/io2018/schedule/?section=may-10">Google I/O 2018</a>.<br/>
+  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10">Google I/O 2018</a>  (9:30 am).<br/>
   It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
   </tr>
@@ -22,9 +22,12 @@ In this document we present the following [Kotlin] code examples:
 - [07_conventions](07_conventions) - [Conventions](#conventions)
 - [08_DSLs](09_DSLs) - [LocalSealedCasts](#local_sealed_casts)
 
-We actually provide two ways to build/run our [Kotlin] code examples:
+We provide several ways to build/run our [Kotlin] code examples:
 - **`build.bat`**
-- [**`gradle.bat`**][gradle_cli] *(which executes* **`build.gradle`***)*
+- [**`gradle.bat`**][gradle_cli]&nbsp;&nbsp;*(**`build.gradle`**)*
+- [**`mvn.cmd`**][mvn_cli]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(**`pom.xml`**)*
+
+Batch command **`build.bat`** with no argument (or with subcommand **`help`**) displays the help message.
 
 <pre style="font-size:80%;">
 <b>&gt; build</b>
@@ -44,6 +47,19 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
     run         execute the generated program
 </pre>
 
+> **:mag_right:** Adding ption **`-debug`**  also prints the executed commands:
+>
+> <pre style="font-size:80%;">
+> <b>&gt; build -debug clean run</b>
+> <span style="background-color:#B0E0E6">[build]</span> _CLEAN=1 _COMPILE=1 _MAIN_CLASS=_01_bean.BeanKt _RUN=1 _VERBOSE=0
+> <span style="background-color:#B0E0E6">[build]</span> rmdir /s /q "O:\HOW-TO~1\01_bean\target"
+> <span style="background-color:#B0E0E6">[build]</span> ktlint.bat --reporter=plain --reporter=checkstyle,output=O:\HOW-TO~1\01_bean\target\ktlint-report.xml  "O:\how-to-kotlin\01_bean\src\main\kotlin\Bean.kt"
+> <span style="background-color:#B0E0E6">[build]</span> kotlinc.bat -d O:\HOW-TO~1\01_bean\target\classes  "O:\how-to-kotlin\01_bean\src\main\kotlin\Bean.kt"
+> <span style="background-color:#B0E0E6">[build]</span> kotlin.bat -cp O:\HOW-TO~1\01_bean\target\classes _01_bean.BeanKt
+> fist=Jane, last=Doe
+> <span style="background-color:#B0E0E6">[build]</span> _EXITCODE=0
+> </pre>
+
 ## <span id="bean">Bean</span>
 
 This example is about [data classes][kotlin_data_classes] whose main purpose is to hold data.
@@ -59,6 +75,13 @@ Command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`*
 
 <pre style="font-size:80%;">
 <b>&gt; gradle -q clean run</b>
+fist=Jane, last=Doe
+</pre>
+
+Command [**`mvn -q clean compile exec:java`**][mvn_cli] (build script [**`pom.xml`**](01_bean/pom.xml) prints the same result:
+
+<pre style="font-size:80%;">
+<b>&gt; mvn -q clean compile exec:java</b>
 fist=Jane, last=Doe
 </pre>
 
@@ -86,6 +109,20 @@ Windows 10 v10.0 (amd64)
 
 ## <span id="lambdas">Lambdas</span>
 
+This example is about [higher-order functions and lambdas][kotlin_lambdas] in [Kotlin].
+
+Command [**`build clean run`**](04_functional/build.bat) compiles source file [**`Lambdas.kt`**](04_functional/src/main/kotlin/Lambdas.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+a = 1, b = null, c = true
+k1 -> 1
+k2 -> 2
+k3 -> 3
+Yay!
+Luck!
+</pre>
+
 ## <span id="callbacks">CallbacksToCoroutines</span>
 
 ## <span id="threads">ThreadsVsCoroutines</span>
@@ -93,6 +130,18 @@ Windows 10 v10.0 (amd64)
 ## <span id="lazy_sequence">LazySequence</span>
 
 ## <span id="conventions">Conventions</span>
+
+This example is about [operator conventions][kotlin_conventions], an elegant way to overload operators in [Kotlin][kotlin].
+
+Command [**`build clean run`**](07_conventions/build.bat) compiles source file [**`Conventions.kt`**](07_conventions/src/main/kotlin/Conventions.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+date: Date(day=25, month=2, year=2018)
+day/month/year: 25/2/2018
+date belongs to Month(month=3, year=2018): false
+date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
+</pre>
 
 ## <span id="local_sealed_casts">LocalSealedCasts</span>
 
@@ -112,5 +161,8 @@ Windows 10 v10.0 (amd64)
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [kotlin]: https://kotlinlang.org/
+[kotlin_conventions]: https://kotlinlang.org/docs/reference/operator-overloading.html
 [kotlin_data_classes]: https://kotlinlang.org/docs/reference/data-classes.html
+[kotlin_lambdas]: https://kotlinlang.org/docs/reference/lambdas.html
 [kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/
+[mvn_cli]: http://maven.apache.org/ref/3.6.3/maven-embedder/cli.html

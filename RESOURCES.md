@@ -14,6 +14,8 @@
 - [Using Gradle Kotlin DSL with JUnit 5](https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/) by Juan Ara, August 7, 2019.
 - [Advanced Kotlin - Part 1 - Delegates](https://americanexpress.io/advanced-kotlin-delegates/) by Brent Watson, July 1, 2019.
 - [Stone Soup Programming](https://stonesoupprogramming.com/) - [Kotlin](https://stonesoupprogramming.com/category/kotlin/), 2019.
+- [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
+- [Mastering Kotlin Conventions: Part I](https://medium.com/insiden26/mastering-kotlin-conventions-plus-minus-compareto-inc-dec-times-div-part-i-1a34b20aaf4) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
 
 ## <span id="books">Books</span>
 

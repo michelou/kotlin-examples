@@ -26,7 +26,7 @@ Optionally one may also install the following software:
 - [Gradle 6.0][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*November 2019*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*December 2019*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
@@ -64,8 +64,8 @@ where
 - directory [**`bin\`**](bin/) contains several batch files.
 - file [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) is the batch script for generating the [Kotlin] software distribution on a Windows machine.
 - directory [**`docs\`**](docs/) contains [Kotlin] related papers/articles.
-- directory [**`examples\`**](examples/) contains [Kotlin] code examples (see [**`examples\README.md`**](examples/README.md)).
-- directory [**`how-to-kotlin\`**](how-to-kotlin/) contains [Kotlin] code examples (see [**`how-to-kotlin\README.md`**](how-to-kotlin/README.md)).
+- directory [**`examples\`**](examples/) contains [Kotlin] code examples (see document [**`examples\README.md`**](examples/README.md)).
+- directory [**`how-to-kotlin\`**](how-to-kotlin/) contains [Kotlin] code examples (see document [**`how-to-kotlin\README.md`**](how-to-kotlin/README.md)).
 - directory **`kotlin\`** contains a copy of the [JetBrains/kotlin][jetbrains_kotlin] repository as a [Github submodule](.gitmodules).
 - directory [**`learn-kotlin\`**](learn-kotlin/) contains [Kotlin] code examples (see [**`learn-kotlin\README.md`**](learn-kotlin/README.md)).
 - file [**`BUILD.md`**](BUILD.md) is the [Markdown][github_markdown] document presenting the generation of the [Kotlin] software.
@@ -123,7 +123,7 @@ Kotlin/Native is an LLVM backend (based on <a href="https://releases.llvm.org/8.
 <p style="margin:0 0 1em 20px;">
 No Windows distribution is available from the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> repository.
 </p>
-<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as <a href="http://www.lihaoyi.com/mill/index.html#windows">Mill assembly</a> distribution):
+<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as the <a href="http://www.lihaoyi.com/mill/index.html#windows">Mill assembly</a> distribution):
 </p>
 <ul style="margin:0 0 1em 20px;">
 <li>we create an installation directory <b><code>c:\opt\ktlint-0.36.0\</code></b>.</li>
@@ -171,7 +171,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/November 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/December 2019* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
