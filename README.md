@@ -26,7 +26,7 @@ Optionally one may also install the following software:
 - [Gradle 6.0][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*December 2019*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*January 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
@@ -171,7 +171,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/December 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -197,8 +197,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.36.0
 [linux_opt]: http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
-[maven_latest]: https://github.com/JetBrains/kotlin/releases/latest
-[maven_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.61
+[maven_latest]: http://maven.apache.org/download.cgi
+[maven_relnotes]: http://maven.apache.org/docs/3.6.3/release-notes.html
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/

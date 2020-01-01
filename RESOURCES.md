@@ -19,7 +19,10 @@
 
 ## <span id="books">Books</span>
 
-- [Kotlin Cookbook][book_kotlin_cookbook] by Ken Kousen, O'Reilly, November 2019 (ISBN: 9781492046660).
+- [Kotlin Cookbook][book_kotlin_cookbook] by Ken Kousen,<br/>O'Reilly, November 2019 <span style="font-size:80%;">(ISBN: 978-1-49204-666-0)</span>.
+- [Learn Kotlin Programming][book_kotlin_programming] by Stephen Samuel and Stefan Bocutiu, <br/>Packt Publishing, May 2019 <span style="font-size:80%;">(ISBN: 978-1-78980-235-1)</span>.
+- [The Joy of Kotlin][book_joy_kotlin] by Pierre-Yves Saumont,<br/>Manning Publications, 2018 <span style="font-size:80%;">(ISBN: 978-1-61729-536-2)</span>.
+- [Functional Kotlin](book_functional_kotlin) by Mario Arias and Rivu Chakraborty,<br/>Packt Publishing, February 2018 <span style="font-size:80%;">(ISBN: 978-1-78847-648-5)</span>.
 
 ## <span id="tools">Tools</span>
 
@@ -33,9 +36,12 @@
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/December 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
+[book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
+[book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
 [book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/
+[book_kotlin_programming]: https://www.packtpub.com/application-development/learn-kotlin-programming-second-edition

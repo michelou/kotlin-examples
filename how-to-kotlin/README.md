@@ -156,7 +156,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/December 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
