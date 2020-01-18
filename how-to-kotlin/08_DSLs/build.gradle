@@ -7,14 +7,14 @@ plugins {
 group "$appGroup"
 version "$appVersion"
 
-description = """Kotlin/JVM code example"""
+description """Kotlin/JVM code example"""
 
 sourceSets {
     // Default: srcDirs "src/main/kotlin"
 	main.kotlin.srcDirs "src/main/kotlin"
 }
 // Default: buildDir = "build"
-buildDir = "target"
+buildDir "target"
 
 ext {
     ktLintOpts = [
@@ -67,5 +67,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    // testCompile "junit:junit:4.12"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    api "junit:junit:$junitVersion"
+    testImplementation "junit:junit:$junitVersion"
 }

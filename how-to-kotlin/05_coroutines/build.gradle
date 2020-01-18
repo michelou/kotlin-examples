@@ -14,7 +14,7 @@ sourceSets {
 	main.kotlin.srcDirs "src/main/kotlin"
 }
 // Default: buildDir = "build"
-buildDir = "target"
+buildDir "target"
 
 ext {
     ktLintOpts = [

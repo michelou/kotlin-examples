@@ -31,7 +31,7 @@ For instance our development environment looks as follows (*January 2020*) <sup 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\Git-2.24.1\                     <i>(277 MB)</i>
-C:\opt\gradle-6.0.1\                   <i>(103 MB)</i>
+C:\opt\gradle-6.1\                     <i>(105 MB)</i>
 C:\opt\kotlinc-1.3.61\                 <i>( 56 MB)</i>
 C:\opt\kotlin-native-windows-1.3.61\   <i>(378 MB)</i>
 C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
@@ -91,11 +91,11 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; setenv -verbose</b>
    Tool versions:
-      gradle 6.0.1, java 1.8.0_232,
+      gradle 6.1, java 1.8.0_232,
       kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.36.0
       mvn 3.6.3, git 2.24.1.windows.2, diff 3.7
    Tool paths:
-      C:\opt\gradle-6.0.1\bin\gradle.bat
+      C:\opt\gradle-6.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_232-b09\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
       C:\opt\kotlinc-1.3.61\bin\kotlinc.bat
@@ -163,7 +163,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
-<a href="https://gradle.org/releases/">gradle-6.0.1-bin.zip</a>                 <i>( 90 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.1-bin.zip</a>                   <i>( 93 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-compiler-1.3.61.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-native-windows-1.3.61.zip</a>     <i>(125 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.24.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>

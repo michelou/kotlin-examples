@@ -26,7 +26,6 @@ if %_HELP%==1 (
     call :help
     exit /b !_EXITCODE!
 )
-
 set _GRADLE_PATH=
 set _JAVA_PATH=
 set _KOTLIN_PATH=

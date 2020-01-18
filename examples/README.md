@@ -233,6 +233,10 @@ BUILD SUCCESSFUL in 3s
 Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
+<b>&gt; kotlinc-native -version</b>
+info: kotlinc-native 1.3.60 (JRE 1.8.0_232-b09)
+Kotlin/Native: 1.3.61
+&nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
 mingw_x64:                    (default) mingw
 mingw_x86:
@@ -302,7 +306,7 @@ Hello World!
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/November 2019* [**&#9650;**](#top)
+*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
