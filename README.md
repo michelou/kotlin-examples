@@ -16,21 +16,21 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.24][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.25][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.3][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin Native 1.3][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> ([*release notes*][kotlin_native_relnotes])
 
 Optionally one may also install the following software:
 
 - [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
-- [Gradle 6.0][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 6.1][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
 For instance our development environment looks as follows (*January 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\Git-2.24.1\                     <i>(277 MB)</i>
+C:\opt\Git-2.25.0\                     <i>(268 MB)</i>
 C:\opt\gradle-6.1\                     <i>(105 MB)</i>
 C:\opt\kotlinc-1.3.61\                 <i>( 56 MB)</i>
 C:\opt\kotlin-native-windows-1.3.61\   <i>(378 MB)</i>
@@ -93,7 +93,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       gradle 6.1, java 1.8.0_232,
       kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.36.0
-      mvn 3.6.3, git 2.24.1.windows.2, diff 3.7
+      mvn 3.6.3, git 2.25.0.windows.2, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\gradle-6.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_232-b09\bin\java.exe
@@ -103,9 +103,9 @@ We distinguish different sets of batch commands:
       C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc-native.bat
       C:\opt\ktlint-0.36.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.24.1\bin\git.exe
-      C:\opt\Git-2.24.1\mingw64\bin\git.exe
-      C:\opt\Git-2.24.1\usr\bin\diff.exe
+      C:\opt\Git-2.25.0\bin\git.exe
+      C:\opt\Git-2.25.0\mingw64\bin\git.exe
+      C:\opt\Git-2.25.0\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -166,7 +166,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-6.1-bin.zip</a>                   <i>( 93 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-compiler-1.3.61.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-native-windows-1.3.61.zip</a>     <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.24.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.25.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
@@ -179,13 +179,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.24.1.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.25.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/6.0.1/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/6.1/release-notes.html
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.61

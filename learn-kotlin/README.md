@@ -31,7 +31,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Valid names are: All (default), Boolean, Byte, Char, Double, Float, Int, Long, Short
 </pre>
 
-For instance, command **`build clean run`** executes all examples while command **`build clean run:Double`** executes *only* example [DoubleExample.kt](Unit_4/src/main/kotlin/DoubleExample.kt):
+For instance, command **`build clean run`** executes all examples while command **`build clean run:Double`** executes *only* example [**`DoubleExample.kt`**](Unit_4/src/main/kotlin/DoubleExample.kt):
 
 <pre style="font-size:80%;">
 <b>&gt; build clean run:Double</b>
@@ -45,8 +45,8 @@ The value of double(-Double.MAX_VALUE) is: -1.7976931348623157E308
 ## [Unit 5][unit_5]
 
 This tutorial part presents Kotling binary operators and basic functions
-- either in source file [src\main\kotlin\Examples.kt](Unit_5/src/main/kotlin/Examples.kt)
-- or in script file [src\Examples.kts](Unit_5/src/Examples.kts)
+- either in source file [**`Examples.kt`**](Unit_5/src/main/kotlin/Examples.kt)
+- or in script file [**`Examples.kts`**](Unit_5/src/Examples.kts)
 
 <pre style="font-size:80%;">
 <b>&gt; build</b>
@@ -67,7 +67,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Valid names are: all (default), examples
 </pre>
 
-For instance, command **`build -script -verbose run`** executes the script file [src\Examples.kts](Unit_5/src/Examples.kts) instead of the source file [src\main\kotlin\Examples.kt](Unit_5/src/main/kotlin/Examples.kt):
+For instance, command **`build -script -verbose run`** executes the script file [`Examples.kts`](Unit_5/src/Examples.kts) instead of the source file [`Examples.kt`](Unit_5/src/main/kotlin/Examples.kt):
 
 <pre>
 <b>&gt; build -script -verbose run</b>
@@ -77,7 +77,7 @@ byte10 = 10
 
 ## [Unit 6][unit_6]
 
-This tutorial part introduces Kotlin classes, i.e. class [Person](src/main/kotlin/example1/Person.kt).
+This tutorial part introduces Kotlin classes, i.e. class [**`Person.kt`**](Unit_6/src/main/kotlin/example1/Person.kt).
 
 <pre style="font-size:80%;">
 <b>&gt; build</b>
@@ -99,7 +99,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 ## [Unit 7][unit_7]
 
-This tutorial part presents more advanced Kotlin features, such as default arguments, function types, names arguments and nullable variables.
+This tutorial part presents more advanced Kotlin features, such as default arguments, function types, names arguments and nullable variables i.e. [**`Default.kt`**](Unit_7/src/main/kotlin/defaultargs), [**`FunctionTypes.kt`**](Unit_7/src/main/kotlin/functiontypes), [**`Named.kt`**](Unit_7/src/main/kotlin/namedargs) and [**`Nullable.kt`**](Unit_7/src/main/kotlin/nullable).
 
 <pre style="font-size:80%;">
 <b>&gt; build</b>

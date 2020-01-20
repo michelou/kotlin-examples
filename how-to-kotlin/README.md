@@ -105,7 +105,30 @@ Windows 10 v10.0 (amd64)
 
 ## <span id="functions">Functions</span>
 
+This example is about [extension functions][kotlin_extensions].
+
+Command **`build clean run`** compiles source file [**`Functions.kt`**](03_functions/src/main/kotlin/Functions.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+Jane
+Jane
+Jane
+</pre>
+
 ## <span id="expressions">Expressions</span>
+
+This example 
+Command **`build clean run`** compiles source files [**`Expressions.kt`**](04_expressions/src/main/kotlin/Expressions.kt) and executes the generated Java class files.
+
+<pre style="font-size:80%;">
+<b>&gt; build clean run</b>
+a = 1, b = null, c = true
+k1 -> 1
+k2 -> 2
+k3 -> 3
+Not this time
+</pre>
 
 ## <span id="lambdas">Lambdas</span>
 
@@ -163,6 +186,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 [kotlin]: https://kotlinlang.org/
 [kotlin_conventions]: https://kotlinlang.org/docs/reference/operator-overloading.html
 [kotlin_data_classes]: https://kotlinlang.org/docs/reference/data-classes.html
+[kotlin_extensions]: https://kotlinlang.org/docs/tutorials/kotlin-for-py/extension-functionsproperties.html
 [kotlin_lambdas]: https://kotlinlang.org/docs/reference/lambdas.html
 [kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/
 [mvn_cli]: http://maven.apache.org/ref/3.6.3/maven-embedder/cli.html
