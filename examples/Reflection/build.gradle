@@ -7,68 +7,16 @@ plugins {
 group "$appGroup"
 version "$appVersion"
 
-description """Kotlin/JVM code example"""
+description """Kotlin/JVM example project"""
 
-sourceSets {
-    // Default: srcDirs "src/main/kotlin"
-	main.kotlin.srcDirs "src/main/kotlin"
-}
-// Default: buildDir = "build"
-buildDir "target"
+apply from: "../common.gradle"
 
-ext {
-    ktLintOpts = [
-        "--reporter=plain",
-        "--reporter=checkstyle,output=$buildDir\\ktlint-report.xml"
-    ]
-}
-
-task lint(type: JavaExec) {
-    description "Analyze Kotlin source files with KtLint"
-    main "-jar"
-    args files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
-}
-
-checkstyle {
-    maxErrors = 10
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-compileKotlin {
-    // dependsOn lint
-
-    kotlinOptions {
-        // Tool options
-        // suppressWarnings = true
-        // verbose = false
-        // Common options
-        apiVersion = "1.3"
-        languageVersion = "1.3"
-        // JVM options
-        jvmTarget = "1.8"
-    }
-}
-
-task run(type: JavaExec) {
-    dependsOn compileKotlin
-    description "Execute Kotlin main class $kotlinMainClassName"
-    classpath sourceSets.main.runtimeClasspath
+run.doFirst {
     main kotlinMainClassName
     args ""
 }
 
-repositories {
-    mavenCentral()
-}
-
+// see common dependencies defined in ../common.gradle
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-    api "junit:junit:$junitVersion"
-    testImplementation "junit:junit:$junitVersion"
 }
