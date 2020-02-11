@@ -141,7 +141,7 @@ if defined __GRADLE_CMD (
     )
 )
 if not exist "%_GRADLE_HOME%\bin\gradle.bat" (
-    echo %_ERROR_LABEL% Executable gradle.bat not found ^(%_JAVA_HOME%^) 1>&2
+    echo %_ERROR_LABEL% Executable gradle.bat not found ^(%_GRADLE_HOME%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
