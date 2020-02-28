@@ -69,7 +69,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 For instance, command **`build -script -verbose run`** executes the script file [`Examples.kts`](Unit_5/src/Examples.kts) instead of the source file [`Examples.kt`](Unit_5/src/main/kotlin/Examples.kt):
 
-<pre>
+<pre style="font-size:80%;">
 <b>&gt; build -script -verbose run</b>
 Execute Kotlin script file "src\Examples.kts"
 byte10 = 10
@@ -138,7 +138,7 @@ Tutorial by Steven Perry:
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

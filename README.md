@@ -23,15 +23,15 @@ This project depends on the following external software for the **Microsoft Wind
 Optionally one may also install the following software:
 
 - [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
-- [Gradle 6.1][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 6.2][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*January 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*February 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\Git-2.25.0\                     <i>(268 MB)</i>
-C:\opt\gradle-6.1.1\                   <i>(105 MB)</i>
+C:\opt\Git-2.25.1\                     <i>(268 MB)</i>
+C:\opt\gradle-6.2.1\                   <i>(105 MB)</i>
 C:\opt\kotlinc-1.3.61\                 <i>( 56 MB)</i>
 C:\opt\kotlin-native-windows-1.3.61\   <i>(378 MB)</i>
 C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
@@ -91,11 +91,11 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; setenv -verbose</b>
    Tool versions:
-      gradle 6.1.1, java 1.8.0_242,
+      gradle 6.2.1, java 1.8.0_242,
       kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.36.0
-      mvn 3.6.3, git 2.25.0.windows.2, diff 3.7, bash 4.4.23(1)-release
+      mvn 3.6.3, git 2.25.1.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\gradle-6.1.1\bin\gradle.bat
+      C:\opt\gradle-6.2.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_242-b08\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
       C:\opt\kotlinc-1.3.61\bin\kotlinc.bat
@@ -103,9 +103,9 @@ We distinguish different sets of batch commands:
       C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc-native.bat
       C:\opt\ktlint-0.36.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.25.0\bin\git.exe
-      C:\opt\Git-2.25.0\mingw64\bin\git.exe
-      C:\opt\Git-2.25.0\usr\bin\diff.exe
+      C:\opt\Git-2.25.1\bin\git.exe
+      C:\opt\Git-2.25.1\mingw64\bin\git.exe
+      C:\opt\Git-2.25.1\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -163,15 +163,15 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
-<a href="https://gradle.org/releases/">gradle-6.1.1-bin.zip</a>                 <i>( 93 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.2.1-bin.zip</a>                 <i>( 93 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-compiler-1.3.61.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-native-windows-1.3.61.zip</a>     <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.25.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.25.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -179,13 +179,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.25.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.25.1.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/6.1.1/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/6.2.1/release-notes.html
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.61
@@ -195,10 +195,10 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
 [ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.36.0
-[linux_opt]: http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
+[linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
-[maven_latest]: http://maven.apache.org/download.cgi
-[maven_relnotes]: http://maven.apache.org/docs/3.6.3/release-notes.html
+[maven_latest]: https://maven.apache.org/download.cgi
+[maven_relnotes]: https://maven.apache.org/docs/3.6.3/release-notes.html
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/

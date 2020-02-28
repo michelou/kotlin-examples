@@ -23,20 +23,22 @@
 - [Learn Kotlin Programming][book_kotlin_programming] by Stephen Samuel and Stefan Bocutiu, <br/>Packt Publishing, May 2019 <span style="font-size:80%;">(ISBN: 978-1-78980-235-1)</span>.
 - [The Joy of Kotlin][book_joy_kotlin] by Pierre-Yves Saumont,<br/>Manning Publications, 2018 <span style="font-size:80%;">(ISBN: 978-1-61729-536-2)</span>.
 - [Functional Kotlin](book_functional_kotlin) by Mario Arias and Rivu Chakraborty,<br/>Packt Publishing, February 2018 <span style="font-size:80%;">(ISBN: 978-1-78847-648-5)</span>.
+- [Kotlin in Action][book_kotlin_in_action] by Dmitry Jemerov and Svetlana Isakova,<br/>Manning Publications, 2017 <span style="font-size:80%;">(ISBN: 978-1-61729-329-0)</span>.
+- [Programming Koltin][book_programming_kotlin] by Stephen Samuel and Sefan Bocutiu,<br/>Packt Publishing, January 2017 <span style="font-size:80%;">(ISBN: 978-1-78712-636-7)</span>.
 
 ## <span id="tools">Tools</span>
 
-- [The Gradle build system- Tutorial](https://www.vogella.com/tutorials/Gradle/article.html) by Lars Vobel and Simon Scholh, June 2018.
+- [The Gradle build system- Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span>
 
 - [GeeksforGeeks](https://www.geeksforgeeks.org/) - [Kotling Programming Language](https://www.geeksforgeeks.org/kotlin-programming-language/).
-- [JournalDev](https://www.journaldev.com/) - [Kotlin](https://www.journaldev.com/kotlin)
+- [JournalDev](https://www.journaldev.com/) - [Kotlin][tuto_journaldev]
 - [ZetCode](http://zetcode.com/) - [Kotlin tutorial](http://zetcode.com/all/#kotlin) by Jan Bodnar, 2019.
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -44,4 +46,8 @@
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
 [book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/
+[book_kotlin_in_action]: https://www.manning.com/books/kotlin-in-action
 [book_kotlin_programming]: https://www.packtpub.com/application-development/learn-kotlin-programming-second-edition
+[book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
+[tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
+[tuto_journaldev]: https://www.journaldev.com/kotlin

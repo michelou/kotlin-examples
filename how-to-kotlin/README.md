@@ -179,7 +179,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ***
 
-*[mics](http://lampwww.epfl.ch/~michelou/)/January 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
@@ -189,4 +189,4 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 [kotlin_extensions]: https://kotlinlang.org/docs/tutorials/kotlin-for-py/extension-functionsproperties.html
 [kotlin_lambdas]: https://kotlinlang.org/docs/reference/lambdas.html
 [kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/
-[mvn_cli]: http://maven.apache.org/ref/3.6.3/maven-embedder/cli.html
+[mvn_cli]: https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html

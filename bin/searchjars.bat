@@ -26,6 +26,9 @@ rem ## Main
 call :search "%KOTLIN_HOME%\lib" 1
 if not %_EXITCODE%==0 goto end
 
+call :search "%_ROOT_DIR%\kotlin-examples\kotlin-cookbook\lib" 1
+if not %_EXITCODE%==0 goto end
+
 goto end
 
 rem ##########################################################################
@@ -134,12 +137,12 @@ for /f %%i in ('dir %__DIR_OPTS% "%__LIB_DIR%\*.jar" 2^>NUL') do (
         for %%x in (%%f) do set __LAST=%%x
         if defined _METH_NAME (
             set __CLASS_NAME=!__LAST:~0,-6!
-		    if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_JAVAP_CMD% -cp "!__JAR_FILE!" "!__CLASS_NAME:/=.!" ^| findstr "%_METH_NAME%" 1>&2
+            if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_JAVAP_CMD% -cp "!__JAR_FILE!" "!__CLASS_NAME:/=.!" ^| findstr "%_METH_NAME%" 1>&2
             ) else if %_VERBOSE%==1 ( echo Search for method %_METH_NAME% in class !__CLASS_NAME:/=.! 1>&2
             )
             for /f "delims=" %%y in ('%_JAVAP_CMD% -cp "!__JAR_FILE!" "!__CLASS_NAME:/=.!" ^| findstr "%_METH_NAME%"') do (
                 echo   !_JAR_FILENAME!:!__LAST!
-				echo   %%y
+                echo   %%y
             )
         ) else (
             echo   !_JAR_FILENAME!:!__LAST!
