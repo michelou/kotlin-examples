@@ -9,8 +9,7 @@
   </tr>
 </table>
 
-[Dotty][dotty_examples], [GraalSqueak][graalsqueak_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples] and [LLVM][llvm_examples] are other topics we are currently investigating.
-
+[Dotty][dotty_examples], [GraalSqueak][graalsqueak_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples] and [Node.js][nodejs_examples] are other topics we are currently investigating.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -72,12 +71,12 @@ where
 - file [**`README.md`**](README.md) is the Markdown document for this page.
 - file [**`setenv.bat`**](setenv.bat) is the batch script for setting up our environment.
 
-We also define a virtual drive **`O:`** in our working environment in order to reduce/hide the real path of our project directory (see article ["Windows command prompt limitation"][windows_limitation] from Microsoft Support).
+We also define a virtual drive **`K:`** in our working environment in order to reduce/hide the real path of our project directory (see article ["Windows command prompt limitation"][windows_limitation] from Microsoft Support).
 
 > **:mag_right:** We use the Windows external command [**`subst`**][windows_subst] to create virtual drives; for instance:
 >
 > <pre style="font-size:80%;">
-> <b>&gt; subst O: %USERPROFILE%\workspace\kotlin-examples</b>
+> <b>&gt; subst K: %USERPROFILE%\workspace\kotlin-examples</b>
 > </pre>
 
 In the next section we give a brief description of the batch files present in this project.
@@ -200,6 +199,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
 [maven_relnotes]: https://maven.apache.org/docs/3.6.3/release-notes.html
+[nodejs_examples]: https://github.com/michelou/nodejs-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/
