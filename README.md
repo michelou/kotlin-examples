@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Dotty][dotty_examples], [GraalSqueak][graalsqueak_examples], [GraalVM][graalvm_examples] and [LLVM][llvm_examples] are other topics we are currently investigating.
+[Dotty][dotty_examples], [GraalSqueak][graalsqueak_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples] and [LLVM][llvm_examples] are other topics we are currently investigating.
 
 
 ## <span id="proj_deps">Project dependencies</span>
@@ -186,6 +186,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
 [gradle_relnotes]: https://docs.gradle.org/6.2.1/release-notes.html
+[haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.61

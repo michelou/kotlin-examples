@@ -28,8 +28,8 @@ In this document we present the following [Kotlin] code examples:
 
 We provide 4 different ways to build/run the code examples:
 - **`build.bat`** is the old-fashioned batch file.
-- **`build.gradle`** is the Gradle build script written in Groovy DSL.
-- **`build.gradle.kts`** is the Gradle build script written in Kotlin DSL.
+- **`build.gradle`** is the Gradle build script written in [Groovy DSL][groovy_dsl].
+- **`build.gradle.kts`** is the Gradle build script written in [Kotlin DSL][kotlin_dsl].
 - **`pom.xml`** is the Maven build script written in XML.
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
@@ -71,7 +71,7 @@ Hello World!
 
 > **:mag_right:** We observe the naming convention for generated class files: **`HelloWorldKt.class`** is generated for source file **`HelloWorld.kt`**.
 
-Command **`build -native clean run`** generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>:
+Command [**`build -native clean run`**](HelloWorld/build.bat) generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>:
 
 <pre style="font-size:80%;">
 <b>&gt; $ build -native clean run</b>
@@ -82,7 +82,7 @@ Hello World!
     ktlint-report.xml
 </pre>
 
-> **:mag_right:** The [**`pelook`**](http://bytepointer.com/tools/index.htm#pelook) utility can help us getting more information about the native executable:
+> **:mag_right:** The [**`pelook`**][bytepointer_pelook] utility can help us getting more information about the native executable:
 > <pre style="font-size:80%;">
 > <b>&gt; pelook.exe -h target\HelloWorld.exe | head -7</b>
 > loaded "target\HelloWorld.exe" / 478599 (0x74D87) bytes
@@ -234,7 +234,7 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; kotlinc-native -version</b>
-info: kotlinc-native 1.3.60 (JRE 1.8.0_232-b09)
+info: kotlinc-native 1.3.60 (JRE 1.8.0_242-b08)
 Kotlin/Native: 1.3.61
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
@@ -311,10 +311,13 @@ Hello World!
 
 <!-- link refs -->
 
+[bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
+[groovy_dsl]: https://docs.gradle.org/current/dsl/index.html
 [java_kotlin]: https://kotlinlang.org/docs/reference/java-interop.html#calling-java-code-from-kotlin
 [kotlin]: https://kotlinlang.org/
+[kotlin_dsl]: https://docs.gradle.org/current/userguide/kotlin_dsl.html
 [kotlin_java]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#calling-kotlin-from-java
 [kotlin_js]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjs-compiler-options
 [kotlin_jvm]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjvm-compiler-options
