@@ -56,11 +56,9 @@ set _ERROR_LABEL=[91mError[0m:
 set _WARNING_LABEL=[93mWarning[0m:
 
 set _SOURCE_DIR=%_ROOT_DIR%src
+set _KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin
 set _TARGET_DIR=%_ROOT_DIR%target
 set _CLASSES_DIR=%_TARGET_DIR%\classes
-
-set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
 
 rem derives package name from project directory name
 set __PKG_NAME=
@@ -183,16 +181,23 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :compile_jvm
-set __KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin
-set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%__KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
-
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
+set __ARG_FILE=%_TARGET_DIR%\kt_files.txt
+if exist "%__ARG_FILE%" del "%__ARG_FILE%" 1>NUL
+set __N=0
+for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
+    echo %%f >> "%__ARG_FILE%"
+    set /a __N+=1
+)
+if %__N%==0 (
+    echo %_WARNING_LABEL% No source file found 1>&2
+    goto :eof
+)
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
+call %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

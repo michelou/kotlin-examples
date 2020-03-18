@@ -191,18 +191,23 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :compile
-set __SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%\%_EXAMPLE%" *.kt 2^>NUL') do set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-if not defined __SOURCE_FILES (
+if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
+
+set __ARG_FILE=%_TARGET_DIR%\kt_files.txt
+if exist "%__ARG_FILE%" del "%__ARG_FILE%" 1>NUL
+set __N=0
+for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
+    echo %%f >> "%__ARG_FILE%"
+    set /a __N+=1
+)
+if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
-if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
-
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %__SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% %__SOURCE_FILES%
+call %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
