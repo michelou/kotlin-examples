@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.25][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.26][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.3][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin Native 1.3][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -29,10 +29,10 @@ For instance our development environment looks as follows (*March 2020*) <sup id
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\Git-2.25.1\                     <i>(268 MB)</i>
+C:\opt\Git-2.26.0\                     <i>(268 MB)</i>
 C:\opt\gradle-6.2.2\                   <i>(105 MB)</i>
-C:\opt\kotlinc-1.3.61\                 <i>( 56 MB)</i>
-C:\opt\kotlin-native-windows-1.3.61\   <i>(378 MB)</i>
+C:\opt\kotlinc-1.3.71\                 <i>( 58 MB)</i>
+C:\opt\kotlin-native-windows-1.3.71\   <i>(378 MB)</i>
 C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
 </pre>
 <!--
@@ -91,20 +91,20 @@ We distinguish different sets of batch commands:
    <b>&gt; setenv -verbose</b>
    Tool versions:
       gradle 6.2.2, java 1.8.0_242,
-      kotlinc 1.3.61, kotlinc-native 1.3.61, ktlint 0.36.0
-      mvn 3.6.3, git 2.25.1.windows.1, diff 3.7, bash 4.4.23(1)-release
+      kotlinc 1.3.71, kotlinc-native 1.3.71, ktlint 0.36.0
+      mvn 3.6.3, git 2.26.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\gradle-6.2.2\bin\gradle.bat
       C:\opt\jdk-1.8.0_242-b08\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
-      C:\opt\kotlinc-1.3.61\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-1.3.61\bin\kotlinc-native.bat
+      C:\opt\kotlinc-1.3.71\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-1.3.71\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-1.3.71\bin\kotlinc-native.bat
       C:\opt\ktlint-0.36.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.25.1\bin\git.exe
-      C:\opt\Git-2.25.1\mingw64\bin\git.exe
-      C:\opt\Git-2.25.1\usr\bin\diff.exe
+      C:\opt\Git-2.26.0\bin\git.exe
+      C:\opt\Git-2.26.0\mingw64\bin\git.exe
+      C:\opt\Git-2.26.0\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -114,7 +114,7 @@ We distinguish different sets of batch commands:
 <a name="footnote_01">[1]</a> ***Kotlin Native*** [↩](#anchor_01)
 
 <p style="margin:0 0 1em 20px;">
-Kotlin/Native is an LLVM backend (based on <a href="https://releases.llvm.org/8.0.0/docs/ReleaseNotes.html">LLVM 8.0</a> since version <a hef="https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019">1.3.61</a>) for the Kotlin compiler, runtime implementation, and native code generation facility using the LLVM toolchain.
+Kotlin/Native is an LLVM backend (based on <a href="https://releases.llvm.org/8.0.0/docs/ReleaseNotes.html">LLVM 8.0</a> since version <a hef="https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019">1.3.60</a>) for the Kotlin compiler, runtime implementation, and native code generation facility using the LLVM toolchain.
 </p>
 
 <a name="footnote_02">[2]</a> ***KtLint on Windows*** [↩](#anchor_02)
@@ -163,9 +163,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
 <a href="https://gradle.org/releases/">gradle-6.2.2-bin.zip</a>                 <i>( 93 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-compiler-1.3.61.zip</a>           <i>( 50 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.61">kotlin-native-windows-1.3.61.zip</a>     <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.25.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.71">kotlin-compiler-1.3.71.zip</a>           <i>( 50 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.71">kotlin-native-windows-1.3.71.zip</a>     <i>(125 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.26.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
@@ -178,7 +178,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.25.1.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.26.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
@@ -188,9 +188,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
-[kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.61
+[kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.71
 [kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.61
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.3.71
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
