@@ -22,15 +22,15 @@ This project depends on the following external software for the **Microsoft Wind
 Optionally one may also install the following software:
 
 - [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
-- [Gradle 6.2][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 6.3][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*March 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*April 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\Git-2.26.0\                     <i>(268 MB)</i>
-C:\opt\gradle-6.2.2\                   <i>(105 MB)</i>
+C:\opt\gradle-6.3\                     <i>(109 MB)</i>
 C:\opt\kotlinc-1.3.71\                 <i>( 58 MB)</i>
 C:\opt\kotlin-native-windows-1.3.71\   <i>(378 MB)</i>
 C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
@@ -48,6 +48,7 @@ This project is organized as follows:
 <pre style="font-size:80%;">
 bin\
 bin\kotlin\build.bat
+concurrency-in-kotlin\
 docs\
 examples\
 how-to-kotlin\
@@ -62,9 +63,10 @@ where
 
 - directory [**`bin\`**](bin/) contains several batch files.
 - file [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) is the batch script for generating the [Kotlin] software distribution on a Windows machine.
+- directory [**`concurrency-in-kotlin\`**](concurrency-in-kotlin/) contains [Kotlin] code examples (see [**`concurrency-in-kotlin\README.md`**](concurrency-in-kotlin/README.md))
 - directory [**`docs\`**](docs/) contains [Kotlin] related papers/articles.
 - directory [**`examples\`**](examples/) contains [Kotlin] code examples (see document [**`examples\README.md`**](examples/README.md)).
-- directory [**`how-to-kotlin\`**](how-to-kotlin/) contains [Kotlin] code examples (see document [**`how-to-kotlin\README.md`**](how-to-kotlin/README.md)).
+- directory [**`how-to-kotlin\`**](how-to-kotlin/) contains [Kotlin] code examples (see [**`how-to-kotlin\README.md`**](how-to-kotlin/README.md)).
 - directory **`kotlin\`** contains a copy of the [JetBrains/kotlin][jetbrains_kotlin] repository as a [Github submodule](.gitmodules).
 - directory [**`learn-kotlin\`**](learn-kotlin/) contains [Kotlin] code examples (see [**`learn-kotlin\README.md`**](learn-kotlin/README.md)).
 - file [**`BUILD.md`**](BUILD.md) is the [Markdown][github_markdown] document presenting the generation of the [Kotlin] software.
@@ -90,11 +92,11 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; setenv -verbose</b>
    Tool versions:
-      gradle 6.2.2, java 1.8.0_242,
+      gradle 6.3, java 1.8.0_242,
       kotlinc 1.3.71, kotlinc-native 1.3.71, ktlint 0.36.0
       mvn 3.6.3, git 2.26.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\gradle-6.2.2\bin\gradle.bat
+      C:\opt\gradle-6.3\bin\gradle.bat
       C:\opt\jdk-1.8.0_242-b08\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
       C:\opt\kotlinc-1.3.71\bin\kotlinc.bat
@@ -162,7 +164,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
-<a href="https://gradle.org/releases/">gradle-6.2.2-bin.zip</a>                 <i>( 93 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.3-bin.zip</a>                   <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.71">kotlin-compiler-1.3.71.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.71">kotlin-native-windows-1.3.71.zip</a>     <i>(125 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.26.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
@@ -170,7 +172,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -184,7 +186,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/6.2.2/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/6.3/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/

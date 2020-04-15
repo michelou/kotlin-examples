@@ -47,7 +47,7 @@ rem ##########################################################################
 rem ## Subroutine
 
 rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
-rem                    _SOURCE_FILES, MAIN_CLASS, _EXE_FILE
+rem                    _SOURCE_FILES, _MAIN_CLASS, _EXE_FILE
 :env
 rem ANSI colors in standard Windows 10 shell
 rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -60,25 +60,34 @@ set _TARGET_DIR=%_ROOT_DIR%target
 set _CLASSES_DIR=%_TARGET_DIR%\classes
 
 set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
-
-set _PKG_NAME=org.example.main
-
-set _MAIN_NAME=HelloWorld
-set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
+for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+    set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
+)
+rem derives package name from project directory name
+set __PKG_NAME=
+for %%d in ("%~dp0") do (
+   set __DIR=%%~d
+   if "!__DIR:~-1!"=="\" set __DIR=!__DIR:~0,-1!
+   for %%f in ("!__DIR!") do set __PKG_NAME=%%~nf.
+)
+set _MAIN_NAME=Main
+set _MAIN_CLASS=%__PKG_NAME%%_MAIN_NAME%Kt
 set _EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe
 
 set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
+set _KOTLIN_CPATH=
+for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do set "_KOTLIN_CPATH=!_KOTLIN_CPATH!%%f;"
+
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d %_CLASSES_DIR%
+set _KOTLINC_OPTS=-kotlin-home %KOTLIN_HOME% -cp "%_KOTLIN_CPATH%" -d %_CLASSES_DIR%
 
 set _KOTLIN_CMD=kotlin.bat
-set _KOTLIN_OPTS=-cp %_CLASSES_DIR%
+set _KOTLIN_OPTS=-cp %_KOTLIN_CPATH%%_CLASSES_DIR%
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%" -e "%_PKG_NAME%.main"
+set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%" -e "%__PKG_NAME%main"
 goto :eof
 
 rem input parameter: %*
@@ -128,7 +137,7 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _MAIN_CLASS=%_MAIN_CLASS% _RUN=%_RUN% _VERBOSE=%_VERBOSE% 1>&2
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
@@ -145,14 +154,14 @@ echo   Subcommands:
 echo     clean       delete generated files
 echo     compile     generate class files
 echo     help        display this help message
-echo     lint        analyze Kotlin source files with KtLint
+echo     lint        analyze KtLint source files and flag programming/stylistic errors
 echo     run         execute the generated program
 goto :eof
 
 :clean
 if not exist "%_TARGET_DIR%\" goto :eof
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%_TARGET_DIR%" 1>&2
-) else if %_VERBOSE%==1 ( echo Remove directory %_TARGET_DIR% 1>&2
+) else if %_VERBOSE%==1 ( echo Remove directory !_TARGET_DIR:%_ROOT_DIR%=! 1>&2
 )
 rmdir /s /q "%_TARGET_DIR%"
 if not %ERRORLEVEL%==0 (
@@ -162,11 +171,15 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :lint
-rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
+set /a _PLAIN=_VERBOSE+_DEBUG
+if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
+) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
 )
-call %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES%
+rem prepend ! to negate the pattern in order to check only certain locations 
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES% 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
+)
+call %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -174,10 +187,14 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :compile_jvm
+set __KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin
+set _SOURCE_FILES=
+for /f "delims=" %%f in ('where /r "%__KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
+
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2
+) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
 call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
@@ -187,8 +204,6 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :compile_native
-if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
-
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% %_KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
@@ -200,9 +215,9 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :run_jvm
-set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class"
+set __MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class
 if not exist "%__MAIN_CLASS_FILE%" (
-    echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
+    echo %_ERROR_LABEL% Main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -211,6 +226,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS% 
 )
 call %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
+   echo %_ERROR_LABEL% Execution failure ^(%_MAIN_CLASS%^) 1>&2
    set _EXITCODE=1
    goto :eof
 )
@@ -218,14 +234,13 @@ goto :eof
 
 :run_native
 if not exist "%_EXE_FILE%" (
-    echo %_ERROR_LABEL% Kotlin executable file not found ^(!_EXE_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
 	goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_EXE_FILE% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin native !_EXE_FILE:%_ROOT_DIR%=! 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin native !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
 )
-call "%_EXE_FILE%"
+%_EXE_FILE%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

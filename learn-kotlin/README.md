@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin Logo"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin logo"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from the <a href="https://developer.ibm.com/series/learn-kotlin/">Learn Kotlin</a> tutorial <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.<br/>
   It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
@@ -94,7 +94,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
     help           display this help message
     lint[:&lt;n&gt;]     analyze Kotlin source files and flag programming/stylistic errors
     run[:&lt;n&gt;]      execute the generated program
-  Valid values: n=1..4 (default=2)
+  Valid values: n=1..4 ^(default=2^)
 </pre>
 
 ## [Unit 7][unit_7]
@@ -138,7 +138,7 @@ Tutorial by Steven Perry:
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
