@@ -61,6 +61,8 @@ fun main(args: Array<String>) {
     // str1 = null //  error: null can not be a value of a non-null type String
     println(str1.length)
 
+    // see src/org/jetbrains/kotlin/diagnostics/rendering/DefaultErrorMessages.java
+    @Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")
     var str2: String? = "name"
     str2 = null
     println(str2?.length)

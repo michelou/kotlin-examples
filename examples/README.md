@@ -74,7 +74,7 @@ Hello World!
 Command [**`build -native clean run`**](HelloWorld/build.bat) generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>:
 
 <pre style="font-size:80%;">
-<b>&gt; $ build -native clean run</b>
+<b>&gt; build -native clean run</b>
 Hello World!
 &nbsp;
 <b>&gt; tree /a /f target | findstr /v "^[A-Z]"</b>
@@ -161,6 +161,8 @@ John we welcome you!
 null
 </pre>
 
+> **:mag_right:** The list of error messages associated with the `@Suppress` annotation can be found in source file [`DefaultErrorMessages.java`](https://github.com/JetBrains/kotlin/blob/master/compiler/frontend/src/org/jetbrains/kotlin/diagnostics/rendering/DefaultErrorMessages.java).
+
 ## <span id="reflection">Reflection (JVM only)</span>
 
 Command [**`build -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
@@ -234,7 +236,7 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; kotlinc-native -version</b>
-info: kotlinc-native 1.3.71 (JRE 1.8.0_242-b08)
+info: kotlinc-native 1.3.71-release-424 (JRE 1.8.0_252-b09)
 Kotlin/Native: 1.3.71
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
@@ -279,7 +281,7 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 <tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b><br/>Hello World!</code></td></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b><br/>Hello World!</code></td></tr>
 </table>
-<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.3.50\lib\kotlin-stdlib.jar</code></b></span>
+<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.3.71\lib\kotlin-stdlib.jar</code></b></span>
 
 <p style="margin:0 0 1em 20px;">
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
@@ -306,7 +308,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/April 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

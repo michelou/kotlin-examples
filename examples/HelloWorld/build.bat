@@ -137,7 +137,7 @@ echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
 echo.
 echo   Options:
 echo     -debug      show commands executed by this script
-echo     -native     generated native executable
+echo     -native     generate native executable
 echo     -timer      display total elapsed time
 echo     -verbose    display progress messages
 echo.
@@ -152,7 +152,7 @@ goto :eof
 :clean
 if not exist "%_TARGET_DIR%\" goto :eof
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%_TARGET_DIR%" 1>&2
-) else if %_VERBOSE%==1 ( echo Remove directory %_TARGET_DIR% 1>&2
+) else if %_VERBOSE%==1 ( echo Remove directory !_TARGET_DIR:%_ROOT_DIR%=! 1>&2
 )
 rmdir /s /q "%_TARGET_DIR%"
 if not %ERRORLEVEL%==0 (
@@ -164,7 +164,7 @@ goto :eof
 :lint
 rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
 call %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
@@ -177,7 +177,7 @@ goto :eof
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2
+) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
 call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
@@ -189,10 +189,14 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% %_KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
+set /a __SHOW_ALL=_VERBOSE+_DEBUG
+if %__SHOW_ALL% gtr 0 ( set __KOTLINC_NATIVE_OPTS=-verbose %_KOTLINC_NATIVE_OPTS%
+) else ( set __KOTLINC_NATIVE_OPTS=-nowarn %_KOTLINC_NATIVE_OPTS%
+)
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
-call %_KOTLINC_NATIVE_CMD% %_KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
+call %_KOTLINC_NATIVE_CMD% %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -223,7 +227,7 @@ if not exist "%_EXE_FILE%" (
 	goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_EXE_FILE% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin native !_EXE_FILE:%_ROOT_DIR%=! 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin native !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (

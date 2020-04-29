@@ -30,6 +30,7 @@ set _GRADLE_PATH=
 set _JAVA_PATH=
 set _KOTLIN_PATH=
 set _KOTLINE_NATIVE_PATH=
+set _DETEKT_PATH=
 set _KTLINT_PATH=
 set _MAVEN_PATH=
 set _GIT_PATH=
@@ -44,6 +45,9 @@ call :kotlinc-jvm
 if not %_EXITCODE%==0 goto end
 
 call :kotlinc-native
+if not %_EXITCODE%==0 goto end
+
+call :detekt
 if not %_EXITCODE%==0 goto end
 
 call :ktlint
@@ -257,6 +261,37 @@ if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
 set "_KOTLIN_NATIVE_PATH=;%_KOTLIN_NATIVE_HOME%\bin"
 goto :eof
 
+rem output parameter(s): _DETEKT_HOME, _DETEKT_PATH
+:detekt
+set _DETEKT_HOME=
+set _DETEKT_PATH=
+
+set __DETEKT_CMD=
+for /f %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
+if defined __DETEKT_CMD (
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Detekt executable found in PATH 1>&2
+    for %%i in ("%__JAVAC_CMD%") do set __JAVA_BIN_DIR=%%~dpsi
+    for %%f in ("!__JAVA_BIN_DIR!..") do set _JAVA_HOME=%%~sf
+    rem keep _DETEKT_PATH undefined since executable already in path
+    goto :eof
+) else if defined DETEKT_HOME (
+    set "_DETEKT_HOME=%DETEKT_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DETEKT_HOME 1>&2
+) else (
+    set __PATH=C:\opt
+    if exist "!__PATH!\detekt-cli\" ( set _DETEKT_HOME=!__PATH!\detekt-cli
+    ) else (
+        for /f %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
+        if not defined _DETEKT_HOME (
+            set "__PATH=%ProgramFiles%"
+            for /f %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
+        )
+    )
+)
+set "_DETEKT_PATH=;%_DETEKT_HOME%\bin"
+goto :eof
+
+rem output parameter(s): _KTLINT_HOME, _KTLINT_PATH
 :ktlint
 set _KTLINT_PATH=
 
@@ -274,7 +309,7 @@ if defined __KTLINT_CMD (
     if exist "!__PATH!\ktlint\" ( set _KTLINT_HOME=!__PATH!\ktlint
     ) else (
         for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
-        if not defined _GIT_HOME (
+        if not defined _KTLINT_HOME (
             set "__PATH=%ProgramFiles%"
             for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         )
@@ -364,6 +399,11 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,2,*" %%i in ('java.exe -version 2^<^&1 ^| findstr version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% java %%~k,"
     set __WHERE_ARGS=%__WHERE_ARGS% java.exe
 )
+where /q detekt-cli.bat
+if %ERRORLEVEL%==0 (
+    for /f "tokens=*" %%i in ('detekt-cli.bat --version 2^>^&1') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% detekt-cli %%i,"
+    set __WHERE_ARGS=%__WHERE_ARGS% detekt-cli.bat
+)
 where /q kotlinc.bat
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,2,3,*" %%i in ('kotlinc.bat -version 2^>^&1 ^| findstr kotlinc') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc %%k,"
@@ -414,7 +454,7 @@ endlocal & (
     if not defined JAVA_HOME set JAVA_HOME=%_JAVA_HOME%
     if not defined KOTLIN_HOME set KOTLIN_HOME=%_KOTLIN_HOME%
     if not defined KOTLIN_NATIVE_HOME set KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%
-    set "PATH=%_JAVA_PATH%%PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_KTLINT_PATH%%_MAVEN_PATH%%_GIT_PATH%"
+    set "PATH=%_JAVA_PATH%%PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_DETEKT_PATH%%_KTLINT_PATH%%_MAVEN_PATH%%_GIT_PATH%"
     call :print_env %_VERBOSE%
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

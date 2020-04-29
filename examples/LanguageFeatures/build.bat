@@ -78,7 +78,7 @@ set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp %_CLASSES_DIR%
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=
+set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%" -e "%_PKG_NAME%.main"
 goto :eof
 
 rem input parameter: %*
@@ -137,7 +137,7 @@ echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
 echo.
 echo   Options:
 echo     -debug      show commands executed by this script
-echo     -native     generate a native executable
+echo     -native     generate native executable
 echo     -timer      display total elapsed time
 echo     -verbose    display progress messages
 echo.
@@ -204,9 +204,9 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :run_jvm
-set __MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class
+set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
-    echo %_ERROR_LABEL% Main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
+    echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -222,13 +222,14 @@ goto :eof
 
 :run_native
 if not exist "%_EXE_FILE%" (
+    echo %_ERROR_LABEL% Kotlin executable file not found ^(!_EXE_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
 	goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_EXE_FILE% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin native !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
 )
-%_EXE_FILE%
+call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
