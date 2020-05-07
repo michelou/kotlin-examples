@@ -14,5 +14,5 @@ exit
 if "%JAVA_HOME%"=="" ( set "JAVACMD=java.exe"
 ) else ( set "JAVACMD=%JAVA_HOME%\bin\java.exe"
 )
-"%JAVACMD%" -Xmx512m -jar "%0" %*
+"%JAVACMD%" -Xmx512m -jar "%~dpnx0" %*
 exit /B %errorlevel%

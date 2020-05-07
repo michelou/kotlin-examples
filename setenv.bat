@@ -113,7 +113,7 @@ goto :eof
 echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
 echo.
 echo   Options:
-echo     -debug      show commands executed by this script
+echo     -debug      display commands executed by this script
 echo     -verbose    display environment settings
 echo.
 echo   Subcommands:
