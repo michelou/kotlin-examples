@@ -15,5 +15,5 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("compiler", "1.3.60"))
+    implementation(kotlin("compiler", "1.3.72"))
 }

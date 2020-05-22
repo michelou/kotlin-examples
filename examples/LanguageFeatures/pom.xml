@@ -3,14 +3,14 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>02_properties</artifactId>
+    <groupId>kotlin.examples</groupId>
+    <artifactId>LanguageFeatures</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>org.example</groupId>
-        <artifactId>how-to-kotlin</artifactId>
+        <groupId>kotlin.examples</groupId>
+        <artifactId>kotlin-examples</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -20,7 +20,7 @@
     </dependencies>
 
     <properties>
-        <mainClass>_02_properties.PropertiesKt</mainClass>
+        <mainClass>org.example.main.LanguageFeaturesKt</mainClass>
     </properties>
 
     <build>

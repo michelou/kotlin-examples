@@ -26,7 +26,7 @@ class Turtle {
 }
 
 // Extension functions
-fun Int.multi() = this * 5
+fun Int.multiplyBy5() = this * 5
 fun String.greet(): String = this.plus(" we welcome you!")
 
 // High order functions
@@ -48,7 +48,7 @@ fun main(args: Array<String>) {
     }
 
     // Extension functions
-    println(50.multi())
+    println(50.multiplyBy5())
     println("John".greet())
 
     // High order functions

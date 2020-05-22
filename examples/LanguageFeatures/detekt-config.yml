@@ -1,0 +1,8 @@
+# See https://arturbosch.github.io/detekt/configurations.html
+
+# When using a custom config file, the default values are ignored
+# unless you also set the --build-upon-default-config flag.
+
+style:
+  MagicNumber:
+    active: false

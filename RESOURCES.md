@@ -30,6 +30,7 @@
 
 ## <span id="tools">Tools</span>
 
+- [detekt][detekt_home]: Static code analysis for Kotlin.
 - [The Gradle build system- Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span>
@@ -40,7 +41,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/April 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -51,5 +52,6 @@
 [book_kotlin_in_action]: https://www.manning.com/books/kotlin-in-action
 [book_kotlin_programming]: https://www.packtpub.com/application-development/learn-kotlin-programming-second-edition
 [book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
+[detekt_home]: https://detekt.github.io/detekt/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
 [tuto_journaldev]: https://www.journaldev.com/kotlin

@@ -58,6 +58,12 @@ build {
     dependsOn compileKotlin
 }
 
+// see https://github.com/Kotlin/dokka#using-dokka
+dokka {
+    outputDirectory = "$buildDir/dokka"
+    outputFormat = "html"
+}
+
 task run(type: JavaExec) {
     dependsOn compileKotlin
 
@@ -65,17 +71,24 @@ task run(type: JavaExec) {
 
     classpath sourceSets.main.runtimeClasspath
 
-    // properties "main" and "args" are defined in build.gradle (main script)
-    if (! main?.trim()) main "Main"
+    if (mainClassName?.trim()) main mainClassName
+    else main "Main"
     if (args == null) args ""
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://dl.bintray.com/kotlin/kotlin-dev"
+    }
+    maven { // dokka-gradle-plugin
+        url "https://repo.spring.io/libs-release"
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"                                                                   
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"
     testImplementation "junit:junit:$junitVersion"

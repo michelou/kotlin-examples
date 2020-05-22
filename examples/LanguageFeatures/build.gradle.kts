@@ -6,7 +6,7 @@ import Config  // buildSrc/main/java/Config.kt
 plugins {
     checkstyle
     java
-    kotlin("jvm") version "${Config.kotlinVersion}"   // id("org.jetbrains.kotlin.jvm") version "1.3.60"
+    kotlin("jvm") version "${Config.kotlinVersion}"   // id("org.jetbrains.kotlin.jvm") version "1.3.72"
 }
 
 group = "${Config.appGroup}"
@@ -75,7 +75,7 @@ repositories {
 
 dependencies {
     api(kotlin("stdlib", "${Config.kotlinVersion}"))
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.60")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.72")
     implementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("test-junit", "${Config.kotlinVersion}"))

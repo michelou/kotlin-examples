@@ -3,14 +3,11 @@ setlocal enabledelayedexpansion
 
 set _DEBUG=0
 
-rem ##########################################################################
-rem ## Environment setup
-
-set _BASENAME=%~n0
+@rem #########################################################################
+@rem ## Environment setup
 
 set _EXITCODE=0
-
-for %%f in ("%~dp0") do set _ROOT_DIR=%%~sf
+set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -18,8 +15,8 @@ if not %_EXITCODE%==0 goto end
 call :args %*
 if not %_EXITCODE%==0 goto end
 
-rem ##########################################################################
-rem ## Main
+@rem #########################################################################
+@rem ## Main
 
 if %_HELP%==1 (
     call :help
@@ -27,6 +24,10 @@ if %_HELP%==1 (
 )
 if %_CLEAN%==1 (
     call :clean
+    if not !_EXITCODE!==0 goto end
+)
+if %_DETEKT%==1 (
+    call :detekt
     if not !_EXITCODE!==0 goto end
 )
 if %_LINT%==1 (
@@ -37,27 +38,33 @@ if %_COMPILE%==1 (
     call :compile
     if not !_EXITCODE!==0 goto end
 )
+if %_DOC%==1 (
+    call :doc
+    if not !_EXITCODE!==0 goto end
+)
 if %_RUN%==1 (
     call :run
     if not !_EXITCODE!==0 goto end
 )
 goto end
 
-rem ##########################################################################
-rem ## Subroutine
+@rem #########################################################################
+@rem ## Subroutine
 
-rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
-rem                    _KT_SOURCE_FILES, MAIN_CLASS, _EXE_FILE
+@rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
+@rem                    _KT_SOURCE_FILES, MAIN_CLASS, _EXE_FILE
 :env
-rem ANSI colors in standard Windows 10 shell
-rem see https://gist.github.com/mlocati/#file-win10colors-cmd
+set _BASENAME=%~n0
+
+@rem ANSI colors in standard Windows 10 shell
+@rem see https://gist.github.com/mlocati/#file-win10colors-cmd
 set _DEBUG_LABEL=[46m[%_BASENAME%][0m
 set _ERROR_LABEL=[91mError[0m:
 set _WARNING_LABEL=[93mWarning[0m:
 
-set _SOURCE_DIR=%_ROOT_DIR%src
-set _TARGET_DIR=%_ROOT_DIR%target
-set _CLASSES_DIR=%_TARGET_DIR%\classes
+set "_SOURCE_DIR=%_ROOT_DIR%src"
+set "_TARGET_DIR=%_ROOT_DIR%target"
+set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
 set _KT_SOURCE_FILES=
 for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _KT_SOURCE_FILES=!_KT_SOURCE_FILES! "%%f"
@@ -68,16 +75,19 @@ for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\java" *.java 2^>NUL') do 
 set _JAVA_MAIN_CLASS=KotlinInterop
 set _KT_MAIN_NAME=JavaInterop
 set _KT_MAIN_CLASS=%_KT_MAIN_NAME%Kt
-set _EXE_FILE=%_TARGET_DIR%\%_KT_MAIN_NAME%.exe
+set "_EXE_FILE=%_TARGET_DIR%\%_KT_MAIN_NAME%.exe"
+
+set _DETEKT_CMD=detekt-cli.bat
+set _DETEKT_OPTS=--language-version 1.3 --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
 
 set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--color --reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d %_CLASSES_DIR%
+set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
-set _KOTLIN_OPTS=-cp %_CLASSES_DIR%
+set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 if not exist "%KOTLIN_HOME%\lib\" (
     echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
@@ -90,17 +100,19 @@ set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
 set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%"
 
 set _JAVAC_CMD=javac.exe
-set _JAVAC_OPTS=-cp %_KOTLIN_CPATH%;%_CLASSES_DIR% -d %_CLASSES_DIR%
+set _JAVAC_OPTS=-cp "%_KOTLIN_CPATH%;%_CLASSES_DIR%" -d "%_CLASSES_DIR%"
 
 set _JAVA_CMD=java.exe
-set _JAVA_OPTS=-cp %_KOTLIN_CPATH%;%_CLASSES_DIR%
+set _JAVA_OPTS=-cp "%_KOTLIN_CPATH%;%_CLASSES_DIR%"
 goto :eof
 
-rem input parameter: %*
-rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
+@rem input parameter: %*
+@rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
 :args
 set _CLEAN=0
 set _COMPILE=0
+set _DETEKT=0
+set _DOC=0
 set _HELP=0
 set _LINT=0
 set _RUN=0
@@ -115,7 +127,7 @@ if not defined __ARG (
     goto args_done
 )
 if "%__ARG:~0,1%"=="-" (
-    rem option
+    @rem option
     if /i "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if /i "%__ARG%"=="-help" ( set _HELP=1
     ) else if /i "%__ARG%"=="-native" ( set _TARGET=native
@@ -127,18 +139,20 @@ if "%__ARG:~0,1%"=="-" (
         goto args_done
    )
 ) else (
-    rem subcommand
-    set /a __N+=1
+    @rem subcommand
     if /i "%__ARG%"=="clean" ( set _CLEAN=1
-    ) else if /i "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
+    ) else if /i "%__ARG%"=="compile" ( set _COMPILE=1
+    ) else if /i "%__ARG%"=="detekt" ( set _DETEKT=1
+    ) else if /i "%__ARG%"=="doc" ( set _DOC=1
     ) else if /i "%__ARG%"=="help" ( set _HELP=1
     ) else if /i "%__ARG%"=="lint" ( set _LINT=1
-    ) else if /i "%__ARG%"=="run" ( set _LINT=1& set _COMPILE=1& set _RUN=1
+    ) else if /i "%__ARG%"=="run" ( set _COMPILE=1& set _RUN=1
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
         set _EXITCODE=1
         goto args_done
     )
+    set /a __N+=1
 )
 shift
 goto :args_loop
@@ -162,18 +176,42 @@ echo.
 echo   Subcommands:
 echo     clean       delete generated files
 echo     compile     generate class files
+echo     detekt      analyze Kotlin source files with Detekt
+echo     doc         generate documentation
 echo     help        display this help message
-echo     lint        analyze Java/Kotlin source files and flag programming/stylistic errors
+echo     lint        analyze Java/Kotlin source files with KtLint
 echo     run         execute the generated program
 goto :eof
 
 :clean
-if not exist "%_TARGET_DIR%\" goto :eof
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%_TARGET_DIR%" 1>&2
-) else if %_VERBOSE%==1 ( echo Remove directory %_TARGET_DIR% 1>&2
+call :rmdir "%_TARGET_DIR%"
+goto :eof
+
+@rem input parameter: %1=directory path
+:rmdir
+set "__DIR=%~1"
+if not exist "!__DIR!\" goto :eof
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "!__DIR!" 1>&2
+) else if %_VERBOSE%==1 ( echo Delete directory "!__DIR:%_ROOT_DIR%=!" 1>&2
 )
-rmdir /s /q "%_TARGET_DIR%"
+rmdir /s /q "!__DIR!"
 if not %ERRORLEVEL%==0 (
+    set _EXITCODE=1
+    goto :eof
+)
+goto :eof
+
+:detekt
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_DETEKT_CMD% %_DETEKT_OPTS% 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
+)
+call %_DETEKT_CMD% %_DETEKT_OPTS%
+if not %ERRORLEVEL%==0 (
+    if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
+        set __SIZE=0
+        for %%f in (%_TARGET_DIR%\detekt-report.xml) do set __SIZE=%%~zf
+        if !__SIZE! gtr 79 type "%_TARGET_DIR%\detekt-report.xml"
+    )
     set _EXITCODE=1
     goto :eof
 )
@@ -192,7 +230,7 @@ if not defined _KT_SOURCE_FILES goto :eof
 
 set "__TMP_FILE=%TEMP%\%_BASENAME%_ktlint.txt"
 
-rem prepend ! to negate the pattern in order to check only certain locations 
+@rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_KT_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
@@ -203,7 +241,7 @@ if not %ERRORLEVEL%==0 (
    ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
    )
    if exist "%__TMP_FILE%" del "%__TMP_FILE%"
-   rem set _EXITCODE=1
+   @rem set _EXITCODE=1
    goto :eof
 )
 goto :eof
@@ -259,11 +297,16 @@ if not defined _JAVA_SOURCE_FILES goto :eof
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_JAVAC_CMD% %_JAVAC_OPTS% %_JAVA_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Java source files 1>&2
 )
-call %_JAVAC_CMD% %_JAVAC_OPTS% %_JAVA_SOURCE_FILES%
+call "%_JAVAC_CMD%" %_JAVAC_OPTS% %_JAVA_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
 )
+goto :eof
+
+:doc
+@rem see https://github.com/Kotlin/dokka/releases
+echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
 goto :eof
 
 :run
@@ -277,7 +320,7 @@ if not %_EXITCODE%==0 goto :eof
 goto :eof
 
 :run_jvm
-set __MAIN_CLASS_FILE=%_CLASSES_DIR%\%_KT_MAIN_CLASS:.=\%.class
+set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_KT_MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
     echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
@@ -301,7 +344,7 @@ if not exist "%_EXE_FILE%" (
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_EXE_FILE% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin native application !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
 )
-%_EXE_FILE%
+call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -333,9 +376,10 @@ if not exist "%__USER_KOTLIN_DIR%" mkdir "%__USER_KOTLIN_DIR%"
 set "__XML_FILE=%__USER_KOTLIN_DIR%\java_checks.xml"
 if not exist "%__XML_FILE%" call :checkstyle_xml "%__XML_FILE%"
 )
-set __JAR_NAME=checkstyle-8.26-all.jar
-set __JAR_URL=https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.26/%__JAR_NAME%
-set __JAR_FILE=%__USER_KOTLIN_DIR%\%__JAR_NAME%
+set __JAR_VERSION=8.32
+set __JAR_NAME=checkstyle-%__JAR_VERSION%-all.jar
+set __JAR_URL=https://github.com/checkstyle/checkstyle/releases/download/checkstyle-%__JAR_VERSION%/%__JAR_NAME%
+set "__JAR_FILE=%__USER_KOTLIN_DIR%\%__JAR_NAME%"
 if exist "%__JAR_FILE%" goto checkstyle_analyze
 
 set "__PS1_FILE=%__USER_KOTLIN_DIR%\webrequest.ps1"
@@ -362,14 +406,14 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_JAVA_CMD% -jar "%__JAR_FILE%" -c="%__XML_
 )
 %_JAVA_CMD% -jar "%__JAR_FILE%" -c="%__XML_FILE%" %__SOURCE_FILES% %_STDOUT_REDIRECT%
 if not %ERRORLEVEL%==0 (
-    rem set _EXITCODE=1
+    @rem set _EXITCODE=1
     goto :eof
 )
 goto :eof
 
-rem input parameter: %1=XML file path
-rem NB. Archive checkstyle-*-all.jar contains 2 configuration files:
-rem     google_checks.xml, sun_checks.xml.
+@rem input parameter: %1=XML file path
+@rem NB. Archive checkstyle-*-all.jar contains 2 configuration files:
+@rem     google_checks.xml, sun_checks.xml.
 :checkstyle_xml
 set "__XML_FILE=%~1"
 (
@@ -409,11 +453,11 @@ set "__XML_FILE=%~1"
 ) > "%__XML_FILE%"
 goto :eof
 
-rem input parameter: %1=PS1 file path
+@rem input parameter: %1=PS1 file path
 :checkstyle_ps1
 set "__PS1_FILE=%~1"
-rem see https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
-rem NB. cURL is a standard tool only from Windows 10 build 17063 and later.
+@rem see https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
+@rem NB. cURL is a standard tool only from Windows 10 build 17063 and later.
 (
     echo Param^(
     echo    [Parameter^(Mandatory=$True,Position=1^)]
@@ -441,7 +485,7 @@ rem NB. cURL is a standard tool only from Windows 10 build 17063 and later.
 ) > "%__PS1_FILE%"
 goto :eof
 
-rem output parameter: _DURATION
+@rem output parameter: _DURATION
 :duration
 set __START=%~1
 set __END=%~2
@@ -449,14 +493,14 @@ set __END=%~2
 for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
-rem ##########################################################################
-rem ## Cleanups
+@rem #########################################################################
+@rem ## Cleanups
 
 :end
 if %_TIMER%==1 (
     for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Elapsed time: !_DURATION! 1>&2
+    echo Total elapsed time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%

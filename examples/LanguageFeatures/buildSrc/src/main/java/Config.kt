@@ -12,10 +12,10 @@ object Config: Properties() {
 
     val appGroup      = getProperty("appGroup",      "org.example")
     val appVersion    = getProperty("appVersion",    "1.0-SNAPSHOT")
-    val kotlinHome    = getProperty("kotlinHome",    "c:/opt/kotlinc-1.3.60/")
-    val kotlinVersion = getProperty("kotlinVersion", "1.3.60")
+    val kotlinHome    = getProperty("kotlinHome",    "c:/opt/kotlinc-1.3.72/")
+    val kotlinVersion = getProperty("kotlinVersion", "1.3.72")
     val mainClassName = getProperty("mainClassName", "org.example.main.HelloWorldKt")
-    val ktLintJar     = getProperty("ktLintJar",     "C:/opt/ktlint-0.35.0/ktlint.jar")
+    val ktLintJar     = getProperty("ktLintJar",     "C:/opt/ktlint-0.36.0/ktlint.jar")
 
     fun filesInDir(dirPath: String, fileExt: String = ".kt"): List<String> {
         return File(dirPath).walk().filter { it.name.endsWith(fileExt) }.map { it.absolutePath }.toList()

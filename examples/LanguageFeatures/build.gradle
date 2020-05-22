@@ -1,6 +1,7 @@
 plugins {
     id "checkstyle"
     id "java"
+    id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
 }
 
@@ -12,6 +13,5 @@ description """Kotlin/JVM example project"""
 apply from: "../common.gradle"
 
 run.doFirst {
-    main kotlinMainClassName
     args ""
 }
