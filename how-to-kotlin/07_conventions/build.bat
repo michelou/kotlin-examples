@@ -62,10 +62,7 @@ set "_SOURCE_DIR=%_ROOT_DIR%src"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
-set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
-
-rem derives package name from project directory name
+@rem derives package name from project directory name
 set __PKG_NAME=
 for %%d in ("%~dp0") do (
    set __DIR=%%~d
@@ -80,13 +77,13 @@ set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-Werror -d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.3 -Werror -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=-Werror -o "%_EXE_FILE%" -e "%__PKG_NAME%main"
+set _KOTLINC_NATIVE_OPTS=-language-version 1.3 -Werror -o "%_EXE_FILE%" -e "%__PKG_NAME%main"
 goto :eof
 
 @rem input parameter: %*
@@ -183,11 +180,15 @@ set /a _PLAIN=_VERBOSE+_DEBUG
 if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
 ) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
 )
+set __SOURCE_FILES=
+for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
+)
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
-call %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES%
+call %_KTLINT_CMD% %__KTLINT_OPTS% %__SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -197,17 +198,24 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-set __KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin
-set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%__KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
-
+set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
+if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
+set __N=0
+for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+    echo %%f >> "%__SOURCES_FILE%"
+    set /a __N+=1
+)
+if %__N%==0 (
+    echo %_WARNING_LABEL% No source file found 1>&2
+    goto :eof
+)
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES%
+call %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -217,13 +225,24 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
+set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
+if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
+set __N=0
+for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+    echo %%f >> "%__SOURCES_FILE%"
+    set /a __N+=1
+)
+if %__N%==0 (
+    echo %_WARNING_LABEL% No source file found 1>&2
+    goto :eof
+)
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo %_KOTLINC_NATIVE_OPTS:\=\\% > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
-call %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES% 
+call %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

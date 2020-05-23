@@ -15,8 +15,8 @@ if not %_EXITCODE%==0 goto end
 call :args %*
 if not %_EXITCODE%==0 goto end
 
-rem ##########################################################################
-rem ## Main
+@rem #########################################################################
+@rem ## Main
 
 if %_HELP%==1 (
     call :help
@@ -48,7 +48,7 @@ goto end
 @rem ## Subroutine
 
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
-@rem                    _SOURCE_FILES, _PKG_NAME
+@rem                    _PKG_NAME
 :env
 set _BASENAME=%~n0
 

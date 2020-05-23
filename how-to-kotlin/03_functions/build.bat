@@ -59,20 +59,17 @@ set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
-set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
-
 set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.3 -Werror -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%"
+set _KOTLINC_NATIVE_OPTS=-language-version 1.3 -Werror -o "%_EXE_FILE%"
 goto :eof
 
 @rem input parameter: %*
@@ -173,11 +170,15 @@ set /a _PLAIN=_VERBOSE+_DEBUG
 if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
 ) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
 )
-@rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
+set __SOURCE_FILES=
+for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
 )
-call %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES%
+@rem prepend ! to negate the pattern in order to check only certain locations 
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
+)
+call %_KTLINT_CMD% %__KTLINT_OPTS% %__SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
