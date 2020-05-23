@@ -84,7 +84,7 @@ set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--color --reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.3 -Werror -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
@@ -97,7 +97,7 @@ if not exist "%KOTLIN_HOME%\lib\" (
 set _KOTLIN_CPATH=%KOTLIN_HOME%\lib\kotlin-stdlib.jar
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%"
+set _KOTLINC_NATIVE_OPTS=-language-version 1.3 -Werror -o "%_EXE_FILE%"
 
 set _JAVAC_CMD=javac.exe
 set _JAVAC_OPTS=-cp "%_KOTLIN_CPATH%;%_CLASSES_DIR%" -d "%_CLASSES_DIR%"

@@ -12,6 +12,12 @@ ext {
         "--reporter=checkstyle,output=$buildDir\\ktlint-report.xml"
     ]
     classesDir = file("${buildDir}/classes")
+
+    kotlinMain = "Main"
+    if (project.hasProperty("mainClassName") && mainClassName?.trim()) kotlinMain = mainClassName
+
+    javaMain = "Main"
+    if (project.hasProperty("javaMainClassName") && javaMainClassName?.trim()) javaMain = javaMainClassName
 }
 
 sourceSets {
@@ -67,12 +73,11 @@ dokka {
 task run(type: JavaExec) {
     dependsOn compileKotlin
 
-    description "Execute Kotlin main class $mainClassName"
+    description "Execute Kotlin main class $kotlinMain"
 
     classpath sourceSets.main.runtimeClasspath
 
-    if (mainClassName?.trim()) main mainClassName
-    else main "Main"
+    main kotlinMain
     if (args == null) args ""
 }
 
@@ -88,7 +93,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"                                                                   
+    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"
     testImplementation "junit:junit:$junitVersion"

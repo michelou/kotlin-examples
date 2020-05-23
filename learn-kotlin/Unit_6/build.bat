@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+@rem only for interactive debugging !
 set _DEBUG=0
 
 @rem #########################################################################
@@ -92,7 +93,7 @@ if not defined __ARG (
     goto args_done
 )
 if "%__ARG:~0,1%"=="-" (
-    rem option
+    @rem option
     if /i "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if /i "%__ARG%"=="-help" ( set _HELP=1
     ) else if /i "%__ARG%"=="-timer" ( set _TIMER=1
@@ -103,8 +104,7 @@ if "%__ARG:~0,1%"=="-" (
         goto args_done
    )
 ) else (
-    rem subcommand
-    set /a __N+=1
+    @rem subcommand
     if /i "%__ARG%"=="clean" ( set _CLEAN=1
     ) else if /i "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
     ) else if /i "%__ARG:~0,8%"=="compile:" (
@@ -131,6 +131,7 @@ if "%__ARG:~0,1%"=="-" (
         set _EXITCODE=1
         goto args_done
     )
+    set /a __N+=1
 )
 shift
 goto :args_loop
@@ -170,11 +171,17 @@ echo   Valid values: n=1..4 ^(default=2^)
 goto :eof
 
 :clean
-if not exist "%_TARGET_DIR%\" goto :eof
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%_TARGET_DIR%" 1>&2
-) else if %_VERBOSE%==1 ( echo Remove directory %_TARGET_DIR% 1>&2
+call :rmdir "%_TARGET_DIR%"
+goto :eof
+
+@rem input parameter(s): %1=directory path
+:rmdir
+set "__DIR=%~1"
+if not exist "%__DIR%\" goto :eof
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%__DIR%" 1>&2
+) else if %_VERBOSE%==1 ( echo Delete directory !__DIR:%_ROOT_DIR%=! 1>&2
 )
-rmdir /s /q "%_TARGET_DIR%"
+rmdir /s /q "%__DIR%"
 if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
@@ -188,7 +195,7 @@ if not defined __SOURCE_FILES (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
-rem prepend ! to negate the pattern in order to check only certain locations 
+@rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
 )
@@ -202,25 +209,33 @@ goto :eof
 :compile
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-set __ARG_FILE=%_TARGET_DIR%\kt_files.txt
-if exist "%__ARG_FILE%" del "%__ARG_FILE%" 1>NUL
+set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
+if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
 for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
-    echo %%f >> "%__ARG_FILE%"
+    echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
 if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%" 1>&2
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
+echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%"
+call %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
 )
+goto :eof
+
+:doc
+@rem see https://github.com/Kotlin/dokka/releases
+echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
 goto :eof
 
 :run

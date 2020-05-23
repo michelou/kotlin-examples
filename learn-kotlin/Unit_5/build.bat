@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+@rem only for interactive debugging !
 set _DEBUG=0
 
 @rem #########################################################################
@@ -230,7 +231,7 @@ if %__N%==0 (
     goto :eof
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-echo %_KOTLINC_OPTS% > "%__OPTS_FILE%"
+echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2

@@ -3,10 +3,8 @@ setlocal enabledelayedexpansion
 
 set _DEBUG=0
 
-rem ##########################################################################
-rem ## Environment setup
-
-set _BASENAME=%~n0
+@rem #########################################################################
+@rem ## Environment setup
 
 set _EXITCODE=0
 
@@ -18,8 +16,8 @@ if not %_EXITCODE%==0 goto end
 call :args %*
 if not %_EXITCODE%==0 goto end
 
-rem ##########################################################################
-rem ## Main
+@rem #########################################################################
+@rem ## Main
 
 if %_HELP%==1 (
     call :help
@@ -43,21 +41,23 @@ if %_RUN%==1 (
 )
 goto end
 
-rem ##########################################################################
-rem ## Subroutine
+@rem #########################################################################
+@rem ## Subroutine
 
-rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
-rem                    _SOURCE_FILES, MAIN_CLASS, _EXE_FILE
+@rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
+@rem                    _SOURCE_FILES, MAIN_CLASS, _EXE_FILE
 :env
-rem ANSI colors in standard Windows 10 shell
-rem see https://gist.github.com/mlocati/#file-win10colors-cmd
+set _BASENAME=%~n0
+
+@rem ANSI colors in standard Windows 10 shell
+@rem see https://gist.github.com/mlocati/#file-win10colors-cmd
 set _DEBUG_LABEL=[46m[%_BASENAME%][0m
 set _ERROR_LABEL=[91mError[0m:
 set _WARNING_LABEL=[93mWarning[0m:
 
-set _SOURCE_DIR=%_ROOT_DIR%src
-set _TARGET_DIR=%_ROOT_DIR%target
-set _CLASSES_DIR=%_TARGET_DIR%\classes
+set "_SOURCE_DIR=%_ROOT_DIR%src"
+set "_TARGET_DIR=%_ROOT_DIR%target"
+set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
 set _SOURCE_FILES=
 for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
@@ -66,20 +66,21 @@ set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d %_CLASSES_DIR%
+set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
-set _KOTLIN_OPTS=-cp %_CLASSES_DIR%
+set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
 set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%"
 goto :eof
 
-rem input parameter: %*
-rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
+@rem input parameter: %*
+@rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
 :args
 set _CLEAN=0
 set _COMPILE=0
+set _DOC=0
 set _HELP=0
 set _LINT=0
 set _MAIN=LocalSealedCasts
@@ -95,7 +96,7 @@ if not defined __ARG (
     goto args_done
 )
 if "%__ARG:~0,1%"=="-" (
-    rem option
+    @rem option
     if /i "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if /i "%__ARG%"=="-help" ( set _HELP=1
     ) else if /i "%__ARG%"=="-native" ( set _TARGET=native
@@ -107,21 +108,21 @@ if "%__ARG:~0,1%"=="-" (
         goto args_done
    )
 ) else (
-    rem subcommand
-    set /a __N+=1
+    @rem subcommand
     if /i "%__ARG%"=="clean" ( set _CLEAN=1
-    ) else if /i "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
+    ) else if /i "%__ARG%"=="compile" ( set _COMPILE=1
     ) else if /i "%__ARG%"=="help" ( set _HELP=1
     ) else if /i "%__ARG%"=="lint" ( set _LINT=1
-    ) else if /i "%__ARG%"=="run" ( set _LINT=1& set _COMPILE=1& set _RUN=1
+    ) else if /i "%__ARG%"=="run" ( set _COMPILE=1& set _RUN=1
     ) else if /i "%__ARG:~0,4%"=="run:" (
         set "_MAIN=%__ARG:~4%"
-        set _LINT=1& set _COMPILE=1& set _RUN=1
+        set _COMPILE=1& set _RUN=1
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
         set _EXITCODE=1
         goto args_done
     )
+    set /a __N+=1
 )
 shift
 goto :args_loop
@@ -148,11 +149,17 @@ echo     run[:^<name^>]   execute the generated program ^(default: LocalSealedCa
 goto :eof
 
 :clean
-if not exist "%_TARGET_DIR%\" goto :eof
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%_TARGET_DIR%" 1>&2
-) else if %_VERBOSE%==1 ( echo Remove directory %_TARGET_DIR% 1>&2
+call :rmdir "%_TARGET_DIR%"
+goto :eof
+
+@rem input parameter(s): %1=directory path
+:rmdir
+set "__DIR=%~1"
+if not exist "%__DIR%\" goto :eof
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%__DIR%" 1>&2
+) else if %_VERBOSE%==1 ( echo Delete directory !__DIR:%_ROOT_DIR%=! 1>&2
 )
-rmdir /s /q "%_TARGET_DIR%"
+rmdir /s /q "%__DIR%"
 if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
@@ -164,7 +171,7 @@ set /a _PLAIN=_VERBOSE+_DEBUG
 if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
 ) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
 )
-rem prepend ! to negate the pattern in order to check only certain locations 
+@rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
 )
@@ -178,10 +185,13 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
+echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
+call %_KOTLINC_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -191,10 +201,13 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% %_KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
+echo %_KOTLINC_NATIVE_OPTS:\=\\% > "%__OPTS_FILE%"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
-call %_KOTLINC_NATIVE_CMD% %_KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
+call %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" %_SOURCE_FILES% 
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -203,7 +216,7 @@ goto :eof
 
 :run_jvm
 set __MAIN_CLASS=_08_DSLs.%_MAIN%Kt
-set __MAIN_CLASS_FILE=%_CLASSES_DIR%\%__MAIN_CLASS:.=\%.class
+set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%__MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
     echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
@@ -228,14 +241,14 @@ if not exist "%__EXE_FILE%" (
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %__EXE_FILE% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin native !__EXE_FILE:%_ROOT_DIR%\=! 1>&2
 )
-%__EXE_FILE%
+call "%__EXE_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
 )
 goto :eof
 
-rem output parameter: _DURATION
+@rem output parameter: _DURATION
 :duration
 set __START=%~1
 set __END=%~2
@@ -243,14 +256,14 @@ set __END=%~2
 for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
-rem ##########################################################################
-rem ## Cleanups
+@rem #########################################################################
+@rem ## Cleanups
 
 :end
 if %_TIMER%==1 (
     for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Elapsed time: !_DURATION! 1>&2
+    echo Total elapsed time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%
