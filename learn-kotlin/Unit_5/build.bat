@@ -16,8 +16,8 @@ if not %_EXITCODE%==0 goto end
 call :args %*
 if not %_EXITCODE%==0 goto end
 
-rem ##########################################################################
-rem ## Main
+@rem #########################################################################
+@rem ## Main
 
 if %_HELP%==1 (
     call :help
@@ -64,10 +64,10 @@ set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
 set _KTLINT_CMD=ktlint.bat
-set _KTLINT_OPTS=--reporter=plain --reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
+set _KTLINT_OPTS=--reporter=plain --reporter="checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-jvm-target 1.8 -Werror -d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-jvm-target 1.8 -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
@@ -209,7 +209,7 @@ if not defined __SOURCE_FILES (
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
 )
-call %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %_KTLINT_OPTS% %__SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -233,11 +233,12 @@ if %__N%==0 (
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2
 )
-call %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
+call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
+echo 66666666666666
    set _EXITCODE=1
    goto :eof
 )
@@ -255,8 +256,9 @@ if "%_EXAMPLE%"=="*" ( set __MAIN_CLASS=ExamplesKt
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %__MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %__MAIN_CLASS%  1>&2
 )
-call %_KOTLIN_CMD% %_KOTLIN_OPTS% %__MAIN_CLASS%
+call "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
+echo 8888888888888
    set _EXITCODE=1
    goto :eof
 )
@@ -269,7 +271,7 @@ if "%_EXAMPLE%"=="*" ( set "__SCRIPT_FILE=%_SOURCE_DIR%\examples.kts"
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" -script "%__SCRIPT_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin script file "!__SCRIPT_FILE:%_ROOT_DIR%=!"  1>&2
 )
-call %_KOTLINC_CMD% -script "%__SCRIPT_FILE%"
+call "%_KOTLINC_CMD%" -script "%__SCRIPT_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

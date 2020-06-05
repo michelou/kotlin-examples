@@ -1,13 +1,13 @@
 @echo off
 setlocal enabledelayedexpansion
 
+@rem only for interactive debugging !
 set _DEBUG=0
 
 @rem #########################################################################
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -51,6 +51,7 @@ goto end
 @rem                    _SOURCE_FILES, MAIN_CLASS, _EXE_FILE
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -176,10 +177,10 @@ goto :eof
 
 :lint
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
-call %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES%
+call "%_KTLINT_CMD%" %_KTLINT_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -189,10 +190,10 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
+call "%_KOTLINC_CMD%" %_KOTLINC_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -206,19 +207,47 @@ set /a __SHOW_ALL=_VERBOSE+_DEBUG
 if %__SHOW_ALL% gtr 0 ( set __KOTLINC_NATIVE_OPTS=-verbose %_KOTLINC_NATIVE_OPTS%
 ) else ( set __KOTLINC_NATIVE_OPTS=-nowarn %_KOTLINC_NATIVE_OPTS%
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
-call %_KOTLINC_NATIVE_CMD% %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
+call "%_KOTLINC_NATIVE_CMD%" %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
 )
 goto :eof
 
+@rem output parameter: _LIBS_CPATH
+:libs_cpath
+for %%f in ("%~dp0..") do set "__BATCH_FILE=%%~sf\cpath.bat"
+if not exist "%__BATCH_FILE%" (
+    echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
+call "%__BATCH_FILE%" %_DEBUG%
+set _LIBS_CPATH=%_CPATH%
+goto :eof
+
 :doc
+set __JAVA_CMD=java.exe
+set __JAVA_OPTS=
+
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
 @rem see https://github.com/Kotlin/dokka/releases
-echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
+set __DOKKA_MAIN=org.jetbrains.dokka.MainKt
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%__JAVA_CMD%" %__JAVA_OPTS% -classpath %_LIBS_CPATH% %__DOKKA_MAIN% 1>&2
+) else if %_VERBOSE%==1 ( echo Generate documentation  1>&2
+)
+call "%__JAVA_CMD%" %__JAVA_OPTS% -classpath %_LIBS_CPATH% %__DOKKA_MAIN%
+if not %ERRORLEVEL%==0 (
+   set _EXITCODE=1
+   goto :eof
+)
 goto :eof
 
 :run_jvm
@@ -228,10 +257,10 @@ if not exist "%__MAIN_CLASS_FILE%" (
     set _EXITCODE=1
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
 )
-call %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS%
+call "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

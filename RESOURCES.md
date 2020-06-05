@@ -8,14 +8,20 @@
   </tr>
 </table>
 
-## <span id="blogs">Blogs</span>
+## <span id="articles">Articles</span>
 
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
+- [Medium]: [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
 - [Using Gradle Kotlin DSL with JUnit 5](https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/) by Juan Ara, August 7, 2019.
 - [Advanced Kotlin - Part 1 - Delegates](https://americanexpress.io/advanced-kotlin-delegates/) by Brent Watson, July 1, 2019.
 - [Stone Soup Programming](https://stonesoupprogramming.com/) - [Kotlin](https://stonesoupprogramming.com/category/kotlin/), 2019.
-- [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
-- [Mastering Kotlin Conventions: Part I](https://medium.com/insiden26/mastering-kotlin-conventions-plus-minus-compareto-inc-dec-times-div-part-i-1a34b20aaf4) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
+- [Medium]: [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
+- [Medium]: [Mastering Kotlin Conventions: Part I](https://medium.com/insiden26/mastering-kotlin-conventions-plus-minus-compareto-inc-dec-times-div-part-i-1a34b20aaf4) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
+- [Kotlin vs Scala: Which Problems Do They Solve?][article_kotlin_scala], June 28, 2017.
+
+## <span id="blogs">Blogs</span>
+
+- [Jebrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
 
 ## <span id="books">Books</span>
 
@@ -41,11 +47,12 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/June 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
+[article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
 [book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/
@@ -53,5 +60,6 @@
 [book_kotlin_programming]: https://www.packtpub.com/application-development/learn-kotlin-programming-second-edition
 [book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
 [detekt_home]: https://detekt.github.io/detekt/
+[medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
 [tuto_journaldev]: https://www.journaldev.com/kotlin

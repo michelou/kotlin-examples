@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.26][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.27][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.3][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin Native 1.3][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -26,12 +26,12 @@ Optionally one may also install the following software:
 - [Gradle 6.4][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*May 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*June 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.9.1\               <i>( 47 MB)</i>
-C:\opt\Git-2.26.2\                     <i>(271 MB)</i>
+C:\opt\Git-2.27.0\                     <i>(271 MB)</i>
 C:\opt\gradle-6.4.1\                   <i>(109 MB)</i>
 C:\opt\kotlinc-1.3.72\                 <i>( 58 MB)</i>
 C:\opt\kotlin-native-windows-1.3.72\   <i>(341 MB)</i>
@@ -96,7 +96,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       gradle 6.4.1, java 1.8.0_252, detekt-cli 1.9.1,
       kotlinc 1.3.72, kotlinc-native 1.3.72, ktlint 0.36.0
-      mvn 3.6.3, git 2.26.2.windows.1, diff 3.7, bash 4.4.23(1)-release
+      mvn 3.6.3, git 2.27.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\gradle-6.4.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_252-b09\bin\java.exe
@@ -107,9 +107,9 @@ We distinguish different sets of batch commands:
       C:\opt\kotlin-native-windows-1.3.72\bin\kotlinc-native.bat
       C:\opt\ktlint-0.36.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.26.2\bin\git.exe
-      C:\opt\Git-2.26.2\mingw64\bin\git.exe
-      C:\opt\Git-2.26.2\usr\bin\diff.exe
+      C:\opt\Git-2.27.0\bin\git.exe
+      C:\opt\Git-2.27.0\mingw64\bin\git.exe
+      C:\opt\Git-2.27.0\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -171,12 +171,12 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-6.4-bin.zip</a>                   <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-compiler-1.3.72.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-native-windows-1.3.72.zip</a>     <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.26.2-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.27.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/June 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -186,7 +186,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.26.2.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.27.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples

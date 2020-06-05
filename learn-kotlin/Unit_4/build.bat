@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+@rem only for interactive debugging !
 set _DEBUG=0
 
 @rem #########################################################################
@@ -34,6 +35,10 @@ if %_COMPILE%==1 (
     call :compile
     if not !_EXITCODE!==0 goto end
 )
+if %_DOC%==1 (
+    call :doc
+    if not !_EXITCODE!==0 goto end
+)
 if %_RUN%==1 (
     call :run
     if not !_EXITCODE!==0 goto end
@@ -62,7 +67,7 @@ set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=plain --reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-jvm-target 1.8 -Werror -d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-jvm-target 1.8 -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
@@ -101,22 +106,24 @@ if "%__ARG:~0,1%"=="-" (
 ) else (
     @rem subcommand
     if /i "%__ARG%"=="clean" ( set _CLEAN=1
-    ) else if /i "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
+    ) else if /i "%__ARG%"=="compile" ( set _COMPILE=1
     ) else if /i "%__ARG:~0,8%"=="compile:" (
         call :args_example "%__ARG:~8%"
         if not !_EXITCODE!==0 goto args_done
-        set _LINT=1& set _COMPILE=1
+        set _COMPILE=1
+    ) else if /i "%__ARG%"=="doc" ( set _DOC=1
     ) else if /i "%__ARG%"=="help" ( set _HELP=1
     ) else if /i "%__ARG%"=="lint" ( set _LINT=1
     ) else if /i "%__ARG:~0,5%"=="lint:" (
         call :args_example "%__ARG:~5%"
         if not !_EXITCODE!==0 goto args_done
         set _LINT=1
-    ) else if /i "%__ARG%"=="run" ( set _LINT=1& set _COMPILE=1& set _RUN=1
+    ) else if /i "%__ARG%"=="run" (
+        set _COMPILE=1& set _RUN=1
     ) else if /i "%__ARG:~0,4%"=="run:" (
         call :args_example "%__ARG:~4%"
         if not !_EXITCODE!==0 goto args_done
-        set _LINT=1& set _COMPILE=1& set _RUN=1
+        set _COMPILE=1& set _RUN=1
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
         set _EXITCODE=1
@@ -127,7 +134,7 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _EXAMPLE=%_EXAMPLE% _LINT=%_LINT% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DOC=%_DOC% _EXAMPLE=%_EXAMPLE% _LINT=%_LINT% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
@@ -192,11 +199,11 @@ if not defined __SOURCE_FILES (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
-rem prepend ! to negate the pattern in order to check only certain locations 
+@rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
 )
-call %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %_KTLINT_OPTS% %__SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -223,11 +230,16 @@ echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files 1>&2
 )
-call %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
+call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
 )
+goto :eof
+
+:doc
+@rem see https://github.com/Kotlin/dokka/releases
+echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
 goto :eof
 
 :run
@@ -237,7 +249,7 @@ if "%_EXAMPLE%"=="*" ( set __MAIN_CLASS=PrimitivesKt
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %__MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %__MAIN_CLASS%  1>&2
 )
-call %_KOTLIN_CMD% %_KOTLIN_OPTS% %__MAIN_CLASS%
+call "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
