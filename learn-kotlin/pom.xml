@@ -19,7 +19,7 @@
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
         <maven.jar.version>3.2.0</maven.jar.version>            <!-- Oct 2019 -->
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <exec.maven.version>1.6.0</exec.maven.version>          <!-- Mar 2017 -->
+        <exec.maven.version>3.0.0</exec.maven.version>          <!-- Mar 2017 -->
     </properties>
 
     <dependencies>

@@ -69,6 +69,7 @@ fun formatDateTime(localDateTime: LocalDateTime, formatString: String = "MM/dd/y
  * The driving force behind this little program.
  * Literally. It drives the program.
  */
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     // Exercise LocalDate functions
     val localDate = createLocalDate(year = 2018, month = 9, day = 2)

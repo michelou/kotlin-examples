@@ -38,6 +38,7 @@ fun addTwoExpression(first: Int, second: Int) = first + second
 /**
  * Main function to drive the program
  */
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     println("Add 2 + 2 via Block Body Function: ${addTwoBlock(2, 2)}")
     println("Add 2 + 2 via Expression Body Function: ${addTwoExpression(2, 2)}")

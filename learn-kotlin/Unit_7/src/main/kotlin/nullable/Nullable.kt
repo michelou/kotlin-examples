@@ -30,6 +30,7 @@ fun formatLocalDate(localDate: LocalDate, formatString: String): String {
     return localDate.format(dateTimeFormatter)
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
 
     var formatString: String? = null

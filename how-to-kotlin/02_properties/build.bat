@@ -8,7 +8,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -52,6 +51,7 @@ goto end
 @rem                    _SOURCE_FILES, _PKG_NAME
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -67,7 +67,7 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 @rem derives package name from project directory name
 set _PKG_NAME=
 for %%d in ("%~dp0") do (
-   set __DIR=%%~d
+   set "__DIR=%%~d"
    if "!__DIR:~-1!"=="\" set __DIR=!__DIR:~0,-1!
    for %%f in ("!__DIR!") do set _PKG_NAME=_%%~nf.
 )
@@ -76,14 +76,14 @@ set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.4 -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
 @rem option -o defined later in subroutine :args
-set _KOTLINC_NATIVE_OPTS=-e "%_PKG_NAME%main"
+set _KOTLINC_NATIVE_OPTS=-language-version 1.4 -e "%_PKG_NAME%main"
 goto :eof
 
 @rem input parameter: %*
@@ -151,17 +151,17 @@ goto :eof
 echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
 echo.
 echo   Options:
-echo     -debug        show commands executed by this script
-echo     -native       generated native executable
-echo     -timer        display total elapsed time
-echo     -verbose      display progress messages
+echo     -debug         show commands executed by this script
+echo     -native        generated native executable
+echo     -timer         display total elapsed time
+echo     -verbose       display progress messages
 echo.
 echo   Subcommands:
-echo     clean         delete generated files
-echo     compile       generate class files
-echo     doc           generate documentation
-echo     help          display this help message
-echo     lint          analyze Kotlin source files with KtLint
+echo     clean          delete generated files
+echo     compile        generate class files
+echo     doc            generate documentation
+echo     help           display this help message
+echo     lint           analyze Kotlin source files with KtLint
 echo     run[:^<name^>]   execute the generated program ^(default: Properties^)
 goto :eof
 
@@ -213,10 +213,10 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%" 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" %_KOTLINC_OPTS% "@%__ARG_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% "@%__ARG_FILE%"
+call "%_KOTLINC_CMD%" %_KOTLINC_OPTS% "@%__ARG_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -234,7 +234,7 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo %_KOTLINC_NATIVE_OPTS:\=\\% > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
 call %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 

@@ -7,7 +7,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -51,6 +50,7 @@ goto end
 @rem                    MAIN_CLASS, _EXE_FILE
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -69,13 +69,13 @@ set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-language-version 1.3 -Werror -d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.4 -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
-set _KOTLINC_NATIVE_OPTS=-language-version 1.3 -Werror -o "%_EXE_FILE%"
+set _KOTLINC_NATIVE_OPTS=-language-version 1.4 -o "%_EXE_FILE%"
 goto :eof
 
 rem input parameter: %*
@@ -204,10 +204,10 @@ for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 echo %_KOTLINC_OPTS:\=\\% > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
+call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

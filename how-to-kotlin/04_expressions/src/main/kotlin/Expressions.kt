@@ -2,6 +2,7 @@ package _04_expressions
 
 class Example(val a: Int, val b: String?, val c: Boolean)
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val ex = Example(1, null, true)
     with(ex) {

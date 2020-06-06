@@ -8,7 +8,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -51,6 +50,7 @@ goto end
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -145,7 +145,7 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _EXAMPLE=%_EXAMPLE% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DOC=%_DOC% _EXAMPLE=%_EXAMPLE% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
@@ -162,7 +162,7 @@ echo     clean             delete generated files
 echo     compile[:^<name^>]  generate class files
 echo     doc               generate documentation
 echo     help              display this help message
-echo     lint[:^<name^>]     analyze Kotlin source files and flag programming/stylistic errors
+echo     lint[:^<name^>]     analyze Kotlin source files with KtLint
 echo     run[:^<name^>]      execute the generated program
 echo   Valid names are: defaultargs ^(default^), functiontypes, namedargs, nullable
 goto :eof

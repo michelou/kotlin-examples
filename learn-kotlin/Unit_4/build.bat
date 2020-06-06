@@ -8,7 +8,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -51,6 +50,7 @@ goto end
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -169,7 +169,7 @@ echo   Subcommands:
 echo     clean             delete generated files
 echo     compile[:^<name^>]  generate class files
 echo     help              display this help message
-echo     lint[:^<name^>]     analyze Kotlin source files and flag programming/stylistic errors
+echo     lint[:^<name^>]     analyze Kotlin source files with KtLint
 echo     run[:^<name^>]      execute the generated program
 echo   Valid names are: All ^(default^), Boolean, Byte, Char, Double, Float, Int, Long, Short
 goto :eof
@@ -203,7 +203,7 @@ if not defined __SOURCE_FILES (
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
 )
-call "%_KTLINT_CMD%" %_KTLINT_OPTS% %__SOURCE_FILES%
+call %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

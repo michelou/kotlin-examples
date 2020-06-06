@@ -10,6 +10,7 @@ fun parseName(name: String): FullName {
     )
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val name = parseName("Jane Doe")
     val first = name.first

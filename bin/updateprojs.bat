@@ -28,8 +28,8 @@ set _JUNIT_VERSION_OLD=junitVersion=4.12
 set _JUNIT_VERSION_NEW=junitVersion=4.13
 
 @rem files gradle.properties
-set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.35.0/ktlint.jar
-set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.36.0/ktlint.jar
+set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.36.0/ktlint.jar
+set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.37.0/ktlint.jar
 
 @rem files pom.xml
 set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.3.71
@@ -44,8 +44,8 @@ set _MVN_JAR_VERSION_OLD=maven.jar.version^>3.1.2
 set _MVN_JAR_VERSION_NEW=maven.jar.version^>3.2.0
 
 @rem files pom.xml
-set _MVN_EXEC_VERSION_OLD=exec.maven.version^>1.5.0
-set _MVN_EXEC_VERSION_NEW=exec.maven.version^>1.6.0
+set _MVN_EXEC_VERSION_OLD=exec.maven.version^>1.6.0
+set _MVN_EXEC_VERSION_NEW=exec.maven.version^>3.0.0
 
 call :env
 if not %_EXITCODE%==0 goto end

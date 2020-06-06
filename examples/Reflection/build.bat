@@ -8,7 +8,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -45,13 +44,14 @@ if %_RUN%==1 (
 )
 goto end
 
-@rem ##########################################################################
+@rem #########################################################################
 @rem ## Subroutine
 
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
 @rem                    _SOURCE_FILES, MAIN_CLASS, _EXE_FILE
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -64,17 +64,19 @@ set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
 set _SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
+for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+    set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
+)
 
 set _MAIN_NAME=Reflection
 set _MAIN_CLASS=%_MAIN_NAME%Kt
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
 set _KTLINT_CMD=ktlint.bat
-set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
+set _KTLINT_OPTS="--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.3 -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
@@ -169,10 +171,10 @@ goto :eof
 
 :lint
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
-call %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES%
+call "%_KTLINT_CMD%" %_KTLINT_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -182,10 +184,10 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
+call "%_KOTLINC_CMD%" %_KOTLINC_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -200,14 +202,14 @@ goto :eof
 :run_jvm
 set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
-    echo %_ERROR_LABEL% Main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
+    echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
 )
-call %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS%
+call "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof

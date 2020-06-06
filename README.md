@@ -23,7 +23,7 @@ Optionally one may also install the following software:
 
 - [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
 - [detekt 1.9][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 6.4][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 6.5][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
 For instance our development environment looks as follows (*June 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
@@ -32,10 +32,10 @@ For instance our development environment looks as follows (*June 2020*) <sup id=
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.9.1\               <i>( 47 MB)</i>
 C:\opt\Git-2.27.0\                     <i>(271 MB)</i>
-C:\opt\gradle-6.4.1\                   <i>(109 MB)</i>
+C:\opt\gradle-6.5\                     <i>(110 MB)</i>
 C:\opt\kotlinc-1.3.72\                 <i>( 58 MB)</i>
 C:\opt\kotlin-native-windows-1.3.72\   <i>(341 MB)</i>
-C:\opt\ktlint-0.36.0\                  <i>( 42 MB)</i>
+C:\opt\ktlint-0.37.0\                  <i>( 42 MB)</i>
 </pre>
 <!--
 C:\opt\<a href="https://github.com/pinterest/ktlint/releases/">ktlint-0.35\</a>
@@ -49,7 +49,7 @@ C:\opt\<a href="https://github.com/pinterest/ktlint/releases/">ktlint-0.35\</a>
 This project is organized as follows:
 <pre style="font-size:80%;">
 bin\
-bin\kotlin\build.bat
+<a href="bin/kotlin/build.bat">bin\kotlin\build.bat</a>
 concurrency-in-kotlin\
 docs\
 examples\
@@ -94,18 +94,18 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; setenv -verbose</b>
    Tool versions:
-      gradle 6.4.1, java 1.8.0_252, detekt-cli 1.9.1,
-      kotlinc 1.3.72, kotlinc-native 1.3.72, ktlint 0.36.0
+      gradle 6.5, java 1.8.0_252, detekt-cli 1.9.1,
+      kotlinc 1.3.72, kotlinc-native 1.3.72, ktlint 0.37.0
       mvn 3.6.3, git 2.27.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\gradle-6.4.1\bin\gradle.bat
+      C:\opt\gradle-6.5\bin\gradle.bat
       C:\opt\jdk-1.8.0_252-b09\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
       C:\opt\detekt-cli-1.9.1\bin\detekt-cli.bat
       C:\opt\kotlinc-1.3.72\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.3.72\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.3.72\bin\kotlinc-native.bat
-      C:\opt\ktlint-0.36.0\ktlint.bat
+      C:\opt\ktlint-0.37.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
       C:\opt\Git-2.27.0\bin\git.exe
       C:\opt\Git-2.27.0\mingw64\bin\git.exe
@@ -113,6 +113,8 @@ We distinguish different sets of batch commands:
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
+
+<!-- ##################################################################### -->
 
 ## <span id="footnotes">Footnotes</span>
 
@@ -130,7 +132,7 @@ No Windows distribution is available from the <a href="https://github.com/pinter
 <p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as the <a href="http://www.lihaoyi.com/mill/index.html#windows">Mill assembly</a> distribution):
 </p>
 <ul style="margin:0 0 1em 20px;">
-<li>we create an installation directory <b><code>c:\opt\ktlint-0.36.0\</code></b>.</li>
+<li>we create an installation directory <b><code>c:\opt\ktlint-0.37.0\</code></b>.</li>
 <li>we download the shell script from the <a href="https://github.com/pinterest/ktlint">Github repository</a>.</i>
 <li>we extract the JAR file from the bash script (and check it with command <b><code>jar tf</code></b>).</li>
 <li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.bin"><b><code>ktlint_header.bin</code></b></a> and the extracted JAR file.</li>
@@ -139,25 +141,25 @@ No Windows distribution is available from the <a href="https://github.com/pinter
 Here are the performed operations:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<b>&gt; mkdir c:\opt\ktlint-0.36.0</b>
-<b>&gt; cd c:\opt\ktlint-0.36.0</b>
+<b>&gt; mkdir c:\opt\ktlint-0.37.0</b>
+<b>&gt; cd c:\opt\ktlint-0.37.0</b>
 &nbsp;
-<b>&gt; curl -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.36.0/ktlint</b>
+<b>&gt; curl -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.37.0/ktlint</b>
 <b>&gt; tail -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; jar tf ktlint.jar | findstr ktlint/Main</b>
 com/pinterest/ktlint/Main.class
-<b>&gt; copy /y /b o:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
+<b>&gt; copy /y /b k:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
 <b>&gt; del ktlint.jar ktlint.sh</b>
 </pre>
 <p style="margin:0 0 1em 20px;">
 The installation directory now contains one single file, namely <b><code>ktlint.bat</code></b>:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<b>&gt; dir /b c:\opt\ktlint-0.36.0</b>
+<b>&gt; dir /b c:\opt\ktlint-0.37.0</b>
 ktlint.bat
 &nbsp;
-<b>&gt; c:\opt\ktlint-0.36.0\ktlint.bat --version</b>
-0.36.0
+<b>&gt; c:\opt\ktlint-0.37.0\ktlint.bat --version</b>
+0.37.0
 </pre>
 
 <a name="footnote_03">[3]</a> ***Downloads*** [↩](#anchor_03)
@@ -168,7 +170,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.9.1.zip</a>                 <i>( 42 MB)</i>
-<a href="https://gradle.org/releases/">gradle-6.4-bin.zip</a>                   <i>( 97 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.5-bin.zip</a>                   <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-compiler-1.3.72.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-native-windows-1.3.72.zip</a>     <i>(125 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.27.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
@@ -192,7 +194,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/6.4.1/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/6.5/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
@@ -202,7 +204,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.36.0
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.37.0
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi

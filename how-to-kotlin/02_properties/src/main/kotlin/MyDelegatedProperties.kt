@@ -13,6 +13,7 @@ class Prop(var field: String) {
     }
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     var p1 by Prop("initial")
     var p2 by Prop("initial")

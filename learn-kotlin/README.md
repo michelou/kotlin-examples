@@ -9,12 +9,12 @@
   </tr>
 </table>
 
-## [Unit 4][unit_4]
+## <span id="unit_4">[Unit 4][unit_4]</span>
 
 This tutorial part presents the Kotlin primitive types and literals, i.e. [Boolean](Unit_4/src/main/kotlin/BooleanExample.kt), [Byte](Unit_4/src/main/kotlin/ByteExample.kt), [Char](Unit_4/src/main/kotlin/CharExample.kt), [Double](Unit_4/src/main/kotlin/DoubleExample.kt), [Float](Unit_4/src/main/kotlin/FloatExample.kt), [Int](Unit_4/src/main/kotlin/IntExample.kt), [Long](Unit_4/src/main/kotlin/LongExample.kt) and [Short](Unit_4/src/main/kotlin/ShortExample.kt).
 
 <pre style="font-size:80%;">
-<b>&gt; build</b>
+<b>&gt; <a href="Unit_4/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
@@ -42,14 +42,14 @@ The value of double(1.0e22) is: 1.0E22
 The value of double(-Double.MAX_VALUE) is: -1.7976931348623157E308
 </pre>
 
-## [Unit 5][unit_5]
+## <span id="unit_5">[Unit 5][unit_5]</span>
 
 This tutorial part presents Kotling binary operators and basic functions
 - either in source file [**`Examples.kt`**](Unit_5/src/main/kotlin/Examples.kt)
 - or in script file [**`Examples.kts`**](Unit_5/src/Examples.kts)
 
 <pre style="font-size:80%;">
-<b>&gt; build</b>
+<b>&gt; <a href="Unit_5/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
@@ -75,12 +75,12 @@ Execute Kotlin script file "src\Examples.kts"
 byte10 = 10
 </pre>
 
-## [Unit 6][unit_6]
+## <span id="unit_6">[Unit 6][unit_6]</span>
 
 This tutorial part introduces Kotlin classes, i.e. class [**`Person.kt`**](Unit_6/src/main/kotlin/example1/Person.kt).
 
 <pre style="font-size:80%;">
-<b>&gt; build</b>
+<b>&gt; <a href="Unit_6/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
@@ -97,12 +97,12 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Valid values: n=1..4 ^(default=2^)
 </pre>
 
-## [Unit 7][unit_7]
+## <span id="unit_7">[Unit 7][unit_7]</span>
 
 This tutorial part presents more advanced Kotlin features, such as default arguments, function types, names arguments and nullable variables i.e. [**`Default.kt`**](Unit_7/src/main/kotlin/defaultargs), [**`FunctionTypes.kt`**](Unit_7/src/main/kotlin/functiontypes), [**`Named.kt`**](Unit_7/src/main/kotlin/namedargs) and [**`Nullable.kt`**](Unit_7/src/main/kotlin/nullable).
 
 <pre style="font-size:80%;">
-<b>&gt; build</b>
+<b>&gt; <a href="Unit_7/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
@@ -119,7 +119,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Valid names are: defaultargs (default), functiontypes, namedargs, nullable
 </pre>
 
-## Footnotes
+## <span id="footnotes">Footnotes</span>
 
 <a name="footnote_01">[1]</a> ***Learn Kotlin* Tutorial** [↩](#anchor_01)
 

@@ -18,6 +18,7 @@ get() {
 val String.firstWord2: String
 get() = this.getFirstWord()
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     println("Jane Doe".getFirstWord())
     println("Jane Doe".firstWord)

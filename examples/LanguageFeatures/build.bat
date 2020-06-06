@@ -7,7 +7,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -26,6 +25,10 @@ if %_CLEAN%==1 (
     call :clean
     if not !_EXITCODE!==0 goto end
 )
+if %_DETEKT%==1 (
+    call :detekt
+    if not !_EXITCODE!==0 goto end
+)
 if %_LINT%==1 (
     call :lint
     if not !_EXITCODE!==0 goto end
@@ -34,19 +37,24 @@ if %_COMPILE%==1 (
     call :compile_%_TARGET%
     if not !_EXITCODE!==0 goto end
 )
+if %_DOC%==1 (
+    call :doc
+    if not !_EXITCODE!==0 goto end
+)
 if %_RUN%==1 (
     call :run_%_TARGET%
     if not !_EXITCODE!==0 goto end
 )
 goto end
 
-@rem ##########################################################################
+@rem #########################################################################
 @rem ## Subroutine
 
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
 @rem                    _SOURCE_FILES, MAIN_CLASS, _EXE_FILE
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -67,11 +75,14 @@ set _MAIN_NAME=LanguageFeatures
 set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
+set _DETEKT_CMD=detekt-cli.bat
+set _DETEKT_OPTS=--language-version 1.3 --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
+
 set _KTLINT_CMD=ktlint.bat
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-language-version 1.3 -cp "%_CLASSES_DIR%" -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
@@ -85,6 +96,7 @@ goto :eof
 :args
 set _CLEAN=0
 set _COMPILE=0
+set _DETEKT=0
 set _DOC=0
 set _HELP=0
 set _LINT=0
@@ -114,11 +126,12 @@ if "%__ARG:~0,1%"=="-" (
 ) else (
     @rem subcommand
     if /i "%__ARG%"=="clean" ( set _CLEAN=1
-    ) else if /i "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
+    ) else if /i "%__ARG%"=="compile" ( set _COMPILE=1
+    ) else if /i "%__ARG%"=="detekt" ( set _DETEKT=1
     ) else if /i "%__ARG%"=="doc" ( set _DOC=1
     ) else if /i "%__ARG%"=="help" ( set _HELP=1
     ) else if /i "%__ARG%"=="lint" ( set _LINT=1
-    ) else if /i "%__ARG%"=="run" ( set _LINT=1& set _COMPILE=1& set _RUN=1
+    ) else if /i "%__ARG%"=="run" ( set _COMPILE=1& set _RUN=1
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
         set _EXITCODE=1
@@ -129,7 +142,7 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DOC=%_DOC% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _VERBOSE=%_VERBOSE% 1>&2
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
@@ -145,6 +158,7 @@ echo.
 echo   Subcommands:
 echo     clean       delete generated files
 echo     compile     generate class files
+echo     detekt      analyze Kotlin source files with Detekt
 echo     doc         generate documentation
 echo     help        display this help message
 echo     lint        analyze Kotlin source files with KtLint
@@ -169,8 +183,24 @@ if not %ERRORLEVEL%==0 (
 )
 goto :eof
 
+:detekt
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_DETEKT_CMD% %_DETEKT_OPTS% 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
+)
+call %_DETEKT_CMD% %_DETEKT_OPTS%
+if not %ERRORLEVEL%==0 (
+    set _EXITCODE=1
+    goto :eof
+)
+if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
+    set __SIZE=0
+    for %%f in (%_TARGET_DIR%\detekt-report.xml) do set __SIZE=%%~zf
+    if !__SIZE! gtr 79 type "%_TARGET_DIR%\detekt-report.xml"
+)
+goto :eof
+
 :lint
-rem prepend ! to negate the pattern in order to check only certain locations 
+@rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
@@ -184,10 +214,10 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" %_KOTLINC_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(JVM^) 1>&2
 )
-call %_KOTLINC_CMD% %_KOTLINC_OPTS% %_SOURCE_FILES%
+call "%_KOTLINC_CMD%" %_KOTLINC_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -201,10 +231,10 @@ set /a __SHOW_ALL=_VERBOSE+_DEBUG
 if %__SHOW_ALL% gtr 0 ( set __KOTLINC_NATIVE_OPTS=-verbose %_KOTLINC_NATIVE_OPTS%
 ) else ( set __KOTLINC_NATIVE_OPTS=-nowarn %_KOTLINC_NATIVE_OPTS%
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
-call %_KOTLINC_NATIVE_CMD% %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
+call "%_KOTLINC_NATIVE_CMD%" %__KOTLINC_NATIVE_OPTS% %_SOURCE_FILES% 
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -223,10 +253,10 @@ if not exist "%__MAIN_CLASS_FILE%" (
     set _EXITCODE=1
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
 )
-call %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS%
+call "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -249,7 +279,7 @@ if not %ERRORLEVEL%==0 (
 )
 goto :eof
 
-rem output parameter: _DURATION
+@rem output parameter: _DURATION
 :duration
 set __START=%~1
 set __END=%~2
@@ -257,8 +287,8 @@ set __END=%~2
 for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
-rem ##########################################################################
-rem ## Cleanups
+@rem #########################################################################
+@rem ## Cleanups
 
 :end
 if %_TIMER%==1 (
