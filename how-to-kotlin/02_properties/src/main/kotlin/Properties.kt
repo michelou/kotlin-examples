@@ -6,8 +6,8 @@ val osAvoid: String
         if (_os == null) {
             println("Computing...")
             _os = System.getProperty("os.name") +
-                    " v" + System.getProperty("os.version") +
-                    " (" + System.getProperty("os.arch") + ")"
+                " v" + System.getProperty("os.version") +
+                " (" + System.getProperty("os.arch") + ")"
         }
         return _os!!
     }
@@ -17,7 +17,7 @@ val os: String by lazy {
     System.getProperty("os.name") +
         " v" + System.getProperty("os.version") +
         " (" + System.getProperty("os.arch") + ")"
-    }
+}
 
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {

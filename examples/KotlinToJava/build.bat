@@ -7,7 +7,6 @@ set _DEBUG=0
 @rem ## Environment setup
 
 set _EXITCODE=0
-set "_ROOT_DIR=%~dp0"
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -55,6 +54,7 @@ goto end
 @rem                    _KT_SOURCE_FILES, MAIN_CLASS, _EXE_FILE
 :env
 set _BASENAME=%~n0
+set "_ROOT_DIR=%~dp0"
 
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
@@ -80,8 +80,9 @@ set "_EXE_FILE=%_TARGET_DIR%\%_KT_MAIN_NAME%.exe"
 set _DETEKT_CMD=detekt-cli.bat
 set _DETEKT_OPTS=--language-version 1.3 --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
 
-set _KTLINT_CMD=ktlint.bat
-set _KTLINT_OPTS=--color --reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
+@rem full path required (limitation of ktlint.bat)
+for /f %%f in ('where ktlint.bat') do set "_KTLINT_CMD=%%f"
+set _KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
 set _KOTLINC_CMD=kotlinc.bat
 set _KOTLINC_OPTS=-language-version 1.3 -Werror -d "%_CLASSES_DIR%"
@@ -160,7 +161,7 @@ goto :args_loop
 set _STDOUT_REDIRECT=1^>NUL
 if %_DEBUG%==1 set _STDOUT_REDIRECT=1^>CON
 
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
@@ -304,9 +305,38 @@ if not %ERRORLEVEL%==0 (
 )
 goto :eof
 
+@rem output parameter: _LIBS_CPATH
+:libs_cpath
+for %%f in ("%~dp0..") do set "__BATCH_FILE=%%~sf\cpath.bat"
+if not exist "%__BATCH_FILE%" (
+    echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
+call "%__BATCH_FILE%" %_DEBUG%
+set _LIBS_CPATH=%_CPATH%
+goto :eof
+
 :doc
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
+set __JAVA_CMD=java.exe
+set __JAVA_OPTS=-classpath "%_LIBS_CPATH%"
+
 @rem see https://github.com/Kotlin/dokka/releases
-echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
+set __DOKKA_MAIN=org.jetbrains.dokka.MainKt
+set __DOKKA_ARGS=-output "%_TARGET_DOCS_DIR%" -format html -generateIndexPages
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%__JAVA_CMD%" %__JAVA_OPTS% %__DOKKA_MAIN% %__DOKKA_ARGS% 1>&2
+) else if %_VERBOSE%==1 ( echo Generate documentation with Dokka 1>&2
+)
+call "%__JAVA_CMD%" %__JAVA_OPTS% %__DOKKA_MAIN% %__DOKKA_ARGS%
+if not %ERRORLEVEL%==0 (
+   set _EXITCODE=1
+   goto :eof
+)
 goto :eof
 
 :run
@@ -338,11 +368,12 @@ goto :eof
 
 :run_native
 if not exist "%_EXE_FILE%" (
+    echo %_ERROR_LABEL% Kotlin executable file not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
 	goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_EXE_FILE% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin native application !_EXE_FILE:%_ROOT_DIR%\=! 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin native application "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
@@ -358,11 +389,11 @@ if not exist "%__MAIN_CLASS_FILE%" (
     set _EXITCODE=1
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_JAVA_CMD% %_JAVA_OPTS% %_JAVA_MAIN_CLASS% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %_JAVA_OPTS% %_JAVA_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_JAVA_MAIN_CLASS%  1>&2
 ) else ( echo.
 )
-call %_JAVA_CMD% %_JAVA_OPTS% %_JAVA_MAIN_CLASS%
+call "%_JAVA_CMD%" %_JAVA_OPTS% %_JAVA_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -376,7 +407,7 @@ if not exist "%__USER_KOTLIN_DIR%" mkdir "%__USER_KOTLIN_DIR%"
 set "__XML_FILE=%__USER_KOTLIN_DIR%\java_checks.xml"
 if not exist "%__XML_FILE%" call :checkstyle_xml "%__XML_FILE%"
 )
-set __JAR_VERSION=8.32
+set __JAR_VERSION=8.33
 set __JAR_NAME=checkstyle-%__JAR_VERSION%-all.jar
 set __JAR_URL=https://github.com/checkstyle/checkstyle/releases/download/checkstyle-%__JAR_VERSION%/%__JAR_NAME%
 set "__JAR_FILE=%__USER_KOTLIN_DIR%\%__JAR_NAME%"

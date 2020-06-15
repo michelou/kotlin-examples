@@ -72,7 +72,8 @@ for %%d in ("%~dp0") do (
    for %%f in ("!__DIR!") do set _PKG_NAME=_%%~nf.
 )
 
-set _KTLINT_CMD=ktlint.bat
+@rem full path required (limitation of ktlint.bat)
+for /f %%f in ('where ktlint.bat') do set "_KTLINT_CMD=%%f"
 set _KTLINT_OPTS=--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
@@ -143,7 +144,7 @@ set _MAIN_CLASS=%_PKG_NAME%%__MAIN_NAME%Kt
 set _EXE_FILE=%_TARGET_DIR%\%__MAIN_NAME%.exe
 set _KOTLINC_NATIVE_OPTS=-o "%_EXE_FILE%" %_KOTLINC_NATIVE_OPTS%
 
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DOC=%_DOC% _MAIN_CLASS=%_MAIN_CLASS% _RUN=%_RUN% _VERBOSE=%_VERBOSE%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DOC=%_DOC% _LINT=%_LINT% _MAIN_CLASS=%_MAIN_CLASS% _RUN=%_RUN% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE%
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
@@ -189,10 +190,10 @@ if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
 ) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
 )
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %_SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
 )
-call %_KTLINT_CMD% %__KTLINT_OPTS% %_SOURCE_FILES%
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% %_SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -244,9 +245,38 @@ if not %ERRORLEVEL%==0 (
 )
 goto :eof
 
+@rem output parameter: _LIBS_CPATH
+:libs_cpath
+for %%f in ("%~dp0..") do set "__BATCH_FILE=%%~sf\cpath.bat"
+if not exist "%__BATCH_FILE%" (
+    echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
+call "%__BATCH_FILE%" %_DEBUG%
+set _LIBS_CPATH=%_CPATH%
+goto :eof
+
 :doc
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
+set __JAVA_CMD=java.exe
+set __JAVA_OPTS=-classpath "%_LIBS_CPATH%"
+
 @rem see https://github.com/Kotlin/dokka/releases
-echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
+set __DOKKA_MAIN=org.jetbrains.dokka.MainKt
+set __DOKKA_ARGS=-output "%_TARGET_DOCS_DIR%" -format html -generateIndexPages
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%__JAVA_CMD%" %__JAVA_OPTS% %__DOKKA_MAIN% %__DOKKA_ARGS% 1>&2
+) else if %_VERBOSE%==1 ( echo Generate documentation with Dokka 1>&2
+)
+call "%__JAVA_CMD%" %__JAVA_OPTS% %__DOKKA_MAIN% %__DOKKA_ARGS%
+if not %ERRORLEVEL%==0 (
+   set _EXITCODE=1
+   goto :eof
+)
 goto :eof
 
 :run_jvm

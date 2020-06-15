@@ -74,7 +74,8 @@ set _MAIN_NAME=Functions
 set _MAIN_CLASS=%__PKG_NAME%%_MAIN_NAME%Kt
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
-set _KTLINT_CMD=ktlint.bat
+@rem full path required (limitation of ktlint.bat)
+for /f %%f in ('where ktlint.bat') do set "_KTLINT_CMD=%%f"
 set _KTLINT_OPTS="--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
 set _KOTLINC_CMD=kotlinc.bat
@@ -234,19 +235,48 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo %_KOTLINC_NATIVE_OPTS:\=\\% > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
 )
-call %_KOTLINC_NATIVE_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
+call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
 )
 goto :eof
 
+@rem output parameter: _LIBS_CPATH
+:libs_cpath
+for %%f in ("%~dp0..") do set "__BATCH_FILE=%%~sf\cpath.bat"
+if not exist "%__BATCH_FILE%" (
+    echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
+call "%__BATCH_FILE%" %_DEBUG%
+set _LIBS_CPATH=%_CPATH%
+goto :eof
+
 :doc
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
+set __JAVA_CMD=java.exe
+set __JAVA_OPTS=-classpath "%_LIBS_CPATH%"
+
 @rem see https://github.com/Kotlin/dokka/releases
-echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
+set __DOKKA_MAIN=org.jetbrains.dokka.MainKt
+set __DOKKA_ARGS=-output "%_TARGET_DOCS_DIR%" -format html -generateIndexPages
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%__JAVA_CMD%" %__JAVA_OPTS% %__DOKKA_MAIN% %__DOKKA_ARGS% 1>&2
+) else if %_VERBOSE%==1 ( echo Generate documentation with Dokka 1>&2
+)
+call "%__JAVA_CMD%" %__JAVA_OPTS% %__DOKKA_MAIN% %__DOKKA_ARGS%
+if not %ERRORLEVEL%==0 (
+   set _EXITCODE=1
+   goto :eof
+)
 goto :eof
 
 :run_jvm
@@ -256,10 +286,10 @@ if not exist "%__MAIN_CLASS_FILE%" (
     set _EXITCODE=1
     goto :eof
 )
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
 )
-call %_KOTLIN_CMD% %_KOTLIN_OPTS% %_MAIN_CLASS%
+call "%_KOTLIN_CMD%" %_KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    echo %_ERROR_LABEL% Execution failure ^(%_MAIN_CLASS%^) 1>&2
    set _EXITCODE=1

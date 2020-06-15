@@ -34,7 +34,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 For instance, command **`build clean run`** executes all examples while command **`build clean run:Double`** executes *only* example [**`DoubleExample.kt`**](Unit_4/src/main/kotlin/DoubleExample.kt):
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run:Double</b>
+<b>&gt; <a href="Unit_4/build.bat">build</a> clean run:Double</b>
 The value of doubleMin is: 4.9E-324
 The value of doubleMax is: 1.7976931348623157E308
 The value of double(1000000000000.0001) is: 1.0000000000000001E12
@@ -70,7 +70,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 For instance, command **`build -script -verbose run`** executes the script file [`Examples.kts`](Unit_5/src/Examples.kts) instead of the source file [`Examples.kt`](Unit_5/src/main/kotlin/Examples.kt):
 
 <pre style="font-size:80%;">
-<b>&gt; build -script -verbose run</b>
+<b>&gt; <a href="Unit_5/build.bat">build</a> -script -verbose run</b>
 Execute Kotlin script file "src\Examples.kts"
 byte10 = 10
 </pre>
@@ -94,7 +94,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
     help           display this help message
     lint[:&lt;n&gt;]     analyze Kotlin source files and flag programming/stylistic errors
     run[:&lt;n&gt;]      execute the generated program
-  Valid values: n=1..4 ^(default=2^)
+  Valid values: n=1..4 (default=2)
 </pre>
 
 ## <span id="unit_7">[Unit 7][unit_7]</span>

@@ -2,8 +2,8 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin logo"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">This document presents <a href="https://kotlinlang.org/">Kotlin</a> related resources we collected so far.
+  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin logo"/></a></td>
+  <td style="border:0;padding:0;vertical-align:text-top;">This document presents <a href="https://kotlinlang.org/" rel="external">Kotlin</a> related resources we collected so far.
   </td>
   </tr>
 </table>
@@ -37,7 +37,7 @@
 ## <span id="tools">Tools</span>
 
 - [detekt][detekt_home]: Static code analysis for Kotlin.
-- [The Gradle build system- Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
+- [The Gradle build system - Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span>
 

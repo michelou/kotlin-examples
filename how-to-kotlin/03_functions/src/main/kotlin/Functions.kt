@@ -8,15 +8,14 @@ fun String.getFirstWord(separator: String = " "): String {
 
 // Extension properties
 val String.firstWord: String
-
-get() {
-    val index = indexOf(" ")
-    return if (index < 0) this else substring(0, index)
-}
+    get() {
+        val index = indexOf(" ")
+        return if (index < 0) this else substring(0, index)
+    }
 
 // Extension properties (combined)
 val String.firstWord2: String
-get() = this.getFirstWord()
+    get() = this.getFirstWord()
 
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
