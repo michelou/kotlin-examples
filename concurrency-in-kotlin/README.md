@@ -1,10 +1,10 @@
-# <span id="top">*Concurrency in Kotlin* Book</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
+# <span id="top">Book &ndash; *Concurrency in Kotlin*</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin logo"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from the <a href="https://www.packtpub.com/application-development/learning-concurrency-kotlin">Learn Concurrency in Kotlin</a> book <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.<br/>
-  It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
+  It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -17,7 +17,7 @@ Code examples can be built/run with the following tools:
 | Maven      | `mvn.cmd`    | `pom.xml`          |
 | Batch      | `build.bat`  | *none*             |
 
-## Coroutine Example
+## <span id="coroutine_example">Coroutine Example</span>
 
 <pre style="font-size:80%;">
 <b>&gt; gradle clean run</b>
@@ -36,7 +36,7 @@ Finished 10000 in main
 Took 1450 ms
 </pre>
 
-## Concurrent Example
+## <span id="concurrent_example">Concurrent Example</span>
 
 <pre style="font-size:80%;">
 <b>&gt; gradle clean run</b>
@@ -49,7 +49,7 @@ Hello, Susan Calvin
 Execution took 1034 ms
 </pre>
 
-## Footnotes
+## <span id="footnotes">Footnotes</span>
 
 <a name="footnote_01">[1]</a> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
     <div style="margin:-12px 0 0 20px;">

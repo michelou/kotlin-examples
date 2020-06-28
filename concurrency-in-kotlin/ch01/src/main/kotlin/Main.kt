@@ -1,6 +1,6 @@
 // Concurrency in Kotlin, Packt 2018, pp. 11-13
 
-package ch01
+package chapter1
 
 import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.Job
@@ -26,10 +26,11 @@ suspend fun createCoroutines(amount: Int) = coroutineScope {
     }
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) = runBlocking {
     println("${Thread.activeCount()} threads active at the start")
     val time = measureTimeMillis {
-        createCoroutines(10_000)
+        createCoroutines(10)
     }
     println("${Thread.activeCount()} threads active at the end")
     println("Took $time ms")

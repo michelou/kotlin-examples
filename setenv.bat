@@ -22,14 +22,23 @@ if %_HELP%==1 (
     call :help
     exit /b !_EXITCODE!
 )
+
+set _BAZEL_PATH=
+set _CFR_PATH=
 set _GRADLE_PATH=
 set _JAVA_PATH=
 set _KOTLIN_PATH=
-set _KOTLINE_NATIVE_PATH=
+set _KOTLIN_NATIVE_PATH=
 set _DETEKT_PATH=
 set _KTLINT_PATH=
 set _MAVEN_PATH=
 set _GIT_PATH=
+
+call :bazel
+if not %_EXITCODE%==0 goto end
+
+call :cfr
+if not %_EXITCODE%==0 goto end
 
 call :gradle
 if not %_EXITCODE%==0 goto end
@@ -65,13 +74,56 @@ goto end
 set _BASENAME=%~n0
 set "_ROOT_DIR=%~dp0"
 
+call :env_colors
+set _DEBUG_LABEL=%_NORMAL_BG_CYAN%[%_BASENAME%]%_RESET%
+set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
+set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
+goto :eof
+
+:env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _DEBUG_LABEL=[46m[%_BASENAME%][0m
-set _ERROR_LABEL=[91mError[0m:
-set _WARNING_LABEL=[93mWarning[0m:
+set _RESET=[0m
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
 
-@rem for %%f in ("%ProgramFiles%") do set _PROGRAM_FILES=%%~sf
+@rem normal foreground colors
+set _NORMAL_FG_BLACK=[30m
+set _NORMAL_FG_RED=[31m
+set _NORMAL_FG_GREEN=[32m
+set _NORMAL_FG_YELLOW=[33m
+set _NORMAL_FG_BLUE=[34m
+set _NORMAL_FG_MAGENTA=[35m
+set _NORMAL_FG_CYAN=[36m
+set _NORMAL_FG_WHITE=[37m
+
+@rem normal background colors
+set _NORMAL_BG_BLACK=[40m
+set _NORMAL_BG_RED=[41m
+set _NORMAL_BG_GREEN=[42m
+set _NORMAL_BG_YELLOW=[43m
+set _NORMAL_BG_BLUE=[44m
+set _NORMAL_BG_MAGENTA=[45m
+set _NORMAL_BG_CYAN=[46m
+set _NORMAL_BG_WHITE=[47m
+
+@rem strong foreground colors
+set _STRONG_FG_BLACK=[90m
+set _STRONG_FG_RED=[91m
+set _STRONG_FG_GREEN=[92m
+set _STRONG_FG_YELLOW=[93m
+set _STRONG_FG_BLUE=[94m
+set _STRONG_FG_MAGENTA=[95m
+set _STRONG_FG_CYAN=[96m
+set _STRONG_FG_WHITE=[97m
+
+@rem strong background colors
+set _STRONG_BG_BLACK=[100m
+set _STRONG_BG_RED=[101m
+set _STRONG_BG_GREEN=[102m
+set _STRONG_BG_YELLOW=[103m
+set _STRONG_BG_BLUE=[104m
 goto :eof
 
 @rem input parameter: %*
@@ -109,14 +161,79 @@ if %_DEBUG%==1 echo %_DEBUG_LABEL% _HELP=%_HELP% _VERBOSE=%_VERBOSE% 1>&2
 goto :eof
 
 :help
-echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
+if %_VERBOSE%==1 (
+    set __BEG_P=%_STRONG_FG_CYAN%%_UNDERSCORE%
+    set __BEG_O=%_STRONG_FG_GREEN%
+    set __BEG_N=%_NORMAL_FG_YELLOW%
+    set __END=%_RESET%
+) else (
+    set __BEG_P=
+    set __BEG_O=
+    set __BEG_N=
+    set __END=
+)
+echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
-echo   Options:
-echo     -debug      display commands executed by this script
-echo     -verbose    display environment settings
+echo   %__BEG_P%Options:%__END%
+echo     %__BEG_O%-debug%__END%      display commands executed by this script
+echo     %__BEG_O%-verbose%__END%    display environment settings
 echo.
-echo   Subcommands:
-echo     help        display this help message
+echo   %__BEG_P%Subcommands:%__END%
+echo     %__BEG_O%help%__END%        display this help message
+goto :eof
+
+@rem output parameter(s): _BAZEL_PATH
+:bazel
+set _BAZEL_PATH=
+
+set __BAZEL_HOME=
+set __BAZEL_CMD=
+for /f %%f in ('where bazel.exe 2^>NUL') do set "__BAZEL_CMD=%%f"
+if defined __BAZEL_CMD (
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Bazel executable found in PATH 1>&2
+    for /f "delims=" %%i in ("%__BAZEL_CMD%") do set "__BAZEL_HOME=%%~dpi"
+    @rem keep _BAZEL_PATH undefined since executable already in path
+    goto :eof
+) else if defined BAZEL_HOME (
+    set "__BAZEL_HOME=%BAZEL_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable BAZEL_HOME 1>&2
+) else (
+    set "__PATH=%ProgramFiles%"
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "__BAZEL_HOME=!__PATH!\%%f"
+    if not defined __BAZEL_HOME (
+        set __PATH=C:\opt
+        for /f %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "__BAZEL_HOME=!__PATH!\%%f"
+    )
+)
+if not exist "%__BAZEL_HOME%\bazel.exe" (
+    echo %_ERROR_LABEL% Bazel executable not found ^("%__BAZEL_HOME%"^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set "_BAZEL_PATH=;%__BAZEL_HOME%"
+goto :eof
+
+@rem http://www.benf.org/other/cfr/
+:cfr
+where /q cfr.bat
+if %ERRORLEVEL%==0 goto :eof
+
+if defined CFR_HOME (
+    set "_CFR_HOME=%CFR_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable CFR_HOME 1>&2
+) else (
+    set _PATH=C:\opt
+    for /f %%f in ('dir /ad /b "!_PATH!\cfr*" 2^>NUL') do set "_CFR_HOME=!_PATH!\%%f"
+    if defined _CFR_HOME (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default cfr installation directory !_CFR_HOME! 1>&2
+    )
+)
+if not exist "%_CFR_HOME%\bin\cfr.bat" (
+    echo %_ERROR_LABEL% cfr executable not found ^(%_CFR_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set "_CFR_PATH=;%_CFR_HOME%\bin"
 goto :eof
 
 @rem output parameter(s): _GRADLE_HOME, _GRADLE_PATH
@@ -129,7 +246,7 @@ for /f %%f in ('where gradle.bat 2^>NUL') do set "__GRADLE_CMD=%%f"
 if defined __GRADLE_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Gradle executable found in PATH 1>&2
     for %%i in ("%__GRADLE_CMD%") do set "__GRADLE_BIN_DIR=%%~dpi"
-    for %%f in ("!__GRADLE_BIN_DIR!..") do set "_GRADLE_HOME=%%~dpf"
+    for %%f in ("!__GRADLE_BIN_DIR!\.") do set "_GRADLE_HOME=%%~dpf"
     @rem keep _GRADLE_PATH undefined since executable already in path
     goto :eof
 ) else if defined GRADLE_HOME (
@@ -161,7 +278,7 @@ for /f %%f in ('where javac.exe 2^>NUL') do set "__JAVAC_CMD=%%f"
 if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
     for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
-    for %%f in ("!__JAVA_BIN_DIR!..") do set "_JAVA_HOME=%%~dpf"
+    for %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
     @rem keep _JAVA_PATH undefined since executable already in path
     goto :eof
 ) else if defined JAVA_HOME (
@@ -260,7 +377,7 @@ for /f %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
 if defined __DETEKT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Detekt executable found in PATH 1>&2
     for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
-    for %%f in ("!__JAVA_BIN_DIR!..") do set "_JAVA_HOME=%%~dpf"
+    for %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
     @rem keep _DETEKT_PATH undefined since executable already in path
     goto :eof
 ) else if defined DETEKT_HOME (
@@ -374,6 +491,11 @@ set "__VERSIONS_LINE1=  "
 set "__VERSIONS_LINE2=  "
 set "__VERSIONS_LINE3=  "
 set __WHERE_ARGS=
+where /q bazel.exe
+if %ERRORLEVEL%==0 (
+    for /f "tokens=1,*" %%i in ('bazel.exe --version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% bazel %%j,"
+    set __WHERE_ARGS=%__WHERE_ARGS% bazel.exe
+)
 where /q gradle.bat
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('gradle.bat -version 2^<^&1 ^| findstr Gradle') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% gradle %%~j,"
@@ -403,6 +525,11 @@ where /q ktlint.bat
 if %ERRORLEVEL%==0 (
     for /f "tokens=*" %%i in ('ktlint.bat --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
     set __WHERE_ARGS=%__WHERE_ARGS% ktlint.bat
+)
+where /q cfr.bat
+if %ERRORLEVEL%==0 (
+    for /f "tokens=1,*" %%i in ('cfr.bat 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
+    set __WHERE_ARGS=%__WHERE_ARGS% cfr.bat
 )
 where /q mvn.cmd
 if %ERRORLEVEL%==0 (
@@ -439,7 +566,7 @@ endlocal & (
     if not defined JAVA_HOME set "JAVA_HOME=%_JAVA_HOME%"
     if not defined KOTLIN_HOME set "KOTLIN_HOME=%_KOTLIN_HOME%"
     if not defined KOTLIN_NATIVE_HOME set "KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%"
-    set "PATH=%_JAVA_PATH%%PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_DETEKT_PATH%%_KTLINT_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
+    set "PATH=%_JAVA_PATH%%PATH%%_BAZEL_PATH%%_CFR_PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_DETEKT_PATH%%_KTLINT_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

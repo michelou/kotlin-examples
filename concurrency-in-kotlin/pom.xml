@@ -14,7 +14,7 @@
 
         <kotlin.version>1.3.72</kotlin.version>
         <!-- see https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.3.5</kotlinx.version>
+        <kotlinx.version>1.3.7</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.3</kotlin.compiler.languageVersion>
 

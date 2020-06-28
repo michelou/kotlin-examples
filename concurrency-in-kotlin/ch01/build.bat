@@ -53,11 +53,10 @@ goto end
 set _BASENAME=%~n0
 set "_ROOT_DIR=%~dp0"
 
-@rem ANSI colors in standard Windows 10 shell
-@rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _DEBUG_LABEL=[46m[%_BASENAME%][0m
-set _ERROR_LABEL=[91mError[0m:
-set _WARNING_LABEL=[93mWarning[0m:
+call :env_colors
+set _DEBUG_LABEL=%_NORMAL_BG_CYAN%[%_BASENAME%]%_RESET%
+set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
+set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
 set "_TARGET_DIR=%_ROOT_DIR%target"
@@ -67,13 +66,7 @@ set _SOURCE_FILES=
 for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
     set _SOURCE_FILES=!_SOURCE_FILES! "%%f"
 )
-rem derives package name from project directory name
-set __PKG_NAME=
-for %%d in ("%~dp0") do (
-   set __DIR=%%~d
-   if "!__DIR:~-1!"=="\" set __DIR=!__DIR:~0,-1!
-   for %%f in ("!__DIR!") do set __PKG_NAME=%%~nf.
-)
+set __PKG_NAME=chapter1.
 set _MAIN_NAME=Main
 set _MAIN_CLASS=%__PKG_NAME%%_MAIN_NAME%Kt
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
@@ -85,13 +78,59 @@ set _KOTLIN_CPATH=
 for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do set "_KOTLIN_CPATH=!_KOTLIN_CPATH!%%f;"
 
 set _KOTLINC_CMD=kotlinc.bat
-set _KOTLINC_OPTS=-Werror -kotlin-home "%KOTLIN_HOME%" -cp "%_KOTLIN_CPATH%" -d "%_CLASSES_DIR%"
+set _KOTLINC_OPTS=-kotlin-home "%KOTLIN_HOME%" -cp "%_KOTLIN_CPATH%" -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_KOTLIN_CPATH%%_CLASSES_DIR%"
 
 set _KOTLINC_NATIVE_CMD=kotlinc-native.bat
 set _KOTLINC_NATIVE_OPTS=-Werror -kotlin-home "%KOTLIN_HOME%" -o "%_EXE_FILE%" -e "%__PKG_NAME%main"
+goto :eof
+
+:env_colors
+@rem ANSI colors in standard Windows 10 shell
+@rem see https://gist.github.com/mlocati/#file-win10colors-cmd
+set _RESET=[0m
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+
+@rem normal foreground colors
+set _NORMAL_FG_BLACK=[30m
+set _NORMAL_FG_RED=[31m
+set _NORMAL_FG_GREEN=[32m
+set _NORMAL_FG_YELLOW=[33m
+set _NORMAL_FG_BLUE=[34m
+set _NORMAL_FG_MAGENTA=[35m
+set _NORMAL_FG_CYAN=[36m
+set _NORMAL_FG_WHITE=[37m
+
+@rem normal background colors
+set _NORMAL_BG_BLACK=[40m
+set _NORMAL_BG_RED=[41m
+set _NORMAL_BG_GREEN=[42m
+set _NORMAL_BG_YELLOW=[43m
+set _NORMAL_BG_BLUE=[44m
+set _NORMAL_BG_MAGENTA=[45m
+set _NORMAL_BG_CYAN=[46m
+set _NORMAL_BG_WHITE=[47m
+
+@rem strong foreground colors
+set _STRONG_FG_BLACK=[90m
+set _STRONG_FG_RED=[91m
+set _STRONG_FG_GREEN=[92m
+set _STRONG_FG_YELLOW=[93m
+set _STRONG_FG_BLUE=[94m
+set _STRONG_FG_MAGENTA=[95m
+set _STRONG_FG_CYAN=[96m
+set _STRONG_FG_WHITE=[97m
+
+@rem strong background colors
+set _STRONG_BG_BLACK=[100m
+set _STRONG_BG_RED=[101m
+set _STRONG_BG_GREEN=[102m
+set _STRONG_BG_YELLOW=[103m
+set _STRONG_BG_BLUE=[104m
 goto :eof
 
 rem input parameter: %*
@@ -148,21 +187,32 @@ if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TI
 goto :eof
 
 :help
-echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
+if %_VERBOSE%==1 (
+    set __BEG_P=%_STRONG_FG_CYAN%%_UNDERSCORE%
+    set __BEG_O=%_STRONG_FG_GREEN%
+    set __BEG_N=%_NORMAL_FG_YELLOW%
+    set __END=%_RESET%
+) else (
+    set __BEG_P=
+    set __BEG_O=
+    set __BEG_N=
+    set __END=
+)
+echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
-echo   Options:
-echo     -debug      show commands executed by this script
-echo     -native     generate native executable
-echo     -timer      display total elapsed time
-echo     -verbose    display progress messages
+echo   %__BEG_P%Options:%__END%
+echo     %__BEG_O%-debug%__END%      show commands executed by this script
+echo     %__BEG_O%-native%__END%     generate native executable
+echo     %__BEG_O%-timer%__END%      display total elapsed time
+echo     %__BEG_O%-verbose%__END%    display progress messages
 echo.
-echo   Subcommands:
-echo     clean       delete generated files
-echo     compile     generate class files
-echo     doc         generate documentation
-echo     help        display this help message
-echo     lint        analyze Kotlin source files with KtLint
-echo     run         execute the generated program
+echo   %__BEG_P%Subcommands:%__END%
+echo     %__BEG_O%clean%__END%       delete generated files
+echo     %__BEG_O%compile%__END%     generate class files
+echo     %__BEG_O%doc%__END%         generate documentation
+echo     %__BEG_O%help%__END%        display this help message
+echo     %__BEG_O%lint%__END%        analyze Kotlin source files with %__BEG_N%KtLint%__END%
+echo     %__BEG_O%run%__END%         execute the generated program
 goto :eof
 
 :clean

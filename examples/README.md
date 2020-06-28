@@ -74,7 +74,7 @@ Hello World!
 Command [**`build -native clean run`**](HelloWorld/build.bat) generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>:
 
 <pre style="font-size:80%;">
-<b>&gt; build -native clean run</b>
+<b>&gt; <a href="HelloWorld/build.bat">build</a> -native clean run</b>
 Hello World!
 &nbsp;
 <b>&gt; tree /a /f target | findstr /v "^[A-Z]"</b>
@@ -99,7 +99,7 @@ Hello World!
 Either command [**`build clean run`**](JavaToKotlin/build.bat) or command [**`gradle -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="JavaToKotlin/build.bat">build</a> clean run</b>
 name=&lt;name&gt; active=true
 name=Bob active=true
 three=3
@@ -117,7 +117,7 @@ See Kotlin reference documentation: [Calling Java code from Kotlin][java_kotlin]
 Either command [**`build clean run`**](KotlinToJava/build.bat) or command [**`gradle -q clean run runJava`**](KotlinToJava/build.gradle) compiles the source files [**`JavaInteropt.java`**](KotlinToJava/src/main/java/JavaInteropt.java) and [**`JavaInterop.kt`**](KotlinToJava/src/main/kotlin/JavaInterop.kt) and produces the following output (Kotlin output first and then Java output):
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="KotlinToJava/build.bat">build</a> clean run</b>
 [kt] this is a message: a message
 [kt] another message: a message
 &nbsp;
@@ -168,7 +168,7 @@ null
 Command [**`build -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
 
 <pre style="font-size:80%;">
-<b>&gt; build -timer clean run</b>
+<b>&gt; <a href="Reflection/build.bat">build</a> -timer clean run</b>
 Source code:
     data class Person(
         val name: String,

@@ -1,6 +1,6 @@
 // Concurrency in Kotlin, Packt, 2018, pp.31-32
 
-package ch01_2
+package chapter1_2
 
 import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.async
@@ -35,6 +35,7 @@ fun concurrentExample() = runBlocking {
     println("Execution took $time ms")
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     nonConcurrentExample() // Execution took 2032 ms
     println()
