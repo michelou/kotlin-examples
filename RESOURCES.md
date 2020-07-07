@@ -22,6 +22,7 @@
 ## <span id="blogs">Blogs</span>
 
 - [Jebrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
+- [Getting Started Unit Testing with Kotlin](https://spin.atomicobject.com/2018/10/07/kotlin-unit-testing/) by Molly Alger, October 7, 2018.
 
 ## <span id="books">Books</span>
 

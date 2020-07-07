@@ -52,18 +52,19 @@ goto end
 set _BASENAME=%~n0
 set "_ROOT_DIR=%~dp0"
 
-@rem ANSI colors in standard Windows 10 shell
-@rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _DEBUG_LABEL=[46m[%_BASENAME%][0m
-set _ERROR_LABEL=[91mError[0m:
-set _WARNING_LABEL=[93mWarning[0m:
+call :env_colors
+set _DEBUG_LABEL=%_NORMAL_BG_CYAN%[%_BASENAME%]%_RESET%
+set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
+set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
 set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
+set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 
-set _KTLINT_CMD=ktlint.bat
+@rem full path required (limitation of ktlint.bat)
+for /f "delims=" %%f in ('where ktlint.bat') do set "_KTLINT_CMD=%%f"
 set _KTLINT_OPTS=--reporter=plain --reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml
 
 set _KOTLINC_CMD=kotlinc.bat
@@ -71,6 +72,52 @@ set _KOTLINC_OPTS=-jvm-target 1.8 -Werror -d "%_CLASSES_DIR%"
 
 set _KOTLIN_CMD=kotlin.bat
 set _KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
+goto :eof
+
+:env_colors
+@rem ANSI colors in standard Windows 10 shell
+@rem see https://gist.github.com/mlocati/#file-win10colors-cmd
+set _RESET=[0m
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+
+@rem normal foreground colors
+set _NORMAL_FG_BLACK=[30m
+set _NORMAL_FG_RED=[31m
+set _NORMAL_FG_GREEN=[32m
+set _NORMAL_FG_YELLOW=[33m
+set _NORMAL_FG_BLUE=[34m
+set _NORMAL_FG_MAGENTA=[35m
+set _NORMAL_FG_CYAN=[36m
+set _NORMAL_FG_WHITE=[37m
+
+@rem normal background colors
+set _NORMAL_BG_BLACK=[40m
+set _NORMAL_BG_RED=[41m
+set _NORMAL_BG_GREEN=[42m
+set _NORMAL_BG_YELLOW=[43m
+set _NORMAL_BG_BLUE=[44m
+set _NORMAL_BG_MAGENTA=[45m
+set _NORMAL_BG_CYAN=[46m
+set _NORMAL_BG_WHITE=[47m
+
+@rem strong foreground colors
+set _STRONG_FG_BLACK=[90m
+set _STRONG_FG_RED=[91m
+set _STRONG_FG_GREEN=[92m
+set _STRONG_FG_YELLOW=[93m
+set _STRONG_FG_BLUE=[94m
+set _STRONG_FG_MAGENTA=[95m
+set _STRONG_FG_CYAN=[96m
+set _STRONG_FG_WHITE=[97m
+
+@rem strong background colors
+set _STRONG_BG_BLACK=[100m
+set _STRONG_BG_RED=[101m
+set _STRONG_BG_GREEN=[102m
+set _STRONG_BG_YELLOW=[103m
+set _STRONG_BG_BLUE=[104m
 goto :eof
 
 @rem input parameter: %*
@@ -83,6 +130,7 @@ set _EXAMPLE=defaultargs
 set _HELP=0
 set _LINT=0
 set _RUN=0
+set _TEST=0
 set _TIMER=0
 set _VERBOSE=0
 set __N=0
@@ -94,10 +142,10 @@ if not defined __ARG (
 )
 if "%__ARG:~0,1%"=="-" (
     @rem option
-    if /i "%__ARG%"=="-debug" ( set _DEBUG=1
-    ) else if /i "%__ARG%"=="-help" ( set _HELP=1
-    ) else if /i "%__ARG%"=="-timer" ( set _TIMER=1
-    ) else if /i "%__ARG%"=="-verbose" ( set _VERBOSE=1
+    if "%__ARG%"=="-debug" ( set _DEBUG=1
+    ) else if "%__ARG%"=="-help" ( set _HELP=1
+    ) else if "%__ARG%"=="-timer" ( set _TIMER=1
+    ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
         echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
         set _EXITCODE=1
@@ -105,9 +153,9 @@ if "%__ARG:~0,1%"=="-" (
    )
 ) else (
     @rem subcommand
-    if /i "%__ARG%"=="clean" ( set _CLEAN=1
-    ) else if /i "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
-    ) else if /i "%__ARG:~0,8%"=="compile:" (
+    if "%__ARG%"=="clean" ( set _CLEAN=1
+    ) else if "%__ARG%"=="compile" ( set _LINT=1& set _COMPILE=1
+    ) else if "%__ARG:~0,8%"=="compile:" (
         set "_EXAMPLE=%__ARG:~8%"
         if not exist "%_KOTLIN_SOURCE_DIR%\!_EXAMPLE!\" (
             echo %_ERROR_LABEL% Example !_EXAMPLE! not found 1>&2
@@ -115,10 +163,10 @@ if "%__ARG:~0,1%"=="-" (
             goto args_done
         )
         set _LINT=1& set _COMPILE=1
-    ) else if /i "%__ARG%"=="doc" ( set _DOC=1
-    ) else if /i "%__ARG%"=="help" ( set _HELP=1
-    ) else if /i "%__ARG%"=="lint" ( set _LINT=1
-    ) else if /i "%__ARG:~0,5%"=="lint:" (
+    ) else if "%__ARG%"=="doc" ( set _DOC=1
+    ) else if "%__ARG%"=="help" ( set _HELP=1
+    ) else if "%__ARG%"=="lint" ( set _LINT=1
+    ) else if "%__ARG:~0,5%"=="lint:" (
         set "_EXAMPLE=%__ARG:~5%"
         if not exist "%_KOTLIN_SOURCE_DIR%\!_EXAMPLE!\" (
             echo %_ERROR_LABEL% Example !_EXAMPLE! not found 1>&2
@@ -126,8 +174,8 @@ if "%__ARG:~0,1%"=="-" (
             goto args_done
         )
         set _LINT=1
-    ) else if /i "%__ARG%"=="run" ( set _LINT=1& set _COMPILE=1& set _RUN=1
-    ) else if /i "%__ARG:~0,4%"=="run:" (
+    ) else if "%__ARG%"=="run" ( set _LINT=1& set _COMPILE=1& set _RUN=1
+    ) else if "%__ARG:~0,4%"=="run:" (
         set "_EXAMPLE=%__ARG:~4%"
         if not exist "%_KOTLIN_SOURCE_DIR%\!_EXAMPLE!\" (
             echo %_ERROR_LABEL% Example !_EXAMPLE! not found 1>&2
@@ -150,21 +198,32 @@ if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TI
 goto :eof
 
 :help
-echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
+if %_VERBOSE%==1 (
+    set __BEG_P=%_STRONG_FG_CYAN%%_UNDERSCORE%
+    set __BEG_O=%_STRONG_FG_GREEN%
+    set __BEG_N=%_NORMAL_FG_YELLOW%
+    set __END=%_RESET%
+) else (
+    set __BEG_P=
+    set __BEG_O=
+    set __BEG_N=
+    set __END=
+)
+echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
-echo   Options:
-echo     -debug            show commands executed by this script
-echo     -timer            display total elapsed time
-echo     -verbose          display progress messages
+echo   %__BEG_P%Options:%__END%
+echo     %__BEG_O%-debug%__END%            show commands executed by this script
+echo     %__BEG_O%-timer%__END%            display total elapsed time
+echo     %__BEG_O%-verbose%__END%          display progress messages
 echo.
-echo   Subcommands:
-echo     clean             delete generated files
-echo     compile[:^<name^>]  generate class files
-echo     doc               generate documentation
-echo     help              display this help message
-echo     lint[:^<name^>]     analyze Kotlin source files with KtLint
-echo     run[:^<name^>]      execute the generated program
-echo   Valid names are: defaultargs ^(default^), functiontypes, namedargs, nullable
+echo   %__BEG_P%Subcommands:%__END%
+echo     %__BEG_O%clean%__END%             delete generated files
+echo     %__BEG_O%compile[:^<name^>]%__END%  generate class files
+echo     %__BEG_O%doc%__END%               generate documentation
+echo     %__BEG_O%help%__END%              display this help message
+echo     %__BEG_O%lint[:^<name^>]%__END%     analyze Kotlin source files with %__BEG_N%KtLint%__END%
+echo     %__BEG_O%run[:^<name^>]%__END%      execute the generated program
+echo   Valid names are: %__BEG_O%defaultargs%__END% ^(default^), %__BEG_O%functiontypes%__END%, %__BEG_O%namedargs%__END%, %__BEG_O%nullable%__END%
 goto :eof
 
 :clean
@@ -176,7 +235,7 @@ goto :eof
 set "__DIR=%~1"
 if not exist "%__DIR%\" goto :eof
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%__DIR%" 1>&2
-) else if %_VERBOSE%==1 ( echo Delete directory !__DIR:%_ROOT_DIR%=! 1>&2
+) else if %_VERBOSE%==1 ( echo Delete directory "!__DIR:%_ROOT_DIR%=!" 1>&2
 )
 rmdir /s /q "%__DIR%"
 if not %ERRORLEVEL%==0 (
@@ -187,16 +246,20 @@ goto :eof
 
 :lint
 set __SOURCE_FILES=
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%\%_EXAMPLE%" *.kt 2^>NUL') do set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-if not defined __SOURCE_FILES (
+set __N=0
+for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%\%_EXAMPLE%" *.kt 2^>NUL') do (
+    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
+    set /a __N+=1
+)
+if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %_KTLINT_OPTS% %__SOURCE_FILES% 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files 1>&2
 )
-call %_KTLINT_CMD% %_KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %_KTLINT_OPTS% %__SOURCE_FILES%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1
    goto :eof
@@ -230,9 +293,39 @@ if not %ERRORLEVEL%==0 (
 )
 goto :eof
 
+@rem output parameter: _LIBS_CPATH
+:libs_cpath
+for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
+if not exist "%__BATCH_FILE%" (
+    echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
+call "%__BATCH_FILE%" %_DEBUG%
+set _LIBS_CPATH=%_CPATH%
+goto :eof
+
 :doc
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
 @rem see https://github.com/Kotlin/dokka/releases
-echo %_WARNING_LABEL% Not yet implemented ^(waiting for Dokka 0.11.0^) 1>&2
+if not defined _DOKKA_JAR (
+    echo %_ERROR_LABEL% Dokka library file not found 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set __DOKKA_ARGS=-output "%_TARGET_DOCS_DIR%" -format html -generateIndexPages
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %_JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
+) else if %_VERBOSE%==1 ( echo Generate documentation with Dokka 1>&2
+)
+call "%_JAVA_CMD%" %_JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
+if not %ERRORLEVEL%==0 (
+   set _EXITCODE=1
+   goto :eof
+)
 goto :eof
 
 :run

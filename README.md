@@ -26,13 +26,13 @@ Optionally one may also install the following software:
 - [Gradle 6.5][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.37][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*June 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*July 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.10.0\              <i>( 47 MB)</i>
 C:\opt\Git-2.27.0\                     <i>(271 MB)</i>
-C:\opt\gradle-6.5\                     <i>(110 MB)</i>
+C:\opt\gradle-6.5.1\                   <i>(110 MB)</i>
 C:\opt\kotlinc-1.3.72\                 <i>( 58 MB)</i>
 C:\opt\kotlin-native-windows-1.3.72\   <i>(341 MB)</i>
 C:\opt\ktlint-0.37.2\                  <i>( 42 MB)</i>
@@ -91,11 +91,11 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      gradle 6.5, java 1.8.0_252, detekt-cli 1.10.0,
+      gradle 6.5.1, java 1.8.0_252, detekt-cli 1.10.0,
       kotlinc 1.3.72, kotlinc-native 1.3.72, ktlint 0.37.2
       mvn 3.6.3, git 2.27.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\gradle-6.5\bin\gradle.bat
+      C:\opt\gradle-6.5.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_252-b09\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
       C:\opt\detekt-cli-1.10.0\bin\detekt-cli.bat
@@ -167,7 +167,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.10.0.zip</a>                <i>( 42 MB)</i>
-<a href="https://gradle.org/releases/">gradle-6.5-bin.zip</a>                   <i>( 97 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.5.1-bin.zip</a>                 <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-compiler-1.3.72.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-native-windows-1.3.72.zip</a>     <i>(125 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.27.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
@@ -175,7 +175,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
