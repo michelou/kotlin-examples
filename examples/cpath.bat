@@ -9,8 +9,6 @@ if not defined _MVN_CMD set _MVN_CMD=mvn.cmd
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
 )
-set __MAVEN_REPO=https://repo1.maven.org/maven2
-set __BINTRAY_REPO=https://dl.bintray.com/kotlin/kotlinx
 set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
 
 set "__TEMP_DIR=%TEMP%\lib"
@@ -19,20 +17,20 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
-call :add_jar "junit" "junit" "4.13"
+call :add_maven_jar "junit" "junit" "4.13"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-call :add_jar "org/hamcrest" "hamcrest" "2.2"
+call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
-call :add_jar "org/jetbrains/kotlinx" "kotlinx-cli-jvm" "0.2.1"
+call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.2.1"
 
 set _LIBS_CPATH1=%_LIBS_CPATH%
 
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-fatjar
-call :add_jar "org/jetbrains/dokka" "dokka-fatjar" "0.10.1"
+call :add_maven_jar "org/jetbrains/dokka" "dokka-fatjar" "0.10.1"
 
 set _LIBS_CPATH2=%_LIBS_CPATH%
 
@@ -43,20 +41,32 @@ goto end
 
 @rem input parameters: %1=group ID, %2=artifact ID, %3=version
 @rem global variable: _LIBS_CPATH
+:add_maven_jar
+call :add_jar "https://repo1.maven.org/maven2" %1 %2 %3
+goto :eof
+
+@rem input parameters: %1=group ID, %2=artifact ID, %3=version
+@rem global variable: _LIBS_CPATH
+:add_bintray_jar
+call :add_jar "https://dl.bintray.com/kotlin/kotlinx" %1 %2 %3
+goto :eof
+
+@rem input parameters: %1=repository %2=group ID, %3=artifact ID, %4=version
+@rem global variable: _LIBS_CPATH
 :add_jar
-@rem https://mvnrepository.com/artifact/org.portable-scala
-set __GROUP_ID=%~1
-set __ARTIFACT_ID=%~2
-set __VERSION=%~3
+set __REPOSITORY=%~1
+set __GROUP_ID=%~2
+set __ARTIFACT_ID=%~3
+set __VERSION=%~4
 
 set __JAR_NAME=%__ARTIFACT_ID%-%__VERSION%.jar
-set __JAR_PATH=%__GROUP_ID:/=\%\%__ARTIFACT_ID:/=\%
+set __JAR_PATH=%__GROUP_ID:.=\%\%__ARTIFACT_ID:/=\%
 set __JAR_FILE=
 for /f %%f in ('where /r "%__LOCAL_REPO%\%__JAR_PATH%" %__JAR_NAME% 2^>NUL') do (
     set __JAR_FILE=%%f
 )
 if not exist "%__JAR_FILE%" (
-    set __JAR_URL=%__MAVEN_REPO%/%__GROUP_ID%/%__ARTIFACT_ID%/%__VERSION%/%__JAR_NAME%
+    set __JAR_URL=%__REPOSITORY%/%__GROUP_ID:.=/%/%__ARTIFACT_ID%/%__VERSION%/%__JAR_NAME%
     set "__JAR_FILE=%__TEMP_DIR%\%__JAR_NAME%"
     if not exist "!__JAR_FILE!" (
         if %_DEBUG%==1 ( echo %_DEBUG_LABEL% powershell -c "Invoke-WebRequest -Uri !__JAR_URL! -Outfile '!__JAR_FILE!'" 1>&2
@@ -68,10 +78,10 @@ if not exist "%__JAR_FILE%" (
             set _EXITCODE=1
             goto :eof
         )
-        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID:/=.%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% 1>&2
+        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% 1>&2
         ) else if %_VERBOSE%==1 ( echo Install Maven archive into directory "!__LOCAL_REPO:%USERPROFILE%=!\%__SCALA_XML_PATH%" 1>&2
         )
-        call "%_MVN_CMD%" %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID:/=.%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar
+        call "%_MVN_CMD%" %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar
     )
 )
 set "_LIBS_CPATH=%_LIBS_CPATH%%__JAR_FILE%;"
