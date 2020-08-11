@@ -15,22 +15,22 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.27][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.28][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.3][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin Native 1.3][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> ([*release notes*][kotlin_native_relnotes])
 
 Optionally one may also install the following software:
 
 - [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
-- [detekt 1.10][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 6.5][gradle_latest] ([*release notes*][gradle_relnotes])
+- [detekt 1.11][detekt_latest] ([*release notes*][detekt_relnotes])
+- [Gradle 6.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.37][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
 For instance our development environment looks as follows (*August 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\detekt-cli-1.10.0\              <i>( 47 MB)</i>
+C:\opt\detekt-cli-1.11.0\              <i>( 47 MB)</i>
 C:\opt\Git-2.28.0\                     <i>(271 MB)</i>
 C:\opt\gradle-6.6\                     <i>(110 MB)</i>
 C:\opt\kotlinc-1.3.72\                 <i>( 58 MB)</i>
@@ -91,14 +91,14 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      gradle 6.6, java 1.8.0_252, detekt-cli 1.10.0,
+      gradle 6.6, java 1.8.0_252, detekt-cli 1.11.0,
       kotlinc 1.3.72, kotlinc-native 1.3.72, ktlint 0.37.2
       mvn 3.6.3, git 2.28.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\gradle-6.6\bin\gradle.bat
       C:\opt\jdk-1.8.0_252-b09\bin\java.exe
       C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
-      C:\opt\detekt-cli-1.10.0\bin\detekt-cli.bat
+      C:\opt\detekt-cli-1.11.0\bin\detekt-cli.bat
       C:\opt\kotlinc-1.3.72\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.3.72\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.3.72\bin\kotlinc-native.bat
@@ -166,7 +166,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.10.0.zip</a>                <i>( 42 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.11.0.zip</a>                <i>( 42 MB)</i>
 <a href="https://gradle.org/releases/">gradle-6.6-bin.zip</a>                   <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-compiler-1.3.72.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.3.72">kotlin-native-windows-1.3.72.zip</a>     <i>(125 MB)</i>
