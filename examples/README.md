@@ -59,7 +59,7 @@ Command [**`build clean run`**](HelloWorld/build.bat) compiles source file [**`H
 <b>&gt; <a href="HelloWorld/build.bat">build</a> clean run</b>
 Hello World!
 &nbsp;
-<b>&gt; tree /a /f target\classes | findstr /v "^[A-Z]"</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target\classes | findstr /v "^[A-Z]"</b>
 +---META-INF
 |       main.kotlin_module
 |
@@ -77,7 +77,7 @@ Command [**`build -native clean run`**](HelloWorld/build.bat) generates and exec
 <b>&gt; <a href="HelloWorld/build.bat">build</a> -native clean run</b>
 Hello World!
 &nbsp;
-<b>&gt; tree /a /f target | findstr /v "^[A-Z]"</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target | findstr /v "^[A-Z]"</b>
     HelloWorld.exe
     ktlint-report.xml
 </pre>
@@ -104,7 +104,7 @@ name=&lt;name&gt; active=true
 name=Bob active=true
 three=3
 &nbsp;
-<b>&gt; gradle -q clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
 name=&lt;name&gt; active=true
 name=Bob active=true
 three=3
@@ -125,7 +125,7 @@ Either command [**`build clean run`**](KotlinToJava/build.bat) or command [**`gr
 [java] Hello, hi!
 [kt] call companion function
 &nbsp;
-<b>&gt; gradle -q clean run runJava</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run runJava</b>
 [kt] this is a message: a message
 [kt] another message: a message
 &nbsp;
@@ -141,7 +141,7 @@ See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
 Either command [**`build clean run`**](LanguageFeatures/build.bat) or command [**`gradle -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
 <pre style="font-size:80%;">
-<b>&gt; gradle -q clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
 int a: 2
 penDown
 forward 100.0
@@ -193,10 +193,10 @@ Members:
 Elapsed time: 00:00:06
 </pre>
 
-Alternatively command [**`gradle -q clean run`**][gradle_bat] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
+Alternatively command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
 
 <pre style="font-size:80%;">
-<b>&gt; gradle clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
 
 &gt; Task :run
 Source code:
@@ -225,7 +225,7 @@ BUILD SUCCESSFUL in 3s
 3 actionable tasks: 3 executed
 </pre>
 
-> **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_bat] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
+> **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_cli] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
 
 ## <span id="footnotes">Footnotes</span>
 
@@ -258,7 +258,7 @@ wasm32:
 The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single Java archive file if the <b><code>-d</code></b> option argument ends with <b><code>.jar</code></b> (in our case <b><code>target\HelloWorld.jar</code></b>).
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
-<b>&gt; kotlinc -d target\HelloWorld.jar src\HelloWorld.kt</b>
+<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; dir target | findstr HelloWorld.jar</b>
 02.11.2019  16:45             1 164 HelloWorld.jar
 <b>&gt; jar tf target\HelloWorld.jar</b>
@@ -287,11 +287,11 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
-<b>&gt; kotlinc -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
+<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; dir target | findstr HelloWorld.jar</b>
 02.11.2019  16:40         1 309 824 HelloWorld.jar
 &nbsp;
-<b>&gt; jar tf target\HelloWorld.jar</b>
+<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
 META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
@@ -302,19 +302,19 @@ kotlin/jvm/internal/CallableReference.class
 kotlin/coroutines/EmptyCoroutineContext.class
 kotlin/coroutines/intrinsics/CoroutineSingletons.class
 &nbsp;
-<b>&gt; java -jar target\HelloWorld.jar</b>
+<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java</a> -jar target\HelloWorld.jar</b>
 Hello World!
 </pre>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
 [bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
-[gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
+[gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
 [groovy_dsl]: https://docs.gradle.org/current/dsl/index.html
 [java_kotlin]: https://kotlinlang.org/docs/reference/java-interop.html#calling-java-code-from-kotlin

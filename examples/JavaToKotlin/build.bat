@@ -79,7 +79,6 @@ set "_EXE_FILE=%_TARGET_DIR%\%__MAIN_NAME%.exe"
 
 @rem full path required (limitation of detekt-cli.bat)
 for /f "delims=" %%f in ('where detekt-cli.bat 2^>NUL') do set "_DETEKT_CMD=%%f"
-set _DETEKT_OPTS=--language-version %_LANGUAGE_VERSION%--input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
 
 @rem full path required (limitation of ktlint.bat)
 for /f "delims=" %%f in ('where ktlint.bat 2^>NUL') do set "_KTLINT_CMD=%%f"
@@ -99,8 +98,6 @@ if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat" (
 	goto :eof
 )
 set "_KOTLINC_NATIVE_CMD=%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat"
-@rem see https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options
-set _KOTLINC_NATIVE_OPTS=-language-version %_LANGUAGE_VERSION% -o "%_EXE_FILE%"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
@@ -279,11 +276,20 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :detekt
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %_DETEKT_OPTS% 1>&2
+for %%f in ("%~dp0\.") do set "__CONFIG_FILE=%%~dpfdetekt-config.yml"
+
+set __DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --config "%__CONFIG_FILE%" --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
 )
-call "%_DETEKT_CMD%" %_DETEKT_OPTS%
+call "%_DETEKT_CMD%" %__DETEKT_OPTS%
 if not %ERRORLEVEL%==0 (
+    if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
+        set __SIZE=0
+        for %%f in (%_TARGET_DIR%\detekt-report.xml) do set __SIZE=%%~zf
+        if !__SIZE! gtr 79 type "%_TARGET_DIR%\detekt-report.xml"
+    )
     set _EXITCODE=1
     goto :eof
 )
@@ -334,7 +340,7 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\java\*.java" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
-set "__OPTS_FILE=%_TARGET_DIR%javac_opts.txt"
+set "__OPTS_FILE=%_TARGET_DIR%\javac_opts.txt"
 echo -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
@@ -380,7 +386,7 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
-echo %_KOTLINC_NATIVE_OPTS:\=\\% > "%__OPTS_FILE%"
+echo -language-version %_LANGUAGE_VERSION% -o "%_EXE_FILE:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile Kotlin source files ^(native^) 1>&2
