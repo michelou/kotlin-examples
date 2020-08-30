@@ -3,8 +3,8 @@
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin logo"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10">Google I/O 2018</a>  (9:30 am).<br/>
-  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10" rel="external">Google I/O 2018</a>  (9:30 am).<br/>
+  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -50,14 +50,16 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > **:mag_right:** Adding ption **`-debug`**  also prints the executed commands:
 >
 > <pre style="font-size:80%;">
-> <b>&gt; build -debug clean run</b>
-> <span style="background-color:#B0E0E6">[build]</span> _CLEAN=1 _COMPILE=1 _MAIN_CLASS=_01_bean.BeanKt _RUN=1 _VERBOSE=0
-> <span style="background-color:#B0E0E6">[build]</span> rmdir /s /q "O:\HOW-TO~1\01_bean\target"
-> <span style="background-color:#B0E0E6">[build]</span> ktlint.bat --reporter=plain --reporter=checkstyle,output=O:\HOW-TO~1\01_bean\target\ktlint-report.xml  "O:\how-to-kotlin\01_bean\src\main\kotlin\Bean.kt"
-> <span style="background-color:#B0E0E6">[build]</span> kotlinc.bat -d O:\HOW-TO~1\01_bean\target\classes  "O:\how-to-kotlin\01_bean\src\main\kotlin\Bean.kt"
-> <span style="background-color:#B0E0E6">[build]</span> kotlin.bat -cp O:\HOW-TO~1\01_bean\target\classes _01_bean.BeanKt
+> <b>&gt; <a href="01_bean/build.bat">build</a> -debug clean run</b>
+> [build] Options    : _TIMER=0 _VERBOSE=0
+> [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
+> [build] Variables  : KOTLIN_HOME="C:\opt\kotlinc-1.4.0" KOTLIN_NATIVE_HOME="C:\opt\kotlin-native-windows-1.4.0"
+> [build] Variables  : _MAIN_CLASS=_01_bean.BeanKt
+> [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
+> [build] "C:\opt\kotlinc-1.4.0\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc-1.4.0\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
-> <span style="background-color:#B0E0E6">[build]</span> _EXITCODE=0
+> [build] _EXITCODE=0
 > </pre>
 
 ## <span id="bean">Bean</span>
@@ -67,7 +69,7 @@ This example is about [data classes][kotlin_data_classes] whose main purpose is 
 Command [**`build clean run`**](01_bean/build.bat) compiles source file [**`Bean.kt`**](01_bean/src/main/kotlin/Bean.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="01_bean/build.bat">build</a> clean run</b>
 fist=Jane, last=Doe
 </pre>
 
@@ -92,7 +94,7 @@ This example is about [lazy properties][kotlin_lazy_props] whose value is initia
 Command [**`build clean run`**](02_properties/build.bat) compiles source file [**`Properties.kt`**](02_properties/src/main/kotlin/Properties.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="02_properties/build.bat">build</a> clean run</b>
 Computing...
 Windows 10 v10.0 (amd64)
 Windows 10 v10.0 (amd64)
@@ -179,7 +181,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

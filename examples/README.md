@@ -229,15 +229,15 @@ BUILD SUCCESSFUL in 3s
 
 ## <span id="footnotes">Footnotes</span>
 
-<a name="footnote_01">[1]</a> ***Available targets*** [↩](#anchor_01)
+<b name="footnote_01">[1]</b> ***Available targets*** [↩](#anchor_01)
 
 <p style="margin:0 0 1em 20px;">
 Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; kotlinc-native -version</b>
-info: kotlinc-native 1.3.72-release-424 (JRE 1.8.0_252-b09)
-Kotlin/Native: 1.3.72
+info: kotlinc-native 1.4.0-rc-308 (JRE 1.8.0_262-b10)
+Kotlin/Native: 1.4
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -252,7 +252,7 @@ android_arm64:
 wasm32:
 </pre>
 
-<a name="footnote_02">[2]</a> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
+<b name="footnote_02">[2]</b> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
 
 <p style="margin:0 0 1em 20px;">
 The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single Java archive file if the <b><code>-d</code></b> option argument ends with <b><code>.jar</code></b> (in our case <b><code>target\HelloWorld.jar</code></b>).
@@ -261,13 +261,14 @@ The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single
 <b>&gt; kotlinc -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; dir target | findstr HelloWorld.jar</b>
 02.11.2019  16:45             1 164 HelloWorld.jar
+&nbsp;
 <b>&gt; jar tf target\HelloWorld.jar</b>
 META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
 </pre>
 
-<a name="footnote_03">[3]</a> ***Execution on JVM*** [↩](#anchor_03)
+<b name="footnote_03">[3]</b> ***Execution on JVM*** [↩](#anchor_03)
 
 <p style="margin:0 0 1em 20px;">
 On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can be executed in several ways depending on two parameters:
@@ -276,12 +277,12 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 </p>
 <table style="margin:0 0 1em 20px;">
 <tr><th>Command</th><th>Class/JAR file</th><th>Session example</th></tr>
-<tr><td><code>kotlin.bat</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; kotlin -cp target\classes HelloWorldKt</b><br/>Hello World!</code></tr>
-<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><b><code>&gt; kotlin -J-Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></br>Hello World!</code></td></tr>
-<tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b><br/>Hello World!</code></td></tr>
-<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b><br/>Hello World!</code></td></tr>
+<tr><td><code>kotlin.bat</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; kotlin -cp target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></tr>
+<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><b><code>&gt; kotlin -J-Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code></br><code>Hello World!</code></td></tr>
+<tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></td></tr>
+<tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code><br/><code>Hello World!</code></td></tr>
 </table>
-<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.3.72\lib\kotlin-stdlib.jar</code></b></span>
+<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.0\lib\kotlin-stdlib.jar</code></b></span>
 
 <p style="margin:0 0 1em 20px;">
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
@@ -308,7 +309,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

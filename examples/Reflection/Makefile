@@ -2,6 +2,8 @@ SOURCE_DIR = src
 TARGET_DIR = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
+LANGUAGE_VERSION = 1.4
+
 TARGET = $(TARGET_DIR)/Reflection.jar
 
 ifeq ($(OS),Windows_NT)
@@ -20,7 +22,7 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCE_DIR)/main/kotlin/*.kt
 	test -d $(CLASSES_DIR) || mkdir -p $(CLASSES_DIR)
-	$(KOTLINC) -language-version 1.3 -d $(CLASSES_DIR) $<
+	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $<
 	jar cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:

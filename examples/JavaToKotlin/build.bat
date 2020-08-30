@@ -71,13 +71,12 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
+set _LANGUAGE_VERSION=1.4
+
 set _MAIN_NAME=Main
 set _MAIN_CLASS=%_MAIN_NAME%Kt
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
-set _LANGUAGE_VERSION=1.4
-
-@rem full path required (limitation of ktlint.bat)
 for /f "delims=" %%f in ('where detekt-cli.bat') do set "_DETEKT_CMD=%%f"
 set _DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
 
@@ -105,6 +104,29 @@ if not exist "%JAVA_HOME%\bin\javac.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
     set _EXITCODE=1
     goto :eof
+=======
+for /f "delims=" %%f in ('where ktlint.bat 2^>NUL') do set "_KTLINT_CMD=%%f"
+set _KTLINT_OPTS="--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
+
+if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
+    echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
+	set _EXITCODE=1
+	goto :eof
+)
+set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
+set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
+
+if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat" (
+    echo %_ERROR_LABEL% Kotlin Native installation not found 1>&2
+	set _EXITCODE=1
+	goto :eof
+)
+set "_KOTLINC_NATIVE_CMD=%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat"
+
+if not exist "%JAVA_HOME%\bin\java.exe" (
+    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
+	set _EXITCODE=1
+	goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -209,13 +231,21 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
-set _STDOUT_REDIRECT=1^>NUL
-if %_DEBUG%==1 set _STDOUT_REDIRECT=1^>CON
+set _STDERR_REDIRECT=2^>NUL
+if %_DEBUG%==1 set _STDERR_REDIRECT=
 
+if %_DETEKT%==1 if not defined _DETEKT_CMD (
+    echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand '-detekt'^) 1>&2
+	set _DETEKT=0
+)
+if %_LINT%==1 if not defined _KTLINT_CMD (
+    echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand '-lint'^) 1>&2
+	set _LINT=0
+)
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
-    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" _MAIN_CLASS=%_MAIN_CLASS% 1>&2
+	echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -270,10 +300,14 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :detekt
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %_DETEKT_OPTS% 1>&2
+for %%f in ("%~dp0\.") do set "__CONFIG_FILE=%%~dpfdetekt-config.yml"
+
+set __DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --config "%__CONFIG_FILE%" --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
 )
-call "%_DETEKT_CMD%" %_DETEKT_OPTS%
+call "%_DETEKT_CMD%" %__DETEKT_OPTS%
 if not %ERRORLEVEL%==0 (
     if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
         set __SIZE=0
@@ -501,7 +535,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOUR
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of Kotlin test source files failed 1>&2
+    echo %_ERROR_LABEL% Compilation of %__N% Kotlin test source files failed ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )

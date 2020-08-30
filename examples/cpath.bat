@@ -56,34 +56,21 @@ goto end
 @rem input parameters: %1=group ID, %2=artifact ID, %3=version
 @rem global variable: _LIBS_CPATH
 :add_maven_jar
-set __REPOSITORY=https://repo1.maven.org/maven2
-set __GROUP_ID=%~1
-set __ARTIFACT_ID=%~2
-set __VERSION=%~3
-call :add_jar "%__REPOSITORY%" "%__GROUP_ID%" "%__ARTIFACT_ID%" "%__VERSION%"
+call :add_jar "https://repo1.maven.org/maven2" %1 %2 %3
 goto :eof
 
 @rem input parameters: %1=group ID, %2=artifact ID, %3=version
 @rem global variable: _LIBS_CPATH
 :add_bintray_jar
-set __REPOSITORY=https://dl.bintray.com/kotlin/kotlinx
-set __GROUP_ID=%~1
-set __ARTIFACT_ID=%~2
-set __VERSION=%~3
-call :add_jar "%__REPOSITORY%" "%__GROUP_ID%" "%__ARTIFACT_ID%" "%__VERSION%"
+call :add_jar "https://dl.bintray.com/kotlin/kotlinx" %1 %2 %3
 goto :eof
 
 @rem input parameters: %1=group ID, %2=artifact ID, %3=version
 @rem global variable: _LIBS_CPATH
 :add_bintray1_jar
-set __REPOSITORY=https://dl.bintray.com/kotlin/dokka
-set __GROUP_ID=%~1
-set __ARTIFACT_ID=%~2
-set __VERSION=%~3
-call :add_jar "%__REPOSITORY%" "%__GROUP_ID%" "%__ARTIFACT_ID%" "%__VERSION%"
+call :add_jar "https://dl.bintray.com/kotlin/dokka" %1 %2 %3
 goto :eof
 
-@rem input parameters: %1=repository, %2=group ID, %3=artifact ID, %4=version
 @rem global variable: _LIBS_CPATH
 :add_jar
 set __REPOSITORY=%~1
@@ -92,7 +79,7 @@ set __ARTIFACT_ID=%~3
 set __VERSION=%~4
 
 set __JAR_NAME=%__ARTIFACT_ID%-%__VERSION%.jar
-set __JAR_PATH=%__GROUP_ID:/=\%\%__ARTIFACT_ID:/=\%
+set __JAR_PATH=%__GROUP_ID:.=\%\%__ARTIFACT_ID:/=\%
 set __JAR_FILE=
 for /f %%f in ('where /r "%__LOCAL_REPO%\%__JAR_PATH%" %__JAR_NAME% 2^>NUL') do (
     set __JAR_FILE=%%f
@@ -110,10 +97,10 @@ if not exist "%__JAR_FILE%" (
             set _EXITCODE=1
             goto :eof
         )
-        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID:/=.%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% 1>&2
+        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% 1>&2
         ) else if %_VERBOSE%==1 ( echo Install Maven archive into directory "!__LOCAL_REPO:%USERPROFILE%=!\%__SCALA_XML_PATH%" 1>&2
         )
-        call "%_MVN_CMD%" %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID:/=.%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar
+        call "%_MVN_CMD%" %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar
     )
 )
 set "_LIBS_CPATH=%_LIBS_CPATH%%__JAR_FILE%;"
