@@ -258,11 +258,11 @@ wasm32:
 The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single Java archive file if the <b><code>-d</code></b> option argument ends with <b><code>.jar</code></b> (in our case <b><code>target\HelloWorld.jar</code></b>).
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
-<b>&gt; kotlinc -d target\HelloWorld.jar src\HelloWorld.kt</b>
+<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; dir target | findstr HelloWorld.jar</b>
 02.11.2019  16:45             1 164 HelloWorld.jar
 &nbsp;
-<b>&gt; jar tf target\HelloWorld.jar</b>
+<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
 META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
@@ -288,11 +288,11 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
-<b>&gt; kotlinc -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
+<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; dir target | findstr HelloWorld.jar</b>
 02.11.2019  16:40         1 309 824 HelloWorld.jar
 &nbsp;
-<b>&gt; jar tf target\HelloWorld.jar</b>
+<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
 META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
@@ -303,7 +303,7 @@ kotlin/jvm/internal/CallableReference.class
 kotlin/coroutines/EmptyCoroutineContext.class
 kotlin/coroutines/intrinsics/CoroutineSingletons.class
 &nbsp;
-<b>&gt; java -jar target\HelloWorld.jar</b>
+<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java</a> -jar target\HelloWorld.jar</b>
 Hello World!
 </pre>
 

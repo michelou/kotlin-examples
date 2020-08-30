@@ -34,7 +34,7 @@ C:\opt\detekt-cli-1.12.0\              <i>( 49 MB)</i>
 C:\opt\Git-2.28.0\                     <i>(271 MB)</i>
 C:\opt\gradle-6.6.1\                   <i>(110 MB)</i>
 C:\opt\kotlinc-1.4.0\                  <i>( 58 MB)</i>
-C:\opt\kotlin-native-windows-1.4\      <i>(341 MB)</i>
+C:\opt\kotlin-native-windows-1.4.0\    <i>(341 MB)</i>
 C:\opt\ktlint-0.38.1\                  <i>( 42 MB)</i>
 </pre>
 
@@ -138,7 +138,7 @@ No Windows distribution is available from the <a href="https://github.com/pinter
 Here are the performed operations:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<b>&gt; mkdir c:\opt\ktlint-0.38.1</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir">mkdir</a> c:\opt\ktlint-0.38.1</b>
 <b>&gt; cd c:\opt\ktlint-0.38.1</b>
 &nbsp;
 <b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.38.1/ktlint</b>
@@ -196,7 +196,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.4.0
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v140-aug-2020
 [kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.4.0
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint

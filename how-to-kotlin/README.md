@@ -76,14 +76,14 @@ fist=Jane, last=Doe
 Command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`**](01_bean/build.gradle) and property file [**`gradle.properties`**](01_bean/gradle.properties)) performs the same operations:
 
 <pre style="font-size:80%;">
-<b>&gt; gradle -q clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
 fist=Jane, last=Doe
 </pre>
 
 Command [**`mvn -q clean compile exec:java`**][mvn_cli] (build script [**`pom.xml`**](01_bean/pom.xml) prints the same result:
 
 <pre style="font-size:80%;">
-<b>&gt; mvn -q clean compile exec:java</b>
+<b>&gt; <a href="https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html">mvn</a> -q clean compile exec:java</b>
 fist=Jane, last=Doe
 </pre>
 
@@ -112,7 +112,7 @@ This example is about [extension functions][kotlin_extensions].
 Command **`build clean run`** compiles source file [**`Functions.kt`**](03_functions/src/main/kotlin/Functions.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="03_functions/build.bat">build</a> clean run</b>
 Jane
 Jane
 Jane
@@ -124,7 +124,7 @@ This example
 Command **`build clean run`** compiles source files [**`Expressions.kt`**](04_expressions/src/main/kotlin/Expressions.kt) and executes the generated Java class files.
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="04_expressions/build.bat">build</a> clean run</b>
 a = 1, b = null, c = true
 k1 -> 1
 k2 -> 2
@@ -139,7 +139,7 @@ This example is about [higher-order functions and lambdas][kotlin_lambdas] in [K
 Command [**`build clean run`**](04_functional/build.bat) compiles source file [**`Lambdas.kt`**](04_functional/src/main/kotlin/Lambdas.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="04_functional/build.bat">build</a> clean run</b>
 a = 1, b = null, c = true
 k1 -> 1
 k2 -> 2
@@ -161,7 +161,7 @@ This example is about [operator conventions][kotlin_conventions], an elegant way
 Command [**`build clean run`**](07_conventions/build.bat) compiles source file [**`Conventions.kt`**](07_conventions/src/main/kotlin/Conventions.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
-<b>&gt; build clean run</b>
+<b>&gt; <a href="07_conventions/build.bat">build</a> clean run</b>
 date: Date(day=25, month=2, year=2018)
 day/month/year: 25/2/2018
 date belongs to Month(month=3, year=2018): false
