@@ -3,7 +3,7 @@
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin logo"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from the <a href="https://developer.ibm.com/series/learn-kotlin/">Learn Kotlin</a> tutorial <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.<br/>
+  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from the <a href="https://developer.ibm.com/series/learn-kotlin/" rel="external">Learn Kotlin</a> tutorial <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.<br/>
   It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
@@ -44,7 +44,7 @@ The value of double(-Double.MAX_VALUE) is: -1.7976931348623157E308
 
 ## <span id="unit_5">[Unit 5][unit_5]</span>
 
-This tutorial part presents Kotling binary operators and basic functions
+This tutorial part presents [Kotlin] binary operators and basic functions
 - either in source file [**`Examples.kt`**](Unit_5/src/main/kotlin/Examples.kt)
 - or in script file [**`Examples.kts`**](Unit_5/src/Examples.kts)
 
@@ -138,7 +138,7 @@ Tutorial by Steven Perry:
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

@@ -29,10 +29,7 @@ set _LIBS_CPATH1=%_LIBS_CPATH%
 
 set _LIBS_CPATH=
 
-set __DOKKA_VERSION=1.4.0-rc
-
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-fatjar
-@rem call :add_bintray1_jar "org.jetbrains.dokka" "dokka-fatjar" "0.10.2-dev-34"
+set __DOKKA_VERSION=1.4.0
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"

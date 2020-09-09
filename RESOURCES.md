@@ -21,6 +21,7 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Exploring Kotlin/Native - Part 1][blog_exploring] by Jamie Lee, March 26, 2020.
 - [Jebrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
 - [Getting Started Unit Testing with Kotlin](https://spin.atomicobject.com/2018/10/07/kotlin-unit-testing/) by Molly Alger, October 7, 2018.
 
@@ -37,6 +38,7 @@
 
 ## <span id="tools">Tools</span>
 
+- [Clikt][clikt_home]: Multiplatform Kotlin library for writing command line interfaces.
 - [detekt][detekt_home]: Static code analysis for Kotlin.
 - [The Gradle build system - Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
 
@@ -48,18 +50,20 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
+[blog_exploring]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
 [book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/
 [book_kotlin_in_action]: https://www.manning.com/books/kotlin-in-action
 [book_kotlin_programming]: https://www.packtpub.com/application-development/learn-kotlin-programming-second-edition
 [book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
+[clikt_home]: https://ajalt.github.io/clikt/
 [detekt_home]: https://detekt.github.io/detekt/
 [medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html

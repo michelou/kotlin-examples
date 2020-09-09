@@ -51,7 +51,7 @@ Execution took 1034 ms
 
 ## <span id="footnotes">Footnotes</span>
 
-<a name="footnote_01">[1]</a> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
+<b name="footnote_01">[1]</b> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
     <div style="margin:-12px 0 0 20px;">
     by Miguel Angel Castiblanco Torres,<br/>
     Packt Publishing (ISBN: 9781788627160), July 2018.
@@ -59,7 +59,7 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

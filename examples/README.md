@@ -30,7 +30,7 @@ We provide 4 different ways to build/run the code examples:
 - **`build.bat`** is the old-fashioned batch file.
 - **`build.gradle`** is the Gradle build script written in [Groovy DSL][groovy_dsl].
 - **`build.gradle.kts`** is the Gradle build script written in [Kotlin DSL][kotlin_dsl].
-- **`pom.xml`** is the Maven build script written in XML.
+- **`pom.xml`** is the [Maven] build script written in XML.
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
 > <pre style="font-size:80%;">
@@ -77,7 +77,7 @@ Command [**`build -native clean run`**](HelloWorld/build.bat) generates and exec
 <b>&gt; <a href="HelloWorld/build.bat">build</a> -native clean run</b>
 Hello World!
 &nbsp;
-<b>&gt; tree /a /f target | findstr /v "^[A-Z]"</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target | findstr /v "^[A-Z]"</b>
     HelloWorld.exe
     ktlint-report.xml
 </pre>
@@ -125,7 +125,7 @@ Either command [**`build clean run`**](KotlinToJava/build.bat) or command [**`gr
 [java] Hello, hi!
 [kt] call companion function
 &nbsp;
-<b>&gt; gradle -q clean run runJava</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run runJava</b>
 [kt] this is a message: a message
 [kt] another message: a message
 &nbsp;
@@ -141,7 +141,7 @@ See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
 Either command [**`build clean run`**](LanguageFeatures/build.bat) or command [**`gradle -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
 <pre style="font-size:80%;">
-<b>&gt; gradle -q clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
 int a: 2
 penDown
 forward 100.0
@@ -309,7 +309,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -325,3 +325,4 @@ Hello World!
 [kotlin_js]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjs-compiler-options
 [kotlin_jvm]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjvm-compiler-options
 [kotlin_native]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options
+[maven]: https://maven.apache.org/what-is-maven.html

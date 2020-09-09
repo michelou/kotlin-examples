@@ -22,15 +22,15 @@ This project depends on the following external software for the **Microsoft Wind
 Optionally one may also install the following software:
 
 - [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
-- [detekt 1.12][detekt_latest] ([*release notes*][detekt_relnotes])
+- [detekt 1.13][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 6.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.38][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*August 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*September 2020*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\detekt-cli-1.12.0\              <i>( 49 MB)</i>
+C:\opt\detekt-cli-1.13.0\              <i>( 49 MB)</i>
 C:\opt\Git-2.28.0\                     <i>(271 MB)</i>
 C:\opt\gradle-6.6.1\                   <i>(110 MB)</i>
 C:\opt\kotlinc-1.4.0\                  <i>( 58 MB)</i>
@@ -91,14 +91,14 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      bazel 3.4.1, gradle 6.6.1, java 1.8.0_262, detekt-cli 1.12.0,
+      bazel 3.4.1, gradle 6.6.1, java 1.8.0_262, detekt-cli 1.13.0,
       kotlinc 1.4.0, kotlinc-native 1.4.0, ktlint 0.38.1
       mvn 3.6.3, git 2.28.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\bazel-3.4.1\bazel.exe
       C:\opt\gradle-6.6.1\bin\gradle.bat
       C:\opt\jdk-1.8.0_262-b10\bin\java.exe
-      C:\opt\detekt-cli-1.12.0\bin\detekt-cli.bat
+      C:\opt\detekt-cli-1.13.0\bin\detekt-cli.bat
       C:\opt\kotlinc-1.4.0\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.4.0\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.4.0\bin\kotlinc-native.bat
@@ -145,14 +145,14 @@ Here are the performed operations:
 <b>&gt; tail -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf ktlint.jar | findstr ktlint/Main</b>
 com/pinterest/ktlint/Main.class
-<b>&gt; copy /y /b k:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
-<b>&gt; del ktlint.jar ktlint.sh</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy">copy</a> /y /b k:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/del">del</a> ktlint.jar ktlint.sh</b>
 </pre>
 <p style="margin:0 0 1em 20px;">
 The installation directory now contains one single file, namely <b><code>ktlint.bat</code></b>:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<b>&gt; dir /b c:\opt\ktlint-0.38.1</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir">dir</a> /b c:\opt\ktlint-0.38.1</b>
 ktlint.bat
 &nbsp;
 <b>&gt; c:\opt\ktlint-0.38.1\ktlint.bat --version</b>
@@ -166,7 +166,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.12.0.zip</a>                <i>( 42 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.13.0.zip</a>                <i>( 42 MB)</i>
 <a href="https://gradle.org/releases/">gradle-6.6.1-bin.zip</a>                 <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.0">kotlin-compiler-1.4.0.zip</a>            <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.0">kotlin-native-windows-1.4.zip</a>        <i>(125 MB)</i>
@@ -175,13 +175,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.12.0
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.13.0
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
