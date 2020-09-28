@@ -104,29 +104,6 @@ if not exist "%JAVA_HOME%\bin\javac.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
     set _EXITCODE=1
     goto :eof
-=======
-for /f "delims=" %%f in ('where ktlint.bat 2^>NUL') do set "_KTLINT_CMD=%%f"
-set _KTLINT_OPTS="--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
-
-if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
-    echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
-	set _EXITCODE=1
-	goto :eof
-)
-set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
-set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
-
-if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat" (
-    echo %_ERROR_LABEL% Kotlin Native installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
-)
-set "_KOTLINC_NATIVE_CMD=%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat"
-
-if not exist "%JAVA_HOME%\bin\java.exe" (
-    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -387,8 +364,9 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCE
 )
 call "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    echo %_ERROR_LABEL% Compilation of %__N% Java source files failed 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -398,7 +376,7 @@ if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
 for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
-    set __N+=1
+    set /a __N+=1
 )
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
@@ -412,8 +390,9 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOUR
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(JVM^) 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -482,7 +461,7 @@ goto :eof
 :run_jvm
 set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
-    echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
+    echo %_ERROR_LABEL% Kotlin main class file not found ^("!__MAIN_CLASS_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -525,7 +504,7 @@ if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
 for /f %%i in ('dir /s /b "%_SOURCE_DIR%\test\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
-    set __N+=1
+    set /a __N+=1
 )
 set "__OPTS_FILE=%_TARGET_DIR%\test_kotlinc_opts.txt"
 echo -cp "%_CPATH:\=\\%%_CLASSES_DIR:\=\\%" -d %_TEST_CLASSES_DIR:\=\\% > "%__OPTS_FILE%"

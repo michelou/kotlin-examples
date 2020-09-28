@@ -1,5 +1,6 @@
 package com.makotogo.learn.kotlin.example4
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     println(publicProperty)
     println(internalProperty)

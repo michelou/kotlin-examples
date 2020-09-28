@@ -24,6 +24,7 @@ private class Child(name: String) : Parent(name) {
     }
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     println(publicProperty)
     println(internalProperty)

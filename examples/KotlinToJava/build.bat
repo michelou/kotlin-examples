@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+@rem only for interactive debugging !
 set _DEBUG=0
 
 @rem #########################################################################
@@ -59,7 +60,7 @@ goto end
 @rem ## Subroutine
 
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
-@rem                    _MAIN_CLASS, _EXE_FILE
+@rem                    _LANGUAGE_VERSION, _MAIN_CLASS, _EXE_FILE
 :env
 set _BASENAME=%~n0
 set "_ROOT_DIR=%~dp0"
@@ -95,21 +96,22 @@ if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation not found 1>&2
     set _EXITCODE=1
     goto :eof
+)
 set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 set "_KOTLIN_CPATH=%KOTLIN_HOME%\lib\kotlin-stdlib.jar"
 
-if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat" (
+if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
     echo %_ERROR_LABEL% Kotlin Native installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
-set "_KOTLINC_NATIVE_CMD=%KOTLIN_NATIVE_HOME%\bin\kotlinc.bat"
+set "_KOTLINC_NATIVE_CMD=%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat"
 
-if not exist "%JAVA_HOME%\bin\java.exe" (
+if not exist "%JAVA_HOME%\bin\javac.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -219,17 +221,17 @@ if %_DEBUG%==1 set _STDOUT_REDIRECT=1^>CON
 
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand '-detekt'^) 1>&2
-	set _DETEKT=0
+    set _DETEKT=0
 )
 if %_LINT%==1 if not defined _KTLINT_CMD (
     echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand '-lint'^) 1>&2
-	set _LINT=0
+    set _LINT=0
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
-    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%"
-	echo %_DEBUG_LABEL% Variables  : _JAVA_MAIN_CLASS=%_JAVA_MAIN_CLASS% _KT_MAIN_CLASS=%_KT_MAIN_CLASS% 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : _JAVA_MAIN_CLASS=%_JAVA_MAIN_CLASS% _KT_MAIN_CLASS=%_KT_MAIN_CLASS% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -260,7 +262,7 @@ echo     %__BEG_O%compile%__END%     generate class files
 echo     %__BEG_O%detekt%__END%      analyze Kotlin source files with %__BEG_N%Detekt%__END%
 echo     %__BEG_O%doc%__END%         generate HTML documentation
 echo     %__BEG_O%help%__END%        display this help message
-echo     %__BEG_O%lint%__END%        analyze Kotlin/Java source files with %__BEG_N%KtLint%__END%/__BEG_N%CheckStyle%__END%
+echo     %__BEG_O%lint%__END%        analyze Kotlin/Java source files with %__BEG_N%KtLint%__END%/%__BEG_N%CheckStyle%__END%
 echo     %__BEG_O%run%__END%         execute the generated program
 echo     %__BEG_O%test%__END%        execute unit tests
 goto :eof
@@ -296,7 +298,7 @@ if not %ERRORLEVEL%==0 (
     if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
         set __SIZE=0
         for %%f in (%_TARGET_DIR%\detekt-report.xml) do set __SIZE=%%~zf
-        if !__SIZE! gtr 79 type "%_TARGET_DIR%\detekt-report.xml"
+        if !__SIZE! gtr 79 type "%_TARGET_DIR%\detekt-report.xml" 1>&2
     )
     set _EXITCODE=1
     goto :eof
@@ -380,7 +382,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCE
 )
 call "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(JVM^) 1>&2
+    echo %_ERROR_LABEL% Compilation of %__N% Java source files failed 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -393,7 +395,7 @@ if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
 for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
-    set __N+=1
+    set /a __N+=1
 )
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
@@ -407,7 +409,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOUR
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(native^) 1>&2
+    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -435,7 +437,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@
 )
 call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Java source files failed 1>&2
+    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -476,7 +478,7 @@ goto :eof
 :run_jvm
 set "__MAIN_CLASS_FILE=%_CLASSES_DIR%\%_MAIN_CLASS:.=\%.class"
 if not exist "%__MAIN_CLASS_FILE%" (
-    echo %_ERROR_LABEL% Kotlin main class file not found ^(!__MAIN_CLASS_FILE:%_ROOT_DIR%=!^) 1>&2
+    echo %_ERROR_LABEL% Kotlin main class file not found ^("!__MAIN_CLASS_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -496,7 +498,7 @@ goto :eof
 if not exist "%_EXE_FILE%" (
     echo %_ERROR_LABEL% Kotlin executable file not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
-	goto :eof
+    goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin native application "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
@@ -539,7 +541,7 @@ if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
 for /f %%i in ('dir /s /b "%_SOURCE_DIR%\test\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
-    set __N+=1
+    set /a __N+=1
 )
 set "__OPTS_FILE=%_TARGET_DIR%\test_kotlinc_opts.txt"
 echo -cp "%_CPATH:\=\\%%_CLASSES_DIR:\=\\%" -d %_TEST_CLASSES_DIR:\=\\% > "%__OPTS_FILE%"
@@ -549,7 +551,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOUR
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin test source files failed 1>&2
+    echo %_ERROR_LABEL% Compilation of %__N% Kotlin test source files failed ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -624,7 +626,7 @@ set __SOURCE_FILES=
 set __N=0
 for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%" *.java') do (
     set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-	set /a __N+=1
+    set /a __N+=1
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" -jar "%__JAR_FILE%" -c="%__XML_FILE%" %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze %__N% Java source files with CheckStyle configuration "!__XML_FILE:%USERPROFILE%\=!" 1>&2
