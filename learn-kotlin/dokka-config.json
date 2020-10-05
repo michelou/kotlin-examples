@@ -1,0 +1,8 @@
+{
+    "outputDir": "target/docs",
+    "moduleDisplayName": "AAA",
+    "sourceSet": {
+        "displayName": "BBB",
+        "src": "src/main/kotlin"
+    }
+}

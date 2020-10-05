@@ -81,7 +81,7 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
     set "_KTLINT_CMD=%KTLINT_HOME%\ktlint.bat"
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
-    echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
+    echo %_ERROR_LABEL% Kotlin installation not found 1>&2
 	set _EXITCODE=1
 	goto :eof
 )
@@ -231,6 +231,9 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
+set _STDERR_REDIRECT=2^>NUL
+if %_DEBUG%==1 set _STDERR_REDIRECT=
+
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
 	set _DETEKT=0
@@ -290,8 +293,8 @@ echo.
 echo   %__BEG_P%Subcommands:%__END%
 echo     %__BEG_O%clean%__END%             delete generated files
 echo     %__BEG_O%compile[:^<name^>]%__END%  generate class files
-echo     %__BEG_O%doc%__END%               generate HTML documentation with %__BEG_N%Dokka%__END%
 echo     %__BEG_O%detekt%__END%            analyze Kotlin source files with %__BEG_N%Detekt%__END%
+echo     %__BEG_O%doc%__END%               generate HTML documentation with %__BEG_N%Dokka%__END%
 echo     %__BEG_O%help%__END%              display this help message
 echo     %__BEG_O%lint[:^<name^>]%__END%     analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run[:^<name^>]%__END%      execute the generated program
@@ -376,13 +379,14 @@ if %__N%==0 (
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 echo -language-version %_LANGUAGE_VERSION% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -408,8 +412,8 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -src %_SOURCE_DIR%\main\kotlin
-set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
+set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2

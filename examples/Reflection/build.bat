@@ -283,6 +283,12 @@ echo     %__BEG_O%help%__END%        display this help message
 echo     %__BEG_O%lint%__END%        analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run%__END%         execute the generated program
 echo     %__BEG_O%test%__END%        execute unit tests
+if %_VERBOSE%==0 goto :eof
+echo.
+echo   %__BEG_P%Build tools:%__END%
+echo     %__BEG_O%^> build clean run%__END%
+echo     %__BEG_O%^> gradle -q clean run%__END%
+echo     %__BEG_O%^> mvn -q clean compile exec:java%__END%
 goto :eof
 
 :clean
@@ -340,13 +346,20 @@ for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
     set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
     set /a __N+=1
 )
+set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
+
 @rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with KtLint 1>&2
 )
-call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
+   echo %_WARNING_LABEL% Ktlint error found 1>&2
+   if %_DEBUG%==1 ( type "%__TMP_FILE%"
+   ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
+   )
+   if exist "%__TMP_FILE%" del "%__TMP_FILE%"
+   @rem set _EXITCODE=1
    goto :eof
 )
 goto :eof
@@ -357,9 +370,13 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
-    echo %%i >> "%__SOURCES_FILE%"
+for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+    echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
+)
+if %__N%==0 (
+    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
+    goto :eof
 )
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
@@ -401,8 +418,8 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -src %_SOURCE_DIR%\main\kotlin
-set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
+set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2

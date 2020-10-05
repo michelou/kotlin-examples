@@ -256,6 +256,7 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
     echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : KOTLIN_NATIVE_HOME="%KOTLIN_NATIVE_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _MAIN_CLASS=%_MAIN_CLASS% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
@@ -290,6 +291,12 @@ echo     %__BEG_O%help%__END%        display this help message
 echo     %__BEG_O%lint%__END%        analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run%__END%         execute the generated program
 echo     %__BEG_O%test%__END%        execute unit tests
+if %_VERBOSE%==0 goto :eof
+echo.
+echo   %__BEG_P%Build tools:%__END%
+echo     %__BEG_O%^> build clean run%__END%
+echo     %__BEG_O%^> gradle -q clean run%__END%
+echo     %__BEG_O%^> mvn -q clean compile exec:java%__END%
 goto :eof
 
 :clean
@@ -347,13 +354,20 @@ for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
     set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
     set /a __N+=1
 )
+set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
+
 @rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with KtLint 1>&2
 )
-call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
+   echo %_WARNING_LABEL% Ktlint error found 1>&2
+   if %_DEBUG%==1 ( type "%__TMP_FILE%"
+   ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
+   )
+   if exist "%__TMP_FILE%" del "%__TMP_FILE%"
+   @rem set _EXITCODE=1
    goto :eof
 )
 goto :eof
@@ -364,9 +378,13 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
-    echo %%i >> "%__SOURCES_FILE%"
+for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+    echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
+)
+if %__N%==0 (
+    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
+    goto :eof
 )
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
@@ -392,7 +410,7 @@ if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims" %%f in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )

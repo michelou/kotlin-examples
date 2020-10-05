@@ -53,10 +53,6 @@ if %_TEST%==1 (
     call :test_%_TARGET%
     if not !_EXITCODE!==0 goto end
 )
-if %_TEST%==1 (
-    call :test
-    if not !_EXITCODE!==0 goto end
-)
 goto end
 
 @rem #########################################################################
@@ -259,8 +255,9 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
-    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" _MAIN_CLASS=%_MAIN_CLASS% 1>&2
-    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _JAVA_MAIN_CLASS=%_JAVA_MAIN_CLASS% _KT_MAIN_CLASS=%_KT_MAIN_CLASS% 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%"
+    echo %_DEBUG_LABEL% Variables  : KOTLIN_NATIVE_HOME="%KOTLIN_NATIVE_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _MAIN_CLASS=%_MAIN_CLASS% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -294,6 +291,12 @@ echo     %__BEG_O%help%__END%        display this help message
 echo     %__BEG_O%lint%__END%        analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run%__END%         execute the generated program
 echo     %__BEG_O%test%__END%        execute unit tests
+if %_VERBOSE%==0 goto :eof
+echo.
+echo   %__BEG_P%Build tools:%__END%
+echo     %__BEG_O%^> build clean run%__END%
+echo     %__BEG_O%^> gradle -q clean run%__END%
+echo     %__BEG_O%^> mvn -q clean compile exec:java%__END%
 goto :eof
 
 :clean
@@ -322,7 +325,7 @@ set __DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --config "%__CONFIG_FIL
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
 )
-call "%_DETEKT_CMD%" %__DETEKT_OPTS%
+call "%_DETEKT_CMD%" %__DETEKT_OPTS% %_STDERR_REDIRECT%
 if not %ERRORLEVEL%==0 (
     if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
         set __SIZE=0
@@ -340,13 +343,14 @@ if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
 goto :eof
 
 :lint
-set /a _PLAIN=_VERBOSE+_DEBUG
-if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
-) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
+set __KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
+
+if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
+) else if %_VERBOSE%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
 set __SOURCE_FILES=
 set __N=0
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
     set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
     set /a __N+=1
 )
@@ -358,7 +362,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_F
 )
 call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   echo %_WARNING_LABEL% CheckStyle error found 1>&2
+   echo %_WARNING_LABEL% Ktlint error found 1>&2
    if %_DEBUG%==1 ( type "%__TMP_FILE%"
    ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
    )
@@ -374,9 +378,13 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
-    echo %%i >> "%__SOURCES_FILE%"
+for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+    echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
+)
+if %__N%==0 (
+    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
+    goto :eof
 )
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
@@ -406,8 +414,12 @@ for /f "delims=" %%f in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
+set /a __WARN_ENABLED=_VERBOSE+_DEBUG
+if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
+) else ( set __NOWARN_OPT=
+)
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% -o "%_EXE_FILE:\=\\%" -e "%_PKG_NAME%.main" > "%__OPTS_FILE%"
+echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -o "%_EXE_FILE:\=\\%" -e "%_PKG_NAME%.main" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(native^) 1>&2
@@ -444,6 +456,7 @@ set __JAVA_OPTS=
 @rem see https://github.com/Kotlin/dokka/releases
 set __ARGS=-src %_SOURCE_DIR%\main\kotlin
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
+
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2
 )
@@ -462,6 +475,9 @@ if not exist "%__MAIN_CLASS_FILE%" (
     set _EXITCODE=1
     goto :eof
 )
+@rem call :libs_cpath
+@rem if not %_EXITCODE%==0 goto :eof
+
 set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
@@ -477,7 +493,7 @@ goto :eof
 
 :run_native
 if not exist "%_EXE_FILE%" (
-    echo %_ERROR_LABEL% Kotlin executable file not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
+    echo %_ERROR_LABEL% Kotlin executable not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -486,8 +502,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 

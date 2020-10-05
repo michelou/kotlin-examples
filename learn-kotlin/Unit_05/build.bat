@@ -92,7 +92,7 @@ set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
-    echo %_ERROR_LABEL% Java SDK nstallation not found 1>&2
+    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
 	set _EXITCODE=1
 	goto :eof
 )
@@ -228,11 +228,11 @@ set _STDERR_REDIRECT=2^>NUL
 if %_DEBUG%==1 set _STDERR_REDIRECT=
 
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
-    echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand '-detekt'^) 1>&2
+    echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
 	set _DETEKT=0
 )
 if %_LINT%==1 if not defined _KTLINT_CMD (
-    echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand '-lint'^) 1>&2
+    echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand 'lint'^) 1>&2
 	set _LINT=0
 )
 if %_DEBUG%==1 (
@@ -361,30 +361,6 @@ if not %ERRORLEVEL%==0 (
 )
 goto :eof
 
-:doc
-call :libs_cpath
-if not %_EXITCODE%==0 goto :eof
-
-set __JAVA_OPTS=
-
-@rem see https://github.com/Kotlin/dokka/releases
-if not defined _DOKKA_JAR (
-    echo %_ERROR_LABEL% Dokka library file not found 1>&2
-    set _EXITCODE=1
-    goto :eof
-)
-set __DOKKA_ARGS=-output "%_TARGET_DOCS_DIR%" -format html -generateIndexPages
-
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
-) else if %_VERBOSE%==1 ( echo Generate documentation with Dokka 1>&2
-)
-call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
-if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
-)
-goto :eof
-
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
 for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
@@ -395,7 +371,30 @@ if not exist "%__BATCH_FILE%" (
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
 call "%__BATCH_FILE%" %_DEBUG%
-set _LIBS_CPATH=%_CPATH%
+set "_LIBS_CPATH=%_CPATH%"
+goto :eof
+
+:doc
+if not exist "%_TARGET_DOCS_DIR%" mkdir "%_TARGET_DOCS_DIR%"
+
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
+set __JAVA_OPTS=
+
+@rem see https://github.com/Kotlin/dokka/releases
+set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
+) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2
+)
+call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
+if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Generation of HTML documentation failed 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
 goto :eof
 
 :run
