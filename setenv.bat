@@ -24,13 +24,7 @@ if %_HELP%==1 (
 )
 
 set _BAZEL_PATH=
-set _CFR_PATH=
 set _GRADLE_PATH=
-set _JAVA_PATH=
-set _KOTLIN_PATH=
-set _KOTLIN_NATIVE_PATH=
-set _DETEKT_PATH=
-set _KTLINT_PATH=
 set _MAVEN_PATH=
 set _GIT_PATH=
 
@@ -213,12 +207,19 @@ if not exist "%__BAZEL_HOME%\bazel.exe" (
 set "_BAZEL_PATH=;%__BAZEL_HOME%"
 goto :eof
 
+@rem output parameter: _CFR_HOME
 @rem http://www.benf.org/other/cfr/
 :cfr
-where /q cfr.bat
-if %ERRORLEVEL%==0 goto :eof
+set _CFR_HOME=
 
-if defined CFR_HOME (
+set __CFR_CMD=
+for /f %%f in ('where cfr.bat 2^>NUL') do set "__CFR_CMD=%%f"
+if defined __CFR_CMD (
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of cfr executable found in PATH 1>&2
+    for %%i in ("%__CFR_CMD%") do set "__CFR_BIN_DIR=%%~dpi"
+    for %%f in ("!__CFR_BIN_DIR!\.") do set "_CFR_HOME=%%~dpf"
+    goto :eof
+) else if defined CFR_HOME (
     set "_CFR_HOME=%CFR_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable CFR_HOME 1>&2
 ) else (
@@ -233,7 +234,6 @@ if not exist "%_CFR_HOME%\bin\cfr.bat" (
     set _EXITCODE=1
     goto :eof
 )
-set "_CFR_PATH=;%_CFR_HOME%\bin"
 goto :eof
 
 @rem output parameter(s): _GRADLE_HOME, _GRADLE_PATH
@@ -268,10 +268,9 @@ if not exist "%_GRADLE_HOME%\bin\gradle.bat" (
 set "_GRADLE_PATH=;%_GRADLE_HOME%\bin"
 goto :eof
 
-@rem output parameter(s): _JAVA_HOME, _JAVA_PATH
+@rem output parameter: _JAVA_HOME
 :javac
 set _JAVA_HOME=
-set _JAVA_PATH=
 
 set __JAVAC_CMD=
 for /f %%f in ('where javac.exe 2^>NUL') do set "__JAVAC_CMD=%%f"
@@ -279,7 +278,6 @@ if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
     for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
     for %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
-    @rem keep _JAVA_PATH undefined since executable already in path
     goto :eof
 ) else if defined JAVA_HOME (
     set "_JAVA_HOME=%JAVA_HOME%"
@@ -297,14 +295,11 @@ if not exist "%_JAVA_HOME%\bin\javac.exe" (
     set _EXITCODE=1
     goto :eof
 )
-@rem Here we use trailing separator because it will be prepended to PATH
-set "_JAVA_PATH=%_JAVA_HOME%\bin;"
 goto :eof
 
-@rem output parameter(s): _KOTLIN_HOME, _KOTLIN_PATH
+@rem output parameter: _KOTLIN_HOME
 :kotlinc-jvm
 set _KOTLIN_HOME=
-set _KOTLIN_PATH=
 
 set __KOTLINC_CMD=
 for /f %%f in ('where kotlinc.bat 2^>NUL') do set "__KOTLINC_CMD=%%f"
@@ -316,7 +311,8 @@ if defined __KOTLINC_CMD (
 )
 if defined __KOTLINC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
-    @rem keep _KOTLIN_PATH undefined since executable already in path
+    for %%i in ("%__KOTLINC_CMD%") do set "__KOTLINC_BIN_DIR=%%~dpi"
+    for %%f in ("!__KOTLINC_BIN_DIR!\.") do set "_KOTLIN_HOME=%%~dpf"
     goto :eof
 ) else if defined KOTLIN_HOME (
     set "_KOTLIN_HOME=%KOTLIN_HOME%"
@@ -334,19 +330,18 @@ if not exist "%_KOTLIN_HOME%\bin\kotlinc.bat" (
     set _EXITCODE=1
     goto :eof
 )
-set "_KOTLIN_PATH=;%_KOTLIN_HOME%\bin"
 goto :eof
 
-@rem output parameter(s): _KOTLIN_NATIVE_HOME, _KOTLIN_NATIVE_PATH
+@rem output parameter: _KOTLIN_NATIVE_HOME
 :kotlinc-native
 set _KOTLIN_NATIVE_HOME=
-set _KOTLIN_NATIVE_PATH=
 
 set __KOTLINC_NATIVE_CMD=
 for /f %%f in ('where kotlinc-native.bat 2^>NUL') do set "__KOTLINC_NATIVE_CMD=%%f"
 if defined __KOTLINC_NATIVE_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
-    @rem keep _KOTLIN_NATIVE_PATH undefined since executable already in path
+    for %%i in ("%__KOTLINC_NATIVE_CMD%") do set "__KOTLINC_NATIVE_BIN_DIR=%%~dpi"
+    for %%f in ("!__KOTLINC_NATIVE_BIN_DIR!\.") do set "_KOTLIN_NATIVE_HOME=%%~dpf"
     goto :eof
 ) else if defined KOTLIN_NATIVE_HOME (
     set "_KOTLIN_NATIVE_HOME=%KOTLIN_NATIVE_HOME%"
@@ -364,13 +359,11 @@ if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
     set _EXITCODE=1
     goto :eof
 )
-set "_KOTLIN_NATIVE_PATH=;%_KOTLIN_NATIVE_HOME%\bin"
 goto :eof
 
-@rem output parameter(s): _DETEKT_HOME, _DETEKT_PATH
+@rem output parameter: _DETEKT_HOME
 :detekt
 set _DETEKT_HOME=
-set _DETEKT_PATH=
 
 set __DETEKT_CMD=
 for /f %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
@@ -378,7 +371,6 @@ if defined __DETEKT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Detekt executable found in PATH 1>&2
     for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
     for %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
-    @rem keep _DETEKT_PATH undefined since executable already in path
     goto :eof
 ) else if defined DETEKT_HOME (
     set "_DETEKT_HOME=%DETEKT_HOME%"
@@ -394,18 +386,17 @@ if defined __DETEKT_CMD (
         )
     )
 )
-set "_DETEKT_PATH=;%_DETEKT_HOME%\bin"
 goto :eof
 
-@rem output parameter(s): _KTLINT_HOME, _KTLINT_PATH
+@rem output parameter: _KTLINT_HOME
 :ktlint
-set _KTLINT_PATH=
+set _KTLINT_HOME=
 
 set __KTLINT_CMD=
 for /f %%f in ('where ktlint.bat 2^>NUL') do set "__KTLINT_CMD=%%f"
 if defined __KTLINT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of KtLint executable found in PATH 1>&2
-    @rem keep _KTLINT_PATH undefined since executable already in path
+    for %%f in ("%__KTLINT_CMD%") do set "_KTLINT_HOME=%%~dpf"
     goto :eof
 ) else if defined KTLINT_HOME (
     set "_KTLINT_HOME=%KTLINT_HOME%"
@@ -421,7 +412,6 @@ if defined __KTLINT_CMD (
         )
     )
 )
-set "_KTLINT_PATH=;%_KTLINT_HOME%"
 goto :eof
 
 :maven
@@ -501,35 +491,35 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('gradle.bat -version 2^<^&1 ^| findstr Gradle') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% gradle %%~j,"
     set __WHERE_ARGS=%__WHERE_ARGS% gradle.bat
 )
-where /q java.exe
+where /q "%JAVA_HOME%\bin:java.exe"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,*" %%i in ('java.exe -version 2^<^&1 ^| findstr version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% java %%~k,"
-    set __WHERE_ARGS=%__WHERE_ARGS% java.exe
+    for /f "tokens=1,2,*" %%i in ('"%JAVA_HOME%\bin\java.exe" -version 2^<^&1 ^| findstr version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% java %%~k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%JAVA_HOME%\bin:java.exe"
 )
-where /q detekt-cli.bat
+where /q "%DETEKT_HOME%\bin:detekt-cli.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('detekt-cli.bat --version 2^>^&1') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% detekt-cli %%i,"
-    set __WHERE_ARGS=%__WHERE_ARGS% detekt-cli.bat
+    for /f "tokens=*" %%i in ('"%DETEKT_HOME%\bin\detekt-cli.bat" --version 2^>^&1') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% detekt-cli %%i,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%DETEKT_HOME%\bin:detekt-cli.bat"
 )
-where /q kotlinc.bat
+where /q "%KOTLIN_HOME%\bin:kotlinc.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,*" %%i in ('kotlinc.bat -version 2^>^&1 ^| findstr kotlinc') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc %%k,"
-    set __WHERE_ARGS=%__WHERE_ARGS% kotlinc.bat
+    for /f "tokens=1,2,3,*" %%i in ('"%KOTLIN_HOME%\bin\kotlinc.bat" -version 2^>^&1 ^| findstr kotlinc') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc %%k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%KOTLIN_HOME%\bin:kotlinc.bat"
 )
-where /q kotlinc-native.bat
+where /q "%KOTLIN_NATIVE_HOME%\bin:kotlinc-native.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,*" %%i in ('kotlinc-native.bat -version 2^>^&1 ^| findstr kotlinc-native') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc-native %%k,"
-    set __WHERE_ARGS=%__WHERE_ARGS% kotlinc-native.bat
+    for /f "tokens=1,2,3,*" %%i in ('"%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" -version 2^>^&1 ^| findstr kotlinc-native') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc-native %%k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%KOTLIN_NATIVE_HOME%\bin:kotlinc-native.bat"
 )
-where /q ktlint.bat
+where /q "%KTLINT_HOME%:ktlint.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('ktlint.bat --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
-    set __WHERE_ARGS=%__WHERE_ARGS% ktlint.bat
+    for /f "tokens=*" %%i in ('"%KTLINT_HOME%\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%KTLINT_HOME%:ktlint.bat"
 )
-where /q cfr.bat
+where /q "%CFR_HOME%\bin:cfr.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,*" %%i in ('cfr.bat 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
-    set __WHERE_ARGS=%__WHERE_ARGS% cfr.bat
+    for /f "tokens=1,*" %%i in ('"%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
 )
 where /q mvn.cmd
 if %ERRORLEVEL%==0 (
@@ -555,8 +545,12 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     echo Tool paths: 1>&2
     for /f "tokens=*" %%p in ('where %__WHERE_ARGS%') do echo    %%p 1>&2
 	echo Environment variables: 1>&2
-	if defined KOTLINE_HOME echo    KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-	if defined KOTLINE_NATIVE_HOME echo    KOTLIN_NATIVE_HOME="%KOTLIN_HOME%" 1>&2
+	if defined CFR_HOME echo    CFR_HOME="%CFR_HOME%" 1>&2
+	if defined DETEKT_HOME echo    DETEKT_HOME="%DETEKT_HOME%" 1>&2
+	if defined JAVA_HOME echo    JAVA_HOME="%JAVA_HOME%" 1>&2
+	if defined KOTLIN_HOME echo    KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+	if defined KOTLIN_NATIVE_HOME echo    KOTLIN_NATIVE_HOME="%KOTLIN_HOME%" 1>&2
+	if defined KTLINT_HOME echo    KTLINT_HOME="%KTLINT_HOME%" 1>&2
 )
 goto :eof
 
@@ -565,11 +559,14 @@ goto :eof
 
 :end
 endlocal & (
+    if not defined CFR_HOME set "CFR_HOME=%_CFR_HOME%"
+    if not defined DETEKT_HOME set "DETEKT_HOME=%_DETEKT_HOME%"
     if not defined GRADLE_HOME set "GRADLE_HOME=%_GRADLE_HOME%"
     if not defined JAVA_HOME set "JAVA_HOME=%_JAVA_HOME%"
     if not defined KOTLIN_HOME set "KOTLIN_HOME=%_KOTLIN_HOME%"
     if not defined KOTLIN_NATIVE_HOME set "KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%"
-    set "PATH=%_JAVA_PATH%%PATH%%_BAZEL_PATH%%_CFR_PATH%%_GRADLE_PATH%%_KOTLIN_PATH%%_KOTLIN_NATIVE_PATH%%_DETEKT_PATH%%_KTLINT_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
+    if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
+    set "PATH=%PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

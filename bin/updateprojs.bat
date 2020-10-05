@@ -20,24 +20,24 @@ set _KODDA_VERSION_OLD=dokkaVersion=0.10.0
 set _KODDA_VERSION_NEW=dokkaVersion=0.10.1
 
 @rem files gradle.properties
-set _KOTLIN_VERSION_OLD=kotlinVersion=1.3.71
-set _KOTLIN_VERSION_NEW=kotlinVersion=1.3.72
+set _KOTLIN_VERSION_OLD=kotlinVersion=1.3.72
+set _KOTLIN_VERSION_NEW=kotlinVersion=1.4.10
 
 @rem files gradle.properties
 set _JUNIT_VERSION_OLD=junitVersion=4.12
 set _JUNIT_VERSION_NEW=junitVersion=4.13
 
 @rem files gradle.properties
-set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.36.0/ktlint.jar
-set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.37.0/ktlint.jar
+set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.38.1/ktlint.jar
+set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.39.0/ktlint.jar
 
 @rem files pom.xml
-set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.3.71
-set _MVN_KOTLIN_VERSION_NEW=kotlin.version^>1.3.72
+set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.3.72
+set _MVN_KOTLIN_VERSION_NEW=kotlin.version^>1.4.10
 
 @rem files pom.xml
-set _MVN_KOTLINX_VERSION_OLD=kotlinx.version^>1.3.3
-set _MVN_KOTLINX_VERSION_NEW=kotlinx.version^>1.3.7
+set _MVN_KOTLINX_VERSION_OLD=kotlinx.version^>1.3.7
+set _MVN_KOTLINX_VERSION_NEW=kotlinx.version^>1.3.9
 
 @rem files pom.xml
 set _MVN_JAR_VERSION_OLD=maven.jar.version^>3.1.2
@@ -135,9 +135,9 @@ if not defined __ARG goto args_done
 
 if "%__ARG:~0,1%"=="-" (
     @rem option
-    if ""%__ARG%"=="-debug" ( set _DEBUG=1
-    ) else if ""%__ARG%"=="-help" ( set _HELP=1
-    ) else if ""%__ARG%"=="-verbose" ( set _VERBOSE=1
+    if "%__ARG%"=="-debug" ( set _DEBUG=1
+    ) else if "%__ARG%"=="-help" ( set _HELP=1
+    ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
         echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
         set _EXITCODE=1
@@ -145,7 +145,7 @@ if "%__ARG:~0,1%"=="-" (
    )
 ) else (
     @rem subcommand
-    if ""%__ARG%"=="help" ( set _HELP=1
+    if "%__ARG%"=="help" ( set _HELP=1
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
         set _EXITCODE=1

@@ -396,6 +396,8 @@ set _LIBS_CPATH=%_CPATH%
 goto :eof
 
 :doc
+if not exist "%_TARGET_DOCS_DIR%" mkdir "%_TARGET_DOCS_DIR%"
+
 call :libs_cpath
 if not %_EXITCODE%==0 goto :eof
 

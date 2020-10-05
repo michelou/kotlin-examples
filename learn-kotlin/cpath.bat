@@ -22,14 +22,27 @@ call :add_maven_jar "junit" "junit" "4.13"
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
-call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3"
-
-set _LIBS_CPATH1=%_LIBS_CPATH%
+set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-set __DOKKA_VERSION=1.4.0
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.3.9"
+
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
+call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3"
+
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
+call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
+
+@rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
+set __DOKKA_VERSION=1.4.10
+
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
+call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
+
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
+@rem call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
@@ -37,13 +50,17 @@ call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
-call :add_bintray1_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
-
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
 
-set _LIBS_CPATH2=%_LIBS_CPATH%
+set "_LIBS_CPATH2=%_LIBS_CPATH%"
+
+set _LIBS_CPATH=
+
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
+call :add_bintray1_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
+
+set "_LIBS_CPATH3=%_LIBS_CPATH%"
 
 goto end
 
@@ -109,5 +126,6 @@ goto :eof
 :end
 endlocal & (
     set "_CPATH=%_LIBS_CPATH1%"
-    set "_DOKKA_JAR=%_LIBS_CPATH2%"
+    set "_DOKKA_CPATH=%_LIBS_CPATH2%"
+    set "_DOKKA_JAR=%_LIBS_CPATH3:~0,-1%"
 )

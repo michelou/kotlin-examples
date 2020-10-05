@@ -51,22 +51,18 @@ if not defined KOTLIN_HOME (
     set _EXITCODE=1
     goto :eof
 )
-where /q jar.exe
-if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% jar command not found ^(check your PATH variable^) 1>&2
+if not exist "%JAVA_HOME%\bin\jar.exe" (
+    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
     set _EXITCODE=1
     goto :eof
 )
-set _JAR_CMD=jar.exe
-set _JAVAP_CMD=javap.exe
-for /f "delims=" %%i in ('where "%_JAR_CMD%"') do (
-    for %%f in ("%%~dpi..\") do set "_JAVA_HOME=%%~dpf"
-)
-if not exist "%_JAVA_HOME%\lib\" (
-    echo %_ERROR_LABEL% Java library directory not found ^(check your PATH variable^) 1>&2
+if not exist "%JAVA_HOME%\lib\" (
+    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
     set _EXITCODE=1
     goto :eof
 )
+set "_JAR_CMD=%JAVA_HOME%\bin\jar.exe"
+set "_JAVAP_CMD=%JAVA_HOME%\bin\javap.exe"
 goto :eof
 
 :env_colors
@@ -152,7 +148,11 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto args_loop
 :args_done
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _CLASS_NAME=%_CLASS_NAME% _METH_NAME=%_METH_NAME% _VERBOSE=%_VERBOSE% 1>&2
+if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% Options   : _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Parameters: _CLASS_NAME=%_CLASS_NAME% _METH_NAME=%_METH_NAME% 1>&2
+    echo %_DEBUG_LABEL% Variables : JAVA_HOME="%JAVA_HOME%" 1>&2
+)
 goto :eof
 
 :help

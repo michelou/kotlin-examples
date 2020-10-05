@@ -27,10 +27,16 @@ In this document we present the following [Kotlin] code examples:
 -->
 
 We provide 4 different ways to build/run the code examples:
-- **`build.bat`** is the old-fashioned batch file.
-- **`build.gradle`** is the Gradle build script written in [Groovy DSL][groovy_dsl].
-- **`build.gradle.kts`** is the Gradle build script written in [Kotlin DSL][kotlin_dsl].
-- **`pom.xml`** is the [Maven] build script written in XML.
+
+| Build tool          | Configuration file(s) | Parent file(s) |
+|---------------------|-----------------------|----------------|
+| **`build.bat`** | **`build.properties`** | **`cpath.bat`** <sup><b>(1)</b></sup> |
+| **`gradle.exe`**    | **`build.gradle`** <sup><b>(2)</b></sup> | **`common.gradle`**  |
+| **`gradle.exe`**    | **`build.gradle.kts`** <sup><b>(3)</b></sup> | &nbsp; |
+| **`mvn.cmd`**       | **`pom.xml`**   | **`pom.xml`**  |
+<div style="font-size:90%;"><sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).</div>
+<div style="font-size:90%;"><sup>(2)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a></div>
+<div style="font-size:90%;"><sup>(3)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a></div>
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
 > <pre style="font-size:80%;">
@@ -46,9 +52,12 @@ We provide 4 different ways to build/run the code examples:
 >  Subcommands:
 >    clean       delete generated files
 >    compile     generate class files
+>    detekt      analyze Kotlin source files with Detekt
+>    doc         generate documentation
 >    help        display this help message
 >    lint        analyze Kotlin source files with KtLint
 >    run         execute the generated program
+>    test        execute unit tests
 </pre>
 
 ## <span id="hello-jvm">HelloWorld (JVM/native)</span>
@@ -59,7 +68,7 @@ Command [**`build clean run`**](HelloWorld/build.bat) compiles source file [**`H
 <b>&gt; <a href="HelloWorld/build.bat">build</a> clean run</b>
 Hello World!
 &nbsp;
-<b>&gt; tree /a /f target\classes | findstr /v "^[A-Z]"</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target\classes | findstr /v "^[A-Z]"</b>
 +---META-INF
 |       main.kotlin_module
 |
@@ -79,7 +88,8 @@ Hello World!
 &nbsp;
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target | findstr /v "^[A-Z]"</b>
     HelloWorld.exe
-    ktlint-report.xml
+    kotlinc-native_opts.txt
+    kotlinc-native_sources.txt
 </pre>
 
 > **:mag_right:** The [**`pelook`**][bytepointer_pelook] utility can help us getting more information about the native executable:
@@ -104,7 +114,7 @@ name=&lt;name&gt; active=true
 name=Bob active=true
 three=3
 &nbsp;
-<b>&gt; gradle -q clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
 name=&lt;name&gt; active=true
 name=Bob active=true
 three=3
@@ -196,7 +206,7 @@ Elapsed time: 00:00:06
 Alternatively command [**`gradle -q clean run`**][gradle_bat] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
 
 <pre style="font-size:80%;">
-<b>&gt; gradle clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
 
 &gt; Task :run
 Source code:
@@ -236,8 +246,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; kotlinc-native -version</b>
-info: kotlinc-native 1.4.0-rc-308 (JRE 1.8.0_262-b10)
-Kotlin/Native: 1.4
+info: kotlinc-native 1.4.10-rc-405 (JRE 1.8.0_262-b10)
+Kotlin/Native: 1.4.10
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -282,7 +292,7 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 <tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></td></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code><br/><code>Hello World!</code></td></tr>
 </table>
-<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.0\lib\kotlin-stdlib.jar</code></b></span>
+<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.10\lib\kotlin-stdlib.jar</code></b></span>
 
 <p style="margin:0 0 1em 20px;">
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):

@@ -40,11 +40,12 @@
 
 - [Clikt][clikt_home]: Multiplatform Kotlin library for writing command line interfaces.
 - [detekt][detekt_home]: Static code analysis for Kotlin.
+- [ktlint] : Kotlin linter with built-in formatter.
 - [The Gradle build system - Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span>
 
-- [GeeksforGeeks](https://www.geeksforgeeks.org/) - [Kotling Programming Language](https://www.geeksforgeeks.org/kotlin-programming-language/).
+- [GeeksforGeeks](https://www.geeksforgeeks.org/) - [Kotlin Programming Language](https://www.geeksforgeeks.org/kotlin-programming-language/).
 - [JournalDev](https://www.journaldev.com/) - [Kotlin][tuto_journaldev]
 - [ZetCode](http://zetcode.com/) - [Kotlin tutorial](http://zetcode.com/all/#kotlin) by Jan Bodnar, 2019.
 
@@ -65,6 +66,7 @@
 [book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
 [clikt_home]: https://ajalt.github.io/clikt/
 [detekt_home]: https://detekt.github.io/detekt/
+[ktlint]: https://ktlint.github.io/
 [medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
 [tuto_journaldev]: https://www.journaldev.com/kotlin
