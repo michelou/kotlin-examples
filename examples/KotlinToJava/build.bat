@@ -74,7 +74,7 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_MAIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
@@ -261,7 +261,7 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
     echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _JAVA_MAIN_CLASS=%_JAVA_MAIN_CLASS% _KT_MAIN_CLASS=%_KT_MAIN_CLASS% 1>&2
+    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _JAVA_MAIN_CLASS=%_JAVA_MAIN_CLASS% _MAIN_CLASS=%_MAIN_CLASS% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -295,6 +295,12 @@ echo     %__BEG_O%help%__END%        display this help message
 echo     %__BEG_O%lint%__END%        analyze Kotlin/Java source files with %__BEG_N%KtLint%__END%/%__BEG_N%CheckStyle%__END%
 echo     %__BEG_O%run%__END%         execute the generated program
 echo     %__BEG_O%test%__END%        execute unit tests
+if %_VERBOSE%==0 goto :eof
+echo.
+echo   %__BEG_P%Build tools:%__END%
+echo     %__BEG_O%^> build clean run%__END%
+echo     %__BEG_O%^> gradle -q clean run%__END%
+echo     %__BEG_O%^> mvn -q clean compile exec:java%__END%
 goto :eof
 
 :clean
@@ -349,25 +355,27 @@ if not %_EXITCODE%==0 goto :eof
 goto :eof
 
 :lint_kotlin
-set /a _PLAIN=_VERBOSE+_DEBUG
-if %_PLAIN%==0 ( set __KTLINT_OPTS=%_KTLINT_OPTS%
-) else ( set __KTLINT_OPTS=--reporter=plain %_KTLINT_OPTS%
+set __KTLINT_OPTS=--color --reporter=checkstyle,output="%_TARGET_DIR%\\ktlint-report.xml"
+
+if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
+) else if %_VERBOSE%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
 set __SOURCE_FILES=
 set __N=0
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+for /f "delims=" %%f in ('where /r "%_MAIN_SOURCE_DIR%" *.kt 2^>NUL') do (
     set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
     set /a __N+=1
 )
 set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
+if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with KtLint 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2^>"%__TMP_FILE%" 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with Ktlint 1>&2
 )
 call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   echo %_WARNING_LABEL% CheckStyle error found 1>&2
+   echo %_WARNING_LABEL% Ktlint error found 1>&2
    if %_DEBUG%==1 ( type "%__TMP_FILE%"
    ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
    )
@@ -393,9 +401,6 @@ if not %_EXITCODE%==0 goto :eof
 goto :eof
 
 :compile_java
-call :libs_cpath
-if not %_EXITCODE%==0 goto :eof
-
 set "__SOURCES_FILE=%_TARGET_DIR%\javac_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
@@ -404,7 +409,7 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\java\*.java" 2^>NUL') do (
     set /a __N+=1
 )
 set "__OPTS_FILE=%_TARGET_DIR%\javac_opts.txt"
-set "__CPATH=%_KOTLIN_CPATH%;%_CLASSES_DIR%"
+set "__CPATH=%KOTLIN_HOME%\lib\kotlin-stdlib.jar;%_CLASSES_DIR%"
 echo -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
@@ -420,10 +425,9 @@ goto :eof
 
 :compile_kotlin
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
-
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+for /f %%i in ('dir /s /b "%_MAIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -534,7 +538,7 @@ goto :eof
 
 :run_native
 if not exist "%_EXE_FILE%" (
-    echo %_ERROR_LABEL% Kotlin executable file not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
+    echo %_ERROR_LABEL% Kotlin executable not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -543,8 +547,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -643,7 +647,7 @@ if not exist "%__USER_KOTLIN_DIR%" mkdir "%__USER_KOTLIN_DIR%"
 set "__XML_FILE=%__USER_KOTLIN_DIR%\java_checks.xml"
 if not exist "%__XML_FILE%" call :checkstyle_xml "%__XML_FILE%"
 )
-set __JAR_VERSION=8.36
+set __JAR_VERSION=8.36.2
 set __JAR_NAME=checkstyle-%__JAR_VERSION%-all.jar
 set __JAR_URL=https://github.com/checkstyle/checkstyle/releases/download/checkstyle-%__JAR_VERSION%/%__JAR_NAME%
 set "__JAR_FILE=%__USER_KOTLIN_DIR%\%__JAR_NAME%"

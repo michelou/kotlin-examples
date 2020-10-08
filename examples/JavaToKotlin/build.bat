@@ -53,6 +53,10 @@ if %_TEST%==1 (
     call :test_%_TARGET%
     if not !_EXITCODE!==0 goto end
 )
+if %_TEST%==1 (
+    call :test
+    if not !_EXITCODE!==0 goto end
+)
 goto end
 
 @rem #########################################################################
@@ -70,7 +74,7 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_MAIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
@@ -239,8 +243,11 @@ shift
 goto :args_loop
 :args_done
 set _STDERR_REDIRECT=2^>NUL
-if %_DEBUG%==1 set _STDERR_REDIRECT=
-
+set _STDOUT_REDIRECT=1^>NUL
+if %_DEBUG%==1 (
+    set _STDERR_REDIRECT=
+    set _STDOUT_REDIRECT=
+)
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
     set _DETEKT=0
@@ -253,7 +260,8 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
-    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" KOTLIN_NATIVE_HOME="%KOTLIN_NATIVE_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : KOTLIN_NATIVE_HOME="%KOTLIN_NATIVE_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _MAIN_CLASS=%_MAIN_CLASS% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
@@ -322,7 +330,7 @@ set __DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --config "%__CONFIG_FIL
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
 )
-call "%_DETEKT_CMD%" %__DETEKT_OPTS%% %_STDERR_REDIRECT%
+call "%_DETEKT_CMD%" %__DETEKT_OPTS% %_STDERR_REDIRECT%
 if not %ERRORLEVEL%==0 (
     if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
         set __SIZE=0
@@ -355,19 +363,20 @@ if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
 set __SOURCE_FILES=
 set __N=0
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
+for /f "delims=" %%f in ('where /r "%_MAIN_SOURCE_DIR%" *.kt 2^>NUL') do (
     set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
     set /a __N+=1
 )
 set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
+if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
 @rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with KtLint 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with Ktlint 1>&2
 )
 call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   echo %_WARNING_LABEL% CheckStyle error found 1>&2
+   echo %_WARNING_LABEL% Ktlint error found 1>&2
    if %_DEBUG%==1 ( type "%__TMP_FILE%"
    ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
    )
@@ -419,7 +428,7 @@ goto :eof
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+for /f %%i in ('dir /s /b "%_MAIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -622,7 +631,7 @@ if not exist "%__USER_KOTLIN_DIR%" mkdir "%__USER_KOTLIN_DIR%"
 set "__XML_FILE=%__USER_KOTLIN_DIR%\java_checks.xml"
 if not exist "%__XML_FILE%" call :checkstyle_xml "%__XML_FILE%"
 )
-set __JAR_VERSION=8.36
+set __JAR_VERSION=8.36.2
 set __JAR_NAME=checkstyle-%__JAR_VERSION%-all.jar
 set __JAR_URL=https://github.com/checkstyle/checkstyle/releases/download/checkstyle-%__JAR_VERSION%/%__JAR_NAME%
 set "__JAR_FILE=%__USER_KOTLIN_DIR%\%__JAR_NAME%"
