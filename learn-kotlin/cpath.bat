@@ -30,7 +30,7 @@ set _LIBS_CPATH=
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.3.9"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
-call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3"
+@rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
@@ -42,7 +42,7 @@ set __DOKKA_VERSION=1.4.10
 call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
-@rem call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
+call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
@@ -51,7 +51,7 @@ call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
-call :add_bintray1_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
+@rem call :add_bintray1_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
 

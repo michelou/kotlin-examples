@@ -12,6 +12,9 @@ set _EXITCODE=0
 call :env
 if not %_EXITCODE%==0 goto end
 
+call :props
+if not %_EXITCODE%==0 goto end
+
 call :args %*
 if not %_EXITCODE%==0 goto end
 
@@ -78,7 +81,7 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
     set "_KTLINT_CMD=%KTLINT_HOME%\ktlint.bat"
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
-    echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
+    echo %_ERROR_LABEL% Kotlin installation not found 1>&2
 	set _EXITCODE=1
 	goto :eof
 )
@@ -86,7 +89,7 @@ set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
-    echo %_ERROR_LABEL% Java SDK nstallation not found 1>&2
+    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
 	set _EXITCODE=1
 	goto :eof
 )
@@ -138,6 +141,31 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+goto :eof
+
+@rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION
+:props
+for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
+set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
+set _PROJECT_VERSION=0.1-SNAPSHOT
+
+set "__PROPS_FILE=%_ROOT_DIR%build.properties"
+if exist "%__PROPS_FILE%" (
+    for /f "tokens=1,* delims==" %%i in (%__PROPS_FILE%) do (
+        set __NAME=
+        set __VALUE=
+        for /f "delims= " %%n in ("%%i") do set __NAME=%%n
+        @rem line comments start with "#"
+        if defined __NAME if not "!__NAME:~0,1!"=="#" (
+            @rem trim value
+            for /f "tokens=*" %%v in ("%%~j") do set __VALUE=%%v
+            set "_!__NAME:.=_!=!__VALUE!"
+        )
+    )
+    if defined _project_name set _PROJECT_NAME=!_project_name!
+    if defined _project_url set _PROJECT_URL=!_project_url!
+    if defined _project_version set _PROJECT_VERSION=!_project_version!
+)
 goto :eof
 
 @rem input parameter: %*
@@ -206,10 +234,11 @@ shift
 goto :args_loop
 :args_done
 if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _EXAMPLE=%_EXAMPLE% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
 	echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
 	echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-    echo %_DEBUG_LABEL%              KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : DETEKT_HOME="%DETEKT_HOME%" KTLINT_HOME="%KTLINT_HOME%" 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof

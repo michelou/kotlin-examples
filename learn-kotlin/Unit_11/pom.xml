@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>unit_06</artifactId>
+    <artifactId>unit_11</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
     </dependencies>
 
     <properties>
-        <mainClass>com.makotogo.learn.kotlin.example4.FamilyKt</mainClass>
+        <mainClass>com.makotogo.learn.kotlin.MainKt</mainClass>
     </properties>
 
     <build>

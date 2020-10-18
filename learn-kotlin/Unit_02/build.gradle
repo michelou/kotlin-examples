@@ -12,6 +12,10 @@ description """Kotlin/JVM example project"""
 
 apply from: "../common.gradle"
 
+tasks.dokkaHtml.configure {
+    moduleName = "Unit 02"
+}
+
 run.doFirst {
     args ""
 }
