@@ -471,7 +471,7 @@ set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -o "%_EXE_FILE:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(native^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(native^) to executable "!_EXE_FILE:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (

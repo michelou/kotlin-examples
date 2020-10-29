@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.28][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.29][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.4][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin Native 1.4][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -30,8 +30,8 @@ For instance our development environment looks as follows (*October 2020*) <sup 
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
-C:\opt\detekt-cli-1.14.0\              <i>( 49 MB)</i>
-C:\opt\Git-2.28.0\                     <i>(271 MB)</i>
+C:\opt\detekt-cli-1.14.2\              <i>( 49 MB)</i>
+C:\opt\Git-2.29.1\                     <i>(271 MB)</i>
 C:\opt\gradle-6.7\                     <i>(111 MB)</i>
 C:\opt\kotlinc-1.4.10\                 <i>( 58 MB)</i>
 C:\opt\kotlin-native-windows-1.4.10\   <i>(170 MB)</i>
@@ -91,22 +91,22 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      bazel 3.5.0, gradle 6.7, java 1.8.0_262, detekt-cli 1.14.0,
+      bazel 3.7.0, gradle 6.7, java 1.8.0_262, detekt-cli 1.14.2,
       kotlinc 1.4.10, kotlinc-native 1.4.10, ktlint 0.39.0
-      mvn 3.6.3, git 2.28.0.windows.1, diff 3.7, bash 4.4.23(1)-release
+      cfr 0.150, mvn 3.6.3, git 2.29.1.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\bazel-3.5.0\bazel.exe
+      C:\opt\bazel-3.7.0\bazel.exe
       C:\opt\gradle-6.7\bin\gradle.bat
       C:\opt\jdk-1.8.0_262-b10\bin\java.exe
-      C:\opt\detekt-cli-1.14.0\bin\detekt-cli.bat
+      C:\opt\detekt-cli-1.14.2\bin\detekt-cli.bat
       C:\opt\kotlinc-1.4.10\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.4.10\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-1.4.10\bin\kotlinc-native.bat
       C:\opt\ktlint-0.39.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.28.0\bin\git.exe
-      C:\opt\Git-2.28.0\mingw64\bin\git.exe
-      C:\opt\Git-2.28.0\usr\bin\diff.exe
+      C:\opt\Git-2.29.1\bin\git.exe
+      C:\opt\Git-2.29.1\mingw64\bin\git.exe
+      C:\opt\Git-2.29.1\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -139,10 +139,10 @@ Here are the performed operations:
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir">mkdir</a> c:\opt\ktlint-0.39.0</b>
-<b>&gt; cd c:\opt\ktlint-0.39.0</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a> c:\opt\ktlint-0.39.0</b>
 &nbsp;
 <b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.39.0/ktlint</b>
-<b>&gt; tail -n+5 ktlint.sh > ktlint.jar</b>
+<b>&gt; <a href="https://man7.org/linux/man-pages/man1/tail.1.html">tail</a> -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf ktlint.jar | findstr ktlint/Main</b>
 com/pinterest/ktlint/Main.class
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy">copy</a> /y /b k:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
@@ -166,11 +166,11 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.14.0.zip</a>                <i>( 42 MB)</i>
-<a href="https://gradle.org/releases/">gradle-6.7-bin.zip</a>                 <i>( 97 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.14.2.zip</a>                <i>( 44 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.7-bin.zip</a>                   <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.10">kotlin-compiler-1.4.10.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.10">kotlin-native-windows-1.4.zip</a>        <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.28.0-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.29.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
@@ -181,11 +181,11 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <!-- link refs -->
 
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.14.0
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.14.2
 [dotty_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.28.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.29.1.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples

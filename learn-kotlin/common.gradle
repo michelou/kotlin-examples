@@ -12,7 +12,7 @@ ext {
         "--reporter=checkstyle,output=$buildDir\\ktlint-report.xml"
     ]
     classesDir = file("${buildDir}/classes")
-    
+
     kotlinMain = "Main"
     if (project.hasProperty("mainClassName") && mainClassName?.trim()) kotlinMain = mainClassName
 
