@@ -122,6 +122,7 @@ goto :eof
 
 @rem input parameter: %*
 :args
+set _DRIVE_NAME=K
 set _HELP=0
 set _VERBOSE=0
 set __N=0
@@ -151,7 +152,50 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
-if %_DEBUG%==1 echo %_DEBUG_LABEL% _HELP=%_HELP% _VERBOSE=%_VERBOSE% 1>&2
+call :subst %_DRIVE_NAME% "%_ROOT_DIR%"
+if not %_EXITCODE%==0 goto :eof
+if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% Options  : _HELP=%_HELP% _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Variables: _DRIVE_NAME=%_DRIVE_NAME% 1>&2
+)
+goto :eof
+
+@rem input parameter(s): %1: drive letter, %2: path to be substituted
+:subst
+set __DRIVE_NAME=%~1
+set "__GIVEN_PATH=%~2"
+
+if not "%__DRIVE_NAME:~-1%"==":" set __DRIVE_NAME=%__DRIVE_NAME%:
+if "%__DRIVE_NAME%"=="%__GIVEN_PATH:~0,2%" goto :eof
+
+if "%__GIVEN_PATH:~-1%"=="\" set "__GIVEN_PATH=%__GIVEN_PATH:~0,-1%"
+if not exist "%__GIVEN_PATH%" (
+    echo %_ERROR_LABEL% Provided path does not exist ^(%__GIVEN_PATH%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+for /f "tokens=1,2,*" %%f in ('subst ^| findstr /b "%__DRIVE_NAME%" 2^>NUL') do (
+    set "__SUBST_PATH=%%h"
+    if "!__SUBST_PATH!"=="!__GIVEN_PATH!" (
+        set __MESSAGE=
+        for /f %%i in ('subst ^| findstr /b "%__DRIVE_NAME%\"') do "set __MESSAGE=%%i"
+        if defined __MESSAGE (
+            if %_DEBUG%==1 ( echo %_DEBUG_LABEL% !__MESSAGE! 1>&2
+            ) else if %_VERBOSE%==1 ( echo !__MESSAGE! 1>&2
+            )
+        )
+        goto :eof
+    )
+)
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% subst "%__DRIVE_NAME%" "%__GIVEN_PATH%" 1>&2
+) else if %_VERBOSE%==1 ( echo Assign path %__GIVEN_PATH% to drive %__DRIVE_NAME% 1>&2
+)
+subst "%__DRIVE_NAME%" "%__GIVEN_PATH%"
+if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to assigned drive %__DRIVE_NAME% to path 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
 goto :eof
 
 :help
@@ -568,6 +612,10 @@ endlocal & (
     if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
     set "PATH=%PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
+    if not "%CD:~0,2%"=="%_DRIVE_NAME%:" (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% cd /d %_DRIVE_NAME%: 1>&2
+        cd /d %_DRIVE_NAME%:
+    )
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=
 )

@@ -17,7 +17,7 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
-call :add_maven_jar "junit" "junit" "4.13"
+call :add_maven_jar "junit" "junit" "4.13.1"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
@@ -27,7 +27,7 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.3.9"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.1"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
 @rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3"

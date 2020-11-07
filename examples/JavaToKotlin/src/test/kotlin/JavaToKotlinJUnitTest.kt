@@ -12,7 +12,7 @@ class JavaToKotlinJUnitTest {
     init {
         System.setOut(java.io.PrintStream(baos))
     }
-    
+
     companion object {
         private val eol = System.getProperty("line.separator")
 

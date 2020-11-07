@@ -147,7 +147,7 @@ goto :eof
 :props
 for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
-set _PROJECT_VERSION=0.1-SNAPSHOT
+set _PROJECT_VERSION=1.0-SNAPSHOT
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -349,6 +349,15 @@ goto :eof
 :compile
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
+set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
+
+call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+if %_COMPILE_REQUIRED%==0 goto :eof
+
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
+set "__CPATH=%_CLASSES_DIR%"
+echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
@@ -360,9 +369,6 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
-set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
-
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
@@ -371,6 +377,60 @@ if not %ERRORLEVEL%==0 (
     echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed 1>&2
     set _EXITCODE=1
     goto :eof
+)
+echo. > "%__TIMESTAMP_FILE%"
+goto :eof
+
+@rem input parameter: 1=target file 2,3,..=path (wildcards accepted)
+@rem output parameter: _COMPILE_REQUIRED
+:compile_required
+set "__TARGET_FILE=%~1"
+
+set __PATH_ARRAY=
+set __PATH_ARRAY1=
+:compile_path
+shift
+set __PATH=%~1
+if not defined __PATH goto :compile_next
+set __PATH_ARRAY=%__PATH_ARRAY%,'%__PATH%'
+set __PATH_ARRAY1=%__PATH_ARRAY1%,'!__PATH:%_ROOT_DIR%=!'
+goto :compile_path
+
+:compile_next
+set __TARGET_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+     set __TARGET_TIMESTAMP=%%i
+)
+set __SOURCE_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+    set __SOURCE_TIMESTAMP=%%i
+)
+call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
+set _COMPILE_REQUIRED=%_NEWER%
+if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% %__TARGET_TIMESTAMP% Target : "%__TARGET_FILE%" 1>&2
+    echo %_DEBUG_LABEL% %__SOURCE_TIMESTAMP% Sources: "%__PATH_ARRAY:~1%" 1>&2
+    echo %_DEBUG_LABEL% _COMPILE_REQUIRED=%_COMPILE_REQUIRED% 1>&2
+) else if %_VERBOSE%==1 if %_COMPILE_REQUIRED%==0 if %__SOURCE_TIMESTAMP% gtr 0 (
+    echo No compilation needed ^(%__PATH_ARRAY1:~1%^) 1>&2
+)
+goto :eof
+
+@rem output parameter: _NEWER
+:newer
+set __TIMESTAMP1=%~1
+set __TIMESTAMP2=%~2
+
+set __DATE1=%__TIMESTAMP1:~0,8%
+set __TIME1=%__TIMESTAMP1:~-6%
+
+set __DATE2=%__TIMESTAMP2:~0,8%
+set __TIME2=%__TIMESTAMP2:~-6%
+
+if %__DATE1% gtr %__DATE2% ( set _NEWER=1
+) else if %__DATE1% lss %__DATE2% ( set _NEWER=0
+) else if %__TIME1% gtr %__TIME2% ( set _NEWER=1
+) else ( set _NEWER=0
 )
 goto :eof
 

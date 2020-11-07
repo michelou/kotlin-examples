@@ -156,7 +156,7 @@ goto :eof
 :props
 for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
-set _PROJECT_VERSION=0.1-SNAPSHOT
+set _PROJECT_VERSION=1.0-SNAPSHOT
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -215,33 +215,21 @@ if "%__ARG:~0,1%"=="-" (
     if "%__ARG%"=="clean" ( set _CLEAN=1
     ) else if "%__ARG%"=="compile" ( set _COMPILE=1
     ) else if "%__ARG:~0,8%"=="compile:" (
-        set "_EXAMPLE=%__ARG:~8%"
-        if not exist "%_KOTLIN_SOURCE_DIR%\!_EXAMPLE!.kt" (
-            echo %_ERROR_LABEL% Example !_EXAMPLE!.kt not found 1>&2
-            set _EXITCODE=1
-            goto args_done
-        )
+        call :main_name "%__ARG:~8%"
+        if not !_EXITCODE!==0 goto args_done
         set _COMPILE=1
     ) else if "%__ARG%"=="detekt" ( set _DETEKT=1
     ) else if "%__ARG%"=="doc" ( set _DOC=1
     ) else if "%__ARG%"=="help" ( set _HELP=1
     ) else if "%__ARG%"=="lint" ( set _LINT=1
     ) else if "%__ARG:~0,5%"=="lint:" (
-        set "_EXAMPLE=%__ARG:~5%"
-        if not exist "%_KOTLIN_SOURCE_DIR%\!_EXAMPLE!.kt" (
-            echo %_ERROR_LABEL% Example !_EXAMPLE!.kt not found 1>&2
-            set _EXITCODE=1
-            goto args_done
-        )
+        call :main_name "%__ARG:~5%"
+        if not !_EXITCODE!==0 goto args_done
         set _LINT=1
     ) else if "%__ARG%"=="run" ( set _COMPILE=1& set _RUN=1
     ) else if "%__ARG:~0,4%"=="run:" (
-        set "_EXAMPLE=%__ARG:~4%"
-        if not exist "%_KOTLIN_SOURCE_DIR%\!_EXAMPLE!.kt" (
-            echo %_ERROR_LABEL% Example !_EXAMPLE!.kt not found 1>&2
-            set _EXITCODE=1
-            goto args_done
-        )
+        call :main_name "%__ARG:~4%"
+        if not !_EXITCODE!==0 goto args_done
         set _COMPILE=1& set _RUN=1
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
@@ -274,6 +262,21 @@ if %_DEBUG%==1 (
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
+@rem output parameter: _MAIN_NAME
+:main_name
+set __NAME=%~1
+if "%__NAME%"=="constructors" ( set _MAIN_NAME=Constructors
+) else if "%__NAME%"=="dataclasses" ( set _MAIN_NAME=DataClasses
+) else if "%__NAME%"=="extensions" ( set _MAIN_NAME=Extensions
+) else if "%__NAME%"=="pokoEmployee" ( set _MAIN_NAME=PoKoEmployee
+) else if "%__NAME%"=="properties" ( set _MAIN_NAME=Properties
+) else (
+    echo %_ERROR_LABEL% Unknown name for main program ^(%__NAME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+goto :eof
+
 :help
 if %_VERBOSE%==1 (
     set __BEG_P=%_STRONG_FG_CYAN%%_UNDERSCORE%
@@ -302,7 +305,7 @@ echo     %__BEG_O%help%__END%              display this help message
 echo     %__BEG_O%lint[:^<name^>]%__END%     analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run[:^<name^>]%__END%      execute the generated program
 echo.
-echo   Valid names are: %__BEG_O%defaultargs%__END% ^(default^), %__BEG_O%functiontypes%__END%, %__BEG_O%namedargs%__END%, %__BEG_O%nullable%__END%
+echo   Valid names are: %__BEG_O%properties%__END% ^(default^), %__BEG_O%constructors%__END%, %__BEG_O%dataclasses%__END%, %__BEG_O%extensions%__END%
 goto :eof
 
 :clean
@@ -370,10 +373,19 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
+set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
+
+call :compile_required "%__TIMESTAMP_FILE%" "%_KOTLIN_SOURCE_DIR%\*.kt"
+if %_COMPILE_REQUIRED%==0 goto :eof
+
 set __KOTLIN_CPATH=
 for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do (
     set "__KOTLIN_CPATH=!__KOTLIN_CPATH!%%f;"
 )
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
+set "__CPATH=%__KOTLIN_CPATH%%_CLASSES_DIR%"
+echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
@@ -385,10 +397,6 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
 )
-set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-set "__CPATH=%__KOTLIN_CPATH%%_CLASSES_DIR%"
-echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
-
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
@@ -398,6 +406,7 @@ if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
 )
+echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 :compile_native
@@ -421,6 +430,59 @@ if not %ERRORLEVEL%==0 (
     echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(native^) 1>&2
     set _EXITCODE=1
     goto :eof
+)
+goto :eof
+
+@rem input parameter: 1=target file 2,3,..=path (wildcards accepted)
+@rem output parameter: _COMPILE_REQUIRED
+:compile_required
+set "__TARGET_FILE=%~1"
+
+set __PATH_ARRAY=
+set __PATH_ARRAY1=
+:compile_path
+shift
+set __PATH=%~1
+if not defined __PATH goto :compile_next
+set __PATH_ARRAY=%__PATH_ARRAY%,'%__PATH%'
+set __PATH_ARRAY1=%__PATH_ARRAY1%,'!__PATH:%_ROOT_DIR%=!'
+goto :compile_path
+
+:compile_next
+set __TARGET_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+     set __TARGET_TIMESTAMP=%%i
+)
+set __SOURCE_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+    set __SOURCE_TIMESTAMP=%%i
+)
+call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
+set _COMPILE_REQUIRED=%_NEWER%
+if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% %__TARGET_TIMESTAMP% Target : "%__TARGET_FILE%" 1>&2
+    echo %_DEBUG_LABEL% %__SOURCE_TIMESTAMP% Sources: "%__PATH_ARRAY:~1%" 1>&2
+    echo %_DEBUG_LABEL% _COMPILE_REQUIRED=%_COMPILE_REQUIRED% 1>&2
+) else if %_VERBOSE%==1 if %_COMPILE_REQUIRED%==0 if %__SOURCE_TIMESTAMP% gtr 0 (
+    echo No compilation needed ^(%__PATH_ARRAY1:~1%^) 1>&2
+)
+goto :eof
+
+@rem output parameter: _NEWER
+:newer
+set __TIMESTAMP1=%~1
+set __TIMESTAMP2=%~2
+
+set __DATE1=%__TIMESTAMP1:~0,8%
+set __TIME1=%__TIMESTAMP1:~-6%
+
+set __DATE2=%__TIMESTAMP2:~0,8%
+set __TIME2=%__TIMESTAMP2:~-6%
+
+if %__DATE1% gtr %__DATE2% ( set _NEWER=1
+) else if %__DATE1% lss %__DATE2% ( set _NEWER=0
+) else if %__TIME1% gtr %__TIME2% ( set _NEWER=1
+) else ( set _NEWER=0
 )
 goto :eof
 
@@ -461,14 +523,13 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :run_jvm
-set __MAIN_CLASS=com.makotogo.learn.kotlin.%_EXAMPLE%Kt
+set __MAIN_CLASS=com.makotogo.learn.kotlin.%_MAIN_NAME%Kt
 
 set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %__KOTLIN_OPTS% %__MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %__MAIN_CLASS%  1>&2
 )
-
 call %_KOTLIN_CMD% %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1

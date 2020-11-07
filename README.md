@@ -31,7 +31,7 @@ For instance our development environment looks as follows (*October 2020*) <sup 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.14.2\              <i>( 49 MB)</i>
-C:\opt\Git-2.29.1\                     <i>(271 MB)</i>
+C:\opt\Git-2.29.2\                     <i>(271 MB)</i>
 C:\opt\gradle-6.7\                     <i>(111 MB)</i>
 C:\opt\kotlinc-1.4.10\                 <i>( 58 MB)</i>
 C:\opt\kotlin-native-windows-1.4.10\   <i>(170 MB)</i>
@@ -93,7 +93,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       bazel 3.7.0, gradle 6.7, java 1.8.0_262, detekt-cli 1.14.2,
       kotlinc 1.4.10, kotlinc-native 1.4.10, ktlint 0.39.0
-      cfr 0.150, mvn 3.6.3, git 2.29.1.windows.1, diff 3.7, bash 4.4.23(1)-release
+      cfr 0.150, mvn 3.6.3, git 2.29.2.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\bazel-3.7.0\bazel.exe
       C:\opt\gradle-6.7\bin\gradle.bat
@@ -104,9 +104,9 @@ We distinguish different sets of batch commands:
       C:\opt\kotlin-native-windows-1.4.10\bin\kotlinc-native.bat
       C:\opt\ktlint-0.39.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
-      C:\opt\Git-2.29.1\bin\git.exe
-      C:\opt\Git-2.29.1\mingw64\bin\git.exe
-      C:\opt\Git-2.29.1\usr\bin\diff.exe
+      C:\opt\Git-2.29.2\bin\git.exe
+      C:\opt\Git-2.29.2\mingw64\bin\git.exe
+      C:\opt\Git-2.29.2\usr\bin\diff.exe
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -170,12 +170,12 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-6.7-bin.zip</a>                   <i>( 97 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.10">kotlin-compiler-1.4.10.zip</a>           <i>( 50 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.10">kotlin-native-windows-1.4.zip</a>        <i>(125 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.29.1-64-bit.7z.exe</a>     <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.29.2-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2020* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

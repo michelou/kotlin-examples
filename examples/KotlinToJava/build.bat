@@ -53,10 +53,6 @@ if %_TEST%==1 (
     call :test_%_TARGET%
     if not !_EXITCODE!==0 goto end
 )
-if %_TEST%==1 (
-    call :test
-    if not !_EXITCODE!==0 goto end
-)
 goto end
 
 @rem #########################################################################
@@ -171,7 +167,7 @@ goto :eof
 :props
 for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
-set _PROJECT_VERSION=0.1-SNAPSHOT
+set _PROJECT_VERSION=1.0-SNAPSHOT
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -393,14 +389,26 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-call :compile_kotlin
-if not %_EXITCODE%==0 goto :eof
+set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
 
-call :compile_java
-if not %_EXITCODE%==0 goto :eof
+call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+if %_COMPILE_REQUIRED%==1 (
+    call :compile_kotlin
+    if not !_EXITCODE!==0 goto :eof
+)
+call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\java\*.java"
+if %_COMPILE_REQUIRED%==1 (
+    call :compile_java
+    if not !_EXITCODE!==0 goto :eof
+)
+echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 :compile_java
+set "__OPTS_FILE=%_TARGET_DIR%\javac_opts.txt"
+set "__CPATH=%KOTLIN_HOME%\lib\kotlin-stdlib.jar;%_CLASSES_DIR%"
+echo -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+
 set "__SOURCES_FILE=%_TARGET_DIR%\javac_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
@@ -408,10 +416,6 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\java\*.java" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
-set "__OPTS_FILE=%_TARGET_DIR%\javac_opts.txt"
-set "__CPATH=%KOTLIN_HOME%\lib\kotlin-stdlib.jar;%_CLASSES_DIR%"
-echo -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
-
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVAC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Java source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
@@ -424,6 +428,14 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :compile_kotlin
+set /a __WARN_ENABLED=_VERBOSE+_DEBUG
+if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
+) else ( set __NOWARN_OPT=
+)
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
+set "__CPATH=%_CLASSES_DIR%"
+echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
@@ -431,13 +443,6 @@ for /f %%i in ('dir /s /b "%_MAIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
-set /a __WARN_ENABLED=_VERBOSE+_DEBUG
-if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
-) else ( set __NOWARN_OPT=
-)
-set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
-
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
@@ -451,6 +456,11 @@ goto :eof
 
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
+
+set "__TIMESTAMP_FILE=%_TARGET_DIR%\.latest-native-build"
+
+call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+if %_COMPILE_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
@@ -474,6 +484,60 @@ if not %ERRORLEVEL%==0 (
     echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(native^) 1>&2
     set _EXITCODE=1
     goto :eof
+)
+echo. > "%__TIMESTAMP_FILE%"
+goto :eof
+
+@rem input parameter: 1=target file 2,3,..=path (wildcards accepted)
+@rem output parameter: _COMPILE_REQUIRED
+:compile_required
+set "__TARGET_FILE=%~1"
+
+set __PATH_ARRAY=
+set __PATH_ARRAY1=
+:compile_path
+shift
+set __PATH=%~1
+if not defined __PATH goto :compile_next
+set __PATH_ARRAY=%__PATH_ARRAY%,'%__PATH%'
+set __PATH_ARRAY1=%__PATH_ARRAY1%,'!__PATH:%_ROOT_DIR%=!'
+goto :compile_path
+
+:compile_next
+set __TARGET_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+     set __TARGET_TIMESTAMP=%%i
+)
+set __SOURCE_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+    set __SOURCE_TIMESTAMP=%%i
+)
+call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
+set _COMPILE_REQUIRED=%_NEWER%
+if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% %__TARGET_TIMESTAMP% Target : '%__TARGET_FILE%' 1>&2
+    echo %_DEBUG_LABEL% %__SOURCE_TIMESTAMP% Sources: %__PATH_ARRAY:~1% 1>&2
+    echo %_DEBUG_LABEL% _COMPILE_REQUIRED=%_COMPILE_REQUIRED% 1>&2
+) else if %_VERBOSE%==1 if %_COMPILE_REQUIRED%==0 if %__SOURCE_TIMESTAMP% gtr 0 (
+    echo No compilation needed ^(%__PATH_ARRAY1:~1%^) 1>&2
+)
+goto :eof
+
+@rem output parameter: _NEWER
+:newer
+set __TIMESTAMP1=%~1
+set __TIMESTAMP2=%~2
+
+set __DATE1=%__TIMESTAMP1:~0,8%
+set __TIME1=%__TIMESTAMP1:~-6%
+
+set __DATE2=%__TIMESTAMP2:~0,8%
+set __TIME2=%__TIMESTAMP2:~-6%
+
+if %__DATE1% gtr %__DATE2% ( set _NEWER=1
+) else if %__DATE1% lss %__DATE2% ( set _NEWER=0
+) else if %__TIME1% gtr %__TIME2% ( set _NEWER=1
+) else ( set _NEWER=0
 )
 goto :eof
 
@@ -573,10 +637,19 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :compile_test_jvm
+if not exist "%_TEST_CLASSES_DIR%" mkdir "%_TEST_CLASSES_DIR%" 1>NUL
+
+set "__TIMESTAMP_FILE=%_TEST_CLASSES_DIR%\.latest-build"
+
+call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\test\kotlin\*.kt"
+if %_COMPILE_REQUIRED%==0 goto :eof
+
 call :libs_cpath
 if not %_EXITCODE%==0 goto :eof
 
-if not exist "%_TEST_CLASSES_DIR%" mkdir "%_TEST_CLASSES_DIR%" 1>NUL
+set "__OPTS_FILE=%_TARGET_DIR%\test_kotlinc_opts.txt"
+set "__CPATH=%_CPATH%%_CLASSES_DIR%"
+echo -cp "%__CPATH:\=\\%" -d "%_TEST_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 set "__SOURCES_FILE=%_TARGET_DIR%\test_kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
@@ -589,10 +662,6 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin test source files found 1>&2
     goto :eof
 )
-set "__OPTS_FILE=%_TARGET_DIR%\test_kotlinc_opts.txt"
-set "__CPATH=%_CPATH%%_CLASSES_DIR%"
-echo -cp "%__CPATH:\=\\%" -d "%_TEST_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
-
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin test source files ^(JVM^) 1>&2
 )
@@ -602,10 +671,14 @@ if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
 )
+echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 :test_jvm
 call :compile_test_jvm
+if not %_EXITCODE%==0 goto :eof
+
+call :libs_cpath
 if not %_EXITCODE%==0 goto :eof
 
 set __TEST_KOTLIN_OPTS=-classpath "%_CPATH%%_CLASSES_DIR%;%_TEST_CLASSES_DIR%"

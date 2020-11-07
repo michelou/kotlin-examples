@@ -89,23 +89,23 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
     echo %_ERROR_LABEL% Kotlin/Native installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_KOTLINC_NATIVE_CMD=%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -237,17 +237,17 @@ if %_DEBUG%==1 set _STDERR_REDIRECT=
 
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
-	set _DETEKT=0
+    set _DETEKT=0
 )
 if %_LINT%==1 if not defined _KTLINT_CMD (
     echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand 'lint'^) 1>&2
-	set _LINT=0
+    set _LINT=0
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _EXAMPLE=%_EXAMPLE% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
-	echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
-	echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
     echo %_DEBUG_LABEL%              DETEKT_HOME="%DETEKT_HOME%" KTLINT_HOME="%KTLINT_HOME%" 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
@@ -466,7 +466,7 @@ goto :eof
 if not exist "%_EXE_FILE%" (
     echo %_ERROR_LABEL% Kotlin executable not found ^("!_EXE_FILE:%_ROOT_DIR%=!"^) 1>&2
     set _EXITCODE=1
-	goto :eof
+    goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin native "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
