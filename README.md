@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Dotty][dotty_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples] and [TruffleSqueak][trufflesqueak_examples] are other trending topics we are currently monitoring.
+[GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Scala 3][dotty_examples] and [TruffleSqueak][trufflesqueak_examples] are other trending topics we are currently monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -33,8 +33,8 @@ C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.15.0\              <i>( 49 MB)</i>
 C:\opt\Git-2.29.2\                     <i>(271 MB)</i>
 C:\opt\gradle-6.7.1\                   <i>(111 MB)</i>
-C:\opt\kotlinc-1.4.10\                 <i>( 58 MB)</i>
-C:\opt\kotlin-native-windows-1.4.10\   <i>(170 MB)</i>
+C:\opt\kotlinc-1.4.20\                 <i>( 58 MB)</i>
+C:\opt\kotlin-native-windows-1.4.20\   <i>(170 MB)</i>
 C:\opt\ktlint-0.39.0\                  <i>( 42 MB)</i>
 </pre>
 
@@ -91,17 +91,17 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      bazel 3.7.0, gradle 6.7.1, java 1.8.0_262, detekt-cli 1.15.0,
-      kotlinc 1.4.10, kotlinc-native 1.4.10, ktlint 0.39.0
+      bazel 3.7.1, gradle 6.7.1, java 1.8.0_272, detekt-cli 1.15.0,
+      kotlinc 1.4.20, kotlinc-native 1.4.20, ktlint 0.39.0
       cfr 0.150, mvn 3.6.3, git 2.29.2.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\bazel-3.7.0\bazel.exe
       C:\opt\gradle-6.7.1\bin\gradle.bat
-      C:\opt\jdk-1.8.0_262-b10\bin\java.exe
+      C:\opt\jdk-1.8.0_272-b10\bin\java.exe
       C:\opt\detekt-cli-1.15.0\bin\detekt-cli.bat
-      C:\opt\kotlinc-1.4.10\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-1.4.10\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-1.4.10\bin\kotlinc-native.bat
+      C:\opt\kotlinc-1.4.20\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-1.4.20\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-1.4.20\bin\kotlinc-native.bat
       C:\opt\ktlint-0.39.0\ktlint.bat
       C:\opt\apache-maven-3.6.3\bin\mvn.cmd
       C:\opt\Git-2.29.2\bin\git.exe
@@ -167,9 +167,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>           <i>(  9 Mb)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.15.0.zip</a>                <i>( 44 MB)</i>
-<a href="https://gradle.org/releases/">gradle-6.7.1-bin.zip</a>                   <i>( 97 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.10">kotlin-compiler-1.4.10.zip</a>           <i>( 50 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.10">kotlin-native-windows-1.4.zip</a>        <i>(125 MB)</i>
+<a href="https://gradle.org/releases/">gradle-6.7.1-bin.zip</a>                 <i>( 97 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.20">kotlin-compiler-1.4.20.zip</a>           <i>( 50 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.20">kotlin-native-windows-1.4.20.zip</a>     <i>(125 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.29.2-64-bit.7z.exe</a>     <i>( 41 MB)</i>
 </pre>
 
@@ -195,9 +195,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
-[kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.4.10
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v140-aug-2020
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.4.10
+[kotlin_latest]: https://github.com/JetBrains/kotlin/releases/tag/v1.4.20
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.4.20
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases

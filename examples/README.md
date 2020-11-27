@@ -246,8 +246,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; kotlinc-native -version</b>
-info: kotlinc-native 1.4.10-rc-405 (JRE 1.8.0_272-b10)
-Kotlin/Native: 1.4.10
+info: kotlinc-native 1.4.20-282 (JRE 1.8.0_272-b10)
+Kotlin/Native: 1.4.20
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
 mingw_x64:                    (default) mingw
