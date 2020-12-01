@@ -30,5 +30,8 @@ class Guest(familyName: String, givenName: String, val purpose: String) : Person
 /**
  * A Person, but an employee of Megacorp (with title and everything!)
  */
-class Employee(familyName: String, givenName: String, val employeeId: Int, val title: String) : Person(familyName, givenName)
+class Employee(
+    familyName: String, givenName: String,
+    val employeeId: Int, val title: String
+) : Person(familyName, givenName)
 
