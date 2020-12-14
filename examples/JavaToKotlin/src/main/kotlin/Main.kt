@@ -1,6 +1,6 @@
 // see https://developer.android.com/kotlin/interop
 
-fun main(args: Array<String>) {
+fun main(/*args: Array<String>*/) {
     // Property prefixes
     var user = User()
     var name = user.name // Invokes user.getName()

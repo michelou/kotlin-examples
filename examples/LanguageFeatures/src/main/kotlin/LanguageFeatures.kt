@@ -32,7 +32,7 @@ fun String.greet(): String = this.plus(" we welcome you!")
 // High order functions
 fun addValue(f: (Int, Int) -> Int): Int = f(10, 20)
 
-fun main(args: Array<String>) {
+fun main(/*args: Array<String>*/) {
     val a = 1
     test(a, false)
     test(2)
