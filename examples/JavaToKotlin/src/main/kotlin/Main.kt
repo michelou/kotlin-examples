@@ -1,6 +1,7 @@
 // see https://developer.android.com/kotlin/interop
 
-fun main(/*args: Array<String>*/) {
+@Suppress("UNUSED_PARAMETER")
+fun main(args: Array<String>) {
     // Property prefixes
     var user = User()
     var name = user.name // Invokes user.getName()

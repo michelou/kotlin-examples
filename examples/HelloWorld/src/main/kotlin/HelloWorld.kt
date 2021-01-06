@@ -1,5 +1,6 @@
 package org.example.main
 
-fun main(/*args: Array<String>*/) {
+@Suppress("UNUSED_PARAMETER")
+fun main(args: Array<String>) {
     println("Hello World!")
 }

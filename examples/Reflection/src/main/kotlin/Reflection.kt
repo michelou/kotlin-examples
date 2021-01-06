@@ -8,6 +8,7 @@ data class Person(
     var age: Int
 )
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     print("Source code:")
     println("""

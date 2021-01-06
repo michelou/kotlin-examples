@@ -40,6 +40,7 @@ private operator fun Month.contains(date: Date): Boolean {
     return month == date.month && year == date.year
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val date = Date(25, 2, 2018)
     println("date: $date")
