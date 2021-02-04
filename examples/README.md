@@ -34,9 +34,11 @@ We provide 4 different ways to build/run the code examples:
 | **`gradle.exe`**    | **`build.gradle`** <sup><b>(2)</b></sup> | **`common.gradle`**  |
 | **`gradle.exe`**    | **`build.gradle.kts`** <sup><b>(3)</b></sup> | &nbsp; |
 | **`mvn.cmd`**       | **`pom.xml`**   | **`pom.xml`**  |
-<div style="font-size:90%;"><sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).</div>
-<div style="font-size:90%;"><sup>(2)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a></div>
-<div style="font-size:90%;"><sup>(3)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a></div>
+<div style="font-size:90%;">
+<sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
+<sup>(2)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
+<sup>(3)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
+</div>
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
 > <pre style="font-size:80%;">
@@ -94,7 +96,7 @@ Hello World!
 
 > **:mag_right:** The [**`pelook`**][bytepointer_pelook] utility can help us getting more information about the native executable:
 > <pre style="font-size:80%;">
-> <b>&gt; pelook.exe -h target\HelloWorld.exe | head -7</b>
+> <b>&gt; <a href="http://bytepointer.com/tools/pelook_cmdline.htm">pelook.exe</a> -h target\HelloWorld.exe | head -7</b>
 > loaded "target\HelloWorld.exe" / 478599 (0x74D87) bytes
 > signature/type:       PE64 EXE image for amd64
 > image checksum:       0x0007FD9A (OK)
@@ -245,9 +247,9 @@ BUILD SUCCESSFUL in 3s
 Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
-<b>&gt; kotlinc-native -version</b>
-info: kotlinc-native 1.4.20-282 (JRE 1.8.0_272-b10)
-Kotlin/Native: 1.4.20
+<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
+info: kotlinc-native 1.4.21-344 (JRE 1.8.0_282-b08)
+Kotlin/Native: 1.4.21
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -319,7 +321,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

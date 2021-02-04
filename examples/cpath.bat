@@ -36,7 +36,7 @@ call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.2"
 call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
-set __DOKKA_VERSION=1.4.20
+set __DOKKA_VERSION=1.4.30
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
