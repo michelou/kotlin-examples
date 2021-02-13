@@ -53,7 +53,7 @@ Test run finished after 85 ms
 
 ## <span id="ex_03-13">Example 03-13 ― Overriding operator on `Point`</span>
 
-Command [**`build clean run`**](./Example_03-13/build.bat) compiles the source files [**`Main.kt`**](./Example_03-13/src/main/kotlin/Main.kt) and executes the generated Java class files:
+Command [**`build clean run`**](./Example_03-13/build.bat) compiles the source files [**`PointMain.kt`**](./Example_03-13/src/main/kotlin/PointMain.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a></b>
@@ -63,7 +63,7 @@ K:\kotlin-cookbook\Example_03-13
 Point(x=-10, y=-20)
 </pre>
 
-Command [**`build -verbose test`**](./Example_03-13/build.bat) compiles the source file [**`MainKtTest.kt`**](./Example_03-13/src/test/kotlin/MainKtTest.kt) and executes the implemented unit tests.
+Command [**`build -verbose test`**](./Example_03-13/build.bat) compiles the source file [**`PointMainKtTest.kt`**](./Example_03-13/src/test/kotlin/PointMainKtTest.kt) and executes the implemented unit tests.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_03-13/build.bat">build</a> -verbose test</b>
@@ -110,7 +110,6 @@ Command [**`build -verbose test`**](./Example_03-14/build.bat) compiles the sour
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_03-14/build.bat">build</a> -verbose test</b>
-<b>&gt; build -verbose test</b>
 No compilation needed ('src\main\kotlin\*.kt')
 Compile 1 Kotlin test source files (JVM) to directory "target\test-classes"
 Execute test ComplexOverloadOperatorsKtTest
