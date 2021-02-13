@@ -117,6 +117,7 @@ fun not() {
     println("!true && false: ${!true && false}")
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     // <
     lessThan()

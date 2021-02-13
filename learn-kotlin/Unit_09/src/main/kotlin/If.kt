@@ -72,6 +72,7 @@ fun myFunc(isTrue: Boolean) : String {
     }
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val joeSmith = Person(givenName = "Joe", familyName = "Smith")
     val janeAnderson = Guest(purpose = "Maintenance", familyName = "Anderson", givenName = "Jane")

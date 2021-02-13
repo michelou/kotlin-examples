@@ -411,8 +411,8 @@ goto :eof
 set __MAIN_CLASSES[Comparison]=com.makotogo.learn.kotlin.comparison.ComparisonKt
 set __MAIN_CLASSES[Equality]=com.makotogo.learn.kotlin.equality.EqualityKt
 set __MAIN_CLASSES[HashCode]=com.makotogo.learn.kotlin.hashcode.HashCodeKt
-set __MAIN_CLASSES[If]=com.makotogo.learn.kotlin.conditional.If
-set __MAIN_CLASSES[When]=WhenKt
+set __MAIN_CLASSES[If]=com.makotogo.learn.kotlin.conditional.IfKt
+set __MAIN_CLASSES[When]=com.makotogo.learn.kotlin.switch.WhenKt
 
 set __MAIN_CLASS=!__MAIN_CLASSES[%_EXAMPLE%]!
 if not defined __MAIN_CLASS (
@@ -425,7 +425,6 @@ set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %__MAIN_CLASS%  1>&2
 )
-goto :eof
 call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
    set _EXITCODE=1

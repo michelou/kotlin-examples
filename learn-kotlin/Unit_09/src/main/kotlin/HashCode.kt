@@ -99,6 +99,7 @@ fun hashCodePerson() {
 
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     hashCodeNumber()
     hashCodeChar()

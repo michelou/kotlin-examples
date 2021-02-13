@@ -78,10 +78,8 @@ set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
 set _LANGUAGE_VERSION=1.4
 
-set _PKG_NAME=org.example.main
-
-set _MAIN_NAME=HelloWorld
-set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
+set _MAIN_NAME=ComplexOverloadOperators
+set _MAIN_CLASS=%_MAIN_NAME%Kt
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
 set _DETEKT_CMD=
@@ -381,7 +379,7 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
 set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
 
-call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+call :compile_required "%__TIMESTAMP_FILE%" "%_MAIN_SOURCE_DIR%\*.kt"
 if %_COMPILE_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
@@ -395,12 +393,15 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
 )
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
 ) else ( set __NOWARN_OPT=
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-set "__CPATH=%_CLASSES_DIR%"
+set "__CPATH=%_LIBS_CPATH%%_CLASSES_DIR%"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
@@ -545,10 +546,10 @@ if not exist "%__MAIN_CLASS_FILE%" (
     set _EXITCODE=1
     goto :eof
 )
-@rem call :libs_cpath
-@rem if not %_EXITCODE%==0 goto :eof
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
 
-set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
+set __KOTLIN_OPTS=-cp "%_LIBS_CPATH%%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
@@ -604,7 +605,7 @@ if %__N%==0 (
     goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin test source files ^(JVM^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin test source files ^(JVM^) to directory "!_TEST_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
@@ -622,19 +623,24 @@ if not %_EXITCODE%==0 goto :eof
 call :libs_cpath
 if not %_EXITCODE%==0 goto :eof
 
-set __TEST_KOTLIN_OPTS=-classpath "%_CPATH%%_CLASSES_DIR%;%_TEST_CLASSES_DIR%"
+set __TEST_KOTLIN_OPTS=-classpath "%_LIBS_CPATH%%_CLASSES_DIR%;%_TEST_CLASSES_DIR%"
+
+@rem https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher
+set __JUNIT_MAIN_CLASS=org.junit.platform.console.ConsoleLauncher
+set __JUNIT_MAIN_ARGS=--disable-banner
 
 @rem see https://github.com/junit-team/junit4/wiki/Getting-started
-for /f "usebackq" %%f in (`dir /s /b "%_TEST_CLASSES_DIR%\*JUnitTest.class" 2^>NUL`) do (
+for /f "usebackq" %%f in (`dir /s /b "%_TEST_CLASSES_DIR%\*Test.class" 2^>NUL`) do (
     call :test_main_class "%%f"
-    if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__TEST_KOTLIN_OPTS% org.junit.runner.JUnitCore !_TEST_MAIN_CLASS! 1>&2
+    if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__TEST_KOTLIN_OPTS% %__JUNIT_MAIN_CLASS% %__JUNIT_MAIN_ARGS% -c !_TEST_MAIN_CLASS! 1>&2
     ) else if %_VERBOSE%==1 ( echo Execute test !_TEST_MAIN_CLASS! 1>&2
     )
-    call "%_KOTLIN_CMD%" %__TEST_KOTLIN_OPTS% org.junit.runner.JUnitCore !_TEST_MAIN_CLASS!
+    call "%_KOTLIN_CMD%" %__TEST_KOTLIN_OPTS% %__JUNIT_MAIN_CLASS% %__JUNIT_MAIN_ARGS% -c !_TEST_MAIN_CLASS!
     if not !ERRORLEVEL!==0 (
         set _EXITCODE=1
         goto :eof
     )
+    goto :eof
 )
 goto :eof
 

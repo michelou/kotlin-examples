@@ -16,7 +16,7 @@
  */
 
 /**
- * Demonstrates the while oop
+ * Demonstrates the while loop
  */
 fun demoIntIterator(intArray: IntArray) {
     println("********** WhileLoop.demoIntIterator() **********")

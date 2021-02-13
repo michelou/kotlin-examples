@@ -136,6 +136,7 @@ fun referentialEqualsPerson() {
     println("doug !== sameDoug: ${doug !== sameDoug}")
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     // .equals()
     equalsNumber()

@@ -15,6 +15,8 @@
  *
  */
 
+package com.makotogo.learn.kotlin.switch
+
 import com.makotogo.learn.kotlin.model.Person
 import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.model.Employee
@@ -66,6 +68,7 @@ fun admitEntranceWithExpression(person: Person) : Boolean {
     }
 }
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val joeSmith = Person(givenName = "Joe", familyName = "Smith")
     val janeAnderson = Guest(purpose = "Maintenance", familyName = "Anderson", givenName = "Jane")
