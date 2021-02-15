@@ -10,6 +10,15 @@ fun parseName(name: String): FullName {
     )
 }
 
+fun parseName2(name: String): FullName {
+    val space = name.indexOf(' ')
+    if (space < 0) { return FullName("", name) }
+    return FullName(
+        name.substring(0, space),
+        name.substring(space + 1)
+    )
+}
+
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val name = parseName("Jane Doe")

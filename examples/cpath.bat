@@ -29,35 +29,38 @@ set _LIBS_CPATH=
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.2"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
+@rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
 @rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.1"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
+@rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-html-jvm/
 call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
 set __DOKKA_VERSION=1.4.20
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
+@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/kotlin-analysis-compiler/
 call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
+@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/kotlin-analysis-intellij/
 call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-analysis/
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
+@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-base/
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
 @rem call :add_bintray1_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
 
+@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-gradle-plugin/
+call :add_bintray1_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
+
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
+@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-cli/
 call :add_bintray1_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH3=%_LIBS_CPATH%"
@@ -111,7 +114,7 @@ if not exist "%__JAR_FILE%" (
             set _EXITCODE=1
             goto :eof
         )
-        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% 1>&2
+        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar 1>&2
         ) else if %_VERBOSE%==1 ( echo Install Maven archive into directory "!__LOCAL_REPO:%USERPROFILE%=%%USERPROFILE%%!\%__SCALA_XML_PATH%" 1>&2
         )
         call "%_MVN_CMD%" %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar

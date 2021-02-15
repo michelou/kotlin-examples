@@ -2,8 +2,8 @@
 buildDir file("/target")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 ext {
@@ -65,9 +65,16 @@ build {
 }
 
 // see https://github.com/Kotlin/dokka#using-dokka
-dokka {
-    outputDirectory = "$buildDir/dokka"
-    outputFormat = "html"
+dokkaHtml.configure {
+    outputDirectory = file("$buildDir/dokka")
+    dokkaSourceSets {
+        configureEach {
+            // Do not output deprecated members. Applies globally, can be overridden by packageOptions
+            skipDeprecated.set(false)
+            // Used for linking to JDK documentation
+            jdkVersion.set(8)
+        }
+    }
 }
 
 task run(type: JavaExec) {
@@ -83,17 +90,28 @@ task run(type: JavaExec) {
 
 repositories {
     mavenCentral()
+    maven { // e.g. dokka-gradle-plugin
+        url "https://dl.bintray.com/kotlin/dokka"
+    }
+    maven { // e.g. kotlinx-html-jvm
+        url "https://dl.bintray.com/kotlin/kotlinx"
+    }
     maven {
         url "https://dl.bintray.com/kotlin/kotlin-dev"
     }
-    maven { // dokka-gradle-plugin
-        url "https://repo.spring.io/libs-release"
+    maven {
+        url "https://dl.bintray.com/jetbrains/markdown"
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    // implementation "org.jetbrains.dokka:kotlin-analysis-compiler:$dokkaVersion"
+    // implementation "org.jetbrains.dokka:kotlin-analysis-intellij:$dokkaVersion"
+    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
+    implementation "org.jetbrains:markdown:0.1.45"
+    //dokkaGfmPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokkaVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"
     testImplementation "junit:junit:$junitVersion"

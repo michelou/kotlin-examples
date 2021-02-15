@@ -1,6 +1,6 @@
 package _05_coroutines
 
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlin.coroutines.*
 import kotlinx.coroutines.runBlocking
 
 class CallbackService(val name: String) {

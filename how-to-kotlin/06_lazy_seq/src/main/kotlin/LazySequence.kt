@@ -1,9 +1,10 @@
 package _06_lazy_seq
 
-import kotlin.coroutines.experimental.buildSequence
+import kotlin.sequences.sequence
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
-    val seq = buildSequence {
+    val seq = sequence {
         var a = 1
         var b = 1
 

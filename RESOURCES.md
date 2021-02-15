@@ -10,6 +10,7 @@
 
 ## <span id="articles">Articles</span>
 
+- [Handling exceptions in tests: Junit & Kotest][article_junit] by Jaroslaw Michalik, June 2020.
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Medium]: [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
 - [Using Gradle Kotlin DSL with JUnit 5](https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/) by Juan Ara, August 7, 2019.
@@ -56,6 +57,7 @@
 
 <!-- link refs -->
 
+[article_junit]: https://kotlintesting.com/handling-exceptions-in-tests/
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
 [blog_exploring]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
