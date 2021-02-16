@@ -85,16 +85,16 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -223,11 +223,11 @@ goto :args_loop
 :args_done
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
-	set _DETEKT=0
+    set _DETEKT=0
 )
 if %_LINT%==1 if not defined _KTLINT_CMD (
     echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand 'lint'^) 1>&2
-	set _LINT=0
+    set _LINT=0
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2

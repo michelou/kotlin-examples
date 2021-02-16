@@ -85,16 +85,16 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -150,7 +150,7 @@ goto :eof
 :props
 for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
-set _PROJECT_VERSION=0.1-SNAPSHOT
+set _PROJECT_VERSION=1.0-SNAPSHOT
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -223,18 +223,24 @@ goto :args_loop
 :args_done
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
-	set _DETEKT=0
+    set _DETEKT=0
 )
 if %_LINT%==1 if not defined _KTLINT_CMD (
     echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand 'lint'^) 1>&2
-	set _LINT=0
+    set _LINT=0
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
-    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-    echo %_DEBUG_LABEL%              DETEKT_HOME="%DETEKT_HOME%" KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    if defined _DETEKT_CMD (
+        echo %_DEBUG_LABEL% Variables  : DETEKT_HOME="%DETEKT_HOME%" 1>&2
+    )
+    if defined _KTLINT_CMD (
+        echo %_DEBUG_LABEL% Variables  : KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    )
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -332,6 +338,17 @@ goto :eof
 :compile
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
+set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
+
+call :compile_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+if %_COMPILE_REQUIRED%==1 (
+    call :compile_kotlin
+    if not !_EXITCODE!==0 goto :eof
+)
+echo. > "%__TIMESTAMP_FILE%"
+goto :eof
+
+:compile_kotlin
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
@@ -344,7 +361,8 @@ if %__N%==0 (
     goto :eof
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+set "__CPATH=%_CLASSES_DIR%"
+echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
@@ -354,6 +372,59 @@ if not %ERRORLEVEL%==0 (
     echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed 1>&2
     set _EXITCODE=1
     goto :eof
+)
+goto :eof
+
+@rem input parameter: 1=target file 2,3,..=path (wildcards accepted)
+@rem output parameter: _COMPILE_REQUIRED
+:compile_required
+set "__TARGET_FILE=%~1"
+
+set __PATH_ARRAY=
+set __PATH_ARRAY1=
+:compile_path
+shift
+set __PATH=%~1
+if not defined __PATH goto :compile_next
+set __PATH_ARRAY=%__PATH_ARRAY%,'%__PATH%'
+set __PATH_ARRAY1=%__PATH_ARRAY1%,'!__PATH:%_ROOT_DIR%=!'
+goto :compile_path
+
+:compile_next
+set __TARGET_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+     set __TARGET_TIMESTAMP=%%i
+)
+set __SOURCE_TIMESTAMP=00000000000000
+for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+    set __SOURCE_TIMESTAMP=%%i
+)
+call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
+set _COMPILE_REQUIRED=%_NEWER%
+if %_DEBUG%==1 (
+    echo %_DEBUG_LABEL% %__TARGET_TIMESTAMP% Target : '%__TARGET_FILE%' 1>&2
+    echo %_DEBUG_LABEL% %__SOURCE_TIMESTAMP% Sources: %__PATH_ARRAY:~1% 1>&2
+    echo %_DEBUG_LABEL% _COMPILE_REQUIRED=%_COMPILE_REQUIRED% 1>&2
+) else if %_VERBOSE%==1 if %_COMPILE_REQUIRED%==0 if %__SOURCE_TIMESTAMP% gtr 0 (
+    echo No compilation needed ^(%__PATH_ARRAY1:~1%^) 1>&2
+)
+goto :eof
+
+@rem output parameter: _NEWER
+:newer
+set __TIMESTAMP1=%~1
+set __TIMESTAMP2=%~2
+
+set __DATE1=%__TIMESTAMP1:~0,8%
+set __TIME1=%__TIMESTAMP1:~-6%
+
+set __DATE2=%__TIMESTAMP2:~0,8%
+set __TIME2=%__TIMESTAMP2:~-6%
+
+if %__DATE1% gtr %__DATE2% ( set _NEWER=1
+) else if %__DATE1% lss %__DATE2% ( set _NEWER=0
+) else if %__TIME1% gtr %__TIME2% ( set _NEWER=1
+) else ( set _NEWER=0
 )
 goto :eof
 
@@ -379,8 +450,8 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -src %_SOURCE_DIR%\main\kotlin
-set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
+set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2

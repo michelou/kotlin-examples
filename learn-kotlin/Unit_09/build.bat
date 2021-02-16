@@ -79,16 +79,16 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
-    echo %_ERROR_LABEL% Java SDK nstallation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    echo %_ERROR_LABEL% Java SDK installation not found 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -205,11 +205,25 @@ if "%__ARG:~0,1%"=="-" (
 shift
 goto :args_loop
 :args_done
+if %_DETEKT%==1 if not defined _DETEKT_CMD (
+    echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand '-detekt'^) 1>&2
+    set _DETEKT=0
+)
+if %_LINT%==1 if not defined _KTLINT_CMD (
+    echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand '-lint'^) 1>&2
+    set _LINT=0
+)
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Options    : _EXAMPLE=%_EXAMPLE% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
-	echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
-	echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-    echo %_DEBUG_LABEL% Variables  : KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    if defined _DETEKT_CMD (
+        echo %_DEBUG_LABEL% Variables  : DETEKT_HOME="%DETEKT_HOME%" 1>&2
+    )
+    if defined _KTLINT_CMD (
+        echo %_DEBUG_LABEL% Variables  : KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    )
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -218,14 +232,14 @@ goto :eof
 :args_example
 set _ARGS_EXAMPLE=
 set __ARGS=%~1
-if /i "%__ARGS%"=="comparison" ( set _ARGS_EXAMPLE=Comparison
-) else if /i "%__ARGS%"=="equality" ( set _ARGS_EXAMPLE=Equality
-) else if /i "%__ARGS%"=="hashcode" ( set _ARGS_EXAMPLE=HashCode
-) else if /i "%__ARGS%"=="if" ( set _ARGS_EXAMPLE=If
-) else if /i "%__ARGS%"=="when" ( set _ARGS_EXAMPLE=When
+if "%__ARGS%"=="comparison" ( set _ARGS_EXAMPLE=Comparison
+) else if "%__ARGS%"=="equality" ( set _ARGS_EXAMPLE=Equality
+) else if "%__ARGS%"=="hashcode" ( set _ARGS_EXAMPLE=HashCode
+) else if "%__ARGS%"=="if" ( set _ARGS_EXAMPLE=If
+) else if "%__ARGS%"=="when" ( set _ARGS_EXAMPLE=When
 )
 if not defined _ARGS_EXAMPLE (
-    echo %_ERROR_LABEL% Example %__SUM% not found 1>&2
+    echo %_ERROR_LABEL% Example %__ARGS% not found 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -336,8 +350,11 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
+set __OPTS=
+if %_VERBOSE%==0 if %_DEBUG%==0 set __OPTS=-nowarn
+
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+echo %__OPTS% -language-version %_LANGUAGE_VERSION% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
@@ -402,8 +419,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_J
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -427,8 +444,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLA
 )
 call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 

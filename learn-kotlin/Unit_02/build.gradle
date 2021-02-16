@@ -12,7 +12,7 @@ description """Kotlin/JVM example project"""
 
 apply from: "../common.gradle"
 
-tasks.dokkaHtml.configure {
+dokkaHtml {
     moduleName = "Unit 02"
 }
 

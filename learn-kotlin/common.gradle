@@ -64,23 +64,17 @@ build {
     dependsOn compileKotlin
 }
 
-// see https://kotlin.github.io/dokka/1.4.0/user_guide/gradle/usage/
-// available tasks: dokkaHtml, dokkaJavadoc, dokkaGfm and dokkaJekyll
-tasks.dokkaHtml.configure {
-    outputDirectory.set(file("${buildDir}/doc"))
-}
-
-task doc(type: JavaExec) {
-    doFirst {
-        println()
+// see https://github.com/Kotlin/dokka#using-dokka
+dokkaHtml.configure {
+    outputDirectory = file("$buildDir/dokka")
+    dokkaSourceSets {
+        configureEach {
+            // Do not output deprecated members. Applies globally, can be overridden by packageOptions
+            skipDeprecated.set(false)
+            // Used for linking to JDK documentation
+            jdkVersion.set(8)
+        }
     }
-    description "Generate HTML documentation with Dokka"
-
-    // executable jars can have only _one_ jar on the classpath.
-    classpath file("C:\\Users\\michelou\\AppData\\Local\\Temp\\lib\\dokka-cli-1.4.10.jar")
-
-    // TODO: -pluginsClasspath \"%_DOKKA_CPATH%\" 
-    args "-moduleName AAAAAA -moduleVersion 111111 -outputDir \"${buildDir}/doc\" -sourceSet \"-src src/main/kotlin\""
 }
 
 task run(type: JavaExec) {
@@ -94,31 +88,30 @@ task run(type: JavaExec) {
     if (args == null) args ""
 }
 
-task runJava(type: JavaExec) {
-    doFirst {
-        println()
-    }
-    description "Execute Java main class $javaMain"
-
-    classpath sourceSets.main.runtimeClasspath
-
-    main javaMain
-    if (args == null) args ""
-}
-
 repositories {
     mavenCentral()
-    maven { // dokka-gradle-plugin
-        url "https://repo.spring.io/libs-release"
+    maven { // e.g. dokka-gradle-plugin
+        url "https://dl.bintray.com/kotlin/dokka"
+    }
+    maven { // e.g. kotlinx-html-jvm
+        url "https://dl.bintray.com/kotlin/kotlinx"
     }
     maven {
-        url "https://dl.bintray.com/kotlin/dokka"
+        url "https://dl.bintray.com/kotlin/kotlin-dev"
+    }
+    maven {
+        url "https://dl.bintray.com/jetbrains/markdown"
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    // implementation "org.jetbrains.dokka:kotlin-analysis-compiler:$dokkaVersion"
+    // implementation "org.jetbrains.dokka:kotlin-analysis-intellij:$dokkaVersion"
+    implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
+    implementation "org.jetbrains:markdown:0.1.45"
+    //dokkaGfmPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokkaVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"
     testImplementation "junit:junit:$junitVersion"

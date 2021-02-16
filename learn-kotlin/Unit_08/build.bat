@@ -82,16 +82,16 @@ if exist "%KTLINT_HOME%\ktlint.bat" (
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation directory not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%JAVA_HOME%\bin\java.exe" (
     echo %_ERROR_LABEL% Java SDK installation not found 1>&2
-	set _EXITCODE=1
-	goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
@@ -195,17 +195,23 @@ goto :args_loop
 :args_done
 if %_DETEKT%==1 if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand '-detekt'^) 1>&2
-	set _DETEKT=0
+    set _DETEKT=0
 )
 if %_LINT%==1 if not defined _KTLINT_CMD (
     echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand '-lint'^) 1>&2
-	set _LINT=0
+    set _LINT=0
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Options    : _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
-	echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
-	echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-    echo %_DEBUG_LABEL%              DETEKT_HOME="%DETEKT_HOME%" KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
+    echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
+    if defined _DETEKT_CMD (
+        echo %_DEBUG_LABEL% Variables  : DETEKT_HOME="%DETEKT_HOME%" 1>&2
+    )
+    if defined _KTLINT_CMD (
+        echo %_DEBUG_LABEL% Variables  : KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    )
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -251,11 +257,12 @@ echo.
 echo   %__BEG_P%Subcommands:%__END%
 echo     %__BEG_O%clean%__END%             delete generated files
 echo     %__BEG_O%compile[:^<name^>]%__END%  generate class files
-echo     %__BEG_O%doc%__END%               generate HTML documentation with %__BEG_N%Dokka%__END%
 echo     %__BEG_O%detekt%__END%            analyze Kotlin source files with %__BEG_N%Detekt%__END%
+echo     %__BEG_O%doc%__END%               generate HTML documentation with %__BEG_N%Dokka%__END%
 echo     %__BEG_O%help%__END%              display this help message
 echo     %__BEG_O%lint[:^<name^>]%__END%     analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run[:^<name^>]%__END%      execute the generated program
+echo.
 echo   Valid names are: %__BEG_O%All%__END% ^(default^), %__BEG_O%Boolean%__END%, %__BEG_O%Byte%__END%, %__BEG_O%Char%__END%, %__BEG_O%Double%__END%, %__BEG_O%Float%__END%, %__BEG_O%Int%__END%, %__BEG_O%Long%__END%, %__BEG_O%Short%__END%
 goto :eof
 
@@ -278,10 +285,12 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :detekt
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %_DETEKT_OPTS% 1>&2
+set __DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
+
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
 )
-call "%_DETEKT_CMD%" %_DETEKT_OPTS%
+call "%_DETEKT_CMD%" %__DETEKT_OPTS%
 if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
@@ -337,7 +346,7 @@ if %_VERBOSE%==0 if %_DEBUG%==0 set __OPTS=-nowarn
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 echo %__OPTS% -language-version %_LANGUAGE_VERSION% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLINC_CMD% "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
@@ -358,7 +367,7 @@ if not exist "%__BATCH_FILE%" (
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
 call "%__BATCH_FILE%" %_DEBUG%
-set _LIBS_CPATH=%_CPATH%
+set "_LIBS_CPATH=%_CPATH%"
 goto :eof
 
 :doc
@@ -376,7 +385,7 @@ if not defined _DOKKA_JAR (
 set __DOKKA_ARGS=-output "%_TARGET_DOCS_DIR%" -format html -generateIndexPages
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
-) else if %_VERBOSE%==1 ( echo Generate documentation with Dokka 1>&2
+) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
