@@ -17,7 +17,7 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
-call :add_maven_jar "junit" "junit" "4.13.1"
+call :add_maven_jar "junit" "junit" "4.13.2"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"

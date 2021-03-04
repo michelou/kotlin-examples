@@ -11,18 +11,23 @@ data class Person(
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     print("Source code:")
-    println("""
+    printlf("""
     data class Person(
         val name: String,
         var age: Int
-    )
-    """)
-    println("Methods:")
-    Person::class.java.declaredMethods.forEach {
-        println("    fun ${it.name}: ${it.returnType}")
+    )""")
+    printlf()
+    printlf("Methods:")
+    val methods = Person::class.java.declaredMethods
+    java.util.Arrays::sort(methods) // to ensure predictable order
+    methods.forEach {
+        printlf("    fun ${it.name}: ${it.returnType}")
     }
-    println("\nMembers:")
+    printlf()
+    printlf("Members:")
     Person::class.memberProperties.forEach {
-        println("    ${ if (it is KMutableProperty<*>) "var" else "val" } ${it.name}: ${it.returnType}")
+        printlf("    ${ if (it is KMutableProperty<*>) "var" else "val" } ${it.name}: ${it.returnType}")
     }
 }
+
+fun printlf(s: String = "") { print("$s\n") }
