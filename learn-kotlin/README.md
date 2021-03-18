@@ -13,10 +13,10 @@
 
 ## <span id="unit_04">[Unit 4][unit_04]</span>
 
-This tutorial part presents the Kotlin primitive types and literals, i.e. [Boolean](Unit_4/src/main/kotlin/BooleanExample.kt), [Byte](Unit_4/src/main/kotlin/ByteExample.kt), [Char](Unit_4/src/main/kotlin/CharExample.kt), [Double](Unit_4/src/main/kotlin/DoubleExample.kt), [Float](Unit_4/src/main/kotlin/FloatExample.kt), [Int](Unit_4/src/main/kotlin/IntExample.kt), [Long](Unit_4/src/main/kotlin/LongExample.kt) and [Short](Unit_4/src/main/kotlin/ShortExample.kt).
+This tutorial part presents the Kotlin primitive types and literals, i.e. [Boolean](Unit_04/src/main/kotlin/BooleanExample.kt), [Byte](Unit_04/src/main/kotlin/ByteExample.kt), [Char](Unit_04/src/main/kotlin/CharExample.kt), [Double](Unit_04/src/main/kotlin/DoubleExample.kt), [Float](Unit_04/src/main/kotlin/FloatExample.kt), [Int](Unit_04/src/main/kotlin/IntExample.kt), [Long](Unit_04/src/main/kotlin/LongExample.kt) and [Short](Unit_04/src/main/kotlin/ShortExample.kt).
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_4/build.bat">build</a></b>
+<b>&gt; <a href="Unit_04/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
@@ -33,10 +33,10 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Valid names are: All (default), Boolean, Byte, Char, Double, Float, Int, Long, Short
 </pre>
 
-For instance, command **`build clean run`** executes all examples while command **`build clean run:Double`** executes *only* example [**`DoubleExample.kt`**](Unit_4/src/main/kotlin/DoubleExample.kt):
+For instance, command **`build clean run`** executes all examples while command **`build clean run:Double`** executes *only* example [**`DoubleExample.kt`**](Unit_04/src/main/kotlin/DoubleExample.kt):
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_4/build.bat">build</a> clean run:Double</b>
+<b>&gt; <a href="Unit_04/build.bat">build</a> clean run:Double</b>
 The value of doubleMin is: 4.9E-324
 The value of doubleMax is: 1.7976931348623157E308
 The value of double(1000000000000.0001) is: 1.0000000000000001E12
@@ -47,11 +47,11 @@ The value of double(-Double.MAX_VALUE) is: -1.7976931348623157E308
 ## <span id="unit_05">[Unit 5][unit_05]</span>
 
 This tutorial part presents [Kotlin] binary operators and basic functions
-- either in source file [**`Examples.kt`**](Unit_5/src/main/kotlin/Examples.kt)
-- or in script file [**`Examples.kts`**](Unit_5/src/Examples.kts)
+- either in source file [**`Examples.kt`**](Unit_05/src/main/kotlin/Examples.kt)
+- or in script file [**`Examples.kts`**](Unit_05/src/Examples.kts)
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_5/build.bat">build</a></b>
+<b>&gt; <a href="Unit_05/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
@@ -69,20 +69,20 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Valid names are: all (default), examples
 </pre>
 
-For instance, command **`build -script -verbose run`** executes the script file [`Examples.kts`](Unit_5/src/Examples.kts) instead of the source file [`Examples.kt`](Unit_5/src/main/kotlin/Examples.kt):
+For instance, command **`build -script -verbose run`** executes the script file [`Examples.kts`](Unit_05/src/Examples.kts) instead of the source file [`Examples.kt`](Unit_05/src/main/kotlin/Examples.kt):
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_5/build.bat">build</a> -script -verbose run</b>
+<b>&gt; <a href="Unit_05/build.bat">build</a> -script -verbose run</b>
 Execute Kotlin script file "src\Examples.kts"
 byte10 = 10
 </pre>
 
 ## <span id="unit_06">[Unit 6][unit_06]</span>
 
-This tutorial part introduces [Kotlin] classes, i.e. class [**`Person.kt`**](Unit_6/src/main/kotlin/example1/Person.kt).
+This tutorial part introduces [Kotlin] classes, i.e. class [**`Person.kt`**](Unit_06/src/main/kotlin/example1/Person.kt).
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_6/build.bat">build</a></b>
+<b>&gt; <a href="Unit_06/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
@@ -101,10 +101,10 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 ## <span id="unit_07">[Unit 7][unit_07]</span>
 
-This tutorial part presents more advanced [Kotlin] features, such as default arguments, function types, names arguments and nullable variables i.e. [**`Default.kt`**](Unit_7/src/main/kotlin/defaultargs), [**`FunctionTypes.kt`**](Unit_7/src/main/kotlin/functiontypes), [**`Named.kt`**](Unit_7/src/main/kotlin/namedargs) and [**`Nullable.kt`**](Unit_7/src/main/kotlin/nullable).
+This tutorial part presents more advanced [Kotlin] features, such as default arguments, function types, names arguments and nullable variables i.e. [**`Default.kt`**](Unit_07/src/main/kotlin/defaultargs), [**`FunctionTypes.kt`**](Unit_07/src/main/kotlin/functiontypes), [**`Named.kt`**](Unit_07/src/main/kotlin/namedargs) and [**`Nullable.kt`**](Unit_07/src/main/kotlin/nullable).
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_7/build.bat">build</a></b>
+<b>&gt; <a href="Unit_07/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
@@ -151,7 +151,7 @@ The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jste
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/February 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

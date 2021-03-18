@@ -11,16 +11,16 @@
 
 Code examples can be built/run with the following tools:
 
-| Build Tool |   Command    | Configuration file |
-|------------|--------------|--------------------|
-| Gradle     | `gradle.bat` | `build.gradle`     |
-| Maven      | `mvn.cmd`    | `pom.xml`          |
+| Build Tool |   Command                  | Configuration file |
+|------------|----------------------------|--------------------|
+| Gradle     | [`gradle.bat`][gradle_cli] | `build.gradle`     |
+| Maven      | [`mvn.cmd`][maven_cli]     | `pom.xml`          |
 | Batch      | `build.bat`  | *none*             |
 
 ## <span id="coroutine_example">Coroutine Example</span>
 
 <pre style="font-size:80%;">
-<b>&gt; gradle clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
 1 threads active at the start
 Started 1 in main
 Started 2 in main
@@ -39,7 +39,7 @@ Took 1450 ms
 ## <span id="concurrent_example">Concurrent Example</span>
 
 <pre style="font-size:80%;">
-<b>&gt; gradle clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
 
 > Task :run
 Hello, Susan Calvin
@@ -59,7 +59,10 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/September 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
+
+[gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
+[maven_cli]: https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html

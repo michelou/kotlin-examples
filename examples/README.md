@@ -26,14 +26,14 @@ In this document we present the following [Kotlin] code examples:
 **`kotlin-stdlib`** contains most of the functionality: Collections, Ranges, Math, Regex, File extensions, Locks, etc... Most of what you use daily is in kotlin-stdlib
 -->
 
-We provide 4 different ways to build/run the code examples:
+We provide several ways to build/run the code examples:
 
-| Build tool          | Configuration file(s) | Parent file(s) |
-|---------------------|-----------------------|----------------|
-| **`build.bat`** | **`build.properties`** | **`cpath.bat`** <sup><b>(1)</b></sup> |
+| Build tool          | Configuration file(s)  | Parent file(s) |
+|---------------------|------------------------|----------------|
+| **`build.bat`**     | **`build.properties`** | **`cpath.bat`** <sup><b>(1)</b></sup> |
 | **`gradle.exe`**    | **`build.gradle`** <sup><b>(2)</b></sup> | **`common.gradle`**  |
 | **`gradle.exe`**    | **`build.gradle.kts`** <sup><b>(3)</b></sup> | &nbsp; |
-| **`mvn.cmd`**       | **`pom.xml`**   | **`pom.xml`**  |
+| **`mvn.cmd`**       | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](pom.xml)  |
 <div style="font-size:90%;">
 <sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
 <sup>(2)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
@@ -248,8 +248,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.4.21-344 (JRE 1.8.0_282-b08)
-Kotlin/Native: 1.4.21
+info: kotlinc-native 1.4.31-327 (JRE 1.8.0_282-b08)
+Kotlin/Native: 1.4.31
 &nbsp;
 <b>&gt; kotlinc-native -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -294,7 +294,7 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 <tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></td></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code><br/><code>Hello World!</code></td></tr>
 </table>
-<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.10\lib\kotlin-stdlib.jar</code></b></span>
+<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.31\lib\kotlin-stdlib.jar</code></b></span>
 
 <p style="margin:0 0 1em 20px;">
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):

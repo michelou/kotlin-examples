@@ -23,14 +23,20 @@ In this document we present the following [Kotlin] code examples:
 - [08_DSLs](09_DSLs) - [LocalSealedCasts](#local_sealed_casts)
 
 We provide several ways to build/run our [Kotlin] code examples:
-- **`build.bat`**
-- [**`gradle.bat`**][gradle_cli]&nbsp;&nbsp;*(**`build.gradle`**)*
-- [**`mvn.cmd`**][mvn_cli]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(**`pom.xml`**)*
 
-Batch command **`build.bat`** with no argument (or with subcommand **`help`**) displays the help message.
+| Build tool          | Configuration file(s)  | Parent file(s) |
+|---------------------|------------------------|----------------|
+| [**`build.bat`**](01_bean/build.bat) | &nbsp;                 | [**`cpath.bat`**](cpath.bat) <sup><b>(1)</b></sup> |
+| **`gradle.exe`**    | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) |
+| **`mvn.cmd`**       | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  |
+<div style="font-size:90%;">
+<sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>&nbsp;
+</div>
+
+Batch command [**`build.bat`**](01_bean/build.bat) with no argument (or with subcommand **`help`**) displays the help message.
 
 <pre style="font-size:80%;">
-<b>&gt; build</b>
+<b>&gt; <a href="01_bean/build.bat">build</a></b>
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
@@ -181,7 +187,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2020* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

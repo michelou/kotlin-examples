@@ -22,8 +22,12 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
 - [Exploring Kotlin/Native - Part 1][blog_exploring] by Jamie Lee, March 26, 2020.
+- [Why Trailing Commas In Kotlin Are Hype](https://blog.egorand.me/why-trailing-commas-in-kotlin-are-hype/) by Egor Andreevich, March 14, 2020.
 - [Jebrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
+- [Shared Library in Kotlin Multiplatform](https://blog.karumi.com/shared-library-in-kotlin-multiplatform/) by Sergio Lopez Mota, September 2, 2019.
+- [First steps into Kotlin Multiplatform](https://blog.karumi.com/first-steps-into-kotlin-multiplatform/) by Sergio Lopez Mota, June 10, 2019.
 - [Getting Started Unit Testing with Kotlin](https://spin.atomicobject.com/2018/10/07/kotlin-unit-testing/) by Molly Alger, October 7, 2018.
 
 ## <span id="books">Books</span>
