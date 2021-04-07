@@ -37,7 +37,7 @@ if not %_EXITCODE%==0 goto end
 call :gradle
 if not %_EXITCODE%==0 goto end
 
-call :javac
+call :java
 if not %_EXITCODE%==0 goto end
 
 call :kotlinc-jvm
@@ -313,7 +313,7 @@ set "_GRADLE_PATH=;%_GRADLE_HOME%\bin"
 goto :eof
 
 @rem output parameter: _JAVA_HOME
-:javac
+:java
 set _JAVA_HOME=
 
 set __JAVAC_CMD=
@@ -328,10 +328,10 @@ if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable JAVA_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\jdk-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+    for /f %%f in ('dir /ad /b "!__PATH!\jdk*-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     if not defined _JAVA_HOME (
         set "__PATH=%ProgramFiles%"
-        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk*-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     )
 )
 if not exist "%_JAVA_HOME%\bin\javac.exe" (

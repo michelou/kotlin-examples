@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin logo"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="100" alt="Kotlin logo"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
   It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
@@ -248,10 +248,10 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.4.31-327 (JRE 1.8.0_282-b08)
-Kotlin/Native: 1.4.31
+info: kotlinc-native 1.4.32-355 (JRE 1.8.0_282-b08)
+Kotlin/Native: 1.4.32
 &nbsp;
-<b>&gt; kotlinc-native -list-targets</b>
+<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 mingw_x64:                    (default) mingw
 mingw_x86:
 linux_x64:                              linux
@@ -294,7 +294,7 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 <tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></td></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code><br/><code>Hello World!</code></td></tr>
 </table>
-<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.31\lib\kotlin-stdlib.jar</code></b></span>
+<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.32\lib\kotlin-stdlib.jar</code></b></span>
 
 <p style="margin:0 0 1em 20px;">
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
@@ -321,7 +321,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

@@ -27,16 +27,16 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.2"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.3"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
-@rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.1"
+@rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.2"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-html-jvm/
 call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
-set __DOKKA_VERSION=1.4.20
+set __DOKKA_VERSION=1.4.30
 
 @rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/kotlin-analysis-compiler/
 call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
@@ -114,7 +114,7 @@ if not exist "%__JAR_FILE%" (
             set _EXITCODE=1
             goto :eof
         )
-        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% 1>&2
+        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_MVN_CMD%" install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar 1>&2
         ) else if %_VERBOSE%==1 ( echo Install Maven archive into directory "!__LOCAL_REPO:%USERPROFILE%=%%USERPROFILE%%!\%__SCALA_XML_PATH%" 1>&2
         )
         call "%_MVN_CMD%" %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar

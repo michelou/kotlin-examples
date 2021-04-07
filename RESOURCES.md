@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/120px-Kotlin-logo.svg.png" width="100" alt="Kotlin logo"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="100" alt="Kotlin logo"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This document presents <a href="https://kotlinlang.org/" rel="external">Kotlin</a> related resources we collected so far.
   </td>
   </tr>
@@ -56,7 +56,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
