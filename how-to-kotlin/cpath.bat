@@ -17,20 +17,20 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
-call :add_maven_jar "junit" "junit" "4.13.1"
+call :add_maven_jar "junit" "junit" "4.13.2"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test
-call :add_maven_jar "org.jetbrains.kotlin" "kotlin-test" "1.4.30"
+call :add_maven_jar "org.jetbrains.kotlin" "kotlin-test" "1.4.32"
 
 set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.2"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.3"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
 @rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.1"

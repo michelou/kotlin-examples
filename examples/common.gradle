@@ -2,8 +2,10 @@
 buildDir file("/target")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    // JAVA_HOME=c:\opt\jdk-<vendor>-1.8.0.X ==> VERSION_1_8
+    // JAVA_HOME=c:\opt\jdk-<vendor>-11.X    ==> VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 ext {
@@ -21,12 +23,12 @@ ext {
     libDir  = file("${homeDir}/AppData/Local/Temp/lib")
 
     pluginsClasspath = files(
-        "${repoDir}/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.3.9/kotlinx-coroutines-core-1.3.9.jar",
+        "${repoDir}/org/jetbrains/kotlinx/kotlinx-coroutines-core/${kotlinxVersion}/kotlinx-coroutines-core-${kotlinxVersion}.jar",
         "${libDir}/kotlinx-html-jvm-0.7.2.jar",
-        "${libDir}/kotlin-analysis-compiler-1.4.30.jar",
-        "${libDir}/kotlin-analysis-intellij-1.4.30.jar",
-        "${libDir}/dokka-analysis-1.4.30.jar",
-        "${libDir}/dokka-base-1.4.30.jar"
+        "${libDir}/kotlin-analysis-compiler-${dokkaVersion}.jar",
+        "${libDir}/kotlin-analysis-intellij-${dokkaVersion}.jar",
+        "${libDir}/dokka-analysis-${dokkaVersion}.jar",
+        "${libDir}/dokka-base-${dokkaVersion}.jar"
     )
 
     kotlinMain = "Main"
@@ -121,7 +123,8 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    // implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"
+    //implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"
     testImplementation "junit:junit:$junitVersion"

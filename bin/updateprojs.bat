@@ -20,20 +20,20 @@ set _KODDA_VERSION_OLD=dokkaVersion=0.10.0
 set _KODDA_VERSION_NEW=dokkaVersion=0.10.1
 
 @rem files gradle.properties
-set _KOTLIN_VERSION_OLD=kotlinVersion=1.3.72
-set _KOTLIN_VERSION_NEW=kotlinVersion=1.4.10
+set _KOTLIN_VERSION_OLD=kotlinVersion=1.4.10
+set _KOTLIN_VERSION_NEW=kotlinVersion=1.4.32
 
 @rem files gradle.properties
-set _JUNIT_VERSION_OLD=junitVersion=4.12
-set _JUNIT_VERSION_NEW=junitVersion=4.13
+set _JUNIT_VERSION_OLD=junitVersion=4.13
+set _JUNIT_VERSION_NEW=junitVersion=4.13.2
 
 @rem files gradle.properties
-set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.38.1/ktlint.jar
-set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.39.0/ktlint.jar
+set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.40.0/ktlint.jar
+set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.41.0/ktlint.jar
 
 @rem files pom.xml
-set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.3.72
-set _MVN_KOTLIN_VERSION_NEW=kotlin.version^>1.4.10
+set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.4.10
+set _MVN_KOTLIN_VERSION_NEW=kotlin.version^>1.4.32
 
 @rem files pom.xml
 set _MVN_KOTLINX_VERSION_OLD=kotlinx.version^>1.3.7

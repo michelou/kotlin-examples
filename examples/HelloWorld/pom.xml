@@ -3,15 +3,15 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kotlin.examples</groupId>
+    <groupId>kotlin-examples</groupId>
     <artifactId>HelloWorld</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>kotlin.examples</groupId>
-        <artifactId>kotlin-examples</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <groupId>kotlin-examples</groupId>
+        <artifactId>examples</artifactId>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

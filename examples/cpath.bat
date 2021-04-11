@@ -27,7 +27,7 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.2"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.3"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
 @rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.1"
