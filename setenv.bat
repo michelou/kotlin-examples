@@ -589,12 +589,12 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     echo Tool paths: 1>&2
     for /f "tokens=*" %%p in ('where %__WHERE_ARGS%') do echo    %%p 1>&2
 	echo Environment variables: 1>&2
-	if defined CFR_HOME echo    CFR_HOME="%CFR_HOME%" 1>&2
-	if defined DETEKT_HOME echo    DETEKT_HOME="%DETEKT_HOME%" 1>&2
-	if defined JAVA_HOME echo    JAVA_HOME="%JAVA_HOME%" 1>&2
-	if defined KOTLIN_HOME echo    KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
-	if defined KOTLIN_NATIVE_HOME echo    KOTLIN_NATIVE_HOME="%KOTLIN_HOME%" 1>&2
-	if defined KTLINT_HOME echo    KTLINT_HOME="%KTLINT_HOME%" 1>&2
+	if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
+	if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
+	if defined JAVA_HOME echo    "JAVA_HOME=%JAVA_HOME%" 1>&2
+	if defined KOTLIN_HOME echo    "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
+	if defined KOTLIN_NATIVE_HOME echo    "KOTLIN_NATIVE_HOME=%KOTLIN_HOME%" 1>&2
+	if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
 )
 goto :eof
 

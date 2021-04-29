@@ -79,7 +79,7 @@ dependencies {
     implementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("test-junit", "${Config.kotlinVersion}"))
-    api("junit:junit:4.12")
-    implementation("junit:junit:4.12")
-    testImplementation("junit:junit:4.12")
+    api("junit:junit:4.13.2")
+    implementation("junit:junit:4.13.2")
+    testImplementation("junit:junit:4.13.2")
 }
