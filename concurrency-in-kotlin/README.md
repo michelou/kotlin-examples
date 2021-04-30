@@ -11,11 +11,14 @@
 
 Code examples can be built/run with the following tools:
 
-| Build Tool |   Command                  | Configuration file |
-|------------|----------------------------|--------------------|
-| Gradle     | [`gradle.bat`][gradle_cli] | `build.gradle`     |
-| Maven      | [`mvn.cmd`][maven_cli]     | `pom.xml`          |
-| Batch      | `build.bat`  | *none*             |
+| Build tool                     | Configuration file(s)              | Parent file(s)     | Environment(s) |
+|--------------------------------|------------------------------------|--------------------|----------------|
+| [**`gradle.exe`**][gradle_cli] | [**`build.gradle`**](build.gradle) |  | Multiplatform <sup><b>a)</b></sup> |
+| [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](pom.xml)           |  | Multiplatform |
+| [**`build.bat`**](build.bat)   | *none*                             |  | Windows only |
+<div style="margin:0 30% 0 8px;font-size:90%;">
+<sup>a)</sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>&nbsp;
+</div>
 
 ## <span id="coroutine_example">Coroutine Example</span>
 
@@ -51,7 +54,7 @@ Execution took 1034 ms
 
 ## <span id="footnotes">Footnotes</span>
 
-<b name="footnote_01">[1]</b> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
+<span name="footnote_01">[1]</span> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
     <div style="margin:-12px 0 0 20px;">
     by Miguel Angel Castiblanco Torres,<br/>
     Packt Publishing (ISBN: 9781788627160), July 2018.
@@ -59,7 +62,7 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

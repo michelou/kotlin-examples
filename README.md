@@ -21,15 +21,15 @@ This project depends on the following external software for the **Microsoft Wind
 
 Optionally one may also install the following software:
 
-- [Apache Maven 3.6][maven_latest] ([*release notes*][maven_relnotes])
+- [Apache Maven 3.8][maven_latest] ([*release notes*][maven_relnotes])
 - [detekt 1.16][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 7.0][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.41][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*April 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*May 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
-C:\opt\apache-maven-3.6.3\             <i>( 10 MB)</i>
+C:\opt\apache-maven-3.8.1\             <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.16.0\              <i>( 49 MB)</i>
 C:\opt\Git-2.31.1\                     <i>(279 MB)</i>
 C:\opt\gradle-7.0\                     <i>(121 MB)</i>
@@ -95,7 +95,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       bazel 4.0.0, gradle 7.0, java 1.8.0_282, detekt-cli 1.16.0,
       kotlinc 1.4.32, kotlinc-native 1.4.32, ktlint 0.41.0
-      cfr 0.151, mvn 3.6.3, git 2.31.1.windows.1, diff 3.7, bash 4.4.23(1)-release
+      cfr 0.151, mvn 3.8.1, git 2.31.1.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\bazel-4.0.0\bazel.exe
       C:\opt\gradle-7.0\bin\gradle.bat
@@ -106,7 +106,7 @@ We distinguish different sets of batch commands:
       C:\opt\kotlin-native-windows-1.4.32\bin\kotlinc-native.bat
       C:\opt\ktlint-0.41.0\ktlint.bat
       C:\opt\cfr-0.151\bin\cfr.bat
-      C:\opt\apache-maven-3.6.3\bin\mvn.cmd
+      C:\opt\apache-maven-3.8.1\bin\mvn.cmd
       C:\opt\Git-2.31.1\bin\git.exe
       C:\opt\Git-2.31.1\mingw64\bin\git.exe
       C:\opt\Git-2.31.1\usr\bin\diff.exe
@@ -175,7 +175,7 @@ ktlint.bat
 In our case we downloaded the following installation files (see <a href="#proj_deps">section 1</a>):
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.6.3-bin.zip</a>                 <i>(  9 Mb)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.8.1-bin.zip</a>                 <i>(  9 Mb)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.16.0.zip</a>                      <i>( 44 MB)</i>
 <a href="https://gradle.org/releases/">gradle-7.0-bin.zip</a>                         <i>(107 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.4.32">kotlin-compiler-1.4.32.zip</a>                 <i>( 60 MB)</i>
@@ -202,7 +202,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/6.8/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/7.0/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
@@ -216,7 +216,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.6.3/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.8.1/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation

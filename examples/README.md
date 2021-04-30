@@ -330,7 +330,7 @@ Hello World!
 <!-- link refs -->
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
-[apache_maven_cli]: https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html
+[apache_maven_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
 [bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
 [cygwin]: https://cygwin.com/install.html
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

@@ -530,10 +530,11 @@ if defined __KTLINT_CMD (
 )
 goto :eof
 
+@rem output parameters: _MAVEN_HOME, _MAVEN_PATH
 :maven
+set _MAVEN_HOME=
 set _MAVEN_PATH=
 
-set __MAVEN_HOME=
 set __MVN_CMD=
 for /f %%f in ('where /q mvn.cmd 2^>NUL') do set "__MVN_CMD=%%f"
 if defined __MVN_CMD (
@@ -541,21 +542,21 @@ if defined __MVN_CMD (
     @rem keep _MAVEN_PATH undefined since executable already in path
     goto :eof
 ) else if defined MAVEN_HOME (
-    set "__MAVEN_HOME=%MAVEN_HOME%"
+    set "_MAVEN_HOME=%MAVEN_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable MAVEN_HOME 1>&2
 ) else (
     set _PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!_PATH!\apache-maven-*" 2^>NUL') do set "__MAVEN_HOME=!_PATH!\%%f"
-    if defined __MAVEN_HOME (
-        if %_DEBUG%==1 echo [%_BASENAME%] Using default Maven installation directory "!__MAVEN_HOME!"
+    for /f %%f in ('dir /ad /b "!_PATH!\apache-maven-*" 2^>NUL') do set "_MAVEN_HOME=!_PATH!\%%f"
+    if defined _MAVEN_HOME (
+        if %_DEBUG%==1 echo [%_BASENAME%] Using default Maven installation directory "!_MAVEN_HOME!"
     )
 )
-if not exist "%__MAVEN_HOME%\bin\mvn.cmd" (
-    echo %_ERROR_LABEL% Maven executable not found ^(%__MAVEN_HOME%^) 1>&2
+if not exist "%_MAVEN_HOME%\bin\mvn.cmd" (
+    echo %_ERROR_LABEL% Maven executable not found ^(%_MAVEN_HOME%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
-set "_MAVEN_PATH=;%__MAVEN_HOME%\bin"
+set "_MAVEN_PATH=;%_MAVEN_HOME%\bin"
 goto :eof
 
 @rem output parameter(s): _GIT_HOME, _GIT_PATH
@@ -645,10 +646,10 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('"%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
 )
-where /q mvn.cmd
+where /q "%MAVEN_HOME%\bin:mvn.cmd"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,*" %%i in ('mvn.cmd -version ^| findstr Apache') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% mvn %%k,"
-    set __WHERE_ARGS=%__WHERE_ARGS% mvn.cmd
+    for /f "tokens=1,2,3,*" %%i in ('"%MAVEN_HOME%\bin\mvn.cmd" -version ^| findstr Apache') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% mvn %%k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%MAVEN_HOME%\bin:mvn.cmd"
 )
 where /q git.exe
 if %ERRORLEVEL%==0 (
@@ -677,6 +678,7 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
 	if defined KOTLIN_HOME echo    "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
 	if defined KOTLIN_NATIVE_HOME echo    "KOTLIN_NATIVE_HOME=%KOTLIN_HOME%" 1>&2
 	if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
+	if defined MAVEN_HOME echo    "MAVEN_HOME=%MAVEN_HOME%" 1>&2
 )
 goto :eof
 
@@ -694,6 +696,7 @@ endlocal & (
     if not defined KOTLIN_HOME set "KOTLIN_HOME=%_KOTLIN_HOME%"
     if not defined KOTLIN_NATIVE_HOME set "KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%"
     if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
+    if not defined MAVEN_HOME set "MAVEN_HOME=%_MAVEN_HOME%"
     set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
     if not "%CD:~0,2%"=="%_DRIVE_NAME%:" (
