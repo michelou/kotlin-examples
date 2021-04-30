@@ -28,16 +28,19 @@ In this document we present the following [Kotlin] code examples:
 
 We provide several ways to build/run the code examples:
 
-| Build tool          | Configuration file(s)  | Parent file(s) |
-|---------------------|------------------------|----------------|
-| **`build.bat`**     | **`build.properties`** | **`cpath.bat`** <sup><b>(1)</b></sup> |
-| **`gradle.exe`**    | **`build.gradle`** <sup><b>(2)</b></sup> | **`common.gradle`**  |
-| **`gradle.exe`**    | **`build.gradle.kts`** <sup><b>(3)</b></sup> | &nbsp; |
-| **`mvn.cmd`**       | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](pom.xml)  |
-<div style="font-size:90%;">
-<sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
-<sup>(2)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
-<sup>(3)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
+| Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
+|---------------------|------------------------|----------------|-------------|
+| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Multiplatform <sup><b>a)</b></sup> |
+| [**`build.bat`**](HelloWorld/build.bat) | **`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows only |
+| [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix only |
+| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle`**](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [**`common.gradle`**](./common.gradle)  | Multiplatform |
+| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle.kts`**](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Multiplatform |
+| [**`mvn.cmd`**][apache_maven_cli] | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](./pom.xml)  | Multiplatform |
+<div style="margin:0 30% 0 8px;font-size:90%;">
+<sup>a)</sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>
+<sup>b)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
+<sup>c)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
+<sup>d)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
 </div>
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
@@ -205,7 +208,7 @@ Members:
 Elapsed time: 00:00:06
 </pre>
 
-Alternatively command [**`gradle -q clean run`**][gradle_bat] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
+Alternatively command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
@@ -237,7 +240,7 @@ BUILD SUCCESSFUL in 3s
 3 actionable tasks: 3 executed
 </pre>
 
-> **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_bat] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
+> **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_cli] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
 
 ## <span id="footnotes">Footnotes</span>
 
@@ -321,13 +324,16 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/April 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
+[apache_ant_cli]: https://ant.apache.org/manual/running.html
+[apache_maven_cli]: https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html
 [bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
-[gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
+[cygwin]: https://cygwin.com/install.html
+[gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
 [groovy_dsl]: https://docs.gradle.org/current/dsl/index.html
 [java_kotlin]: https://kotlinlang.org/docs/reference/java-interop.html#calling-java-code-from-kotlin
@@ -338,3 +344,4 @@ Hello World!
 [kotlin_jvm]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjvm-compiler-options
 [kotlin_native]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options
 [maven]: https://maven.apache.org/what-is-maven.html
+[msys2]: https://www.msys2.org/

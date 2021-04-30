@@ -24,11 +24,11 @@ ext {
 
     pluginsClasspath = files(
         "${repoDir}/org/jetbrains/kotlinx/kotlinx-coroutines-core/${kotlinxVersion}/kotlinx-coroutines-core-${kotlinxVersion}.jar",
-        "${libDir}/kotlinx-html-jvm-0.7.2.jar",
-        "${libDir}/kotlin-analysis-compiler-${dokkaVersion}.jar",
-        "${libDir}/kotlin-analysis-intellij-${dokkaVersion}.jar",
-        "${libDir}/dokka-analysis-${dokkaVersion}.jar",
-        "${libDir}/dokka-base-${dokkaVersion}.jar"
+        "${libDir}/kotlinx-html-jvm-${kotlinxHtmlVersion}.jar",
+        "${libDir}/kotlin-analysis-compiler-${kotlinVersion}.jar",
+        "${libDir}/kotlin-analysis-intellij-${kotlinVersion}.jar",
+        "${libDir}/dokka-analysis-${kotlinVersion}.jar",
+        "${libDir}/dokka-base-${kotlinVersion}.jar"
     )
 
     kotlinMain = "Main"

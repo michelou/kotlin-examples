@@ -23,10 +23,14 @@ if %_HELP%==1 (
     exit /b !_EXITCODE!
 )
 
+set _ANT_PATH=
 set _BAZEL_PATH=
 set _GRADLE_PATH=
 set _MAVEN_PATH=
 set _GIT_PATH=
+
+call :ant
+if not %_EXITCODE%==0 goto end
 
 call :bazel
 if not %_EXITCODE%==0 goto end
@@ -40,10 +44,13 @@ if not %_EXITCODE%==0 goto end
 call :java
 if not %_EXITCODE%==0 goto end
 
-call :kotlinc-jvm
+call :kotlin_jvm
 if not %_EXITCODE%==0 goto end
 
-call :kotlinc-native
+call :kotlin_native
+if not %_EXITCODE%==0 goto end
+
+call :dokka
 if not %_EXITCODE%==0 goto end
 
 call :detekt
@@ -220,6 +227,44 @@ echo   %__BEG_P%Subcommands:%__END%
 echo     %__BEG_O%help%__END%        display this help message
 goto :eof
 
+@rem output parameter(s): _ANT_HOME, _ANT_PATH
+:ant
+set _ANT_HOME=
+set _ANT_PATH=
+
+set __ANT_CMD=
+for /f %%f in ('where ant.bat 2^>NUL') do set "__ANT_CMD=%%f"
+if defined __ANT_CMD (
+    for %%i in ("%__ANT_CMD%") do set "__ANT_BIN_DIR=%%~dpi"
+    for %%f in ("!__ANT_BIN_DIR!\.") do set "_ANT_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Ant executable found in PATH 1>&2
+    @rem keep _ANT_PATH undefined since executable already in path
+    goto :eof
+) else if defined ANT_HOME (
+    set "_ANT_HOME=%ANT_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable ANT_HOME 1>&2
+) else (
+    set __PATH=C:\opt
+    if exist "!__PATH!\apache-ant\" ( set _ANT_HOME=!__PATH!\apache-ant
+    ) else (
+        for /f %%f in ('dir /ad /b "!__PATH!\apache-ant-*" 2^>NUL') do set "_ANT_HOME=!__PATH!\%%f"
+        if not defined _ANT_HOME (
+            set "__PATH=%ProgramFiles%"
+            for /f %%f in ('dir /ad /b "!__PATH!\apache-ant-*" 2^>NUL') do set "_ANT_HOME=!__PATH!\%%f"
+        )
+    )
+    if defined _ANT_HOME (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Ant installation directory !_ANT_HOME! 1>&2
+    )
+)
+if not exist "%_ANT_HOME%\bin\ant.cmd" (
+    echo %_ERROR_LABEL% Ant executable not found ^(%_ANT_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set "_ANT_PATH=;%_ANT_HOME%\bin"
+goto :eof
+
 @rem output parameter(s): _BAZEL_PATH
 :bazel
 set _BAZEL_PATH=
@@ -342,7 +387,7 @@ if not exist "%_JAVA_HOME%\bin\javac.exe" (
 goto :eof
 
 @rem output parameter: _KOTLIN_HOME
-:kotlinc-jvm
+:kotlin_jvm
 set _KOTLIN_HOME=
 
 set __KOTLINC_CMD=
@@ -377,15 +422,15 @@ if not exist "%_KOTLIN_HOME%\bin\kotlinc.bat" (
 goto :eof
 
 @rem output parameter: _KOTLIN_NATIVE_HOME
-:kotlinc-native
+:kotlin_native
 set _KOTLIN_NATIVE_HOME=
 
 set __KOTLINC_NATIVE_CMD=
 for /f %%f in ('where kotlinc-native.bat 2^>NUL') do set "__KOTLINC_NATIVE_CMD=%%f"
 if defined __KOTLINC_NATIVE_CMD (
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
     for %%i in ("%__KOTLINC_NATIVE_CMD%") do set "__KOTLINC_NATIVE_BIN_DIR=%%~dpi"
     for %%f in ("!__KOTLINC_NATIVE_BIN_DIR!\.") do set "_KOTLIN_NATIVE_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
     goto :eof
 ) else if defined KOTLIN_NATIVE_HOME (
     set "_KOTLIN_NATIVE_HOME=%KOTLIN_NATIVE_HOME%"
@@ -400,6 +445,33 @@ if defined __KOTLINC_NATIVE_CMD (
 )
 if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
     echo kotlinc-native not found in Kotlin/Native installation directory ^(%_KOTLIN_NATIVE_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+goto :eof
+
+@rem output parameter: _DOKKA_HOME
+:dokka
+set _DOKKA_HOME=
+
+if defined DOKKA_HOME (
+    set "_DOKKA_HOME=%DOKKA_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DOKKA_HOME 1>&2
+) else (
+    set __PATH=C:\opt
+    if exist "!__PATH!\dokka\" ( set _DOKKA_HOME=!__PATH!\dokka
+    ) else (
+        for /f %%f in ('dir /ad /b "!__PATH!\dokka-1.4*" 2^>NUL') do set "_DOKKA_HOME=!__PATH!\%%f"
+        if not defined _DOKKA_HOME (
+            set "__PATH=%ProgramFiles%"
+            for /f %%f in ('dir /ad /b "!__PATH!\dokka-1.4*" 2^>NUL') do set "_DOKKA_HOME=!__PATH!\%%f"
+        )
+    )
+)
+set __DOKKA_CLI_JAR=
+for %%f in (%_DOKKA_HOME%\lib\dokka-cli*.jar) do set "__DOKKA_CLI_JAR=%%f"
+if not defined __DOKKA_CLI_JAR (
+    echo CLI library not found in Dokka installation directory ^(%_DOKKA_HOME%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -519,12 +591,20 @@ if not exist "%_GIT_HOME%\bin\git.exe" (
 set "_GIT_PATH=;%_GIT_HOME%\bin;%_GIT_HOME%\mingw64\bin;%_GIT_HOME%\usr\bin"
 goto :eof
 
+@rem %JAVA_HOME%\bin\jar xvf c:\opt\dokka-1.4.20\lib\dokka-cli-1.4.20.jar META-INF/dokka/dokka-version.properties
+@rem type META-INF\dokka\dokka-version.properties
+@rem dokka-version=1.4.20
 :print_env
 set __VERBOSE=%1
 set "__VERSIONS_LINE1=  "
 set "__VERSIONS_LINE2=  "
 set "__VERSIONS_LINE3=  "
 set __WHERE_ARGS=
+where /q "%ANT_HOME%\bin:ant.bat"
+if %ERRORLEVEL%==0 (
+    for /f "tokens=1,2,3,4,*" %%i in ('"%ANT_HOME%\bin\ant.bat" -version ^| findstr version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% ant %%l,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%ANT_HOME%\bin:ant.bat"
+)
 where /q bazel.exe
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('bazel.exe --version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% bazel %%j,"
@@ -589,8 +669,10 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     echo Tool paths: 1>&2
     for /f "tokens=*" %%p in ('where %__WHERE_ARGS%') do echo    %%p 1>&2
 	echo Environment variables: 1>&2
+    if defined ANT_HOME echo    "ANT_HOME=%ANT_HOME%" 1>&2
 	if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
 	if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
+	if defined DOKKA_HOME echo    "DOKKA_HOME=%DOKKA_HOME%" 1>&2
 	if defined JAVA_HOME echo    "JAVA_HOME=%JAVA_HOME%" 1>&2
 	if defined KOTLIN_HOME echo    "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
 	if defined KOTLIN_NATIVE_HOME echo    "KOTLIN_NATIVE_HOME=%KOTLIN_HOME%" 1>&2
@@ -603,14 +685,16 @@ goto :eof
 
 :end
 endlocal & (
+    if not defined ANT_HOME set "ANT_HOME=%_ANT_HOME%"
     if not defined CFR_HOME set "CFR_HOME=%_CFR_HOME%"
     if not defined DETEKT_HOME set "DETEKT_HOME=%_DETEKT_HOME%"
+    if not defined DOKKA_HOME set "DOKKA_HOME=%_DOKKA_HOME%"
     if not defined GRADLE_HOME set "GRADLE_HOME=%_GRADLE_HOME%"
     if not defined JAVA_HOME set "JAVA_HOME=%_JAVA_HOME%"
     if not defined KOTLIN_HOME set "KOTLIN_HOME=%_KOTLIN_HOME%"
     if not defined KOTLIN_NATIVE_HOME set "KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%"
     if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
-    set "PATH=%PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
+    set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
     if not "%CD:~0,2%"=="%_DRIVE_NAME%:" (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% cd /d %_DRIVE_NAME%: 1>&2

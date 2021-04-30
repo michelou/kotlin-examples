@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dotty-common" default="init" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <!-- set dotty.home -->
+    <property environment="env" />
+
+    <condition property="user.home"
+        value="${env.USERPROFILE}"
+        else="${env.HOME}">
+        <os family="windows" />
+    </condition>
+    <property name="ivy.cache" value="${user.home}/.ivy2/cache" />
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <target name="init">
+        <propertyregex
+            property="kotlin.home" input="${env.KOTLIN_HOME}"
+            regexp="/cygdrive/([a-z])/(.+)$" replace="\1:/\2"
+            defaultValue="${env.KOTLIN_HOME}"
+        />
+        <condition property="kotlinc.executable"
+            value="${kotlin.home}/bin/kotlinc.bat"
+            else="${kotlin.home}/bin/kotlinc">
+            <or>
+                <not><os family="windows" /></not>
+                <matches string="${env.OS}" pattern="cygwin|mingw" />
+            </or>
+        </condition>
+        <fail message="Kotlin/JVM compiler not found (${kotlinc.executable})">
+            <condition><not>
+                <available file="${kotlinc.executable}" />
+            </not></condition>
+        </fail>
+        <echo message="KOTLIN_HOME=${kotlin.home}" />
+        <path id="kotlin.classpath">
+            <fileset dir="${kotlin.home}/lib" includes="*.jar" />
+        </path>
+        <typedef resource="org/jetbrains/kotlin/ant/antlib.xml" classpath="${kotlin.home}/lib/kotlin-ant.jar"/>
+        <path id="build.classpath">
+            <pathelement location="${build.dir}" />
+        </path>
+    </target>
+
+</project>

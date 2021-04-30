@@ -29,8 +29,9 @@ getOS() {
 
 getPath() {
     local path=""
-    for i in $(ls -d "$1"*); do path=$i; done
-    echo $path
+    for i in $(ls -d "$1"*/ 2>/dev/null); do path=$i; done
+    # ignore trailing slash introduced in for loop
+    [[ -z "$path" ]] && echo "" || echo "${path::-1}"
 }
 
 ##############################################################################
@@ -40,12 +41,20 @@ PROG_HOME="$(getHome)"
 
 OS="$(getOS)"
 [[ $OS == "unknown" ]] && { echo "Unsuppored OS"; exit 1; }
+
 if [[ $OS == "cygwin" || $OS == "mingw" ]]; then
     [[ $OS == "cygwin" ]] && prefix="/cygdrive" || prefix=""
     export HOME=$prefix/c/Users/$USER
-    export JAVA_HOME=$(getPath "$prefix/c/opt/jdk-openjdk-1.8")
-    export KOTLIN_HOME=$(getPath "$prefix/c/opt/kotlinc-1.4")
-    export CFR_HOME=$(getPath "$prefix/c/opt/cfr-0.15")
+    export ANT_HOME="$(getPath "$prefix/c/opt/apache-ant-1")"
+    export GIT_HOME="$(getPath "$prefix/c/opt/Git-2")"
+    ## export JAVA_HOME="$(getPath "$prefix/c/opt/jdk-openjdk-11")"
+    export JAVA_HOME="$(getPath "$prefix/c/opt/jdk-openjdk-1.8")"
+    export KOTLIN_HOME="$(getPath "$prefix/c/opt/kotlinc-1.4")"
+    export CFR_HOME="$(getPath "$prefix/c/opt/cfr-0.15")"
+    PATH1="$PATH"
+    [[ -x "$ANT_HOME/bin/ant" ]] && PATH1="$PATH1:$ANT_HOME/bin"
+    [[ -x "$GIT_HOME/bin/git" ]] && PATH1="$PATH1:$GIT_HOME/bin"
+    export PATH="$PATH1"
 else
     ## export JAVA_HOME=/opt/jdk-1.8
     export KOTLIN_HOME=/opt/kotlinc

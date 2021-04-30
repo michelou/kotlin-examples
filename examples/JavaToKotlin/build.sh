@@ -78,9 +78,9 @@ args() {
         DECOMPILE=false
     fi
     debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
-    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
+    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP RUN=$RUN"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
-    debug "Variables  : SCALA3_HOME=$SCALA3_HOME"
+    debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     $TIMER && TIMER_START=$(date +"%s")
@@ -162,9 +162,6 @@ action_required() {
 }
 
 compile_java() {
-    # call :libs_cpath
-    # if not %_EXITCODE%==0 goto :eof
-
     local opts_file="$TARGET_DIR/javac_opts.txt"
     local cpath="$LIBS_CPATH$(mixed_path $CLASSES_DIR)"
     echo -classpath "$cpath" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
@@ -189,9 +186,6 @@ compile_java() {
 }
 
 compile_kotlin() {
-    # call :libs_cpath
-    # if not %_EXITCODE%==0 goto :eof
-
     local opts_file="$TARGET_DIR/kotlinc_opts.txt"
     local cpath="$CLASSES_DIR"
     echo -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
@@ -293,11 +287,7 @@ decompile() {
 
 ## output parameter: _EXTRA_CPATH
 extra_cpath() {
-    if [ $SCALA_VERSION==3 ]; then
-        lib_path="$SCALA3_HOME/lib"
-    else
-        lib_path="$SCALA_HOME/lib"
-    fi
+    local lib_path="$KOTLIN_HOME/lib"
     local extra_cpath=
     for f in $(find $lib_path/ -name *.jar); do
         extra_cpath="$extra_cpath$(mixed_path $f)$PSEP"
@@ -307,24 +297,9 @@ extra_cpath() {
 
 ## output parameter: ($version $suffix)
 version_string() {
-    local tool_version="$($SCALAC_CMD -version 2>&1 | cut -d " " -f 4)"
-    local version=
-    [[ $SCALA_VERSION -eq 3 ]] && version="scala3_$tool_version" || version="scala2_$tool_version"
-
-    ## keep only "-NIGHTLY" in version suffix when compiling with a nightly build 
-    local str="${version/NIGHTLY*/NIGHTLY}"
-    local suffix=
-    if [[ ! "$version" == "$str" ]]; then
-        suffix="_$str"
-    else
-        ## same for "-SNAPSHOT"
-        str="${version/SNAPSHOT*/SNAPSHOT}"
-        if [[ ! "$version" == "$str" ]]; then
-            suffix="_$str"
-        else
-            suffix=_3.0.0
-        fi
-    fi
+    local tool_version="$($KOTLINC_CMD -version 2>&1 | cut -d " " -f 3)"
+    local version="kotlin_$tool_version"                                
+    local suffix="$tool_version"
     local arr=($version $suffix)
     echo "${arr[@]}"
 }
@@ -334,29 +309,20 @@ doc() {
 
     local doc_timestamp_file="$TARGET_DOCS_DIR/.latest-build"
 
-    local action_required="$(compile_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.scala")"
-    [[ $action_required -eq 0 ]] && return 1
+    local required="$(action_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")"
+    [[ $required -eq 0 ]] && return 1
 
-    local sources_file="$TARGET_DIR/scaladoc_sources.txt"
-    [[ -f "$sources_file" ]] && rm -rf "$sources_file"
-    # for f in $(find $SOURCE_DIR/main/java/ -name *.java 2>/dev/null); do
-    #     echo $(mixed_path $f) >> "$sources_file"
-    # done
-    for f in $(find $SOURCE_DIR/main/scala/ -name *.scala 2>/dev/null); do
-        echo $(mixed_path $f) >> "$sources_file"
-    done
-    local opts_file="$TARGET_DIR/scaladoc_opts.txt"
-    if [ $SCALA_VERSION -eq 3 ]; then
-        echo -d "$(mixed_path $TARGET_DOCS_DIR)" -doc-title "$PROJECT_NAME" -doc-footer "$PROJECT_URL" -doc-version "$PROJECT_VERSION" > "$opts_file"
-    else
-        echo -siteroot "$(mixed_path $TARGET_DOCS_DIR)" -project "$PROJECT_NAME" -project-url "$PROJECT_URL" -project-version "$PROJECT_VERSION" > "$opts_file"
-    fi
+    ## see https://github.com/Kotlin/dokka/releases
+    DOKKA_CPATH="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
+    DOKKA_JAR="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
+    local args="-src $(mixed_path $MAIN_SOURCE_DIR)"
+    local dokka_args="-pluginsClasspath $(mixed_path $DOKKA_CPATH) -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir $(mixed_path $TARGET_DOCS_DIR) -sourceSet \"$args\""
     if $DEBUG; then
-        debug "$SCALADOC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
+        debug "$JAVA_CMD -jar $(mixed_path $DOKKA_JAR) $dokka_args"
     elif $VERBOSE; then
         echo "Generate HTML documentation into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
     fi
-    eval "$SCALADOC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
+    eval "$JAVA_CMD" -jar "$(mixed_path $DOKKA_JAR)" $dokka_args
     if [[ $? -ne 0 ]]; then
         error "Generation of HTML documentation failed"
         cleanup 1
@@ -443,6 +409,7 @@ if [[ $cygwin || $mingw || $msys ]]; then
     CYGPATH_CMD="$(which cygpath 2>/dev/null)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
+    [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
 fi
 if [ ! -x "$JAVA_HOME/bin/javac" ]; then
     error "Java SDK installation not found"

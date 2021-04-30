@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HelloWorld" default="build" basedir=".">
+
+    <property name="source.dir" value="${basedir}/src/main/kotlin" />
+    <property name="target.dir" value="${basedir}/target" />
+    <property name="build.dir" value="${target.dir}/main/classes" />
+    <property name="main.class" value="org.example.main.HelloWorldKt" />
+
+    <!-- task 'init' is defined in parent build.xml -->
+    <import file="../build.xml" />
+
+    <target name="compile" depends="init">
+        <mkdir dir="${build.dir}" />
+        <javac destdir="${build.dir}" includeAntRuntime="false" srcdir="${source.dir}">
+            <withKotlin/>
+        </javac>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}">
+            <!-- <arg value="1" /> -->
+            <classpath>
+                <path refid="kotlin.classpath" />
+                <path refid="build.classpath" />
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean">
+        <delete dir="${target.dir}"/>
+    </target>
+
+</project>
