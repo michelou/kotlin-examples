@@ -40,7 +40,7 @@ call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
 
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
-set __DOKKA_VERSION=1.4.20
+set __DOKKA_VERSION=1.4.30
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
 call :add_bintray2_jar "org.jetbrains" "markdown" "0.1.45"

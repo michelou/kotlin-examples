@@ -59,11 +59,12 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > <b>&gt; <a href="01_bean/build.bat">build</a> -debug clean run</b>
 > [build] Options    : _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : KOTLIN_HOME="C:\opt\kotlinc-1.4.0" KOTLIN_NATIVE_HOME="C:\opt\kotlin-native-windows-1.4.0"
+> [build] Variables  : KOTLIN_HOME="C:\opt\kotlinc-1.5.0"
+> [buidl] Variables  : KOTLIN_NATIVE_HOME="C:\opt\kotlin-native-windows-1.5.0"
 > [build] Variables  : _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
-> [build] "C:\opt\kotlinc-1.4.0\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
-> [build] "C:\opt\kotlinc-1.4.0\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
+> [build] "C:\opt\kotlinc-1.5.0\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc-1.5.0\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
 > [build] _EXITCODE=0
 > </pre>

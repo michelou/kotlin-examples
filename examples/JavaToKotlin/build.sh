@@ -77,10 +77,13 @@ args() {
         warning "cfr installation not found"
         DECOMPILE=false
     fi
+    debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
     debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
     debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP RUN=$RUN"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
+    debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
+    debug "Variables  : DOKKA_HOME=$DOKKA_HOME"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     $TIMER && TIMER_START=$(date +"%s")
@@ -212,7 +215,7 @@ compile_kotlin() {
 mixed_path() {
     if [ -x "$CYGPATH_CMD" ]; then
         $CYGPATH_CMD -am $1
-    elif [[ $mingw || $msys ]]; then
+    elif $mingw || $msys; then
         echo $1 | sed 's|/|\\\\|g'
     else
         echo $1
@@ -287,9 +290,8 @@ decompile() {
 
 ## output parameter: _EXTRA_CPATH
 extra_cpath() {
-    local lib_path="$KOTLIN_HOME/lib"
     local extra_cpath=
-    for f in $(find $lib_path/ -name *.jar); do
+    for f in $(ls $KOTLIN_HOME/lib/*.jar); do
         extra_cpath="$extra_cpath$(mixed_path $f)$PSEP"
     done
     echo $extra_cpath
@@ -405,7 +407,7 @@ case "`uname -s`" in
 esac
 unset CYGPATH_CMD
 PSEP=":"
-if [[ $cygwin || $mingw || $msys ]]; then
+if $cygwin || $mingw || $msys; then
     CYGPATH_CMD="$(which cygpath 2>/dev/null)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"

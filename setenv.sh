@@ -47,16 +47,19 @@ if [[ $OS == "cygwin" || $OS == "mingw" ]]; then
     export HOME=$prefix/c/Users/$USER
     export ANT_HOME="$(getPath "$prefix/c/opt/apache-ant-1")"
     export GIT_HOME="$(getPath "$prefix/c/opt/Git-2")"
-    ## export JAVA_HOME="$(getPath "$prefix/c/opt/jdk-openjdk-11")"
     export JAVA_HOME="$(getPath "$prefix/c/opt/jdk-openjdk-1.8")"
-    export KOTLIN_HOME="$(getPath "$prefix/c/opt/kotlinc-1.4")"
+    export JAVA11_HOME="$(getPath "$prefix/c/opt/jdk-openjdk-11")"
+    export KOTLIN_HOME="$(getPath "$prefix/c/opt/kotlinc-1.5")"
+    export KOTLIN_NATIVE_HOME="$(getPath "$prefix/c/opt/kotlin-native-windows-1.5")"
     export CFR_HOME="$(getPath "$prefix/c/opt/cfr-0.15")"
     PATH1="$PATH"
     [[ -x "$ANT_HOME/bin/ant" ]] && PATH1="$PATH1:$ANT_HOME/bin"
     [[ -x "$GIT_HOME/bin/git" ]] && PATH1="$PATH1:$GIT_HOME/bin"
     export PATH="$PATH1"
 else
-    ## export JAVA_HOME=/opt/jdk-1.8
-    export KOTLIN_HOME=/opt/kotlinc
+    export JAVA_HOME="$(getPath "/opt/jdk-openjdk-1.8")"
+    export JAVA11_HOME="$(getPath "/opt/jdk-openjdk-11")"
+    export KOTLIN_HOME="$(getPath "/opt/kotlinc-1.5")"
+    export KOTLIN_NATIVE_HOME="$(getPath "/opt/kotlin-native-linux-1.5")"
 fi
 ## echo "KOTLIN_HOME=$KOTLIN_HOME"

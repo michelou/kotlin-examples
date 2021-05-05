@@ -245,7 +245,7 @@ if defined __ANT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable ANT_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    if exist "!__PATH!\apache-ant\" ( set _ANT_HOME=!__PATH!\apache-ant
+    if exist "!__PATH!\apache-ant\" ( set "_ANT_HOME=!__PATH!\apache-ant"
     ) else (
         for /f %%f in ('dir /ad /b "!__PATH!\apache-ant-*" 2^>NUL') do set "_ANT_HOME=!__PATH!\%%f"
         if not defined _ANT_HOME (
@@ -373,10 +373,10 @@ if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable JAVA_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\jdk*-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+    for /f %%f in ('dir /ad /b "!__PATH!\jdk-openjdk-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     if not defined _JAVA_HOME (
         set "__PATH=%ProgramFiles%"
-        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk*-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-openjdk-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     )
 )
 if not exist "%_JAVA_HOME%\bin\javac.exe" (
@@ -459,7 +459,7 @@ if defined DOKKA_HOME (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DOKKA_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    if exist "!__PATH!\dokka\" ( set _DOKKA_HOME=!__PATH!\dokka
+    if exist "!__PATH!\dokka\" ( set "_DOKKA_HOME=!__PATH!\dokka"
     ) else (
         for /f %%f in ('dir /ad /b "!__PATH!\dokka-1.4*" 2^>NUL') do set "_DOKKA_HOME=!__PATH!\%%f"
         if not defined _DOKKA_HOME (
@@ -493,7 +493,7 @@ if defined __DETEKT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DETEKT_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    if exist "!__PATH!\detekt-cli\" ( set _DETEKT_HOME=!__PATH!\detekt-cli
+    if exist "!__PATH!\detekt-cli\" ( set "_DETEKT_HOME=!__PATH!\detekt-cli"
     ) else (
         for /f %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
         if not defined _DETEKT_HOME (
@@ -519,7 +519,7 @@ if defined __KTLINT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable KTLINT_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    if exist "!__PATH!\ktlint\" ( set _KTLINT_HOME=!__PATH!\ktlint
+    if exist "!__PATH!\ktlint\" ( set "_KTLINT_HOME=!__PATH!\ktlint"
     ) else (
         for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         if not defined _KTLINT_HOME (
@@ -575,7 +575,7 @@ if defined __GIT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable GIT_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    if exist "!__PATH!\Git\" ( set _GIT_HOME=!__PATH!\Git
+    if exist "!__PATH!\Git\" ( set "_GIT_HOME=!__PATH!\Git"
     ) else (
         for /f %%f in ('dir /ad /b "!__PATH!\Git*" 2^>NUL') do set "_GIT_HOME=!__PATH!\%%f"
         if not defined _GIT_HOME (
