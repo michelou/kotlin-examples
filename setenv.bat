@@ -674,6 +674,8 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
 	if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
 	if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
 	if defined DOKKA_HOME echo    "DOKKA_HOME=%DOKKA_HOME%" 1>&2
+	if defined GIT_HOME echo    "GIT_HOME=%GIT_HOME%" 1>&2
+	if defined GRADLE_HOME echo    "GRADLE_HOME=%GRADLE_HOME%" 1>&2
 	if defined JAVA_HOME echo    "JAVA_HOME=%JAVA_HOME%" 1>&2
 	if defined KOTLIN_HOME echo    "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
 	if defined KOTLIN_NATIVE_HOME echo    "KOTLIN_NATIVE_HOME=%KOTLIN_HOME%" 1>&2
@@ -691,6 +693,7 @@ endlocal & (
     if not defined CFR_HOME set "CFR_HOME=%_CFR_HOME%"
     if not defined DETEKT_HOME set "DETEKT_HOME=%_DETEKT_HOME%"
     if not defined DOKKA_HOME set "DOKKA_HOME=%_DOKKA_HOME%"
+    if not defined GIT_HOME set "GIT_HOME=%_GIT_HOME%"
     if not defined GRADLE_HOME set "GRADLE_HOME=%_GRADLE_HOME%"
     if not defined JAVA_HOME set "JAVA_HOME=%_JAVA_HOME%"
     if not defined KOTLIN_HOME set "KOTLIN_HOME=%_KOTLIN_HOME%"

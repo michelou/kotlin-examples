@@ -7,11 +7,10 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main -name *.kt)
+SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -name *.kt)
+TARGET = $(TARGET_DIR)/HelloWorld.jar
 
-TARGET = $(TARGET_DIR)/Reflection.jar
-
-MAIN_CLASS = ReflectionKt
+MAIN_CLASS = _02_properties.PropertiesKt
 MAIN_ARGS ?= 
 
 all: build run
@@ -20,7 +19,7 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $<
+	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
 	$(JAR) cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
