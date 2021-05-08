@@ -104,7 +104,7 @@ Usage: $BASENAME { <option> | <subcommand> }
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         display this help message
-    run          execute main class
+    run          execute main class $MAIN_CLASS
 EOS
 }
 
@@ -300,10 +300,24 @@ extra_cpath() {
 ## output parameter: ($version $suffix)
 version_string() {
     local tool_version="$($KOTLINC_CMD -version 2>&1 | cut -d " " -f 3)"
-    local version="kotlin_$tool_version"                                
+    local version="kotlin_$tool_version"
     local suffix="$tool_version"
     local arr=($version $suffix)
     echo "${arr[@]}"
+}
+
+dokka_cpath() {
+    local path=
+    for f in $(ls $DOKKA_HOME/lib/*.jar|grep -e analysis -e base); do
+        path="$path$(mixed_path $f)$PSEP"
+    done
+    echo $path
+}
+
+dokka_cli_jar() {
+    local path=""
+    for i in $(ls $DOKKA_HOME/lib/dokka-cli*.jar); do path=$i; done
+    echo "$(mixed_path $path)"
 }
 
 doc() {
@@ -315,16 +329,16 @@ doc() {
     [[ $required -eq 0 ]] && return 1
 
     ## see https://github.com/Kotlin/dokka/releases
-    DOKKA_CPATH="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
-    DOKKA_JAR="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
+    DOKKA_CPATH="$(dokka_cpath)$(extra_cpath)"
+    DOKKA_CLI_JAR="$(dokka_cli_jar)"
     local args="-src $(mixed_path $MAIN_SOURCE_DIR)"
-    local dokka_args="-pluginsClasspath $(mixed_path $DOKKA_CPATH) -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir $(mixed_path $TARGET_DOCS_DIR) -sourceSet \"$args\""
+    local dokka_args="-pluginsClasspath \"$DOKKA_CPATH\" -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir \"$(mixed_path $TARGET_DOCS_DIR)\" -sourceSet \"$args\""
     if $DEBUG; then
-        debug "$JAVA_CMD -jar $(mixed_path $DOKKA_JAR) $dokka_args"
+        debug "$JAVA_CMD -jar \"$DOKKA_CLI_JAR\" $dokka_args"
     elif $VERBOSE; then
         echo "Generate HTML documentation into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
     fi
-    eval "$JAVA_CMD" -jar "$(mixed_path $DOKKA_JAR)" $dokka_args
+    eval "$JAVA_CMD" -jar "$DOKKA_CLI_JAR" $dokka_args
     if [[ $? -ne 0 ]]; then
         error "Generation of HTML documentation failed"
         cleanup 1
@@ -382,7 +396,7 @@ DEBUG=false
 DECOMPILE=false
 DOC=false
 HELP=false
-MAIN_CLASS="MainKt"
+MAIN_CLASS="com.makotogo.learn.kotlin.defaultargs.DefaultKt"
 MAIN_ARGS=
 RUN=false
 SCALA_VERSION=3
@@ -399,11 +413,13 @@ cygwin=false
 mingw=false
 msys=false
 darwin=false
+linux=false
 case "`uname -s`" in
   CYGWIN*) cygwin=true ;;
   MINGW*)  mingw=true ;;
   MSYS*)   msys=true ;;
-  Darwin*) darwin=true      
+  Darwin*) darwin=true ;;   
+  Linux*)  linux=true 
 esac
 unset CYGPATH_CMD
 PSEP=":"
@@ -412,7 +428,7 @@ if $cygwin || $mingw || $msys; then
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
     [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
-	PSEP=";"
+    PSEP=";"
 fi
 if [ ! -x "$JAVA_HOME/bin/javac" ]; then
     error "Java SDK installation not found"

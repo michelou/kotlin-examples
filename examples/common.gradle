@@ -65,7 +65,7 @@ compileKotlin {
     kotlinOptions {
         // Tool options
         // suppressWarnings = true
-        // verbose = false
+        verbose = false
         // Common options
         apiVersion = "1.4"
         languageVersion = "1.4"
@@ -123,7 +123,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    //implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion"
+    //implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"
