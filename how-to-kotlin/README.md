@@ -24,13 +24,17 @@ In this document we present the following [Kotlin] code examples:
 
 We provide several ways to build/run our [Kotlin] code examples:
 
-| Build tool          | Configuration file(s)  | Parent file(s) |
-|---------------------|------------------------|----------------|
-| [**`build.bat`**](01_bean/build.bat) | &nbsp;                 | [**`cpath.bat`**](cpath.bat) <sup><b>(1)</b></sup> |
-| **`gradle.exe`**    | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) |
-| **`mvn.cmd`**       | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  |
-<div style="font-size:90%;">
-<sup>(1)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>&nbsp;
+| Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
+|---------------------|------------------------|----------------|----------------|
+| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Multiplatform <sup><b>a)</b></sup> |
+| [**`build.bat`**](01_bean/build.bat) | &nbsp;                 | [**`cpath.bat`**](cpath.bat) <sup><b>b)</b></sup> | Windows |
+| [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
+| **`gradle.exe`**    | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) | Multiplatform |
+| **`mvn.cmd`**       | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  | Multiplatform |
+| [**`make.exe`**][gmake_cli] | [**`Makefile`**](HelloWorld/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Multiplatform |
+<div style="margin:0 30% 0 8px;font-size:90%;">
+<sup><b>a)</b></sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>
+<sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>&nbsp;
 </div>
 
 Batch command [**`build.bat`**](01_bean/build.bat) with no argument (or with subcommand **`help`**) displays the help message.
@@ -191,6 +195,9 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 *[mics](https://lampwww.epfl.ch/~michelou/)/May 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
+[apache_ant_cli]: https://ant.apache.org/manual/running.html
+[cygwin]: https://cygwin.com/install.html
+[gmake_cli]: https://www.gnu.org/software/make/manual/make.html
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [kotlin]: https://kotlinlang.org/
 [kotlin_conventions]: https://kotlinlang.org/docs/reference/operator-overloading.html
@@ -199,3 +206,4 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 [kotlin_lambdas]: https://kotlinlang.org/docs/reference/lambdas.html
 [kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/
 [mvn_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
+[msys2]: https://www.msys2.org/

@@ -36,7 +36,30 @@ clean:
 run: build
 	$(KOTLIN) -cp $(TARGET) $(MAIN_CLASS)
 
+help:
+	@$(info Usage: make all|build|clean|help|lint|run|test)
+	@$(info )
+	@echo   Subcommands:
+	@echo     all    alias for build
+	@echo     build  compile Kotlin source files
+	@echo     clean  delete generated files
+	@echo     help   display this help message
+	@echo     lint   analyse Kotlin source files with KtLint
+	@echo     run    execute main program $(MAIN_CLASS)
+	@echo     test   execute unit tests with JUnit
+
+##############################################################################
+## lint rules
+
+LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -name *.kt)
+LINT_TARGET  = $(TARGET_DIR)/.latest-lint
+
+lint: $(LINT_TARGET)
+
+$(LINT_TARGET): $(LINT_SOURCES)
+	$(JAVA) -jar $(KTLINT_HOME)/ktlint.jar $^
+
 ##############################################################################
 ## phony
 
-.PHONY: all build clean run
+.PHONY: all build clean help lint run

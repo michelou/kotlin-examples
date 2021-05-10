@@ -26,21 +26,22 @@ In this document we present the following [Kotlin] code examples:
 **`kotlin-stdlib`** contains most of the functionality: Collections, Ranges, Math, Regex, File extensions, Locks, etc... Most of what you use daily is in kotlin-stdlib
 -->
 
-We provide several ways to build/run the code examples:
+We provide several ways to build/run the [Kotlin] code examples:
 
 | Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
 |---------------------|------------------------|----------------|-------------|
 | [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Multiplatform <sup><b>a)</b></sup> |
-| [**`build.bat`**](HelloWorld/build.bat) | **`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows only |
-| [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix only |
+| [**`build.bat`**](HelloWorld/build.bat) | **`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows |
+| [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
 | [**`gradle.exe`**][gradle_cli]    | [**`build.gradle`**](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [**`common.gradle`**](./common.gradle)  | Multiplatform |
 | [**`gradle.exe`**][gradle_cli]    | [**`build.gradle.kts`**](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Multiplatform |
 | [**`mvn.cmd`**][apache_maven_cli] | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](./pom.xml)  | Multiplatform |
+| [**`make.exe`**][gmake_cli] | [**`Makefile`**](HelloWorld/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Multiplatform |
 <div style="margin:0 30% 0 8px;font-size:90%;">
-<sup>a)</sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>
-<sup>b)</sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
-<sup>c)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
-<sup>d)</sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
+<sup><b>a)</b></sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>
+<sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
+<sup><b>c)</b></sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
+<sup><b>d)</b></sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
 </div>
 
 > **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
@@ -191,16 +192,16 @@ Source code:
     )
 
 Methods:
-    fun equals: boolean
-    fun toString: class java.lang.String
-    fun hashCode: int
-    fun getName: class java.lang.String
-    fun copy: class Person
     fun component1: class java.lang.String
     fun component2: int
-    fun getAge: int
+    fun copy: class Person
     fun copy$default: class Person
+    fun equals: boolean
+    fun getAge: int
+    fun getName: class java.lang.String
+    fun hashCode: int
     fun setAge: void
+    fun toString: class java.lang.String
 
 Members:
     var age: kotlin.Int
@@ -221,16 +222,16 @@ Source code:
     )
 
 Methods:
-    fun equals: boolean
-    fun toString: class java.lang.String
-    fun hashCode: int
-    fun getName: class java.lang.String
-    fun copy: class Person
-    fun component2: int
-    fun copy$default: class Person
-    fun getAge: int
-    fun setAge: void
     fun component1: class java.lang.String
+    fun component2: int
+    fun copy: class Person
+    fun copy$default: class Person
+    fun equals: boolean
+    fun getAge: int
+    fun getName: class java.lang.String
+    fun hashCode: int
+    fun setAge: void
+    fun toString: class java.lang.String
 
 Members:
     var age: kotlin.Int
@@ -244,15 +245,15 @@ BUILD SUCCESSFUL in 3s
 
 ## <span id="footnotes">Footnotes</span>
 
-<b name="footnote_01">[1]</b> ***Available targets*** [↩](#anchor_01)
+<span name="footnote_01">[1]</span> ***Available targets*** [↩](#anchor_01)
 
 <p style="margin:0 0 1em 20px;">
 Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.4.32-355 (JRE 1.8.0_282-b08)
-Kotlin/Native: 1.4.32
+info: kotlinc-native 1.5.0-743 (JRE 1.8.0_292-b10)
+Kotlin/Native: 1.5
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -267,7 +268,7 @@ android_arm64:
 wasm32:
 </pre>
 
-<b name="footnote_02">[2]</b> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
+<span name="footnote_02">[2]</span> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
 
 <p style="margin:0 0 1em 20px;">
 The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single Java archive file if the <b><code>-d</code></b> option argument ends with <b><code>.jar</code></b> (in our case <b><code>target\HelloWorld.jar</code></b>).
@@ -283,7 +284,7 @@ HelloWorldKt.class
 META-INF/main.kotlin_module
 </pre>
 
-<b name="footnote_03">[3]</b> ***Execution on JVM*** [↩](#anchor_03)
+<span name="footnote_03">[3]</span> ***Execution on JVM*** [↩](#anchor_03)
 
 <p style="margin:0 0 1em 20px;">
 On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can be executed in several ways depending on two parameters:
@@ -333,6 +334,7 @@ Hello World!
 [apache_maven_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
 [bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
 [cygwin]: https://cygwin.com/install.html
+[gmake_cli]: https://www.gnu.org/software/make/manual/make.html
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
 [groovy_dsl]: https://docs.gradle.org/current/dsl/index.html

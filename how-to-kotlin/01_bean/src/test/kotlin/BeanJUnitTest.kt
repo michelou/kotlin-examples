@@ -1,9 +1,8 @@
 package _01_bean
 
-import kotlin.test.assertFailsWith
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 class BeanJUnitTest {
 
@@ -27,5 +26,4 @@ class BeanJUnitTest {
         val name = parseName2("SpongeBob")
         assertEquals("First name", "", name.first)
     }
-
 }

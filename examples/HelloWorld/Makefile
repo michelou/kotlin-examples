@@ -36,6 +36,7 @@ help:
 	@echo     build  compile Kotlin source files
 	@echo     clean  delete generated files
 	@echo     help   display this help message
+	@echo     lint   analyse Kotlin source files with KtLint
 	@echo     run    execute main program $(MAIN_CLASS)
 	@echo     test   execute unit tests with JUnit
 
@@ -49,6 +50,17 @@ lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
 	$(JAVA) -jar $(KTLINT_HOME)/ktlint.jar $^
+
+##############################################################################
+## lint rules
+
+TEST_SOURCES = $(shell $(FIND) $(SOURCE_DIR)/test/kotlin -name *.kt)
+TEST_TARGET = $(TARGET_DIR)/HelloWorldTest.jar
+
+test: $(TEST_TARGET)
+
+$(TEST_TARGET): $(TEST_SOURCES)
+	@echo Not yet implemented
 
 ##############################################################################
 ## phony

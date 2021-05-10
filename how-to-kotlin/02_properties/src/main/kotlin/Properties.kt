@@ -5,18 +5,18 @@ val osAvoid: String
     get() {
         if (_os == null) {
             println("Computing...")
-            _os = System.getProperty("os.name") +
-                " v" + System.getProperty("os.version") +
-                " (" + System.getProperty("os.arch") + ")"
+            _os = System_getProperty("os.name") +
+                " v" + System_getProperty("os.version") +
+                " (" + System_getProperty("os.arch") + ")"
         }
         return _os!!
     }
 
 val os: String by lazy {
     println("Computing...")
-    System.getProperty("os.name") +
-        " v" + System.getProperty("os.version") +
-        " (" + System.getProperty("os.arch") + ")"
+    System_getProperty("os.name") +
+        " v" + System_getProperty("os.version") +
+        " (" + System_getProperty("os.arch") + ")"
 }
 
 @Suppress("UNUSED_PARAMETER")

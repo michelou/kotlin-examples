@@ -21,7 +21,8 @@ fun log(msg: String) {
     println("[kt] $msg")
 }
 
-fun main(/*args: Array<String>*/) {
+@Suppress("UNUSED_PARAMETER")
+fun main(args: Array<String>) {
     val greeter = Greeter()
     greeter.foo("a message") {
         log("this is a message: $it")

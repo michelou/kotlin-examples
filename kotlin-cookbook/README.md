@@ -146,7 +146,6 @@ Command [**`build clean run`**](./Example_04-01/build.bat) compiles the source f
 K:\kotlin-cookbook\Example_04-01
 &nbsp;
 <b>&gt; <a href="./Example_04-01/build.bat">build</a> clean run</b>
-<b>&gt; build clean run</b>
 nums = [1, 3, 5, 7]
 sum(*nums) = 16
 
@@ -201,7 +200,7 @@ Test run finished after 100 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

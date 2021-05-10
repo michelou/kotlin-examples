@@ -3,7 +3,8 @@ package _02_properties
 import kotlin.properties.Delegates
 
 var observeMe by Delegates.observable("a") {
-    p, old, new -> println("${p.name} goes $old -> $new")
+    p, old, new ->
+    println("${p.name} goes $old -> $new")
 }
 
 @Suppress("UNUSED_PARAMETER")

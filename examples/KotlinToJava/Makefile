@@ -64,6 +64,25 @@ $(LINT_TARGET): $(LINT_SOURCES)
 	$(JAVA) -jar $(CHECKSTYLE_JAR_FILE) -c=$(CHECKSTYLE_CONFIG_FILE) $^
 
 ##############################################################################
+## test rules
+
+TEST_SOURCES = $(shell $(FIND) $(SOURCE_DIR)/test/kotlin -name *.kt)
+TEST_TARGET  = $(TARGET_DIR)/JavaToKotlinTest.jar
+
+TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
+
+TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
+TEST_MAIN_CLASS  = KotlinToJavaJUnitTest
+
+test: $(TARGET) $(TEST_TARGET)
+	$(KOTLIN) -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
+
+$(TEST_TARGET): $(TEST_SOURCES)
+	[ -d "$(TEST_CLASSES_DIR)" ] || $(MKDIR) -p "$(TEST_CLASSES_DIR)"
+	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -cp "$(TEST_CPATH)" -d $(TEST_CLASSES_DIR) $^
+	$(JAR) cfe $(TEST_TARGET) $(TEST_MAIN_CLASS) -C $(TEST_CLASSES_DIR) .
+
+##############################################################################
 ## phony
 
-.PHONY: all build clean help run
+.PHONY: all build clean help run test
