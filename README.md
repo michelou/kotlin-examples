@@ -156,7 +156,6 @@ Here are the performed operations:
 <b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf ktlint.jar | findstr ktlint/Main</b>
 com/pinterest/ktlint/Main.class
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy">copy</a> /y /b k:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
-<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/del">del</a> ktlint.jar ktlint.sh</b>
 </pre>
 <p style="margin:0 0 1em 20px;">
 The installation directory now contains one single file, namely <b><code>ktlint.bat</code></b>:

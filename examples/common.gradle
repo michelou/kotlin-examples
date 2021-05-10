@@ -1,5 +1,5 @@
-// overrides default "/build"
-buildDir file("/target")
+// overrides default "build"
+buildDir file("target")
 
 java {
     // JAVA_HOME=c:\opt\jdk-<vendor>-1.8.0.X ==> VERSION_1_8
@@ -11,16 +11,20 @@ java {
 ext {
     ktLintOpts = [
         "--reporter=plain",
-        "--reporter=checkstyle,output=$buildDir\\ktlint-report.xml"
+        "--reporter=checkstyle,output=${buildDir}/ktlint-report.xml"
     ]
     moduleName = "XXX"
     mainSourceDir = file("/src/main/kotlin")
     classesDir = file("${buildDir}/classes")
     docsDir = file("${buildDir}/doc")
 
-    homeDir = System.getProperty("user.home")
-    repoDir = file("${homeDir}/.m2/repository")
-    libDir  = file("${homeDir}/AppData/Local/Temp/lib")
+    ktlintHome = System.getenv("KTLINT_HOME")
+    if (!project.hasProperty("ktlintHome")) {
+        throw new GradleException("Variable KTLINT_HOME is undefined")
+    }
+    userHome = System.getProperty("user.home")
+    repoDir = file("${userHome}/.m2/repository")
+    libDir  = file("${userHome}/AppData/Local/Temp/lib")
 
     pluginsClasspath = files(
         "${repoDir}/org/jetbrains/kotlinx/kotlinx-coroutines-core/${kotlinxVersion}/kotlinx-coroutines-core-${kotlinxVersion}.jar",
@@ -40,7 +44,7 @@ ext {
 
 sourceSets {
     // Default: srcDirs "src/main/kotlin"
-	main.kotlin.srcDirs mainSourceDir
+    main.kotlin.srcDirs mainSourceDir
 }
 
 clean.doLast {
@@ -50,7 +54,7 @@ clean.doLast {
 task lint(type: JavaExec) {
     description "Analyze Kotlin source files with KtLint"
     main "-jar"
-    args files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
+    args files("${ktlintHome}") + ktLintOpts + sourceSets.main.allSource.files
 }
 
 checkstyle {

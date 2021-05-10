@@ -1,9 +1,8 @@
 package org.example.test
 
-import org.junit.Assert.*
+import org.example.main
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.example.main.*
 
 class HelloWorldJUnitTest {
 
@@ -16,7 +15,7 @@ class HelloWorldJUnitTest {
     init {
         System.setOut(java.io.PrintStream(baos))
     }
-    
+
     companion object {
         private val eol = System.getProperty("line.separator")
 
@@ -29,5 +28,4 @@ class HelloWorldJUnitTest {
             return stdout
         }
     }
-
 }

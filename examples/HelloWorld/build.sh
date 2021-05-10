@@ -66,6 +66,7 @@ args() {
         decompile) COMPILE=true && DECOMPILE=true ;;
         doc)       COMPILE=true && DOC=true ;;
         help)      HELP=true ;;
+        lint)      LINT=true ;;
         run)       COMPILE=true && RUN=true ;;
         *)
             error "Unknown subcommand $arg"
@@ -73,16 +74,21 @@ args() {
             ;;
         esac
     done
+    if $LINT && [ ! -x "$KTLINT_CMD" ]; then
+        warning "ktLint installation not found"
+        LINT=false
+    fi
     if $DECOMPILE && [ ! -x "$CFR_CMD" ]; then
         warning "cfr installation not found"
         DECOMPILE=false
     fi
     debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
     debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
-    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP RUN=$RUN"
+    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
+    debug "Variables  : KTLINT_HOME=$KTLINT_HOME"
     debug "Variables  : DOKKA_HOME=$DOKKA_HOME"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
@@ -104,16 +110,16 @@ Usage: $BASENAME { <option> | <subcommand> }
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         display this help message
-    run          execute main class
+    run          execute main class $MAIN_CLASS
 EOS
 }
 
 clean() {
     if [ -d "$TARGET_DIR" ]; then
         if $DEBUG; then
-            debug "Delete directory $TARGET_DIR"
+            debug "Delete directory \"$TARGET_DIR\""
         elif $VERBOSE; then
-            echo "Delete directory ${TARGET_DIR/$ROOT_DIR\//}" 1>&2
+            echo "Delete directory \"${TARGET_DIR/$ROOT_DIR\//}\"" 1>&2
         fi
         rm -rf "$TARGET_DIR"
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
@@ -121,7 +127,27 @@ clean() {
 }
 
 lint() {
-    echo "lint"
+    local klint_opts="--color --reporter=checkstyle,output=$TARGET_DIR/ktlint-report.xml"
+
+    ($DEBUG || $VERBOSE) && klint_opts="--reporter=plain $klint_opts"
+
+    local tmp_file="$TARGET_DIR/ktlint_output.txt"
+
+    # prepend ! to negate the pattern in order to check only certain locations 
+    if $DEBUG; then
+        debug "$KTLINT_CMD $klint_opts src/**/*.kt"
+    elif $VERBOSE; then
+        echo "Analyze $n Kotlin source files with KtLint" 1>&2
+    fi
+    eval "$KTLINT_CMD" $klint_opts $source_files "src/**/*.kt"
+    if [[ $? -ne 0 ]]; then
+        warning "Ktlint error found"
+        if [[ -f "$tmp_file" ]]; then
+            ($DEBUG || $VERBOSE) && cat "$tmp_file"
+	        rm "$tmp_file"
+	   fi
+       # EXITCODE=1
+   fi
 }
 
 compile() {
@@ -179,7 +205,7 @@ compile_java() {
     if $DEBUG; then
         debug "$JAVAC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
     elif $VERBOSE; then
-        echo "Compile $n Java source files to directory ${CLASSES_DIR/$ROOT_DIR\//}" 1>&2
+        echo "Compile $n Java source files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVAC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
@@ -203,7 +229,7 @@ compile_kotlin() {
     if $DEBUG; then
         debug "$KOTLINC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
     elif $VERBOSE; then
-        echo "Compile $n Kotlin source files to directory ${CLASSES_DIR/$ROOT_DIR\//}" 1>&2
+        echo "Compile $n Kotlin source files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
@@ -235,7 +261,7 @@ decompile() {
         n="$(ls -n $CLASSES_DIR/*.class | wc -l)"
         [[ $n -gt 0 ]] && class_dirs="$class_dirs $f"
     done
-    $VERBOSE && echo "Decompile Java bytecode to directory ${output_dir/$ROOT_DIR\//}" 1>&2
+    $VERBOSE && echo "Decompile Java bytecode to directory \"${output_dir/$ROOT_DIR\//}\"" 1>&2
     for f in $class_dirs; do
         debug "$CFR_CMD $cfr_opts $(mixed_path $f)/*.class"
         eval "$CFR_CMD" $cfr_opts "$(mixed_path $f)/*.class" $STDERR_REDIRECT
@@ -336,7 +362,7 @@ doc() {
     if $DEBUG; then
         debug "$JAVA_CMD -jar \"$DOKKA_CLI_JAR\" $dokka_args"
     elif $VERBOSE; then
-        echo "Generate HTML documentation into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
+        echo "Generate HTML documentation into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVA_CMD" -jar "$DOKKA_CLI_JAR" $dokka_args
     if [[ $? -ne 0 ]]; then
@@ -344,9 +370,9 @@ doc() {
         cleanup 1
     fi
     if $DEBUG; then
-        debug "HTML documentation saved into directory $TARGET_DOCS_DIR"
+        debug "HTML documentation saved into directory \"$TARGET_DOCS_DIR\""
     elif $VERBOSE; then
-        echo "HTML documentation saved into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
+        echo "HTML documentation saved into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     touch "$doc_timestamp_file"
 }
@@ -396,6 +422,7 @@ DEBUG=false
 DECOMPILE=false
 DOC=false
 HELP=false
+LINT=false
 MAIN_CLASS="org.example.main.HelloWorldKt"
 MAIN_ARGS=
 RUN=false
@@ -449,6 +476,10 @@ PROJECT_NAME="$(basename $ROOT_DIR)"
 PROJECT_URL="github.com/$USER/kotlin-examples"
 PROJECT_VERSION="1.0-SNAPSHOT"
 
+unset KTLINT_CMD
+if [ -x "$KTLINT_HOME/bin/ktlint" ]; then
+    KTLINT_CMD="$KTLINT_HOME/bin/ktlint"
+fi
 unset CFR_CMD
 if [ -f "$CFR_HOME/bin/cfr" ]; then
     CFR_CMD="$CFR_HOME/bin/cfr"
@@ -466,6 +497,9 @@ $HELP && help && cleanup
 
 if $CLEAN; then
     clean || cleanup 1
+fi
+if $LINT; then
+    lint || cleanup 1
 fi
 if $COMPILE; then
     compile || cleanup 1

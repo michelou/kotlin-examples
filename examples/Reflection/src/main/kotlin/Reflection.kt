@@ -19,8 +19,8 @@ fun main(args: Array<String>) {
     printlf()
     printlf("Methods:")
     val methods = Person::class.java.declaredMethods
-    java.util.Arrays::sort(methods) // to ensure predictable order
-    methods.forEach {
+    val sorted = methods.sortedBy { it.name } // to ensure predictable order
+    sorted.forEach {
         printlf("    fun ${it.name}: ${it.returnType}")
     }
     printlf()

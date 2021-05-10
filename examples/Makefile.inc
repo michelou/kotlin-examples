@@ -18,6 +18,7 @@ LOCAL_REPO = $(subst \,/,$(USERPROFILE))/.m2/repository
 PSEP       = ;
 FIND       = $(subst \,/,$(GIT_HOME))/usr/bin/find.exe
 MKDIR      = $(subst \,/,$(GIT_HOME))/usr/bin/mkdir.exe
+TOUCH      = $(subst \,/,$(GIT_HOME))/usr/bin/touch.exe
 else
 JAR        = $(JAVA_HOME)/bin/jar
 JAVA       = $(JAVA_HOME)/bin/java
@@ -28,6 +29,7 @@ LOCAL_REPO = $(HOME)/.m2/repository
 PSEP       = :
 FIND       = find
 MKDIR      = mkdir
+TOUCH      = touch
 endif
 
 LANGUAGE_VERSION = 1.4
