@@ -1,6 +1,6 @@
 package org.example.main
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LanguageFeaturesJUnitTest {
@@ -12,5 +12,4 @@ class LanguageFeaturesJUnitTest {
 
         assertEquals("test1", "John".greet(), "John we welcome you!")
     }
-
 }

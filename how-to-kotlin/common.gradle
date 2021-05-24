@@ -13,6 +13,10 @@ ext {
     ]
     classesDir = file("${buildDir}/classes")
 
+    ktlintHome = System.getenv("KTLINT_HOME")
+    if (!project.hasProperty("ktlintHome")) {
+        throw new GradleException("Variable KTLINT_HOME is undefined")
+    }
     kotlinMain = "Main"
     if (project.hasProperty("mainClassName") && mainClassName?.trim()) kotlinMain = mainClassName
 
@@ -32,7 +36,7 @@ clean.doLast {
 task lint(type: JavaExec) {
     description "Analyze Kotlin source files with KtLint"
     main "-jar"
-    args files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
+    args files("${ktlintHome}") + ktLintOpts + sourceSets.main.allSource.files
 }
 
 checkstyle {

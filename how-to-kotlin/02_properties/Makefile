@@ -7,7 +7,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -name *.kt)
+SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name *.kt)
 TARGET = $(TARGET_DIR)/HelloWorld.jar
 
 MAIN_CLASS = _02_properties.PropertiesKt
