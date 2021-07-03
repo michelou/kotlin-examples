@@ -252,8 +252,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.5.0-743 (JRE 1.8.0_292-b10)
-Kotlin/Native: 1.5
+info: kotlinc-native 1.5.10-871 (JRE 1.8.0_292-b10)
+Kotlin/Native: 1.5.10
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -325,7 +325,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

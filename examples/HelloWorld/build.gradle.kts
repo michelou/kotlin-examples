@@ -1,12 +1,10 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-import Config  // buildSrc/main/java/Config.kt
-
 plugins {
     checkstyle
     java
-    kotlin("jvm") version "${Config.kotlinVersion}"   // id("org.jetbrains.kotlin.jvm") version "1.3.60"
+    kotlin("jvm") version "${Config.kotlinVersion}" // id("org.jetbrains.kotlin.jvm") version "1.3.60"
 }
 
 group = "${Config.appGroup}"
@@ -20,7 +18,7 @@ sourceSets["main"].withConvention(KotlinSourceSet::class) {
     // kotlin.include("**/myTests/*.kt")
 }
 
-buildDir = file("target")   // Default: buildDir = file("build")
+buildDir = file("target") // Default: buildDir = file("build")
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -47,10 +45,12 @@ compileKotlin.kotlinOptions.languageVersion = "1.4"
 // compileKotlin.kotlinOptions.includeRuntime = false
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
-val ktLintOpts by extra { arrayOf(
-    "--reporter=plain",
-    "--reporter=checkstyle,output=$buildDir/ktlint-report.xml"
-)}
+val ktLintOpts by extra {
+    arrayOf(
+        "--reporter=plain",
+        "--reporter=checkstyle,output=$buildDir/ktlint-report.xml"
+    )
+}
 
 tasks {
     register<JavaExec>("lint") {
@@ -62,7 +62,7 @@ tasks {
         dependsOn(":compileKotlin")
         description = "Execute main class ${Config.mainClassName}"
         // https://docs.gradle.org/current/userguide/working_with_files.html#sec:file_trees
-        classpath = fileTree(Config.kotlinHome+"/lib") { include("*stdlib.jar") } + sourceSets["main"].output.classesDirs
+        classpath = fileTree(Config.kotlinHome + "/lib") { include("*stdlib.jar") } + sourceSets["main"].output.classesDirs
         main = Config.mainClassName
         args = listOf("")
     }

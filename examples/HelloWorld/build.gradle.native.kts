@@ -1,5 +1,3 @@
-import Config  // buildSrc/main/java/Config.kt
-
 plugins {
     kotlin("multiplatform") version "${Config.kotlinVersion}"
 }

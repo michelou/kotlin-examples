@@ -26,15 +26,15 @@ Optionally one may also install the following software:
 - [Gradle 7.1][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.41][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*June 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*July 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-maven-3.8.1\            <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.17.1\             <i>( 49 MB)</i>
 C:\opt\Git-2.32.0\                    <i>(279 MB)</i>
-C:\opt\gradle-7.1\                    <i>(121 MB)</i>
-C:\opt\kotlinc-1.5.10\                 <i>( 64 MB)</i>
-C:\opt\kotlin-native-windows-1.5.10\   <i>(170 MB)</i>
+C:\opt\gradle-7.1.1\                  <i>(121 MB)</i>
+C:\opt\kotlinc-1.5.10\                <i>( 64 MB)</i>
+C:\opt\kotlin-native-windows-1.5.10\  <i>(170 MB)</i>
 C:\opt\ktlint-0.41.0\                 <i>( 42 MB)</i>
 </pre>
 
@@ -176,7 +176,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.8.1-bin.zip</a>                 <i>(  9 Mb)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.17.1.zip</a>                      <i>( 44 MB)</i>
-<a href="https://gradle.org/releases/">gradle-7.1-bin.zip</a>                         <i>(107 MB)</i>
+<a href="https://gradle.org/releases/">gradle-7.1.1-bin.zip</a>                       <i>(107 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.10">kotlin-compiler-1.5.10.zip</a>                 <i>( 60 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.10">kotlin-native-prebuilt-windows-1.5.10.zip</a>  <i>(125 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.41.0)</a>                            <i>( 47 MB)</i>
@@ -185,7 +185,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

@@ -139,13 +139,13 @@ lint() {
     elif $VERBOSE; then
         echo "Analyze $n Kotlin source files with KtLint" 1>&2
     fi
-    eval "$KTLINT_CMD" $klint_opts $source_files "src/**/*.kt"
+    eval "$KTLINT_CMD" $klint_opts "src/**/*.kt"
     if [[ $? -ne 0 ]]; then
         warning "Ktlint error found"
         if [[ -f "$tmp_file" ]]; then
             ($DEBUG || $VERBOSE) && cat "$tmp_file"
-	        rm "$tmp_file"
-	   fi
+            rm "$tmp_file"
+       fi
        # EXITCODE=1
    fi
 }

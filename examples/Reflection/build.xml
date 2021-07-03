@@ -4,7 +4,7 @@
     <property name="source.dir" value="${basedir}/src/main/kotlin" />
     <property name="target.dir" value="${basedir}/target" />
     <property name="build.dir" value="${target.dir}/main/classes" />
-    <property name="main.class" value="org.example.main.HelloWorldKt" />
+    <property name="main.class" value="ReflectionKt" />
 
     <!-- task 'init' is defined in parent build.xml -->
     <import file="../build.xml" />

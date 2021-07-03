@@ -13,6 +13,10 @@
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
+    <property name="cfr.version" value="0.151" />
+    <property name="ktlint.version" value="0.41.0" />
+    <property name="picocli.version" value="3.9.6" />
+
     <target name="init">
         <propertyregex
             property="kotlin.home" input="${env.KOTLIN_HOME}"
@@ -40,6 +44,79 @@
         <path id="build.classpath">
             <pathelement location="${build.dir}" />
         </path>
+
+        <!-- installed: C:/opt/apache-ant-1.10.10/lib/ivy-2.5.0.jar -->
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
+            uri="antlib:org.apache.ivy.ant" />
+        <ivy:resolve file="../ivy.xml" showprogress="false" log="download-only" />
+        <pathconvert property="cfr.jar">
+            <fileset dir="${ivy.cache}/org.benf" includes="**/cfr-${cfr.version}.jar" />
+        </pathconvert>
+        <pathconvert property="ktlint.jar">
+            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-${ktlint.version}.jar" />
+        </pathconvert>
+        <path id="ktlint.classpath">
+            <fileset dir="${ivy.cache}/info.picocli" includes="**/jars/picocli-${picocli.version}.jar" />
+            <path refid="build.classpath" />
+        </path>
     </target>
+
+    <macrodef name="cfr" >
+        <attribute name="srcdir" default="." />
+        <attribute name="destdir" default="." />
+        <attribute name="classpathref" default="basedir.ref" />
+        <sequential>
+            <!-- local properties -->
+            <local name="classpath"/>
+            <local name="n"/>
+            <local name="quoted"/>
+            <local name="s"/>
+            <local name="class.files"/>
+
+            <pathconvert property="class.files" pathsep=" ">
+                <fileset dir="@{srcdir}" includes="**/*.class" />
+            </pathconvert>
+            <resourcecount property="n">
+                <fileset dir="@{srcdir}" includes="**/*.class" />
+            </resourcecount>
+            <condition property="s" value="" else="s">
+                <matches string="${n}" pattern="[0-1]" />
+            </condition>
+            <echo message="Decompiling ${n} class file${s} to @{destdir}" level="info" />
+            <pathconvert property="classpath" refid="@{classpathref}" />
+            <condition property="quoted" value="&quot;" else="">
+                <contains string="${classpath}" substring=" " />
+            </condition>
+            <java fork="true" jar="${cfr.jar}">
+                <arg value="--outputdir" />
+                <arg value="@{destdir}" />
+                <arg value="--extraclasspath" />
+                <arg value="${quoted}${classpath}${quoted}" />
+                <arg line="${class.files}" />
+            </java>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="ktlint" >
+        <attribute name="pattern" default="src/**/*.kt" />
+        <attribute name="classpathref" default="basedir.ref" />
+        <sequential>
+            <!-- local properties -->
+            <local name="classpath"/>
+            <local name="quoted"/>
+
+            <echo message="Analyzing Kotlin source files" level="info" />
+            <pathconvert property="classpath" refid="@{classpathref}" />
+            <condition property="quoted" value="&quot;" else="">
+                <contains string="${classpath}" substring=" " />
+            </condition>
+            <java fork="true" jar="${ktlint.jar}">
+                <arg value="--color" />
+                <arg value="--extraclasspath" />
+                <arg value="${quoted}${classpath}${quoted}" />
+                <arg line="${quoted}@{pattern}${quoted}" />
+            </java>
+        </sequential>
+    </macrodef>
 
 </project>

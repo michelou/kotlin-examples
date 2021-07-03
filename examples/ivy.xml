@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- see http://ant.apache.org/ivy/history/latest-milestone/ivyfile.html -->
+<ivy-module version="2.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="myorg" module="examples"/>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+        <dependency org="commons-lang" name="commons-lang" rev="2.6"/>
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency org="log4j" name="log4j" rev="1.2.17"/>
+
+        <dependency org="org.benf" name="cfr" rev="0.151"/>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency org="junit" name="junit" rev="4.13.2"/>
+
+        <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
+        <dependency org="info.picocli" name="picocli" rev="3.9.6"/>
+        <!-- https://mvnrepository.com/artifact/com.pinterest/ktlint -->
+        <dependency org="com.pinterest" name="ktlint" rev="0.41.0"/>
+    </dependencies>
+</ivy-module>
