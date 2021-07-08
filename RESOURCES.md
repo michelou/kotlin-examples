@@ -22,10 +22,11 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
 - [Exploring Kotlin/Native - Part 1][blog_exploring] by Jamie Lee, March 26, 2020.
 - [Why Trailing Commas In Kotlin Are Hype](https://blog.egorand.me/why-trailing-commas-in-kotlin-are-hype/) by Egor Andreevich, March 14, 2020.
-- [Jebrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
+- [Jetbrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
 - [Shared Library in Kotlin Multiplatform](https://blog.karumi.com/shared-library-in-kotlin-multiplatform/) by Sergio Lopez Mota, September 2, 2019.
 - [First steps into Kotlin Multiplatform](https://blog.karumi.com/first-steps-into-kotlin-multiplatform/) by Sergio Lopez Mota, June 10, 2019.
 - [Getting Started Unit Testing with Kotlin](https://spin.atomicobject.com/2018/10/07/kotlin-unit-testing/) by Molly Alger, October 7, 2018.
@@ -63,6 +64,7 @@
 
 [article_junit]: https://kotlintesting.com/handling-exceptions-in-tests/
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
+[blog_berga]: https://www.imaginarycloud.com/blog/kotlin-vs-java/
 [blog_exploring]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
