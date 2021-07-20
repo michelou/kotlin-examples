@@ -43,7 +43,7 @@ call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
 set __DOKKA_VERSION=1.4.32
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
-call :add_maven_jar "org.jetbrains" "markdown" "0.1.46"
+call :add_maven_jar "org.jetbrains" "markdown" "0.2.4"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"

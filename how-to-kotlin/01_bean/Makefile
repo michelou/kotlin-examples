@@ -29,16 +29,16 @@ run: build
 	$(KOTLIN) -cp $(TARGET) $(MAIN_CLASS)
 
 help:
-	@$(info Usage: make all|build|clean|help|lint|run|test)
-	@$(info )
-	@echo   Subcommands:
-	@echo     all    alias for build
-	@echo     build  compile Kotlin source files
-	@echo     clean  delete generated files
-	@echo     help   display this help message
-	@echo     lint   analyse Kotlin source files with KtLint
-	@echo     run    execute main program $(MAIN_CLASS)
-	@echo     test   execute unit tests with JUnit
+	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
+	@$(ECHO) ""
+	@$(ECHO) "  Subcommands:"
+	@$(ECHO) "   all    alias for build"
+	@$(ECHO) "   build  compile Kotlin source files"
+	@$(ECHO) "   clean  delete generated files"
+	@$(ECHO) "   help   display this help message"
+	@$(ECHO) "   lint   analyse Kotlin source files with KtLint"
+	@$(ECHO) "   run    execute main program $(MAIN_CLASS)"
+	@$(ECHO) "   test   execute unit tests with JUnit"
 
 ##############################################################################
 ## lint rules
@@ -85,8 +85,8 @@ TEST_CPATH      = $(SCALA_LIB_JAR)$(PSEP)$(SCALA3_LIB_JAR)$(PSEP)$(HAMCREST_JAR)
 
 $(TEST_TARGET): $(TEST_SOURCES)
 	[ -d "$(TEST_CLASSES_DIR)" ] || $(MKDIR) -p "$(TEST_CLASSES_DIR)"
-	@echo $(SCALAC_FLAGS) -classpath "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" > "$(TEST_OPTS_FILE)"
-	@echo $(TEST_SOURCES) > "$(TEST_SOURCES_FILE)"
+	@$(ECHO) $(SCALAC_FLAGS) -classpath "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" > "$(TEST_OPTS_FILE)"
+	@$(ECHO) $(TEST_SOURCES) > "$(TEST_SOURCES_FILE)"
 	$(SCALAC) "@$(TEST_OPTS_FILE)" "@$(TEST_SOURCES_FILE)"
 	@$(TOUCH) "$(TEST_TARGET)"
 

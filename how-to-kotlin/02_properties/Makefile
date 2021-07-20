@@ -29,16 +29,16 @@ run: build
 	$(KOTLIN) -cp $(TARGET) $(MAIN_CLASS)
 
 help:
-	@$(info Usage: make all|build|clean|help|lint|run|test)
-	@$(info )
-	@echo   Subcommands:
-	@echo     all    alias for build
-	@echo     build  compile Kotlin source files
-	@echo     clean  delete generated files
-	@echo     help   display this help message
-	@echo     lint   analyse Kotlin source files with KtLint
-	@echo     run    execute main program $(MAIN_CLASS)
-	@echo     test   execute unit tests with JUnit
+	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
+	@$(ECHO) ""
+	@$(ECHO) "  Subcommands:"
+	@$(ECHO) "    all    alias for build"
+	@$(ECHO) "    build  compile Kotlin source files"
+	@$(ECHO) "    clean  delete generated files"
+	@$(ECHO) "    help   display this help message"
+	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
+	@$(ECHO) "    run    execute main program $(MAIN_CLASS)"
+	@$(ECHO) "    test   execute unit tests with JUnit"
 
 ##############################################################################
 ## lint rules
@@ -52,6 +52,24 @@ $(LINT_TARGET): $(LINT_SOURCES)
 	$(JAVA) -jar $(KTLINT_HOME)/ktlint.jar $^
 
 ##############################################################################
+## doc rules
+
+DOC_SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name *.kt)
+DOC_TARGET  = $(TARGET_DIR)/.latest-doc
+
+DOKKA_CLI_JAR  = $(shell $(FIND) $(DOKKA_HOME)/lib -type f -name dokka-cli*.jar)
+DOKKA_OUT_DIR  = $(TARGET_DIR)/docs
+DOKKA_CPATH    = $(KOTLINX_COROUTINES_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(MARKDOWN_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_COMPILER_JAR)$(PSEP)$(DOKKA_INTELLIJ_JAR)$(PSEP)$(DOKKA_PLUGIN_JAR)$(PSEP)$(INTELLIJ_CORE_JAR)$(PSEP)$(OPENAPI_JAR)
+DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 01_bean -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
+
+doc: $(DOC_TARGET)
+
+$(DOC_TARGET): $(DOC_SOURCES)
+	[ -d "$(DOKKA_OUT_DIR)" ] || $(MKDIR) -p "$(DOKKA_OUT_DIR)"
+	$(JAVA) -jar "$(DOKKA_CLI_JAR)" $(DOKKA_CLI_OPTS)
+	@$(TOUCH) "$(DOC_TARGET)"
+
+##############################################################################
 ## phony
 
-.PHONY: all build clean help lint run
+.PHONY: all build clean doc help lint run

@@ -249,7 +249,7 @@ if "%__ARG:~0,1%"=="-" (
     set /a __N+=1
 )
 shift
-goto :args_loop
+goto args_loop
 :args_done
 set _MAIN_CLASS=%_PKG_NAME%%__MAIN_NAME%Kt
 set _EXE_FILE=%_TARGET_DIR%\%__MAIN_NAME%.exe

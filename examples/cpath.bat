@@ -27,38 +27,38 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.3"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.5.1"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
-set __KOTLIN_VERSION=1.4.32
+set __DOKKA_VERSION=1.5.0
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
-call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__KOTLIN_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
-call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__KOTLIN_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
-call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__KOTLIN_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
-call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__KOTLIN_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
-@rem call :add_maven_jar "org.jetbrains.dokka" "dokka-core" "%__KOTLIN_VERSION%"
+@rem call :add_maven_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
-call :add_maven_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__KOTLIN_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
-call :add_maven_jar "org.jetbrains.dokka" "dokka-cli" "%__KOTLIN_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH3=%_LIBS_CPATH%"
 

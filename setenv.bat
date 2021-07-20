@@ -227,7 +227,7 @@ echo   %__BEG_P%Subcommands:%__END%
 echo     %__BEG_O%help%__END%        display this help message
 goto :eof
 
-@rem output parameter(s): _ANT_HOME, _ANT_PATH
+@rem output parameters: _ANT_HOME, _ANT_PATH
 :ant
 set _ANT_HOME=
 set _ANT_PATH=
@@ -265,35 +265,35 @@ if not exist "%_ANT_HOME%\bin\ant.cmd" (
 set "_ANT_PATH=;%_ANT_HOME%\bin"
 goto :eof
 
-@rem output parameter(s): _BAZEL_PATH
+@rem output parameters: _BAZEL_HOME, _BAZEL_PATH
 :bazel
+set _BAZEL_HOME=
 set _BAZEL_PATH=
 
-set __BAZEL_HOME=
 set __BAZEL_CMD=
 for /f %%f in ('where bazel.exe 2^>NUL') do set "__BAZEL_CMD=%%f"
 if defined __BAZEL_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Bazel executable found in PATH 1>&2
-    for /f "delims=" %%i in ("%__BAZEL_CMD%") do set "__BAZEL_HOME=%%~dpi"
+    for /f "delims=" %%i in ("%__BAZEL_CMD%") do set "_BAZEL_HOME=%%~dpi"
     @rem keep _BAZEL_PATH undefined since executable already in path
     goto :eof
 ) else if defined BAZEL_HOME (
-    set "__BAZEL_HOME=%BAZEL_HOME%"
+    set "_BAZEL_HOME=%BAZEL_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable BAZEL_HOME 1>&2
 ) else (
     set "__PATH=%ProgramFiles%"
-    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "__BAZEL_HOME=!__PATH!\%%f"
-    if not defined __BAZEL_HOME (
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
+    if not defined _BAZEL_HOME (
         set __PATH=C:\opt
-        for /f %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "__BAZEL_HOME=!__PATH!\%%f"
+        for /f %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
     )
 )
-if not exist "%__BAZEL_HOME%\bazel.exe" (
-    echo %_ERROR_LABEL% Bazel executable not found ^("%__BAZEL_HOME%"^) 1>&2
+if not exist "%_BAZEL_HOME%\bazel.exe" (
+    echo %_ERROR_LABEL% Bazel executable not found ^("%_BAZEL_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
-set "_BAZEL_PATH=;%__BAZEL_HOME%"
+set "_BAZEL_PATH=;%_BAZEL_HOME%"
 goto :eof
 
 @rem output parameter: _CFR_HOME
@@ -325,7 +325,7 @@ if not exist "%_CFR_HOME%\bin\cfr.bat" (
 )
 goto :eof
 
-@rem output parameter(s): _GRADLE_HOME, _GRADLE_PATH
+@rem output parameters: _GRADLE_HOME, _GRADLE_PATH
 :gradle
 set _GRADLE_HOME=
 set _GRADLE_PATH=

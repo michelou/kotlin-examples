@@ -33,8 +33,8 @@ C:\opt\apache-maven-3.8.1\            <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.17.1\             <i>( 49 MB)</i>
 C:\opt\Git-2.32.0\                    <i>(279 MB)</i>
 C:\opt\gradle-7.1.1\                  <i>(121 MB)</i>
-C:\opt\kotlinc-1.5.20\                <i>( 64 MB)</i>
-C:\opt\kotlin-native-windows-1.5.20\  <i>(170 MB)</i>
+C:\opt\kotlinc-1.5.21\                <i>( 64 MB)</i>
+C:\opt\kotlin-native-windows-1.5.21\  <i>(170 MB)</i>
 C:\opt\ktlint-0.41.0\                 <i>( 42 MB)</i>
 </pre>
 
@@ -94,17 +94,17 @@ We distinguish different sets of batch commands:
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
       bazel 4.1.0, gradle 7.1.1, java 1.8.0_292, detekt-cli 1.17.1,
-      kotlinc 1.5.20, kotlinc-native 1.5.20, ktlint 0.41.0
+      kotlinc 1.5.21, kotlinc-native 1.5.21, ktlint 0.41.0
       cfr 0.151, mvn 3.8.1, git 2.32.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\apache-ant-1.10.10\bin\ant.bat
+      C:\opt\apache-ant-1.10.11\bin\ant.bat
       C:\opt\bazel-4.1.0\bazel.exe
       C:\opt\gradle-7.1.1\bin\gradle.bat
       C:\opt\jdk-openjdk-1.8.0u292-b10\bin\java.exe
       C:\opt\detekt-cli-1.17.1\bin\detekt-cli.bat
-      C:\opt\kotlinc-1.5.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-1.5.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-1.5.20\bin\kotlinc-native.bat
+      C:\opt\kotlinc-1.5.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-1.5.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-1.5.21\bin\kotlinc-native.bat
       C:\opt\ktlint-0.41.0\ktlint.bat
       C:\opt\cfr-0.151\bin\cfr.bat
       C:\opt\apache-maven-3.8.1\bin\mvn.cmd
@@ -112,15 +112,15 @@ We distinguish different sets of batch commands:
       C:\opt\Git-2.32.0\mingw64\bin\git.exe
       C:\opt\Git-2.32.0\usr\bin\diff.exe
    Environment variables:
-      "ANT_HOME=C:\opt\apache-ant-1.10.10"
+      "ANT_HOME=C:\opt\apache-ant-1.10.11"
       "CFR_HOME=C:\opt\cfr-0.151"
       "DETEKT_HOME=C:\opt\detekt-cli-1.17.1"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.32.0"
       "GRADLE_HOME=C:\opt\gradle-7.1.1"
       "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u292-b10"
-      "KOTLIN_HOME=C:\opt\kotlinc-1.5.20"
-      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.5.20"
+      "KOTLIN_HOME=C:\opt\kotlinc-1.5.21"
+      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.5.21"
       "KTLINT_HOME=C:\opt\ktlint-0.41.0"
    </pre>
 
@@ -182,8 +182,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.8.1-bin.zip</a>                 <i>(  9 Mb)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.17.1.zip</a>                      <i>( 44 MB)</i>
 <a href="https://gradle.org/releases/">gradle-7.1.1-bin.zip</a>                       <i>(107 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.20">kotlin-compiler-1.5.20.zip</a>                 <i>( 60 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.20">kotlin-native-prebuilt-windows-1.5.20.zip</a>  <i>(125 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.21">kotlin-compiler-1.5.21.zip</a>                 <i>( 60 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.21">kotlin-native-prebuilt-windows-1.5.21.zip</a>  <i>(125 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.41.0)</a>                            <i>( 47 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.32.0-64-bit.7z.exe</a>           <i>( 41 MB)</i>
 </pre>
@@ -212,7 +212,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
 [kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.5.20
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.5.21
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases

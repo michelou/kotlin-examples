@@ -53,10 +53,10 @@ compileKotlin {
         // suppressWarnings = true
         // verbose = false
         // Common options
-        apiVersion = "1.4"
-        languageVersion = "1.4"
+        apiVersion = "1.5"
+        languageVersion = "1.5"
         // JVM options
-        jvmTarget = "1.8"
+        jvmTarget = "11" // "1.8"
     }
 }
 
@@ -114,7 +114,7 @@ dependencies {
     // implementation "org.jetbrains.dokka:kotlin-analysis-compiler:$dokkaVersion"
     // implementation "org.jetbrains.dokka:kotlin-analysis-intellij:$dokkaVersion"
     implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
-    implementation "org.jetbrains:markdown:0.1.45"
+    implementation "org.jetbrains:markdown:0.2.4"
     //dokkaGfmPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokkaVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"

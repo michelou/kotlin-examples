@@ -16,8 +16,10 @@ KOTLIN     = $(subst \,/,$(KOTLIN_HOME))/bin/kotlin.bat
 KOTLINC    = $(subst \,/,$(KOTLIN_HOME))/bin/kotlinc.bat
 LOCAL_REPO = $(subst \,/,$(USERPROFILE))/.m2/repository
 PSEP       = ;
+ECHO       = $(subst \,/,$(GIT_HOME))/usr/bin/echo.exe
 FIND       = $(subst \,/,$(GIT_HOME))/usr/bin/find.exe
 MKDIR      = $(subst \,/,$(GIT_HOME))/usr/bin/mkdir.exe
+TOUCH      = $(subst \,/,$(GIT_HOME))/usr/bin/touch.exe
 else
 JAR        = $(JAVA_HOME)/bin/jar
 JAVA       = $(JAVA_HOME)/bin/java
@@ -26,8 +28,10 @@ KOTLIN     = $(KOTLIN_HOME)/bin/kotlin
 KOTLINC    = $(KOTLIN_HOME)/bin/kotlinc
 LOCAL_REPO = $(HOME)/.m2/repository
 PSEP       = :
+ECHO       = echo
 FIND       = find
 MKDIR      = mkdir
+TOUCH      = touch
 endif
 
 LANGUAGE_VERSION = 1.4
