@@ -11,16 +11,19 @@
 
 Code examples can be built/run with the following tools:
 
-| Build tool                     | Configuration file(s)              | Parent file(s)     | Environment(s) |
+| Build tool                     | Configuration file               | Parent file         | Environment(s) |
 |--------------------------------|------------------------------------|--------------------|----------------|
-| [**`gradle.exe`**][gradle_cli] | [**`build.gradle`**](build.gradle) |  | Multiplatform <sup><b>a)</b></sup> |
-| [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](pom.xml)           |  | Multiplatform |
-| [**`build.bat`**](build.bat)   | *none*                             |  | Windows only |
-<div style="margin:0 30% 0 8px;font-size:90%;">
-<sup>a)</sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>&nbsp;
+| [**`gradle.exe`**][gradle_cli] | [**`build.gradle`**](ch01/build.gradle) |  | Any <sup><b>a)</b></sup> |
+| [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](ch01/pom.xml)           |  | Any |
+| [**`build.bat`**](ch01/build.bat)   | *none*                             |  | Windows only |
+<div style="margin:0 20% 0 8px;font-size:90%;">
+<sup>a)</sup></b> Here "Any" means "tested on Windows / Cygwin / MSYS2 / Unix".<br/>&nbsp;
 </div>
 
 ## <span id="coroutine_example">Coroutine Example</span>
+
+The Gradle build configuration is defined by the two files <a href="ch01/build.gradle"><code>build.gradle</code></a> and 
+<a href="ch01/gradle.properties"><code>gradle.properties</code></a>.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
@@ -62,7 +65,7 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

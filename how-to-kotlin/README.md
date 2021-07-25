@@ -26,14 +26,14 @@ We provide several ways to build/run our [Kotlin] code examples:
 
 | Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
 |---------------------|------------------------|----------------|----------------|
-| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Multiplatform <sup><b>a)</b></sup> |
+| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](01_bean/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
 | [**`build.bat`**](01_bean/build.bat) | &nbsp;                 | [**`cpath.bat`**](cpath.bat) <sup><b>b)</b></sup> | MS Windows |
-| [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
-| **`gradle.exe`**    | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) | Multiplatform |
-| **`mvn.cmd`**       | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  | Multiplatform |
-| [**`make.exe`**][gmake_cli] | [**`Makefile`**](HelloWorld/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Multiplatform |
-<div style="margin:0 30% 0 8px;font-size:90%;">
-<sup><b>a)</b></sup></b> Multiplatform = MS Windows / Cygwin / MSYS2 / Unix.<br/>
+| [**`build.sh`**](01_bean/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
+| **`gradle.exe`**    | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) | Any |
+| **`mvn.cmd`**       | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  | Any |
+| [**`make.exe`**][gmake_cli] | [**`Makefile`**](01_bean/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Any |
+<div style="margin:0 15% 0 8px;font-size:90%;">
+<sup><b>a)</b></sup></b> Here "Any" means "tested on MS Windows / Cygwin / MSYS2 / Unix".<br/>
 <sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>&nbsp;
 </div>
 
@@ -63,12 +63,12 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > <b>&gt; <a href="01_bean/build.bat">build</a> -debug clean run</b>
 > [build] Options    : _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.5.10"
-> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.5.10"
+> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.5.21"
+> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.5.21"
 > [build] Variables  : _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
-> [build] "C:\opt\kotlinc-1.5.10\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
-> [build] "C:\opt\kotlinc-1.5.10\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
+> [build] "C:\opt\kotlinc-1.5.21\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc-1.5.21\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
 > [build] _EXITCODE=0
 > </pre>

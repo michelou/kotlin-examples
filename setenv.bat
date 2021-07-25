@@ -26,6 +26,7 @@ if %_HELP%==1 (
 set _ANT_PATH=
 set _BAZEL_PATH=
 set _GRADLE_PATH=
+set _MAKE_PATH=
 set _MAVEN_PATH=
 set _GIT_PATH=
 
@@ -57,6 +58,9 @@ call :detekt
 if not %_EXITCODE%==0 goto end
 
 call :ktlint
+if not %_EXITCODE%==0 goto end
+
+call :make
 if not %_EXITCODE%==0 goto end
 
 call :maven
@@ -530,6 +534,35 @@ if defined __KTLINT_CMD (
 )
 goto :eof
 
+@rem output parameters: _MAKE_HOME, _MAKE_PATH
+:make
+set _MAKE_HOME=
+set _MAKE_PATH=
+
+set __MAKE_CMD=
+for /f %%f in ('where make.exe 2^>NUL') do set "__MAKE_CMD=%%f"
+if defined __MAKE_CMD (
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Make executable found in PATH 1>&2
+    rem keep _MAKE_PATH undefined since executable already in path
+    goto :eof
+) else if defined MAKE_HOME (
+    set "_MAKE_HOME=%MAKE_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable MAKE_HOME 1>&2
+) else (
+    set _PATH=C:\opt
+    for /f %%f in ('dir /ad /b "!_PATH!\make-3*" 2^>NUL') do set "_MAKE_HOME=!_PATH!\%%f"
+    if defined _MAKE_HOME (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Make installation directory !_MAKE_HOME! 1>&2
+    )
+)
+if not exist "%_MAKE_HOME%\bin\make.exe" (
+    echo %_ERROR_LABEL% Make executable not found ^(%_MAKE_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set "_MAKE_PATH=;%_MAKE_HOME%\bin"
+goto :eof
+
 @rem output parameters: _MAVEN_HOME, _MAVEN_PATH
 :maven
 set _MAVEN_HOME=
@@ -646,6 +679,11 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('"%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
 )
+where /q "%MAKE_HOME%\bin:make.exe"
+if %ERRORLEVEL%==0 (
+    for /f "tokens=1,2,*" %%i in ('"%MAKE_HOME%\bin\make.exe" --version 2^>^&1 ^| findstr Make') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% make %%k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%MAKE_HOME%\bin:make.exe"
+)
 where /q "%MAVEN_HOME%\bin:mvn.cmd"
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,2,3,*" %%i in ('"%MAVEN_HOME%\bin\mvn.cmd" -version ^| findstr Apache') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% mvn %%k,"
@@ -669,18 +707,19 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     @rem if %_DEBUG%==1 echo %_DEBUG_LABEL% where %__WHERE_ARGS%
     echo Tool paths: 1>&2
     for /f "tokens=*" %%p in ('where %__WHERE_ARGS%') do echo    %%p 1>&2
-	echo Environment variables: 1>&2
+    echo Environment variables: 1>&2
     if defined ANT_HOME echo    "ANT_HOME=%ANT_HOME%" 1>&2
-	if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
-	if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
-	if defined DOKKA_HOME echo    "DOKKA_HOME=%DOKKA_HOME%" 1>&2
-	if defined GIT_HOME echo    "GIT_HOME=%GIT_HOME%" 1>&2
-	if defined GRADLE_HOME echo    "GRADLE_HOME=%GRADLE_HOME%" 1>&2
-	if defined JAVA_HOME echo    "JAVA_HOME=%JAVA_HOME%" 1>&2
-	if defined KOTLIN_HOME echo    "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
-	if defined KOTLIN_NATIVE_HOME echo    "KOTLIN_NATIVE_HOME=%KOTLIN_HOME%" 1>&2
-	if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
-	if defined MAVEN_HOME echo    "MAVEN_HOME=%MAVEN_HOME%" 1>&2
+    if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
+    if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
+    if defined DOKKA_HOME echo    "DOKKA_HOME=%DOKKA_HOME%" 1>&2
+    if defined GIT_HOME echo    "GIT_HOME=%GIT_HOME%" 1>&2
+    if defined GRADLE_HOME echo    "GRADLE_HOME=%GRADLE_HOME%" 1>&2
+    if defined JAVA_HOME echo    "JAVA_HOME=%JAVA_HOME%" 1>&2
+    if defined KOTLIN_HOME echo    "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
+    if defined KOTLIN_NATIVE_HOME echo    "KOTLIN_NATIVE_HOME=%KOTLIN_HOME%" 1>&2
+    if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
+    if defined MAKE_HOME echo    "MAKE_HOME=%MAKE_HOME%" 1>&2
+    if defined MAVEN_HOME echo    "MAVEN_HOME=%MAVEN_HOME%" 1>&2
 )
 goto :eof
 
@@ -699,8 +738,9 @@ endlocal & (
     if not defined KOTLIN_HOME set "KOTLIN_HOME=%_KOTLIN_HOME%"
     if not defined KOTLIN_NATIVE_HOME set "KOTLIN_NATIVE_HOME=%_KOTLIN_NATIVE_HOME%"
     if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
+    if not defined MAKE_HOME set "MAKE_HOME=%_MAKE_HOME%"
     if not defined MAVEN_HOME set "MAVEN_HOME=%_MAVEN_HOME%"
-    set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
+    set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAKE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
     if not "%CD:~0,2%"=="%_DRIVE_NAME%:" (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% cd /d %_DRIVE_NAME%: 1>&2

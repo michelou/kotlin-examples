@@ -23,24 +23,24 @@ call :add_maven_jar "junit" "junit" "4.13.2"
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test
-call :add_maven_jar "org.jetbrains.kotlin" "kotlin-test" "1.4.32"
+call :add_maven_jar "org.jetbrains.kotlin" "kotlin-test" "1.5.21"
 
 set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.3"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.5.1"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
 @rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.1"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-html-jvm/
-call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
+call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
 
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
-set __DOKKA_VERSION=1.4.32
+set __DOKKA_VERSION=1.5.0
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
 call :add_maven_jar "org.jetbrains" "markdown" "0.2.4"
