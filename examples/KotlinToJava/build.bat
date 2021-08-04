@@ -80,9 +80,9 @@ set _LANGUAGE_VERSION=1.4
 
 set _JAVA_MAIN_CLASS=KotlinInterop
 
-set _MAIN_NAME=JavaInterop
-set _MAIN_CLASS=%_MAIN_NAME%Kt
-set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
+set __MAIN_NAME=JavaInterop
+set _MAIN_CLASS=%__MAIN_NAME%Kt
+set "_EXE_FILE=%_TARGET_DIR%\%__MAIN_NAME%.exe"
 
 set _DETEKT_CMD=
 if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
@@ -357,20 +357,15 @@ set __KTLINT_OPTS=--color --reporter=checkstyle,output="%_TARGET_DIR%\\ktlint-re
 if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 ) else if %_VERBOSE%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
-set __SOURCE_FILES=
-set __N=0
-for /f "delims=" %%f in ('where /r "%_MAIN_SOURCE_DIR%" *.kt 2^>NUL') do (
-    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-    set /a __N+=1
-)
 set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
+@rem KtLint does not support absolute path in globs.
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2^>"%__TMP_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with Ktlint 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2^>"%__TMP_FILE%" 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Ktlint 1>&2
 )
-call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
    echo %_WARNING_LABEL% Ktlint error found 1>&2
    if %_DEBUG%==1 ( type "%__TMP_FILE%"
