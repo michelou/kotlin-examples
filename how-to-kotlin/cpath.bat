@@ -32,11 +32,11 @@ set _LIBS_CPATH=
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.5.1"
 
-@rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
-@rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.1"
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm
+@rem call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.2"
 
-@rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-html-jvm/
-call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
 
 
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
@@ -81,12 +81,6 @@ goto end
 @rem global variable: _LIBS_CPATH
 :add_maven_jar
 call :add_jar "https://repo1.maven.org/maven2" %1 %2 %3
-goto :eof
-
-@rem input parameters: %1=group ID, %2=artifact ID, %3=version
-@rem global variable: _LIBS_CPATH
-:add_bintray_jar
-call :add_jar "https://dl.bintray.com/kotlin/kotlinx" %1 %2 %3
 goto :eof
 
 @rem global variable: _LIBS_CPATH

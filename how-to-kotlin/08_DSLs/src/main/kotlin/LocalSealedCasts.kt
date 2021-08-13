@@ -1,5 +1,6 @@
 package _08_DSLs
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val root = Container(
         Text("a"),

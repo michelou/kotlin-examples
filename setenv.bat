@@ -42,7 +42,7 @@ if not %_EXITCODE%==0 goto end
 call :gradle
 if not %_EXITCODE%==0 goto end
 
-call :java
+call :java11
 if not %_EXITCODE%==0 goto end
 
 call :kotlin_jvm
@@ -161,7 +161,7 @@ if "%__ARG:~0,1%"=="-" (
     set /a __N+=1
 )
 shift
-goto :args_loop
+goto args_loop
 :args_done
 call :subst %_DRIVE_NAME% "%_ROOT_DIR%"
 if not %_EXITCODE%==0 goto :eof
@@ -362,11 +362,21 @@ set "_GRADLE_PATH=;%_GRADLE_HOME%\bin"
 goto :eof
 
 @rem output parameter: _JAVA_HOME
-:java
+:java11
 set _JAVA_HOME=
 
 set __JAVAC_CMD=
 for /f %%f in ('where javac.exe 2^>NUL') do set "__JAVAC_CMD=%%f"
+@rem ignore command if Java version is not 11
+if defined __JAVAC_CMD (
+    for /f "tokens=1,*" %%i in ('"%__JAVAC_CMD%" -version') do (
+        set __JAVAC_VERSION=%%j
+        if "!__JAVAC_VERSION:11.=!"=="!__JAVAC_VERSION!" (
+            echo "%_WARNING_LABEL% Expected: Java 11 executable, found: !__JAVAC_VERSION! 1>&2
+            set __JAVAC_CMD=
+        )
+    )
+)
 if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
     for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
@@ -377,10 +387,10 @@ if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable JAVA_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\jdk-openjdk-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+    for /f %%f in ('dir /ad /b "!__PATH!\jdk-openjdk-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     if not defined _JAVA_HOME (
         set "__PATH=%ProgramFiles%"
-        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-openjdk-1.8*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-openjdk-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     )
 )
 if not exist "%_JAVA_HOME%\bin\javac.exe" (
