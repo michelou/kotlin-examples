@@ -349,19 +349,14 @@ set __KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-rep
 if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 ) else if %_VERBOSE%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
-set __SOURCE_FILES=
-set __N=0
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
-    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-    set /a __N+=1
-)
 set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
 
+@rem KtLint does not support absolute path in globs.
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with KtLint 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
-call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 2>"%__TMP_FILE%"
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
    echo %_WARNING_LABEL% Ktlint error found 1>&2
    if %_DEBUG%==1 ( type "%__TMP_FILE%"
@@ -397,7 +392,8 @@ if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
 ) else ( set __NOWARN_OPT=
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%_CLASSES_DIR:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+set "__CPATH=%_CLASSES_DIR%"
+echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
@@ -446,15 +442,15 @@ set "__TARGET_FILE=%~1"
 
 set __PATH_ARRAY=
 set __PATH_ARRAY1=
-:compile_path
+:action_path
 shift
 set __PATH=%~1
-if not defined __PATH goto :compile_next
+if not defined __PATH goto :action_next
 set __PATH_ARRAY=%__PATH_ARRAY%,'%__PATH%'
 set __PATH_ARRAY1=%__PATH_ARRAY1%,'!__PATH:%_ROOT_DIR%=!'
-goto :compile_path
+goto :action_path
 
-:compile_next
+:action_next
 set __TARGET_TIMESTAMP=00000000000000
 for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
      set __TARGET_TIMESTAMP=%%i

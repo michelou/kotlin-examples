@@ -1,4 +1,4 @@
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class JavaToKotlinJUnitTest {
@@ -6,7 +6,7 @@ class JavaToKotlinJUnitTest {
     @Test
     fun test1() {
         val stdout = captureStdout { main(arrayOf("Bob")) }
-        assertEquals("test1", stdout, "name=<name> active=true${eol}name=Bob active=true${eol}three=3${eol}")
+        assertEquals("test1", stdout, "name=<name> active=true${eol}name=Bob active=true$eolthree=3$eol")
     }
 
     init {
@@ -25,5 +25,4 @@ class JavaToKotlinJUnitTest {
             return stdout
         }
     }
-
 }

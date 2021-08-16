@@ -30,15 +30,15 @@ We provide several ways to build/run the [Kotlin] code examples:
 
 | Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
 |---------------------|------------------------|----------------|-------------|
-| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Multiplatform <sup><b>a)</b></sup> |
+| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
 | [**`build.bat`**](HelloWorld/build.bat) | **`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows |
 | [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
-| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle`**](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [**`common.gradle`**](./common.gradle)  | Multiplatform |
-| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle.kts`**](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Multiplatform |
-| [**`mvn.cmd`**][apache_maven_cli] | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](./pom.xml)  | Multiplatform |
-| [**`make.exe`**][gmake_cli] | [**`Makefile`**](HelloWorld/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Multiplatform |
+| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle`**](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [**`common.gradle`**](./common.gradle)  | Any |
+| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle.kts`**](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Any |
+| [**`mvn.cmd`**][apache_maven_cli] | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](./pom.xml)  | Any |
+| [**`make.exe`**][gmake_cli] | [**`Makefile`**](HelloWorld/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Any |
 <div style="margin:0 30% 0 8px;font-size:90%;">
-<sup><b>a)</b></sup></b> Multiplatform = Windows / Cygwin / MSYS2 / Unix.<br/>
+<sup><b>a)</b></sup></b> Here "Any" means "tested on MS Windows / Cygwin / MSYS2 / Unix".<br/>
 <sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
 <sup><b>c)</b></sup> Gradle build script written in <a href="https://docs.gradle.org/current/dsl/index.html">Groovy DSL</a><br/>
 <sup><b>d)</b></sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
@@ -92,7 +92,7 @@ Command [**`build -native clean run`**](HelloWorld/build.bat) generates and exec
 <b>&gt; <a href="HelloWorld/build.bat">build</a> -native clean run</b>
 Hello World!
 &nbsp;
-<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target | findstr /v "^[A-Z]"</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v "^[A-Z]"</b>
     HelloWorld.exe
     kotlinc-native_opts.txt
     kotlinc-native_sources.txt
@@ -100,7 +100,7 @@ Hello World!
 
 > **:mag_right:** The [**`pelook`**][bytepointer_pelook] utility can help us getting more information about the native executable:
 > <pre style="font-size:80%;">
-> <b>&gt; <a href="http://bytepointer.com/tools/pelook_cmdline.htm">pelook.exe</a> -h target\HelloWorld.exe | head -7</b>
+> <b>&gt; <a href="http://bytepointer.com/tools/pelook_cmdline.htm">pelook.exe</a> -h target\HelloWorld.exe | <a href="https://man7.org/linux/man-pages/man1/head.1.html">head</a> -7</b>
 > loaded "target\HelloWorld.exe" / 478599 (0x74D87) bytes
 > signature/type:       PE64 EXE image for amd64
 > image checksum:       0x0007FD9A (OK)

@@ -14,7 +14,7 @@ Code examples can be built/run with the following tools:
 | Build tool                     | Configuration file               | Parent file         | Environment(s) |
 |--------------------------------|------------------------------------|--------------------|----------------|
 | [**`gradle.exe`**][gradle_cli] | [**`build.gradle`**](ch01/build.gradle) |  | Any <sup><b>a)</b></sup> |
-| [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](ch01/pom.xml)           |  | Any |
+| [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](ch01/pom.xml)           | [**`pom.xml`**](./pom.xml) | Any |
 | [**`build.bat`**](ch01/build.bat)   | *none*                             |  | Windows only |
 <div style="margin:0 20% 0 8px;font-size:90%;">
 <sup>a)</sup></b> Here "Any" means "tested on Windows / Cygwin / MSYS2 / Unix".<br/>&nbsp;

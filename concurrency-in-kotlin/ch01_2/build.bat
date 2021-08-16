@@ -230,7 +230,7 @@ if "%__ARG:~0,1%"=="-" (
     set /a __N+=1
 )
 shift
-goto :args_loop
+goto args_loop
 :args_done
 set _STDERR_REDIRECT=2^>NUL
 if %_DEBUG%==1 set _STDERR_REDIRECT=
@@ -323,27 +323,26 @@ if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
 goto :eof
 
 :lint
-set __KTLINT_OPTS=--reporter=checkstyle,output="%_TARGET_DIR%\ktlint-report.xml"
-set /a _PLAIN=_VERBOSE+_DEBUG
-if %_PLAIN% gtr 0 set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
+set __KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
-set __SOURCE_FILES=
-set __N=0
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
-    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-    set /a __N+=1
+if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
+) else if %_VERBOSE%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
-if %__N%==0 (
-    echo %_WARNING_LABEL% No source file found 1>&2
-    goto :eof
-)
+set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
+
+@rem KtLint does not support absolute path in globs.
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with KtLint 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
-call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
+   echo %_WARNING_LABEL% Ktlint error found 1>&2
+   if %_DEBUG%==1 ( type "%__TMP_FILE%"
+   ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
+   )
+   if exist "%__TMP_FILE%" del "%__TMP_FILE%"
+   @rem set _EXITCODE=1
    goto :eof
 )
 goto :eof
@@ -351,14 +350,15 @@ goto :eof
 :compile_jvm
 if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
-set __KOTLIN_CPATH=
-for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do (
-    set "__KOTLIN_CPATH=!__KOTLIN_CPATH!%%f;"
-)
+set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
+
+call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+if %_ACTION_REQUIRED%==0 goto :eof
+
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
+for /f "delims=" %%i in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -366,9 +366,17 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
 )
+set __KOTLIN_CPATH=
+for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do (
+    set "__KOTLIN_CPATH=!__KOTLIN_CPATH!%%f;"
+)
+set /a __WARN_ENABLED=_VERBOSE+_DEBUG
+if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
+) else ( set __NOWARN_OPT=
+)
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 set "__CPATH=%__KOTLIN_CPATH%%_CLASSES_DIR%"
-echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
@@ -379,6 +387,7 @@ if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
 )
+echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 :compile_native

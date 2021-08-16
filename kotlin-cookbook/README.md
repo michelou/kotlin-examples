@@ -27,7 +27,7 @@ Command [**`build -verbose test`**](./Example_03-10/build.bat) compiles the sour
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_03-10/build.bat">build</a> -verbose test</b>
-No compilation needed ('src\main\kotlin\*.kt')
+No action required ('src\main\kotlin\*.kt')
 Compile 1 Kotlin test source files (JVM) to directory "target\test-classes"
 Execute test CustomerKtTestKt
 .
@@ -67,7 +67,7 @@ Command [**`build -verbose test`**](./Example_03-13/build.bat) compiles the sour
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_03-13/build.bat">build</a> -verbose test</b>
-No compilation needed ('src\main\kotlin\*.kt')
+No action required ('src\main\kotlin\*.kt')
 Compile 1 Kotlin test source files (JVM) to directory "target\test-classes"
 Execute test MainKtTest
 .
@@ -110,7 +110,7 @@ Command [**`build -verbose test`**](./Example_03-14/build.bat) compiles the sour
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_03-14/build.bat">build</a> -verbose test</b>
-No compilation needed ('src\main\kotlin\*.kt')
+No action required ('src\main\kotlin\*.kt')
 Compile 1 Kotlin test source files (JVM) to directory "target\test-classes"
 Execute test ComplexOverloadOperatorsKtTest
 .
@@ -164,7 +164,7 @@ Command [**`build -verbose test`**](./Example_04-01/build.bat) compiles the sour
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_04-01/build.bat">build</a> -verbose test</b>
-No compilation needed ('src\main\kotlin\*.kt')
+No action required ('src\main\kotlin\*.kt')
 Compile 1 Kotlin test source files (JVM) to directory "target\test-classes"
 Execute test FoldMainKtTest
 .

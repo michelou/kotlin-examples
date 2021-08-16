@@ -2,12 +2,12 @@
 
 package chapter1
 
-import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlin.system.measureTimeMillis
 
 /** Suspend function 'coroutineScope' must be called from a coroutine or
  *  another suspend function.

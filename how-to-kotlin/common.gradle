@@ -76,7 +76,7 @@ dokkaHtml.configure {
             // Do not output deprecated members. Applies globally, can be overridden by packageOptions
             skipDeprecated.set(false)
             // Used for linking to JDK documentation
-            jdkVersion.set(8)
+            jdkVersion.set(11)
         }
     }
 }

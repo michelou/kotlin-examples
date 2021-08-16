@@ -101,7 +101,7 @@ set "_KOTLIN_CMD=%KOTLIN_HOME%\bin\kotlin.bat"
 set "_KOTLINC_CMD=%KOTLIN_HOME%\bin\kotlinc.bat"
 
 if not exist "%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
-    echo %_ERROR_LABEL% Kotlin Native installation not found 1>&2
+    echo %_ERROR_LABEL% Kotlin/Native installation not found 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -238,7 +238,7 @@ if "%__ARG:~0,1%"=="-" (
     set /a __N+=1
 )
 shift
-goto :args_loop
+goto args_loop
 :args_done
 set _STDERR_REDIRECT=2^>NUL
 if %_DEBUG%==1 set _STDERR_REDIRECT=
@@ -355,7 +355,7 @@ if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
 set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
 
-@rem KtLint does not support absolute path in globs. 
+@rem KtLint does not support absolute path in globs.
 @rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
@@ -391,12 +391,16 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
 )
+set __KOTLIN_CPATH=
+for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do (
+    set "__KOTLIN_CPATH=!__KOTLIN_CPATH!%%f;"
+)
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
 ) else ( set __NOWARN_OPT=
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-set "__CPATH=%_CLASSES_DIR%"
+set "__CPATH=%__KOTLIN_CPATH%%_CLASSES_DIR%"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
@@ -520,7 +524,7 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __ARGS=-src %_MAIN_SOURCE_DIR%
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
