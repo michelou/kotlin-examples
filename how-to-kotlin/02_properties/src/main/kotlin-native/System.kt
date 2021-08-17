@@ -1,6 +1,5 @@
 package _02_properties
 
-import kotlinx.cinterop.*
 import platform.posix.getenv
 import platform.posix.system
 

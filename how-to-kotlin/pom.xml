@@ -13,7 +13,7 @@
         <java.version>11</java.version>
 
         <kotlin.version>1.5.21</kotlin.version>
-        <kotlinx.version>1.5.0</kotlinx.version>
+        <kotlinx.version>1.5.1</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.5</kotlin.compiler.languageVersion>
 

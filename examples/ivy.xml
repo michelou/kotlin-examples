@@ -15,8 +15,8 @@
         <dependency org="junit" name="junit" rev="4.13.2"/>
 
         <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
-        <dependency org="info.picocli" name="picocli" rev="3.9.6"/>
+        <dependency org="info.picocli" name="picocli" rev="4.6.1"/>
         <!-- https://mvnrepository.com/artifact/com.pinterest/ktlint -->
-        <dependency org="com.pinterest" name="ktlint" rev="0.42.0"/>
+        <dependency org="com.pinterest" name="ktlint" rev="0.42.1"/>
     </dependencies>
 </ivy-module>

@@ -1,7 +1,9 @@
 package _05_coroutines
 
-import kotlin.coroutines.*
 import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class CallbackService(val name: String) {
     class Response(val from: CallbackService, val message: String)
@@ -11,7 +13,7 @@ class CallbackService(val name: String) {
         callback(Response(this, "hi $from\n -- Yours, $name"))
     }
 }
-
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val s1 = CallbackService("1")
     val s2 = CallbackService("2")

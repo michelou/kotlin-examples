@@ -14,6 +14,12 @@ set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
 set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
+
+@rem library versions
+set __DOKKA_VERSION=1.5.0
+set __KOTLIN_VERSION=1.5.21
+set __KOTLINX_VERSION=1.5.1
+
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
@@ -27,41 +33,38 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "1.4.3"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLINX_VERSION%"
 
 @rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-cli-jvm/
 @rem call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-cli-jvm" "0.3.2"
 
-@rem https://dl.bintray.com/kotlin/kotlinx/org/jetbrains/kotlinx/kotlinx-html-jvm/
-call :add_bintray_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.2"
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
 
-@rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/3
-set __DOKKA_VERSION=1.4.30
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
+call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
 
-@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/kotlin-analysis-compiler/
-call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
-
-@rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/kotlin-analysis-intellij/
-call :add_bintray1_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
+call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
 
 @rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-analysis/
-call :add_bintray1_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
 
 @rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-base/
-call :add_bintray1_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
-@rem call :add_bintray1_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
+@rem call :add_maven_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
 
 @rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-gradle-plugin/
-call :add_bintray1_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
 @rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-cli/
-call :add_bintray1_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
+call :add_maven_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH3=%_LIBS_CPATH%"
 
@@ -74,18 +77,6 @@ goto end
 @rem global variable: _LIBS_CPATH
 :add_maven_jar
 call :add_jar "https://repo1.maven.org/maven2" %1 %2 %3
-goto :eof
-
-@rem input parameters: %1=group ID, %2=artifact ID, %3=version
-@rem global variable: _LIBS_CPATH
-:add_bintray_jar
-call :add_jar "https://dl.bintray.com/kotlin/kotlinx" %1 %2 %3
-goto :eof
-
-@rem input parameters: %1=group ID, %2=artifact ID, %3=version
-@rem global variable: _LIBS_CPATH
-:add_bintray1_jar
-call :add_jar "https://dl.bintray.com/kotlin/dokka" %1 %2 %3
 goto :eof
 
 @rem global variable: _LIBS_CPATH

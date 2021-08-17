@@ -127,7 +127,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    //implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
+    // implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"

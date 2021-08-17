@@ -11,8 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <kotlin.version>1.5.0</kotlin.version>
-        <kotlinx.version>1.4.3</kotlinx.version>
+        <kotlin.version>1.5.21</kotlin.version>
+        <kotlinx.version>1.5.1</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.4</kotlin.compiler.languageVersion>
 

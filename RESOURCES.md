@@ -42,6 +42,14 @@
 - [Kotlin in Action][book_kotlin_in_action] by Dmitry Jemerov and Svetlana Isakova,<br/>Manning Publications, 2017 <span style="font-size:80%;">(ISBN: 978-1-61729-329-0)</span>.
 - [Programming Koltin][book_programming_kotlin] by Stephen Samuel and Sefan Bocutiu,<br/>Packt Publishing, January 2017 <span style="font-size:80%;">(ISBN: 978-1-78712-636-7)</span>.
 
+## <span id="news">News</span>
+
+- [InfoWorld - Kotlin news and reviews](https://www.infoworld.com/category/kotlin/).
+
+## <span id="papers">Papers</span>
+
+- [ReduKtor: How We Stopped Worrying About Bugs in Kotlin Compiler][paper_stepanov] by Daniil Stepanov, Marat Akhin and Mikahail Belyaev, [ASE 2019](https://2019.ase-conferences.org/).
+
 ## <span id="tools">Tools</span>
 
 - [Clikt][clikt_home]: Multiplatform Kotlin library for writing command line interfaces.
@@ -75,6 +83,7 @@
 [clikt_home]: https://ajalt.github.io/clikt/
 [detekt_home]: https://detekt.github.io/detekt/
 [ktlint]: https://ktlint.github.io/
+[paper_stepanov]: https://arxiv.org/abs/1909.07331
 [medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
 [tuto_journaldev]: https://www.journaldev.com/kotlin

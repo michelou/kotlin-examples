@@ -64,11 +64,13 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 >
 > <pre style="font-size:80%;">
 > <b>&gt; <a href="01_bean/build.bat">build</a> -debug clean run</b>
-> [build] Options    : _TIMER=0 _VERBOSE=0
+> [build] Properties : _PROJECT_NAME=01_bean _PROJECT_VERSION=0.1-SNAPSHOT
+> [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
+> [build] Variables  : "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u302-b08"
 > [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.5.21"
 > [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.5.21"
-> [build] Variables  : _MAIN_CLASS=_01_bean.BeanKt
+> [build] Variables  : _LANGUAGE_VERSION=1.4 _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
 > [build] "C:\opt\kotlinc-1.5.21\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
 > [build] "C:\opt\kotlinc-1.5.21\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt

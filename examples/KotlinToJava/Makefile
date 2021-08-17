@@ -24,19 +24,19 @@ build: $(TARGET) $(JAVA_TARGET)
 
 $(JAVA_TARGET): $(JAVA_SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	$(JAVAC) -cp $(KOTLIN_CPATH)$(PSEP)$(CLASSES_DIR) -d $(CLASSES_DIR) $^
-	touch $(JAVA_TARGET)
+	$(JAVAC) -cp "$(KOTLIN_CPATH)$(PSEP)$(CLASSES_DIR)" -d "$(CLASSES_DIR)" $^
+	@$(TOUCH) $(JAVA_TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
-	$(JAR) cfe $(TARGET) $(MAIN_CLASS) -C $(CLASSES_DIR) .
+	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d "$(CLASSES_DIR)" $^
+	$(JAR) cfe $(TARGET) $(MAIN_CLASS) -C "$(CLASSES_DIR)" .
 
 clean:
 	rm -rf "$(TARGET_DIR)"
 
 run: build
-	$(JAVA) -cp $(KOTLIN_CPATH) -jar $(TARGET)
+	$(KOTLIN) -cp "$(TARGET)" $(MAIN_CLASS) $(MAIN_ARGS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"

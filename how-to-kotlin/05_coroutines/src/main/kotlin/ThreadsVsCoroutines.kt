@@ -4,6 +4,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) = coroutines(100_000)
 
 fun coroutines(n: Int) = runBlocking {
