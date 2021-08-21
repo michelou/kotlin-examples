@@ -14,6 +14,7 @@
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Medium]: [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
 - [Using Gradle Kotlin DSL with JUnit 5](https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/) by Juan Ara, August 7, 2019.
+- [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Advanced Kotlin - Part 1 - Delegates](https://americanexpress.io/advanced-kotlin-delegates/) by Brent Watson, July 1, 2019.
 - [Stone Soup Programming](https://stonesoupprogramming.com/) - [Kotlin](https://stonesoupprogramming.com/category/kotlin/), 2019.
 - [Medium]: [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
@@ -24,6 +25,7 @@
 
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
+- [Exploring Kotlin/Native – Part 2 – Interoperability](https://bignerdranch.com/blog/exploring-kotlin-native-part-2-interoperability/) by Jamie Lee, May 12, 2020.
 - [Exploring Kotlin/Native - Part 1][blog_exploring] by Jamie Lee, March 26, 2020.
 - [Why Trailing Commas In Kotlin Are Hype](https://blog.egorand.me/why-trailing-commas-in-kotlin-are-hype/) by Egor Andreevich, March 14, 2020.
 - [Jetbrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).

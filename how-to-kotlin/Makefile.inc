@@ -7,6 +7,9 @@ endif
 ifndef KOTLIN_HOME
 $(error Variable KOTLIN_HOME is not set)
 endif
+ifndef KOTLIN_NATIVE_HOME
+$(error Variable KOTLIN_NATIVE_HOME is not set)
+endif
 
 ifeq ($(OS),Windows_NT)
 JAR        = $(subst \,/,$(JAVA_HOME))/bin/jar.exe
@@ -20,6 +23,9 @@ ECHO       = $(subst \,/,$(GIT_HOME))/usr/bin/echo.exe
 FIND       = $(subst \,/,$(GIT_HOME))/usr/bin/find.exe
 MKDIR      = $(subst \,/,$(GIT_HOME))/usr/bin/mkdir.exe
 TOUCH      = $(subst \,/,$(GIT_HOME))/usr/bin/touch.exe
+## native
+EXT_NATIVE     = .exe
+KOTLINC_NATIVE = $(subst \,/,$(KOTLIN_NATIVE_HOME))/bin/kotlinc-native.bat
 else
 JAR        = $(JAVA_HOME)/bin/jar
 JAVA       = $(JAVA_HOME)/bin/java
@@ -32,6 +38,9 @@ ECHO       = echo
 FIND       = find
 MKDIR      = mkdir
 TOUCH      = touch
+## native
+EXT_NATIVE     = 
+KOTLINC_NATIVE = $(KOTLIN_NATIVE_HOME)/bin/kotlinc-native
 endif
 
 LANGUAGE_VERSION = 1.5
