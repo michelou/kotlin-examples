@@ -79,12 +79,13 @@ fun main(args: Array<String>) {
 
     // Exercise the LocalDateTime functions
     var localDateTime = createLocalDateTime(
-            month = 9,
-            year = 2018,
-            day = 2,
-            minute = 7,
-            hour = 12,
-            second = 23)
+        month = 9,
+        year = 2018,
+        day = 2,
+        minute = 7,
+        hour = 12,
+        second = 23
+    )
     println("Local date/time: $localDateTime")
     println("Local date/time (formatted): ${formatDateTime(localDateTime = localDateTime)}")
     println("Local date/time (formatted): ${formatDateTime(localDateTime = localDateTime, formatString = "EEEE dd MMMM yyyy hh:mm:ss a")}")

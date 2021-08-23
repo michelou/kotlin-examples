@@ -260,7 +260,7 @@ goto :eof
 
 :help
 if %_VERBOSE%==1 (
-    set __BEG_P=%_STRONG_FG_CYAN%%_UNDERSCORE%
+    set __BEG_P=%_STRONG_FG_CYAN%
     set __BEG_O=%_STRONG_FG_GREEN%
     set __BEG_N=%_NORMAL_FG_YELLOW%
     set __END=%_RESET%
@@ -326,6 +326,8 @@ if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
 goto :eof
 
 :lint
+if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
+
 set __KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
 if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
@@ -335,18 +337,18 @@ set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
 
 @rem KtLint does not support absolute path in globs. 
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS%  "src/**/*.kt"% 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
 call "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   echo %_WARNING_LABEL% Ktlint error found 1>&2
-   if %_DEBUG%==1 ( type "%__TMP_FILE%"
-   ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
-   )
-   if exist "%__TMP_FILE%" del "%__TMP_FILE%"
-   @rem set _EXITCODE=1
-   goto :eof
+    echo %_WARNING_LABEL% Ktlint error found 1>&2
+    if %_DEBUG%==1 ( type "%__TMP_FILE%"
+    ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
+    )
+    if exist "%__TMP_FILE%" del "%__TMP_FILE%"
+    @rem set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -357,10 +359,6 @@ set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
 
 call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
-
-set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
-set "__CPATH=%_CLASSES_DIR%"
-echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
@@ -373,6 +371,10 @@ if %__N%==0 (
     echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
 )
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
+set "__CPATH=%_CLASSES_DIR%"
+echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
+
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
@@ -440,6 +442,7 @@ goto :eof
 
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
+set _LIBS_CPATH=
 for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
 if not exist "%__BATCH_FILE%" (
     echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
@@ -448,6 +451,10 @@ if not exist "%__BATCH_FILE%" (
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
 call "%__BATCH_FILE%" %_DEBUG%
+if not %ERRORLEVEL%==0 (
+    set _EXITCODE=1
+    goto :eof
+)
 set "_LIBS_CPATH=%_CPATH%"
 goto :eof
 
@@ -470,8 +477,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_J
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -490,8 +497,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLA
 )
 call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -510,7 +517,7 @@ goto :eof
 if %_TIMER%==1 (
     for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Total elapsed time: !_DURATION! 1>&2
+    echo Total execution time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%

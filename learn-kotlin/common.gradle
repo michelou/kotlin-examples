@@ -1,15 +1,15 @@
-// overrides default "/build"
-buildDir file("/target")
+// overrides default "build"
+buildDir file("target")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11 // VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_11
 }
 
 ext {
     ktLintOpts = [
         "--reporter=plain",
-        "--reporter=checkstyle,output=$buildDir\\ktlint-report.xml"
+        "--reporter=checkstyle,output=${buildDir}/ktlint-report.xml"
     ]
     classesDir = file("${buildDir}/classes")
 
@@ -26,7 +26,7 @@ ext {
 
 sourceSets {
     // Default: srcDirs "src/main/kotlin"
-	main.kotlin.srcDirs "src/main/kotlin"
+    main.kotlin.srcDirs "src/main/kotlin"
 }
 
 clean.doLast {
@@ -35,7 +35,7 @@ clean.doLast {
 
 task lint(type: JavaExec) {
     description "Analyze Kotlin source files with KtLint"
-    main "-jar"
+    mainClass = "-jar"
     args files("${ktlintHome}") + ktLintOpts + sourceSets.main.allSource.files
 }
 
@@ -51,7 +51,7 @@ compileKotlin {
     kotlinOptions {
         // Tool options
         // suppressWarnings = true
-        // verbose = false
+        verbose = false
         // Common options
         apiVersion = "1.5"
         languageVersion = "1.5"
@@ -88,7 +88,7 @@ task run(type: JavaExec) {
 
     classpath sourceSets.main.runtimeClasspath
 
-    main kotlinMain
+    mainClass = kotlinMain
     if (args == null) args ""
 }
 

@@ -23,7 +23,7 @@ package com.makotogo.learn.kotlin.functiontypes
  *
  * This function is implemented as a Block Body Function
  */
-fun addTwoBlock(first: Int, second: Int) : Int {
+fun addTwoBlock(first: Int, second: Int): Int {
     return first + second
 }
 

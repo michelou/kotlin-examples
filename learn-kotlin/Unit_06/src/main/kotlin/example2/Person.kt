@@ -7,12 +7,14 @@ class Person(val givenName: String, val familyName: String, val dateOfBirth: Loc
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val person = Person(
-            "Susan",
-            "Neumann",
-            LocalDate.of(1980, 3, 17) // 17 Mar 1980
+        "Susan",
+        "Neumann",
+        LocalDate.of(1980, 3, 17) // 17 Mar 1980
     )
 
-    println("Person: Family Name=${person.familyName}, " +
+    println(
+        "Person: Family Name=${person.familyName}, " +
             "Given Name=${person.givenName}, " +
-            "Date of Birth=${person.dateOfBirth}")
+            "Date of Birth=${person.dateOfBirth}"
+    )
 }

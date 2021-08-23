@@ -2,10 +2,8 @@
 buildDir file("target")
 
 java {
-    // JAVA_HOME=c:\opt\jdk-<vendor>-1.8.0.X ==> VERSION_1_8
-    // JAVA_HOME=c:\opt\jdk-<vendor>-11.X    ==> VERSION_11
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11 // JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_11 // JavaVersion.VERSION_1_8
 }
 
 ext {

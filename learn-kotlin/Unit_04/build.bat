@@ -66,7 +66,7 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_MAIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
@@ -241,7 +241,7 @@ if "%__ARG:~0,1%"=="-" (
     set /a __N+=1
 )
 shift
-goto :args_loop
+goto args_loop
 :args_done
 set _STDERR_REDIRECT=2^>NUL
 if %_DEBUG%==1 set _STDERR_REDIRECT=
@@ -258,10 +258,10 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _EXAMPLE=%_EXAMPLE% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
+    if defined _DETEKT_CMD echo %_DEBUG_LABEL% Variables  : "DETEKT_HOME=%DETEKT_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : "JAVA_HOME=%JAVA_HOME%" 1>&2
-	echo %_DEBUG_LABEL% Variables  : "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
-    echo %_DEBUG_LABEL% Variables  : "DETEKT_HOME=%DETEKT_HOME%" 1>&2
-	echo %_DEBUG_LABEL% Variables  : "KTLINT_HOME=%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
+    if defined _KTLINT_CMD echo %_DEBUG_LABEL% Variables  : "KTLINT_HOME=%KTLINT_HOME%" 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -272,10 +272,10 @@ goto :eof
 @rem apply title case to input parameter
 for /f %%i in ('powershell -C "(Get-Culture).TextInfo.ToTitleCase(('%~1').ToLower())"') do set __EXAMPLE=%%i
 if "%__EXAMPLE%"=="All" (
-    set "__EXAMPLE_FILE=%_KOTLIN_SOURCE_DIR%\Primitives.kt"
+    set "__EXAMPLE_FILE=%_MAIN_SOURCE_DIR%\Primitives.kt"
     set _EXAMPLE=*
 ) else (
-    set "__EXAMPLE_FILE=%_KOTLIN_SOURCE_DIR%\%__EXAMPLE%Example.kt"
+    set "__EXAMPLE_FILE=%_MAIN_SOURCE_DIR%\%__EXAMPLE%Example.kt"
     set _EXAMPLE=%__EXAMPLE%Example
 )
 if not exist "%__EXAMPLE_FILE%" (
@@ -287,7 +287,7 @@ goto :eof
 
 :help
 if %_VERBOSE%==1 (
-    set __BEG_P=%_STRONG_FG_CYAN%%_UNDERSCORE%
+    set __BEG_P=%_STRONG_FG_CYAN%
     set __BEG_O=%_STRONG_FG_GREEN%
     set __BEG_N=%_NORMAL_FG_YELLOW%
     set __END=%_RESET%
@@ -353,28 +353,29 @@ if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
 goto :eof
 
 :lint
-set __KTLINT_OPTS=--reporter=checkstyle,output="%_TARGET_DIR%\ktlint-report.xml"
-set /a _PLAIN=_VERBOSE+_DEBUG
-if %_PLAIN% gtr 0 set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
+if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-set __SOURCE_FILES=
-set __N=0
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" %_EXAMPLE%.kt 2^>NUL') do (
-    set __SOURCE_FILES=!__SOURCE_FILES! "%%f"
-    set /a __N+=1
+set __KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
+
+if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
+) else if %_VERBOSE%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
-if %__N%==0 (
-    echo %_WARNING_LABEL% No source file found 1>&2
-    goto :eof
-)
+set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
+
+@rem KtLint does not support absolute path in globs. 
 @rem prepend ! to negate the pattern in order to check only certain locations 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES% 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze %__N% Kotlin source files with Ktlint 1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
-call "%_KTLINT_CMD%" %__KTLINT_OPTS% %__SOURCE_FILES%
+call "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    echo %_WARNING_LABEL% Ktlint error found 1>&2
+    if %_DEBUG%==1 ( type "%__TMP_FILE%"
+    ) else if %_VERBOSE%==1 ( type "%__TMP_FILE%" 
+    )
+    if exist "%__TMP_FILE%" del "%__TMP_FILE%"
+    @rem set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -453,15 +454,15 @@ set "__TARGET_FILE=%~1"
 
 set __PATH_ARRAY=
 set __PATH_ARRAY1=
-:compile_path
+:action_path
 shift
 set __PATH=%~1
-if not defined __PATH goto :compile_next
+if not defined __PATH goto action_next
 set __PATH_ARRAY=%__PATH_ARRAY%,'%__PATH%'
 set __PATH_ARRAY1=%__PATH_ARRAY1%,'!__PATH:%_ROOT_DIR%=!'
-goto :compile_path
+goto action_path
 
-:compile_next
+:action_next
 set __TARGET_TIMESTAMP=00000000000000
 for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
      set __TARGET_TIMESTAMP=%%i
@@ -501,6 +502,7 @@ goto :eof
 
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
+set _LIBS_CPATH=
 for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
 if not exist "%__BATCH_FILE%" (
     echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
@@ -509,6 +511,10 @@ if not exist "%__BATCH_FILE%" (
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
 call "%__BATCH_FILE%" %_DEBUG%
+if not %ERRORLEVEL%==0 (
+    set _EXITCODE=1
+    goto :eof
+)
 set "_LIBS_CPATH=%_CPATH%"
 goto :eof
 
@@ -546,9 +552,9 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLA
 )
 call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
-   echo %_ERROR_LABEL% Execution failure ^(%__MAIN_CLASS%^) 1>&2
-   set _EXITCODE=1
-   goto :eof
+    echo %_ERROR_LABEL% Execution failure ^(%__MAIN_CLASS%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -563,8 +569,8 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
-   set _EXITCODE=1
-   goto :eof
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 
@@ -583,7 +589,7 @@ goto :eof
 if %_TIMER%==1 (
     for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Total elapsed time: !_DURATION! 1>&2
+    echo Total execution time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%

@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Scala 3][scala3_examples] and [TruffleSqueak][trufflesqueak_examples] are other trending topics we are currently monitoring.
+[Deno][deno_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Scala 3][scala3_examples] and [TruffleSqueak][trufflesqueak_examples] are other trending topics we are currently monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -206,6 +206,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 <!-- link refs -->
 
+[deno_examples]: https://github.com/michelou/deno-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
 [detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.18.0
 [scala3_examples]: https://github.com/michelou/dotty-examples

@@ -11,9 +11,9 @@ class Person(val givenName: String, val familyName: String, val dateOfBirth: Loc
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val person = Person(
-            "Susan",
-            "Neumann",
-            LocalDate.of(1980, 3, 17)
+        "Susan",
+        "Neumann",
+        LocalDate.of(1980, 3, 17)
     )
     println(person)
 }

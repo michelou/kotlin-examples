@@ -17,6 +17,7 @@ import java.time.LocalDateTime
  *
  */
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
 
     println("********** literals() **********")
@@ -126,7 +127,8 @@ fun numericConversion() {
     numberAccumulator+= 100
     println("numberAccumulator = ${numberAccumulator}")
 
-    val x = 10
+    var x = 10
+    x += 2
     // x += "2" Compile error!
 }
 
@@ -144,10 +146,11 @@ fun handyUtilities() {
     println("Trimmed string (better):\"$trimmedString\"")
 
     val caseString = "This sentence 42 no cent$ makes"
-    val caseStringUpperCase = caseString.toUpperCase()
+	// Starting with Kotlin 1.5 toUpperCase() becomes uppercase()
+    val caseStringUpperCase = caseString.uppercase()
     println("Trimmed string (UPPER CASE): \"$caseStringUpperCase\"")
 
-    println("Trimmed string (lower case): \"${caseStringUpperCase.toLowerCase()}\"")
+    println("Trimmed string (lower case): \"${caseStringUpperCase.lowercase()}\"")
 
     // filter()
     val stringWithCommas = "This, string had ,,lots of, commas,, ,,in,,,,, it"
