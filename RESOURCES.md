@@ -47,17 +47,21 @@
 ## <span id="news">News</span>
 
 - [InfoWorld - Kotlin news and reviews](https://www.infoworld.com/category/kotlin/).
+- [Kotlin Weekly](http://www.kotlinweekly.net/#latest).
+- [The Daily Kotlin](https://twitter.com/dailykotlin) (*Twitter*).
 
 ## <span id="papers">Papers</span>
 
+- [Java and Kotlin, a performance comparison][paper_gakis] (*Bachelor thesis*) by S. Gakis and N. Evelönn, 2020.
 - [ReduKtor: How We Stopped Worrying About Bugs in Kotlin Compiler][paper_stepanov] by Daniil Stepanov, Marat Akhin and Mikahail Belyaev, [ASE 2019](https://2019.ase-conferences.org/).
 
-## <span id="tools">Tools</span>
+## <span id="tools">Tools and Frameworks</span>
 
-- [Clikt][clikt_home]: Multiplatform Kotlin library for writing command line interfaces.
-- [detekt][detekt_home]: Static code analysis for Kotlin.
-- [ktlint] : Kotlin linter with built-in formatter.
-- [The Gradle build system - Tutorial][tool_vogella] by Lars Vobel and Simon Scholh, June 2018.
+- [Clikt][clikt_home] - a multiplatform Kotlin library for writing command line interfaces.
+- [detekt][detekt_home] - a Static code analysis for Kotlin.
+- [Kotlin∇](https://github.com/breandan/kotlingrad) - a type-safe automatic differentiation framework for Kotlin.
+- [ktlint] - a Kotlin linter with built-in formatter.
+- [The Gradle build system][tool_vogella] - a Gradle tutorial by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span>
 
@@ -85,6 +89,7 @@
 [clikt_home]: https://ajalt.github.io/clikt/
 [detekt_home]: https://detekt.github.io/detekt/
 [ktlint]: https://ktlint.github.io/
+[paper_gakis]: https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1443070&dswid=76
 [paper_stepanov]: https://arxiv.org/abs/1909.07331
 [medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html

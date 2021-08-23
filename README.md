@@ -152,8 +152,8 @@ No Windows distribution is available from the <a href="https://github.com/pinter
 </p>
 <ul style="margin:0 0 1em 20px;">
 <li>we create an installation directory <b><code>c:\opt\ktlint-0.42.1\</code></b>.</li>
-<li>we download the shell script from the <a href="https://github.com/pinterest/ktlint" rel="external">Github repository</a>.</i>
-<li>we extract the JAR file from the bash script (and check it with command <b><code>jar tf</code></b>).</li>
+<li>we download the shell script from the Github repository <a href="https://github.com/pinterest/ktlint" rel="external"><code>pinterest/ktlint</code></a>.</i>
+<li>we extract the JAR file from the bash script (and check it with command <b><code><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf</code></b>).</li>
 <li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.bin"><b><code>ktlint_header.bin</code></b></a> and the extracted JAR file.</li>
 </ul>
 <p style="margin:0 0 1em 20px;">
@@ -207,7 +207,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <!-- link refs -->
 
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.18.0-RC2
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.18.0
 [scala3_examples]: https://github.com/michelou/dotty-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
