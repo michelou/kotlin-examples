@@ -260,6 +260,7 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
+    if defined _DETEKT_CMD echo %_DEBUG_LABEL% Variables  : "DETEKT_HOME=%DETEKT_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : "JAVA_HOME=%JAVA_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : "KOTLIN_NATIVE_HOME=%KOTLIN_NATIVE_HOME%" 1>&2
@@ -513,7 +514,7 @@ if not exist "%__BATCH_FILE%" (
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
 call "%__BATCH_FILE%" %_DEBUG%
-set _LIBS_CPATH=%_CPATH%
+set "_LIBS_CPATH=%_CPATH%"
 goto :eof
 
 :doc
