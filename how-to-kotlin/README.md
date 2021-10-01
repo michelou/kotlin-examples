@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin logo"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>how-to-kotlin/</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10" rel="external">Google I/O 2018</a>  (9:30 am).<br/>
   It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
@@ -68,12 +68,12 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
 > [build] Variables  : "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u302-b08"
-> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.5.21"
-> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.5.21"
+> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.5.31"
+> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.5.31"
 > [build] Variables  : _LANGUAGE_VERSION=1.4 _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
-> [build] "C:\opt\kotlinc-1.5.21\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
-> [build] "C:\opt\kotlinc-1.5.21\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
+> [build] "C:\opt\kotlinc-1.5.31\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc-1.5.31\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
 > [build] _EXITCODE=0
 > </pre>
@@ -164,11 +164,45 @@ Yay!
 Luck!
 </pre>
 
-## <span id="callbacks">CallbacksToCoroutines</span>
-
 ## <span id="threads">ThreadsVsCoroutines</span>
 
+Command [**`build clean run`**](05_coroutines/build.bat) compiles source file [**`ThreadsVsCoroutines.kt`**](05_coroutines/src/main/kotlin/ThreadsVsCoroutines.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="../bin/timeit.bat">timeit</a> <a href="05_coroutines/build.bat">build</a> clean run</b>
+0
+1
+..
+99999
+Execution time: 00:00:35
+</pre>
+
+## <span id="callbacks">CallbacksToCoroutines</span>
+
+Command [**`build clean run`**](05_coroutines/build.bat) compiles source file [**`CallbackToCoroutines.kt`**](05_coroutines/src/main/kotlin/CallbackToCoroutines.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="05_coroutines/build.bat">build</a> clean run:CallbackToCoroutines</b>
+hi 2
+ -- Yours, 1
+hi 1
+ -- Yours, 2
+hi a
+ -- Yours, 1
+hi b
+ -- Yours, 1
+hi c
+ -- Yours, 1
+</pre>
+
 ## <span id="lazy_sequence">LazySequence</span>
+
+Command [**`build clean run`**](06_lazy_seq/build.bat) compiles source file [**`LazySequence.kt`**](06_lazy_seq/src/main/kotlin/LazySequence.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="06_lazy_seq/build.bat">build</a> clean run</b>
+[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
+</pre>
 
 ## <span id="conventions">Conventions</span>
 
@@ -186,6 +220,13 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ## <span id="local_sealed_casts">LocalSealedCasts</span>
 
+Command [**`build clean run`**](08_DSLs/build.bat) compiles source file [**`LocalSealedCasts.kt`**](08_DSLs/src/main/kotlin/LocalSealedCasts.kt) and executes the generated Java class files:
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="07_conventions/build.bat">build</a> clean run</b>
+abcd
+</pre>
+
 <!--
 ## <span id="footnotes">Footnotes</span>
 
@@ -197,7 +238,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/October 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html

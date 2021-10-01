@@ -15,9 +15,9 @@ set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
-set __DOKKA_VERSION=1.5.0
-set __KOTLIN_VERSION=1.5.21
-set __KOTLINX_VERSION=1.5.1
+set __DOKKA_VERSION=1.5.30
+set __KOTLIN_VERSION=1.5.31
+set __KOTLINX_VERSION=1.5.2
 
 set _LIBS_CPATH=
 
