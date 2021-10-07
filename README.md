@@ -30,7 +30,7 @@ For instance our development environment looks as follows (*October 2021*) <sup 
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.11\                   <i>( 39 MB)</i>
-C:\opt\apache-maven-3.8.2\                   <i>( 10 MB)</i>
+C:\opt\apache-maven-3.8.3\                   <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.18.1\                    <i>( 55 MB)</i>
 C:\opt\Git-2.33.0\                           <i>(279 MB)</i>
 C:\opt\gradle-7.2\                           <i>(121 MB)</i>
@@ -83,7 +83,7 @@ We also define a virtual drive **`K:`** in our working environment in order to r
 > **:mag_right:** We use the Windows external command [**`subst`**][windows_subst] to create virtual drives; for instance:
 >
 > <pre style="font-size:80%;">
-> <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst">subst</a> K: %USERPROFILE%\workspace\kotlin-examples</b>
+> <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst">subst</a> K: <a href="https://en.wikipedia.org/wiki/Environment_variable#Default_values">%USERPROFILE%</a>\workspace\kotlin-examples</b>
 > </pre>
 
 In the next section we give a brief description of the batch files present in this project.
@@ -99,7 +99,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       ant 1.10.11, bazel 4.1.0, gradle 7.2, java 1.8.0_302, detekt-cli 1.18.1,
       kotlinc 1.5.31, kotlinc-native 1.5.31, ktlint 0.42.1
-      cfr 0.151, make 3.81, mvn 3.8.2, git 2.33.0.windows.1, diff 3.7, bash 4.4.23(1)-release
+      cfr 0.151, make 3.81, mvn 3.8.3, git 2.33.0.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.11\bin\ant.bat
       C:\opt\bazel-4.1.0\bazel.exe
@@ -112,7 +112,7 @@ We distinguish different sets of batch commands:
       C:\opt\ktlint-0.42.1\ktlint.bat
       C:\opt\cfr-0.151\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
-      C:\opt\apache-maven-3.8.2\bin\mvn.cmd
+      C:\opt\apache-maven-3.8.3\bin\mvn.cmd
       C:\opt\Git-2.33.0\bin\git.exe
       C:\opt\Git-2.33.0\mingw64\bin\git.exe
       C:\opt\Git-2.33.0\usr\bin\diff.exe
@@ -128,7 +128,7 @@ We distinguish different sets of batch commands:
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.5.31"
       "KTLINT_HOME=C:\opt\ktlint-0.42.1"
       "MAKE_HOME=C:\opt\make-3.81"
-      "MAVEN_HOME=C:\opt\apache-maven-3.8.2"
+      "MAVEN_HOME=C:\opt\apache-maven-3.8.3"
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -187,7 +187,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </p>
 <pre style="margin:0 0 1em 20px; font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.11-bin.zip</a>                        <i>(  9 MB)</i>
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.8.2-bin.zip</a>                        <i>(  9 MB)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.8.3-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.18.1.zip</a>                             <i>( 44 MB)</i>
 <a href="https://gradle.org/releases/">gradle-7.2-bin.zip</a>                                <i>(107 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.5.31">kotlin-compiler-1.5.31.zip</a>                        <i>( 60 MB)</i>
@@ -231,7 +231,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.8.2/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.8.3/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples
