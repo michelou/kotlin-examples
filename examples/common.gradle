@@ -40,6 +40,26 @@ ext {
     if (project.hasProperty("javaMainClassName") && javaMainClassName?.trim()) javaMain = javaMainClassName
 }
 
+detekt {
+    config = files("../detekt-config.yml")
+    reports {
+        // see https://detekt.github.io/detekt/reporting.html
+        html {
+            enabled = false
+        }
+        sarif {
+            enabled = false
+        }
+        txt {
+            enabled = true
+            destination = file("${buildDir}/detekt-report.txt")
+        }
+        xml {
+            enabled = false
+        }
+    }
+}
+
 sourceSets {
     // Default: srcDirs "src/main/kotlin"
     main.kotlin.srcDirs mainSourceDir
@@ -113,6 +133,10 @@ task runJava(type: JavaExec) {
     if (args == null) args ""
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.18.1"
+}
+
 repositories {
     mavenCentral()
     maven { // e.g. dokka-gradle-plugin
@@ -124,6 +148,7 @@ repositories {
 }
 
 dependencies {
+    implementation "io.gitlab.arturbosch.detekt:detekt-cli:1.18.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     // implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"

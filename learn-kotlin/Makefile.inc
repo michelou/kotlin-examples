@@ -38,9 +38,10 @@ endif
 
 LANGUAGE_VERSION = 1.5
 
-DOKKA_VERSION   = 1.5.0
-KOTLIN_VERSION  = 1.5.21
-KOTLINX_VERSION = 1.5.1
+DOKKA_VERSION   = 1.5.31
+JUNIT_VERSION   = 4.13.2
+KOTLIN_VERSION  = 1.5.31
+KOTLINX_VERSION = 1.5.2
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)
@@ -54,6 +55,6 @@ KOTLIN_JDK8_JAR        = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kot
 KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-coroutines-core" -name kotlinx-coroutines-core-$(KOTLINX_VERSION).jar)
 KOTLINX_HTML_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-html-jvm" -name kotlinx-html-jvm-0.7.3.jar)
 HAMCREST_JAR           = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
-JUNIT_JAR              = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-4.13.2.jar)
+JUNIT_JAR              = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
 DOKKA_CPATH = $(KOTLIN_COMPILER_JAR)$(PSEP)$(KOTLINX_COROUTINES_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(KOTLIN_INTELLIJ_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_PLUGIN_JAR)

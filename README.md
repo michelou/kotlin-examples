@@ -32,7 +32,7 @@ For instance our development environment looks as follows (*October 2021*) <sup 
 C:\opt\apache-ant-1.10.11\                   <i>( 39 MB)</i>
 C:\opt\apache-maven-3.8.3\                   <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.18.1\                    <i>( 55 MB)</i>
-C:\opt\Git-2.33.0\                           <i>(279 MB)</i>
+C:\opt\Git-2.33.1\                           <i>(279 MB)</i>
 C:\opt\gradle-7.2\                           <i>(121 MB)</i>
 C:\opt\jdk-openjdk-1.8.0_302-b08\            <i>(185 MB)</i>
 C:\opt\jdk-openjdk-11.0.12_7\                <i>(300 MB)</i>
@@ -99,7 +99,7 @@ We distinguish different sets of batch commands:
    Tool versions:
       ant 1.10.11, bazel 4.1.0, gradle 7.2, java 1.8.0_302, detekt-cli 1.18.1,
       kotlinc 1.5.31, kotlinc-native 1.5.31, ktlint 0.42.1
-      cfr 0.151, make 3.81, mvn 3.8.3, git 2.33.0.windows.1, diff 3.7, bash 4.4.23(1)-release
+      cfr 0.151, make 3.81, mvn 3.8.3, git 2.33.1.windows.1, diff 3.7, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.11\bin\ant.bat
       C:\opt\bazel-4.1.0\bazel.exe
@@ -113,15 +113,15 @@ We distinguish different sets of batch commands:
       C:\opt\cfr-0.151\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
       C:\opt\apache-maven-3.8.3\bin\mvn.cmd
-      C:\opt\Git-2.33.0\bin\git.exe
-      C:\opt\Git-2.33.0\mingw64\bin\git.exe
-      C:\opt\Git-2.33.0\usr\bin\diff.exe
+      C:\opt\Git-2.33.1\bin\git.exe
+      C:\opt\Git-2.33.1\mingw64\bin\git.exe
+      C:\opt\Git-2.33.1\usr\bin\diff.exe
    Environment variables:
       "ANT_HOME=C:\opt\apache-ant-1.10.11"
       "CFR_HOME=C:\opt\cfr-0.151"
       "DETEKT_HOME=C:\opt\detekt-cli-1.18.1"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
-      "GIT_HOME=C:\opt\Git-2.33.0"
+      "GIT_HOME=C:\opt\Git-2.33.1"
       "GRADLE_HOME=C:\opt\gradle-7.2"
       "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u302-b08"
       "KOTLIN_HOME=C:\opt\kotlinc-1.5.31"
@@ -196,7 +196,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u302b08.zip</a>    <i>( 99 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.12_7.zip</a>  <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.33.0-64-bit.7z.exe</a>                  <i>( 41 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.33.1-64-bit.7z.exe</a>                  <i>( 41 MB)</i>
 </pre>
 
 ***
@@ -211,7 +211,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.18.1
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.33.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.33.1.txt
 [github_markdown]: https://github.github.com/gfm/
 [graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples

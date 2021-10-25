@@ -12,14 +12,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <kotlin.version>1.5.21</kotlin.version>
+        <kotlin.version>1.5.31</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.5.1</kotlinx.version>
+        <kotlinx.version>1.5.2</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.5</kotlin.compiler.languageVersion>
 
         <!-- https://gantsign.com/ktlint-maven-plugin/ -->
-        <ktlint.maven.version>1.9.0</ktlint.maven.version>
+        <ktlint.maven.version>1.10.2</ktlint.maven.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->

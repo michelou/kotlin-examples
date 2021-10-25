@@ -20,14 +20,14 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $<
-	$(JAR) cf $(TARGET) -C $(CLASSES_DIR) .
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $<
+	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
-	rm -rf "$(TARGET_DIR)"
+	$(RM) -rf "$(TARGET_DIR)"
 
 run: build
-	$(KOTLIN) -cp $(TARGET) $(MAIN_CLASS)
+	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
@@ -46,7 +46,7 @@ help:
 ## doc rules
 
 DOC_TARGET_DIR = $(TARGET_DIR)/docs
-DOC_SOURCES    = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name *.kt)
+DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name *.kt)
 DOC_TARGET     = $(TARGET_DIR)/.latest-doc
 
 PROJECT_NAME    ?= $(shell basename $(CURDIR))
@@ -57,7 +57,7 @@ DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -m
 
 $(DOC_TARGET): $(DOC_SOURCES)
 	[ -d "$(DOC_TARGET_DIR)" ] || $(MKDIR) -p "$(DOC_TARGET_DIR)"
-	$(KOTLIN) "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
+	"$(KOTLIN)" "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
 	@$(TOUCH) "$(DOC_TARGET)"
 
 doc: $(DOC_TARGET)
@@ -74,7 +74,7 @@ CHECKSTYLE_JAR_FILE    = $(shell $(FIND) $(HOME)/.checkstyle -name checkstyle*.j
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	$(JAVA) -jar $(CHECKSTYLE_JAR_FILE) -c=$(CHECKSTYLE_CONFIG_FILE) $^
+	"$(JAVA)" -jar $(CHECKSTYLE_JAR_FILE) -c=$(CHECKSTYLE_CONFIG_FILE) $^
 
 ##############################################################################
 ## phony

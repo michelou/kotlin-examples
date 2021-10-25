@@ -707,7 +707,7 @@ if not exist "%__USER_KOTLIN_DIR%" mkdir "%__USER_KOTLIN_DIR%"
 set "__XML_FILE=%__USER_KOTLIN_DIR%\java_checks.xml"
 if not exist "%__XML_FILE%" call :checkstyle_xml "%__XML_FILE%"
 )
-set __JAR_VERSION=8.36.2
+set __JAR_VERSION=9.0.1
 set __JAR_NAME=checkstyle-%__JAR_VERSION%-all.jar
 set __JAR_URL=https://github.com/checkstyle/checkstyle/releases/download/checkstyle-%__JAR_VERSION%/%__JAR_NAME%
 set "__JAR_FILE=%__USER_KOTLIN_DIR%\%__JAR_NAME%"

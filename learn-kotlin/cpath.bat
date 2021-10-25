@@ -16,14 +16,15 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 
 @rem library versions
-set __DOKKA_VERSION=1.5.0
-set __KOTLIN_VERSION=1.5.21
-set __KOTLINX_VERSION=1.5.1
+set __DOKKA_VERSION=1.5.31
+set __JUNIT_VERSION=4.13.2
+set __KOTLIN_VERSION=1.5.31
+set __KOTLINX_VERSION=1.5.2
 
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
-call :add_maven_jar "junit" "junit" "4.13.2"
+call :add_maven_jar "junit" "junit" "%__JUNIT_VERSION%"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
