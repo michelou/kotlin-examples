@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Deno][deno_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples] and [TruffleSqueak][trufflesqueak_examples] are other trending topics we are continuously monitoring.
+[Deno][deno_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX][wix_examples] are other trending topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -26,7 +26,7 @@ Optionally one may also install the following software:
 - [Gradle 7.2][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.42][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*October 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*November 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.11\                   <i>( 39 MB)</i>
@@ -34,7 +34,7 @@ C:\opt\apache-maven-3.8.3\                   <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.18.1\                    <i>( 55 MB)</i>
 C:\opt\Git-2.33.1\                           <i>(279 MB)</i>
 C:\opt\gradle-7.2\                           <i>(121 MB)</i>
-C:\opt\jdk-openjdk-1.8.0_302-b08\            <i>(185 MB)</i>
+C:\opt\jdk-openjdk-1.8.0_312-b07\            <i>(185 MB)</i>
 C:\opt\jdk-openjdk-11.0.12_7\                <i>(300 MB)</i>
 C:\opt\kotlinc-1.5.31\                       <i>( 64 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.5.31\  <i>(178 MB)</i>
@@ -104,7 +104,7 @@ We distinguish different sets of batch commands:
       C:\opt\apache-ant-1.10.11\bin\ant.bat
       C:\opt\bazel-4.1.0\bazel.exe
       C:\opt\gradle-7.2\bin\gradle.bat
-      C:\opt\jdk-openjdk-1.8.0u302-b08\bin\java.exe
+      C:\opt\jdk-openjdk-1.8.0u312-b07\bin\java.exe
       C:\opt\detekt-cli-1.18.1\bin\detekt-cli.bat
       C:\opt\kotlinc-1.5.31\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-x86_64-1.5.31\bin\kotlinc.bat
@@ -123,7 +123,7 @@ We distinguish different sets of batch commands:
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.33.1"
       "GRADLE_HOME=C:\opt\gradle-7.2"
-      "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u302-b08"
+      "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u312-b07"
       "KOTLIN_HOME=C:\opt\kotlinc-1.5.31"
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.5.31"
       "KTLINT_HOME=C:\opt\ktlint-0.42.1"
@@ -201,7 +201,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -238,4 +238,5 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
+[wix_examples]: https://github.com/michelou/wix-examples
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/

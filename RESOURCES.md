@@ -42,9 +42,9 @@
 - [Mastering Kotlin](https://www.packtpub.com/application-development/mastering-kotlin) by Nate Ebel, October 2019.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-8385-5572-6, 434 pages)</span>
 - [Learn Kotlin Programming][book_kotlin_programming] by Stephen Samuel and Stefan Bocutiu, May 2019.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7898-0235-1, 514 pages)</span>
 - [The Joy of Kotlin][book_joy_kotlin] by Pierre-Yves Saumont, 2018.<br/><span style="font-size:80%;">(Manning Publications,  ISBN 978-1-6172-9536-2, 480 pages)</span>.
-- [Functional Kotlin][book_functional_kotlin] by Mario Arias and Rivu Chakraborty, February 2018.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7884-7648-5, 350 pages)</span>
+- [Functional Kotlin][book_functional_kotlin] by Mario Arias and Rivu Chakraborty, February 2018.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7884-7648-5, 350 pages)</span>.
 - [Kotlin in Action][book_kotlin_in_action] by Dmitry Jemerov and Svetlana Isakova, 2017.<br/><span style="font-size:80%;">(Manning Publications, ISBN 978-1-6172-9329-0, 360 pages)</span>
-- [Programming Koltin][book_programming_kotlin] by Stephen Samuel and Sefan Bocutiu, January 2017.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7871-2636-7, 420 pages)</span>
+- [Programming Koltin][book_programming_kotlin] by Stephen Samuel and Sefan Bocutiu, January 2017.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7871-2636-7, 420 pages)</span>.
 
 ## <span id="news">News</span>
 
@@ -74,7 +74,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

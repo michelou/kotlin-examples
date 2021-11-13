@@ -52,7 +52,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 >  Options:
 >    -debug      show commands executed by this script
 >    -native     generated native executable
->    -timer      display total elapsed time
+>    -timer      display total execution time
 >    -verbose    display progress messages
 > &nbsp;
 >  Subcommands:
@@ -325,7 +325,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
