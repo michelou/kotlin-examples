@@ -17,16 +17,16 @@ This project depends on the following external software for the **Microsoft Wind
 
 - [Git 2.34][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.6][kotlin_latest] ([*release notes*][kotlin_relnotes])
-- [Kotlin Native 1.6][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup> ([*release notes*][kotlin_native_relnotes])
+- [Kotlin Native 1.6][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
 Optionally one may also install the following software:
 
 - [Apache Maven 3.8][maven_latest] ([*release notes*][maven_relnotes])
 - [detekt 1.19][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 7.3][gradle_latest] ([*release notes*][gradle_relnotes])
-- [KtLint 0.43][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup> ([*release notes*][ktlint_relnotes])
+- [KtLint 0.43][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*December 2021*) <sup id="anchor_03"><a href="#footnote_03">[3]</a></sup>:
+For instance our development environment looks as follows (*December 2021*) <sup id="anchor_03"><a href="#footnote_03">3</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.12\                   <i>( 39 MB)</i>
@@ -97,12 +97,12 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.12, bazel 4.1.0, gradle 7.3.1, java 1.8.0_302, detekt-cli 1.19.0,
+      ant 1.10.12, bazel 4.2.2, gradle 7.3.1, java 1.8.0_302, detekt-cli 1.19.0,
       kotlinc 1.6.0, kotlinc-native 1.6.0, ktlint 0.43.2
       cfr 0.151, make 3.81, mvn 3.8.4, git 2.34.1.windows.1, diff 3.8, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.12\bin\ant.bat
-      C:\opt\bazel-4.1.0\bazel.exe
+      C:\opt\bazel-4.2.2\bazel.exe
       C:\opt\gradle-7.3.1\bin\gradle.bat
       C:\opt\jdk-openjdk-1.8.0u312-b07\bin\java.exe
       C:\opt\detekt-cli-1.19.0\bin\detekt-cli.bat
@@ -222,7 +222,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.6.0
 [kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.6.0
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
