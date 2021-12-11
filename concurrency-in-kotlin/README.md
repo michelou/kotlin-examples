@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png" width="120" alt="Kotlin logo"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>concurrency-in-kotlin/</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from the <a href="https://www.packtpub.com/application-development/learning-concurrency-kotlin">Learn Concurrency in Kotlin</a> book <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.<br/>
   It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
@@ -57,7 +57,7 @@ Execution took 1034 ms
 
 ## <span id="footnotes">Footnotes</span>
 
-<span name="footnote_01">[1]</span> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
+<span id="footnote_01">[1]</span> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
     <div style="margin:-12px 0 0 20px;">
     by Miguel Angel Castiblanco Torres,<br/>
     Packt Publishing (ISBN: 9781788627160), July 2018.
@@ -65,7 +65,7 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

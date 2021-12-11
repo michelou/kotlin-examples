@@ -245,15 +245,15 @@ BUILD SUCCESSFUL in 3s
 
 ## <span id="footnotes">Footnotes</span>
 
-<span name="footnote_01">[1]</span> ***Available targets*** [↩](#anchor_01)
+<span id="footnote_01">[1]</span> ***Available targets*** [↩](#anchor_01)
 
 <p style="margin:0 0 1em 20px;">
 Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
 </p>
 <pre style="margin:0 0 1em 20px;font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.5.21 (JRE 1.8.0_302-b08)
-Kotlin/Native: 1.5.21
+info: kotlinc-native 1.6.0 (JRE 11.0.13+8)
+Kotlin/Native: 1.6.0
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 mingw_x64:                    (default) mingw
@@ -325,7 +325,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

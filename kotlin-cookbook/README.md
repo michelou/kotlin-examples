@@ -3,7 +3,7 @@
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>kotlin-cookbook/</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="http://shop.oreilly.com/product/0636920224327.do">Ken Kousen's book</a> "<i>Koltin Cookbook</i>" (O'Reilly, 2019).<br/>
+  <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>kotlin-cookbook\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="http://shop.oreilly.com/product/0636920224327.do">Ken Kousen's book</a> "<i>Koltin Cookbook</i>" (O'Reilly, 2019).<br/>
   It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
@@ -200,7 +200,7 @@ Test run finished after 100 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

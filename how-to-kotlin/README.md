@@ -3,7 +3,7 @@
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>how-to-kotlin/</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10" rel="external">Google I/O 2018</a>  (9:30 am).<br/>
+  <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>how-to-kotlin\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10" rel="external">Google I/O 2018</a>  (9:30 am).<br/>
   It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
@@ -238,7 +238,7 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2021* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
