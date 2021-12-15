@@ -23,6 +23,7 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Scala vs kotlin: Which one is better for your project](blog_dac) by [DAC](https://dac.digital/about/), October 2021.
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
 - [Exploring Kotlin/Native – Part 2 – Interoperability](https://bignerdranch.com/blog/exploring-kotlin-native-part-2-interoperability/) by Jamie Lee, May 12, 2020.
@@ -83,6 +84,7 @@
 [article_junit]: https://kotlintesting.com/handling-exceptions-in-tests/
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
 [blog_berga]: https://www.imaginarycloud.com/blog/kotlin-vs-java/
+[blog_dac]: https://dac.digital/scala-vs-kotlin-which-one-is-better-for-your-project/
 [blog_exploring]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin

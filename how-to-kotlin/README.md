@@ -67,13 +67,13 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] Properties : _PROJECT_NAME=01_bean _PROJECT_VERSION=0.1-SNAPSHOT
 > [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u302-b08"
-> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.5.31"
-> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.5.31"
+> [build] Variables  : "JAVA_HOME=c:\opt\jdk-openjdk-1.8.0u312-b07"
+> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.6.10"
+> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.6.10"
 > [build] Variables  : _LANGUAGE_VERSION=1.4 _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
-> [build] "C:\opt\kotlinc-1.5.31\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
-> [build] "C:\opt\kotlinc-1.5.31\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
+> [build] "C:\opt\kotlinc-1.6.10\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc-1.6.10\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
 > [build] _EXITCODE=0
 > </pre>
