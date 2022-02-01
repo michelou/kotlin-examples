@@ -16,10 +16,10 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 
 @rem library versions
-set __DOKKA_VERSION=1.5.31
+set __DOKKA_VERSION=1.6.10
 set __JUNIT_VERSION=4.13.2
-set __KOTLIN_VERSION=1.5.31
-set __KOTLINX_VERSION=1.5.2
+set __KOTLIN_VERSION=1.6.10
+set __KOTLINX_VERSION=1.6.0
 
 set _LIBS_CPATH=
 

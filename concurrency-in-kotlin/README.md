@@ -57,15 +57,16 @@ Execution took 1034 ms
 
 ## <span id="footnotes">Footnotes</span>
 
-<span id="footnote_01">[1]</span> ***Learn Concurrency in Kotlin** Book* [↩](#anchor_01)
-    <div style="margin:-12px 0 0 20px;">
-    by Miguel Angel Castiblanco Torres,<br/>
-    Packt Publishing (ISBN: 9781788627160), July 2018.
-    </div>
+<span id="footnote_01">[1]</span> *Literature* [↩](#anchor_01)
+
+<dl><dd>
+<a href="https://www.packtpub.com/product/learning-concurrency-in-kotlin/9781788627160">Learn Concurrency in Kotlin</a> by Miguel Angel Castiblanco Torre, July 2018.<br/>
+<span style="font-size:80%;">(Packt Publishing (ISBN: 978-1-7886-2716-0).</span>
+</dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2021* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

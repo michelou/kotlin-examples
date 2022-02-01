@@ -247,10 +247,11 @@ BUILD SUCCESSFUL in 3s
 
 <span id="footnote_01">[1]</span> ***Available targets*** [↩](#anchor_01)
 
-<p style="margin:0 0 1em 20px;">
+<dl><dd>
 Command <b><code>kotlinc-native -list-targets</code></b> displays the list of available targets:
-</p>
-<pre style="margin:0 0 1em 20px;font-size:80%;">
+</dd>
+<dd>
+<pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
 info: kotlinc-native 1.6.0 (JRE 11.0.13+8)
 Kotlin/Native: 1.6.0
@@ -267,13 +268,15 @@ android_arm32:
 android_arm64:
 wasm32:
 </pre>
+</dd></dl>
 
-<span name="footnote_02">[2]</span> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
+<span id="footnote_02">[2]</span> ***Kotlin compiler option <code>-d</code>*** [↩](#anchor_02)
 
-<p style="margin:0 0 1em 20px;">
+<dl><dd>
 The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single Java archive file if the <b><code>-d</code></b> option argument ends with <b><code>.jar</code></b> (in our case <b><code>target\HelloWorld.jar</code></b>).
-</p>
-<pre style="margin:0 0 1em 20px;font-size:80%;">
+</dd>
+<dd>
+<pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir">dir</a> target | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> HelloWorld.jar</b>
 02.11.2019  16:45             1 164 HelloWorld.jar
@@ -283,27 +286,30 @@ META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
 </pre>
+</dd></dl>
 
-<span name="footnote_03">[3]</span> ***Execution on JVM*** [↩](#anchor_03)
+<span id="footnote_03">[3]</span> ***Execution on JVM*** [↩](#anchor_03)
 
-<p style="margin:0 0 1em 20px;">
+<dl><dd>
 On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can be executed in several ways depending on two parameters:
 - We run command <b><code>kotlin.bat</code></b> or command <b><code>java.exe</code></b>.
 - We generated either class files or a single JAR file for our <b><code>HelloWorld</code></b> program.
-</p>
-<table style="margin:0 0 1em 20px;">
+</dd>
+<dd>
+<table>
 <tr><th>Command</th><th>Class/JAR file</th><th>Session example</th></tr>
 <tr><td><code>kotlin.bat</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; kotlin -cp target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><b><code>&gt; kotlin -J-Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code></br><code>Hello World!</code></td></tr>
 <tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></td></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code><br/><code>Hello World!</code></td></tr>
 </table>
-<span style="margin:0 0 1em 20px;font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.32\lib\kotlin-stdlib.jar</code></b></span>
-
-<p style="margin:0 0 1em 20px;">
+<span style="font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.32\lib\kotlin-stdlib.jar</code></b></span>
+</dd>
+<dd>
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
-</p>
-<pre style="margin:0 0 1em 20px;font-size:80%;">
+</dd>
+<dd>
+<pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir">dir</a> target | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> HelloWorld.jar</b>
 02.11.2019  16:40         1 309 824 HelloWorld.jar
@@ -322,10 +328,11 @@ kotlin/coroutines/intrinsics/CoroutineSingletons.class
 <b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java</a> -jar target\HelloWorld.jar</b>
 Hello World!
 </pre>
+</dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/January 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

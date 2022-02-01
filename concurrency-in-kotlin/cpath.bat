@@ -26,7 +26,7 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-set __KOTLINX_VERSION=1.5.1
+set __KOTLINX_VERSION=1.6.0
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLINX_VERSION%"
@@ -38,7 +38,7 @@ call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core-jvm" "%__KO
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
 
 
-set __DOKKA_VERSION=1.5.0
+set __DOKKA_VERSION=1.6.10
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"

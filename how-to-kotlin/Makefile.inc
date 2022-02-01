@@ -47,10 +47,10 @@ endif
 
 LANGUAGE_VERSION = 1.5
 
-DOKKA_VERSION   = 1.5.31
+DOKKA_VERSION   = 1.6.10
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.5.31
-KOTLINX_VERSION = 1.5.2
+KOTLIN_VERSION  = 1.6.10
+KOTLINX_VERSION = 1.6.0
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
