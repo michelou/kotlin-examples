@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Deno][deno_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX][wix_examples] are other trending topics we are continuously monitoring.
+[Ada][ada_examples], [Deno][deno_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX][wix_examples] are other trending topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -97,14 +97,14 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.12, bazel 4.2.2, gradle 7.3.3, java 1.8.0_302, detekt-cli 1.19.0,
+      ant 1.10.12, bazel 4.2.2, gradle 7.3.3, java 11.0.14, detekt-cli 1.19.0,
       kotlinc 1.6.0, kotlinc-native 1.6.0, ktlint 0.43.2
       cfr 0.151, make 3.81, mvn 3.8.4, git 2.35.1.windows.1, diff 3.8, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.12\bin\ant.bat
       C:\opt\bazel-4.2.2\bazel.exe
       C:\opt\gradle-7.3.3\bin\gradle.bat
-      C:\opt\jdk-openjdk-1.8.0u312-b07\bin\java.exe
+      C:\opt\jdk-temurin-11.0.14_9\bin\java.exe
       C:\opt\detekt-cli-1.19.0\bin\detekt-cli.bat
       C:\opt\kotlinc-1.6.10\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-x86_64-1.6.10\bin\kotlinc.bat
@@ -123,7 +123,7 @@ We distinguish different sets of batch commands:
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.35.1"
       "GRADLE_HOME=C:\opt\gradle-7.3.3"
-      "JAVA_HOME=c:\opt\jdk-temurin-1.8.0u322-b06"
+      "JAVA_HOME=C:\opt\jdk-temurin-11.0.14_9"
       "KOTLIN_HOME=C:\opt\kotlinc-1.6.10"
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.6.10"
       "KTLINT_HOME=C:\opt\ktlint-0.43.2"
@@ -219,7 +219,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [git_exe]: https://git-scm.com/docs/git
 [git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.35.1.txt
 [github_markdown]: https://github.github.com/gfm/
-[graalsqueak_examples]: https://github.com/michelou/graalsqueak-examples
+[golang_examples]: https://github.com/michelou/golang-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
@@ -241,6 +241,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples
+[spring_examples]: https://github.com/michelou/spring-examples
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
