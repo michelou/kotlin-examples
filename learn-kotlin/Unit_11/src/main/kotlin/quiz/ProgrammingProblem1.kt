@@ -21,6 +21,7 @@ import com.makotogo.learn.kotlin.controller.processPerson
 import com.makotogo.learn.kotlin.model.Person
 import com.makotogo.learn.kotlin.util.createPerson
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
 
     // Create an immutable Set of Person objects

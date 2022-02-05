@@ -20,7 +20,7 @@
     </dependencies>
 
     <properties>
-        <mainClass>StringsKt</mainClass>
+        <mainClass>MainKt</mainClass>
     </properties>
 
     <build>

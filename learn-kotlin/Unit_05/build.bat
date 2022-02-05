@@ -73,8 +73,6 @@ set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 set _MAIN_NAME=Examples
 set _MAIN_CLASS=%_MAIN_NAME%Kt
 
-set _LANGUAGE_VERSION=1.4
-
 set _DETEKT_CMD=
 if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
     set "_DETEKT_CMD=%DETEKT_HOME%\bin\detekt-cli.bat"
@@ -152,6 +150,8 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
+set _LANGUAGE_VERSION=1.5
+
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
     for /f "tokens=1,* delims==" %%i in (%__PROPS_FILE%) do (
@@ -168,6 +168,7 @@ if exist "%__PROPS_FILE%" (
     if defined _project_name set _PROJECT_NAME=!_project_name!
     if defined _project_url set _PROJECT_URL=!_project_url!
     if defined _project_version set _PROJECT_VERSION=!_project_version!
+    if defined _language_version set _LANGUAGE_VERSION=!_language_version!
 )
 goto :eof
 
@@ -243,6 +244,7 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
     if defined _KTLINT_CMD echo %_DEBUG_LABEL% Variables  : KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof

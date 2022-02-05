@@ -77,6 +77,7 @@ goto end
 @rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
 :env
 set _BASENAME=%~n0
+set _DRIVE_NAME=I
 set "_ROOT_DIR=%~dp0"
 
 call :env_colors
@@ -133,7 +134,6 @@ goto :eof
 
 @rem input parameter: %*
 :args
-set _DRIVE_NAME=K
 set _HELP=0
 set _VERBOSE=0
 set __N=0
@@ -165,9 +165,11 @@ goto args_loop
 :args_done
 call :subst %_DRIVE_NAME% "%_ROOT_DIR%"
 if not %_EXITCODE%==0 goto :eof
+
 if %_DEBUG%==1 (
-    echo %_DEBUG_LABEL% Options  : _HELP=%_HELP% _VERBOSE=%_VERBOSE% 1>&2
-    echo %_DEBUG_LABEL% Variables: _DRIVE_NAME=%_DRIVE_NAME% 1>&2
+    echo %_DEBUG_LABEL% Options    : _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Subcommands: _HELP=%_HELP% 1&2
+    echo %_DEBUG_LABEL% Variables  : _DRIVE_NAME=%_DRIVE_NAME% 1>&2
 )
 goto :eof
 
@@ -731,6 +733,8 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
     if defined MAKE_HOME echo    "MAKE_HOME=%MAKE_HOME%" 1>&2
     if defined MAVEN_HOME echo    "MAVEN_HOME=%MAVEN_HOME%" 1>&2
+    echo Path associations: 1>&2
+    for /f "delims=" %%i in ('subst') do echo    %%i 1>&2
 )
 goto :eof
 

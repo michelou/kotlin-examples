@@ -20,6 +20,7 @@ package com.makotogo.learn.kotlin.quiz
 import com.makotogo.learn.kotlin.controller.processChar
 import com.makotogo.learn.kotlin.util.createChar
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
 
     // Create an Array<List<Char>>

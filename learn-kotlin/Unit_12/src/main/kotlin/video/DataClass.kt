@@ -19,6 +19,7 @@ package com.makotogo.learn.kotlin.video
 
 data class DemoClass(val property: String)
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val attributeValue = "Some Value"
 

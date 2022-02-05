@@ -63,5 +63,5 @@ fun processFloat(float: Float) {
  * For this simple exercise, that just means printing it out.
  */
 fun processChar(char: Char) {
-    println("Char => $char (${char.toLong()})")
+    println("Char => $char (${char.code})")
 }

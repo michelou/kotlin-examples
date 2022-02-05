@@ -71,8 +71,6 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-set _LANGUAGE_VERSION=1.4
-
 set _DETEKT_CMD=
 if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
     set "_DETEKT_CMD=%DETEKT_HOME%\bin\detekt-cli.bat"
@@ -150,6 +148,8 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
+set _LANGUAGE_VERSION=1.5
+
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
     for /f "tokens=1,* delims==" %%i in (%__PROPS_FILE%) do (
@@ -166,6 +166,7 @@ if exist "%__PROPS_FILE%" (
     if defined _project_name set _PROJECT_NAME=!_project_name!
     if defined _project_url set _PROJECT_URL=!_project_url!
     if defined _project_version set _PROJECT_VERSION=!_project_version!
+    if defined _language_version set _LANGUAGE_VERSION=!_language_version!
 )
 goto :eof
 
@@ -242,6 +243,7 @@ if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Variables  : "JAVA_HOME=%JAVA_HOME%" 1>&21
     echo %_DEBUG_LABEL% Variables  : "KOTLIN_HOME=%KOTLIN_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : "KTLINT_HOME=%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -287,13 +289,19 @@ echo     %__BEG_O%lint[:^<n^>]%__END%     analyze Kotlin source files with %__BE
 echo     %__BEG_O%run[:^<n^>]%__END%      execute the generated program
 echo.
 echo   Valid values: n=1..4 ^(default=%__BEG_O%2%__END%^)
+if %_VERBOSE%==0 goto :eof
+echo.
+echo   %__BEG_P%Build tools:%__END%
+echo     %__BEG_O%^> ant clean run%__END%
+echo     %__BEG_O%^> gradle -quiet clean run%__END%
+echo     %__BEG_O%^> mvn -quiet clean compile exec:java%__END%
 goto :eof
 
 :clean
 call :rmdir "%_TARGET_DIR%"
 goto :eof
 
-@rem input parameter(s): %1=directory path
+@rem input parameter: %1=directory path
 :rmdir
 set "__DIR=%~1"
 if not exist "%__DIR%\" goto :eof
@@ -368,19 +376,21 @@ for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do 
     set /a __N+=1
 )
 if %__N%==0 (
-    echo %_WARNING_LABEL% No source file found 1>&2
+    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_opts.txt"
 set "__CPATH=%_CLASSES_DIR%"
 echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )

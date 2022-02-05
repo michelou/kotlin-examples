@@ -55,6 +55,7 @@ fun accessProperty() {
 /**
  * The ubiquitous main function. We meet again.
  */
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     accessProperty()
 }

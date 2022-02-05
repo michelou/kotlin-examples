@@ -25,28 +25,8 @@ if %_HELP%==1 (
     call :help
     exit /b !_EXITCODE!
 )
-if %_CLEAN%==1 (
-    call :clean
-    if not !_EXITCODE!==0 goto end
-)
-if %_DETEKT%==1 (
-    call :detekt
-    if not !_EXITCODE!==0 goto end
-)
-if %_LINT%==1 (
-    call :lint
-    if not !_EXITCODE!==0 goto end
-)
-if %_COMPILE%==1 (
-    call :compile_%_TARGET%
-    if not !_EXITCODE!==0 goto end
-)
-if %_DOC%==1 (
-    call :doc
-    if not !_EXITCODE!==0 goto end
-)
-if %_RUN%==1 (
-    call :run_%_TARGET%
+for %%i in (%_COMMANDS%) do (
+    call :%%i
     if not !_EXITCODE!==0 goto end
 )
 goto end
@@ -71,8 +51,6 @@ set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
-
-set _LANGUAGE_VERSION=1.4
 
 set _DETEKT_CMD=
 if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
@@ -158,6 +136,8 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
+set _LANGUAGE_VERSION=1.5
+
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
     for /f "tokens=1,* delims==" %%i in (%__PROPS_FILE%) do (
@@ -174,22 +154,17 @@ if exist "%__PROPS_FILE%" (
     if defined _project_name set _PROJECT_NAME=!_project_name!
     if defined _project_url set _PROJECT_URL=!_project_url!
     if defined _project_version set _PROJECT_VERSION=!_project_version!
+    if defined _language_version set _LANGUAGE_VERSION=!_language_version!
 )
 goto :eof
 
 @rem input parameter: %*
-@rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
+@rem output parameters: _COMMANDS, _HELP, _TIMER, _VERBOSE
 :args
-set _CLEAN=0
-set _COMPILE=0
-set _DETEKT=0
-set _DOC=0
-set _EXAMPLE=Properties
+set _COMMANDS=
 set _HELP=0
-set _LINT=0
-set _RUN=0
+set _MAIN_NAME=Properties
 set _TARGET=jvm
-set _TEST=0
 set _TIMER=0
 set _VERBOSE=0
 set __N=0
@@ -203,6 +178,7 @@ if "%__ARG:~0,1%"=="-" (
     @rem option
     if "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if "%__ARG%"=="-help" ( set _HELP=1
+    ) else if "%__ARG%"=="-native" ( set _TARGET=native
     ) else if "%__ARG%"=="-timer" ( set _TIMER=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
@@ -212,25 +188,25 @@ if "%__ARG:~0,1%"=="-" (
    )
 ) else (
     @rem subcommand
-    if "%__ARG%"=="clean" ( set _CLEAN=1
-    ) else if "%__ARG%"=="compile" ( set _COMPILE=1
+    if "%__ARG%"=="clean" ( set _COMMANDS=!_COMMANDS! clean
+    ) else if "%__ARG%"=="compile" ( set _COMMANDS=!_COMMANDS! compile
     ) else if "%__ARG:~0,8%"=="compile:" (
         call :main_name "%__ARG:~8%"
         if not !_EXITCODE!==0 goto args_done
-        set _COMPILE=1
-    ) else if "%__ARG%"=="detekt" ( set _DETEKT=1
-    ) else if "%__ARG%"=="doc" ( set _DOC=1
+        set _COMMANDS=!_COMMANDS! compile
+    ) else if "%__ARG%"=="detekt" ( set _COMMANDS=!_COMMANDS! detekt
+    ) else if "%__ARG%"=="doc" ( set _COMMANDS=!_COMMANDS! doc
     ) else if "%__ARG%"=="help" ( set _HELP=1
-    ) else if "%__ARG%"=="lint" ( set _LINT=1
+    ) else if "%__ARG%"=="lint" ( set _COMMANDS=!_COMMANDS! lint
     ) else if "%__ARG:~0,5%"=="lint:" (
         call :main_name "%__ARG:~5%"
         if not !_EXITCODE!==0 goto args_done
-        set _LINT=1
-    ) else if "%__ARG%"=="run" ( set _COMPILE=1& set _RUN=1
+        set _COMMANDS=!_COMMANDS! lint
+    ) else if "%__ARG%"=="run" ( set _COMMANDS=!_COMMANDS! compile run
     ) else if "%__ARG:~0,4%"=="run:" (
         call :main_name "%__ARG:~4%"
         if not !_EXITCODE!==0 goto args_done
-        set _COMPILE=1& set _RUN=1
+        set _COMMANDS=!_COMMANDS! compile run
     ) else (
         echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
         set _EXITCODE=1
@@ -244,20 +220,24 @@ goto :args_loop
 set _STDERR_REDIRECT=2^>NUL
 if %_DEBUG%==1 set _STDERR_REDIRECT=
 
-if %_DETEKT%==1 if not defined _DETEKT_CMD (
+set _COMMANDS=!_COMMANDS:compile=compile_%_TARGET%!
+set _COMMANDS=!_COMMANDS:run=run_%_TARGET%!
+
+if not "!_COMMANDS:detekt=!"=="%_COMMANDS%" if not defined _DETEKT_CMD (
     echo %_WARNING_LABEL% Detekt tool not found ^(disable subcommand 'detekt'^) 1>&2
-    set _DETEKT=0
+    set _COMMANDS=!_COMMANDS:detekt=!
 )
-if %_LINT%==1 if not defined _KTLINT_CMD (
+if not "!_COMMANDS:lint=!"=="%_COMMANDS%" if not defined _KTLINT_CMD (
     echo %_WARNING_LABEL% KtLint tool not found ^(disable subcommand 'lint'^) 1>&2
-    set _LINT=0
+    set _COMMANDS=!_COMMANDS:lint=!
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
     echo %_DEBUG_LABEL% Options    : _EXAMPLE=%_EXAMPLE% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
-    echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% 1>&2
+    echo %_DEBUG_LABEL% Subcommands: _COMMANDS=%_COMMANDS% 1>&2
     echo %_DEBUG_LABEL% Variables  : JAVA_HOME="%JAVA_HOME%" KOTLIN_HOME="%KOTLIN_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : DETEKT_HOME="%DETEKT_HOME%" KTLINT_HOME="%KTLINT_HOME%" 1>&2
+    echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _MAIN_NAME=%_MAIN_NAME% 1>&2
 )
 if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
@@ -306,13 +286,19 @@ echo     %__BEG_O%lint[:^<name^>]%__END%     analyze Kotlin source files with %_
 echo     %__BEG_O%run[:^<name^>]%__END%      execute the generated program
 echo.
 echo   Valid names are: %__BEG_O%properties%__END% ^(default^), %__BEG_O%constructors%__END%, %__BEG_O%dataclasses%__END%, %__BEG_O%extensions%__END%
+if %_VERBOSE%==0 goto :eof
+echo.
+echo   %__BEG_P%Build tools:%__END%
+echo     %__BEG_O%^> ant clean run%__END%
+echo     %__BEG_O%^> gradle -quiet clean run%__END%
+echo     %__BEG_O%^> mvn -quiet clean compile exec:java%__END%
 goto :eof
 
 :clean
 call :rmdir "%_TARGET_DIR%"
 goto :eof
 
-@rem input parameter(s): %1=directory path
+@rem input parameter: %1=directory path
 :rmdir
 set "__DIR=%~1"
 if not exist "%__DIR%\" goto :eof
@@ -396,13 +382,15 @@ for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
 if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -419,15 +407,21 @@ for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
+if %__N%==0 (
+    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
+    goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
+)
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo -Werror -kotlin-home "%KOTLIN_HOME:\=\\%" -o "%_EXE_FILE:\=\\%" -e "%__PKG_NAME%main" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(native^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(native^) 1>&2
 )
 call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(native^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(native^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -556,7 +550,7 @@ goto :eof
 if %_TIMER%==1 (
     for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Total elapsed time: !_DURATION! 1>&2
+    echo Total execution time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%
