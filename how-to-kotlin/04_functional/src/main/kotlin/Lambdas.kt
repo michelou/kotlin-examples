@@ -1,5 +1,6 @@
 package _04_functional
 
+@Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     val numbers = (1..100).toList()
 

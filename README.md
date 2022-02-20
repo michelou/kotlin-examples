@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Deno][deno_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX][wix_examples] are other trending topics we are continuously monitoring.
+[Ada][ada_examples], [Akka][akka_examples], [Deno][deno_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX][wix_examples] are other trending topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -33,9 +33,9 @@ C:\opt\apache-ant-1.10.12\                   <i>( 39 MB)</i>
 C:\opt\apache-maven-3.8.4\                   <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.19.0\                    <i>( 55 MB)</i>
 C:\opt\Git-2.35.1\                           <i>(282 MB)</i>
-C:\opt\gradle-7.3.3\                         <i>(122 MB)</i>
+C:\opt\gradle-7.4\                           <i>(122 MB)</i>
 C:\opt\jdk-temurin-1.8.0_322-b06\            <i>(185 MB)</i>
-C:\opt\jdk-temurin-11.0.14_9\                <i>(300 MB)</i>
+C:\opt\jdk-temurin-11.0.14-1_1\              <i>(300 MB)</i>
 C:\opt\kotlinc-1.6.10\                       <i>( 74 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.6.10\  <i>(198 MB)</i>
 C:\opt\ktlint-0.43.2\                        <i>( 53 MB)</i>
@@ -51,7 +51,7 @@ This project is organized as follows:
 <pre style="font-size:80%;">
 bin\
 <a href="bin/kotlin/build.bat">bin\kotlin\build.bat</a>
-concurrency-in-kotlin\
+concurrency-in-kotlin\{<a href="concurrency-in-kotlin/README.md">README.md</a>}
 docs\
 examples\{<a href="examples/README.md">README.md</a>, <a href="examples/HelloWorld/">HelloWorld</a>, <a href="examples/JavaToKotlin/">JavaToKoltin</a>, ..}
 how-to-kotlin\{<a href="how-to-kotlin/README.md">README.md</a>, <a href="how-to-kotlin/01_bean/">01_bean</a>, <a href="how-to-kotlin/02_properties/">02_properties</a>, ..}
@@ -97,13 +97,13 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.12, bazel 4.2.2, gradle 7.3.3, java 11.0.14, detekt-cli 1.19.0,
+      ant 1.10.12, bazel 4.2.2, gradle 7.4, java 11.0.14, detekt-cli 1.19.0,
       kotlinc 1.6.0, kotlinc-native 1.6.0, ktlint 0.43.2
       cfr 0.151, make 3.81, mvn 3.8.4, git 2.35.1.windows.1, diff 3.8, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.12\bin\ant.bat
       C:\opt\bazel-4.2.2\bazel.exe
-      C:\opt\gradle-7.3.3\bin\gradle.bat
+      C:\opt\gradle-7.4\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.14_9\bin\java.exe
       C:\opt\detekt-cli-1.19.0\bin\detekt-cli.bat
       C:\opt\kotlinc-1.6.10\bin\kotlinc.bat
@@ -122,7 +122,7 @@ We distinguish different sets of batch commands:
       "DETEKT_HOME=C:\opt\detekt-cli-1.19.0"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.35.1"
-      "GRADLE_HOME=C:\opt\gradle-7.3.3"
+      "GRADLE_HOME=C:\opt\gradle-7.4"
       "JAVA_HOME=C:\opt\jdk-temurin-11.0.14_9"
       "KOTLIN_HOME=C:\opt\kotlinc-1.6.10"
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.6.10"
@@ -137,34 +137,38 @@ We distinguish different sets of batch commands:
 
 ## <span id="footnotes">Footnotes</span>
 
-<span name="footnote_01">[1]</span> ***Kotlin/Native*** [↩](#anchor_01)
+<span id="footnote_01">[1]</span> ***Kotlin/Native*** [↩](#anchor_01)
 
-<p style="margin:0 0 1em 20px;">
+<dl><dd>
 Kotlin/Native is an LLVM backend for the Kotlin compiler, runtime implementation, and native code generation facility using the LLVM toolchain.
-</p>
-<table style="margin:0 0 1em 20px;">
+</dd>
+<dd>
+<table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew16.html#llvm-and-linker-updates">1.6.0</a></td><td>11.1.0</td></tr>
 <tr><td><a hef="https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019">1.3.60</a></td><td>8.0</td></tr>
 </table>
+</dd></dl>
 
-<span name="footnote_02">[2]</span> ***KtLint on Windows*** [↩](#anchor_02)
+<span id="footnote_02">[2]</span> ***KtLint on Windows*** [↩](#anchor_02)
 
-<p style="margin:0 0 1em 20px;">
+<dl><dd>
 No Windows distribution is available from the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> repository.
-</p>
-<p style="margin:0 0 1em 20px;">Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as the <a href="http://www.lihaoyi.com/mill/index.html#windows">Mill assembly</a> distribution):
-</p>
-<ul style="margin:0 0 1em 20px;">
+</dd>
+<dd>
+Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as the <a href="http://www.lihaoyi.com/mill/index.html#windows">Mill assembly</a> distribution):
+<ul>
 <li>we create an installation directory <b><code>c:\opt\ktlint-0.43.2\</code></b>.</li>
 <li>we download the shell script from the Github repository <a href="https://github.com/pinterest/ktlint" rel="external"><code>pinterest/ktlint</code></a>.</i>
 <li>we extract the JAR file from the bash script (and check it with command <b><code><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf</code></b>).</li>
 <li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.bin"><b><code>ktlint_header.bin</code></b></a> and the extracted JAR file.</li>
 </ul>
-<p style="margin:0 0 1em 20px;">
+</dd>
+<dd>
 Here are the performed operations:
-</p>
-<pre style="margin:0 0 1em 20px; font-size:80%;">
+</dd>
+<dd>
+<pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir">mkdir</a> c:\opt\ktlint-0.43.2</b>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a> c:\opt\ktlint-0.43.2</b>
 &nbsp;
@@ -174,27 +178,31 @@ Here are the performed operations:
 com/pinterest/ktlint/Main.class
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy">copy</a> /y /b k:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
 </pre>
-<p style="margin:0 0 1em 20px;">
+</dd>
+<dd>
 The installation directory now contains one single file, namely <b><code>ktlint.bat</code></b>:
-</p>
-<pre style="margin:0 0 1em 20px; font-size:80%;">
+</dd>
+<dd>
+<pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir">dir</a> /b c:\opt\ktlint-0.43.2</b>
 ktlint.bat
 &nbsp;
 <b>&gt; c:\opt\ktlint-0.43.2\<a href="https://ktlint.github.io/#command-line">ktlint.bat</a> --version</b>
 0.43.2
 </pre>
+</dd></dl>
 
-<span name="footnote_03">[3]</span> ***Downloads*** [↩](#anchor_03)
+<span id="footnote_03">[3]</span> ***Downloads*** [↩](#anchor_03)
 
-<p style="margin:0 0 1em 20px;">
+<dl><dd>
 In our case we downloaded the following installation files (see <a href="#proj_deps">section 1</a>):
-</p>
-<pre style="margin:0 0 1em 20px; font-size:80%;">
+</dd>
+<dd>
+<pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.12-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.8.4-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.19.0.zip</a>                             <i>( 44 MB)</i>
-<a href="https://gradle.org/releases/">gradle-7.3.3-bin.zip</a>                              <i>(107 MB)</i>
+<a href="https://gradle.org/releases/">gradle-7.4-bin.zip</a>                              <i>(107 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.6.0">kotlin-compiler-1.6.0.zip</a>                         <i>( 60 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.6.0">kotlin-native-windows-x86_64-1.6.0.zip</a>            <i>(125 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.43.2)</a>                                   <i>( 47 MB)</i>
@@ -203,6 +211,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.14_9.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.35.1-64-bit.7z.exe</a>                  <i>( 41 MB)</i>
 </pre>
+</dd></dl>
 
 ***
 
@@ -212,6 +221,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <!-- link refs -->
 
 [ada_examples]: https://github.com/michelou/ada-examples
+[akka_examples]: https://github.com/michelou/akka-examples
 [deno_examples]: https://github.com/michelou/deno-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
 [detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.19.0
@@ -223,13 +233,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/7.3.3/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/7.4/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.6.0
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.6.0
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.6.10
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.6.10
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
