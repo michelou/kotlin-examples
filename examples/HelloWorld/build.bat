@@ -568,11 +568,11 @@ if %_ACTION_REQUIRED%==0 goto :eof
 call :libs_cpath
 if not %_EXITCODE%==0 goto :eof
 
-set "__OPTS_FILE=%_TARGET_DIR%\test_kotlinc_opts.txt"
+set "__OPTS_FILE=%_TARGET_DIR%\kotlinc_test_opts.txt"
 set "__CPATH=%_CPATH%%_CLASSES_DIR%"
 echo -cp "%__CPATH:\=\\%" -d "%_TEST_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
-set "__SOURCES_FILE=%_TARGET_DIR%\test_kotlinc_sources.txt"
+set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_test_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
 for /f %%i in ('dir /s /b "%_SOURCE_DIR%\test\kotlin\*.kt" 2^>NUL') do (
@@ -586,11 +586,11 @@ if %__N%==0 (
 ) else ( set __N_FILES=%__N% Kotlin test source files
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% ^(JVM^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to directory "!_TEST_CLASSES_DIR:%_ROOT_DIR%\=!" ^(JVM^) 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N_FILES% failed ^(JVM^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_TEST_CLASSES_DIR:%_ROOT_DIR%\=!" ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )

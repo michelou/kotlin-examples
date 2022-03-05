@@ -38,8 +38,8 @@ val compileKotlin: KotlinCompile by tasks
 // compileKotlin.kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
 
 // Common options
-compileKotlin.kotlinOptions.apiVersion = "1.4"
-compileKotlin.kotlinOptions.languageVersion = "1.4"
+compileKotlin.kotlinOptions.apiVersion = "1.5"
+compileKotlin.kotlinOptions.languageVersion = "1.5"
 
 // JVM options
 // compileKotlin.kotlinOptions.includeRuntime = false
@@ -75,7 +75,7 @@ repositories {
 
 dependencies {
     api(kotlin("stdlib", "${Config.kotlinVersion}"))
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.60")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
     implementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("test-junit", "${Config.kotlinVersion}"))

@@ -68,7 +68,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 
 ## <span id="hello-jvm">HelloWorld (JVM/native)</span>
 
-Command [**`build clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02"><a href="#footnote_02">[2]</a></sup>:
+Command [**`build clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02">[2](#footnote_02)</sup>:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="HelloWorld/build.bat">build</a> clean run</b>
@@ -332,7 +332,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/February 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/March 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

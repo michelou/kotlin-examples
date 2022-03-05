@@ -56,7 +56,7 @@ if not exist "%__JAR_FILE%" (
         )
         powershell -c "$progressPreference='silentlyContinue';Invoke-WebRequest -Uri !__JAR_URL! -Outfile '!__JAR_FILE!'"
         if not !ERRORLEVEL!==0 (
-            echo %_ERROR_LABEL% Failed to download file %__JAR_NAME% 1>&2
+            echo %_ERROR_LABEL% Failed to download file "%__JAR_NAME%" 1>&2
             set _EXITCODE=1
             goto :eof
         )
@@ -64,6 +64,12 @@ if not exist "%__JAR_FILE%" (
         ) else if %_VERBOSE%==1 ( echo Install Maven archive into directory "%%USERPROFILE%%!__LOCAL_REPO:%USERPROFILE%=!\%__SCALA_XML_PATH%" 1>&2
         )
         %_MVN_CMD% %_MVN_OPTS% install:install-file -Dfile="!__JAR_FILE!" -DgroupId="%__GROUP_ID%" -DartifactId=%__ARTIFACT_ID% -Dversion=%__VERSION% -Dpackaging=jar
+        if not !ERRORLEVEL!==0 (
+            echo %_ERROR_LABEL% Failed to install Maven artifact into directory "!__LOCAL_REPO:%USERPROFILE%=%%USERPROFILE%%!" ^(error:!ERRORLEVEL!^) 1>&2
+        )
+        for /f "usebackq delims=" %%f in (`where /r "%__LOCAL_REPO%\%__JAR_PATH%" %__JAR_NAME% 2^>NUL`) do (
+            set "__JAR_FILE=%%f"
+        )
     )
 )
 set "_LIBS_CPATH=%_LIBS_CPATH%%__JAR_FILE%;"
