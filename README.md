@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.35][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.36][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.6][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 1.6][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
