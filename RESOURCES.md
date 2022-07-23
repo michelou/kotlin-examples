@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin logo"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This document presents <a href="https://kotlinlang.org/" rel="external">Kotlin</a> related resources that caught our attention.
   </td>
   </tr>
@@ -23,6 +23,7 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Convert a Kotlin data class object to a Map](https://www.baeldung.com/kotlin/data-class-to-map) by [baeldung](https://www.baeldung.com/kotlin/author/baeldung), June 2022.
 - [Scala vs kotlin: Which one is better for your project](blog_dac) by [DAC](https://dac.digital/about/), October 2021.
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
@@ -55,14 +56,16 @@
 
 ## <span id="papers">Papers</span>
 
+- [Reflekt: a Library for Compile-Time Reflection in Kotlin](https://arxiv.org/abs/2202.06033) by Anastasiia Birillo &amp; al., February 2022.
 - [Java and Kotlin, a performance comparison][paper_gakis] (*Bachelor thesis*) by S. Gakis and N. Evelönn, 2020.
 - [ReduKtor: How We Stopped Worrying About Bugs in Kotlin Compiler][paper_stepanov] by Daniil Stepanov, Marat Akhin and Mikahail Belyaev, [ASE 2019](https://2019.ase-conferences.org/).
 
 ## <span id="tools">Tools and Frameworks</span>
 
-- [&Lambda;rrow][arrow_home] - a library for typed functional programming in Kotlin.
+- [&Lambda;rrow][arrow_home] &ndash; a library for typed functional programming in Kotlin.
 - [Clikt][clikt_home] - a multiplatform Kotlin library for writing command line interfaces.
 - [detekt][detekt_home] - a Static code analysis for Kotlin.
+- [Kotest][kotest_home] &ndash; a flexible and comprehensive testing tool for Kotlin with multiplatform support.
 - [Kotlin∇](https://github.com/breandan/kotlingrad) - a type-safe automatic differentiation framework for Kotlin.
 - [ktlint] - a Kotlin linter with built-in formatter.
 - [The Gradle build system][tool_vogella] - a Gradle tutorial by Lars Vobel and Simon Scholh, June 2018.
@@ -75,7 +78,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -97,6 +100,7 @@
 [book_vermeulen]: https://www.manning.com/books/functional-programming-in-kotlin
 [clikt_home]: https://ajalt.github.io/clikt/
 [detekt_home]: https://detekt.github.io/detekt/
+[kotest_home]: https://github.com/kotest/kotest
 [ktlint]: https://ktlint.github.io/
 [paper_gakis]: https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1443070&dswid=76
 [paper_stepanov]: https://arxiv.org/abs/1909.07331

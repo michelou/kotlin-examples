@@ -47,10 +47,9 @@ endif
 
 LANGUAGE_VERSION = 1.5
 
-DOKKA_VERSION   = 1.6.10
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.6.10
-KOTLINX_VERSION = 1.6.0
+KOTLIN_VERSION  = 1.7.10
+KOTLINX_VERSION = 1.6.3
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
@@ -58,12 +57,12 @@ KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/ko
 HAMCREST_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
 JUNIT_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
-DOKKA_ANALYSIS_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-analysis-$(DOKKA_VERSION).jar)
-DOKKA_BASE_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-base-$(DOKKA_VERSION).jar)
-DOKKA_COMPILER_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlin-analysis-compiler-$(DOKKA_VERSION).jar)
-DOKKA_INTELLIJ_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlin-analysis-intellij-$(DOKKA_VERSION).jar)
-DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-gradle-plugin-$(DOKKA_VERSION).jar)
-KOTLINX_HTML_JAR   = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlinx-html-jvm-0.7.3.jar)
+DOKKA_ANALYSIS_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-analysis-$(KOTLIN_VERSION).jar)
+DOKKA_BASE_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-base-$(KOTLIN_VERSION).jar)
+DOKKA_COMPILER_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlin-analysis-compiler-$(KOTLIN_VERSION).jar)
+DOKKA_INTELLIJ_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlin-analysis-intellij-$(KOTLIN_VERSION).jar)
+DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-gradle-plugin-$(KOTLIN_VERSION).jar)
+KOTLINX_HTML_JAR   = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlinx-html-jvm-0.8.0.jar)
 MARKDOWN_JAR       = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name markdown-0.1.45.jar)
 
 ANNOTATIONS_JAR    = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name annotations-7.0.3.jar)
