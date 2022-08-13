@@ -23,6 +23,7 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.
 - [Convert a Kotlin data class object to a Map](https://www.baeldung.com/kotlin/data-class-to-map) by [baeldung](https://www.baeldung.com/kotlin/author/baeldung), June 2022.
 - [Scala vs kotlin: Which one is better for your project](blog_dac) by [DAC](https://dac.digital/about/), October 2021.
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
@@ -78,7 +79,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -87,6 +88,7 @@
 [article_junit]: https://kotlintesting.com/handling-exceptions-in-tests/
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
 [blog_berga]: https://www.imaginarycloud.com/blog/kotlin-vs-java/
+[blog_chandrakant]: https://www.baeldung.com/kotlin/multiplatform-programming
 [blog_dac]: https://dac.digital/scala-vs-kotlin-which-one-is-better-for-your-project/
 [blog_exploring]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
