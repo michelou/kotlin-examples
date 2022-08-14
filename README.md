@@ -34,7 +34,6 @@ C:\opt\apache-maven-3.8.6\                   <i>( 10 MB)</i>
 C:\opt\detekt-cli-1.21.0\                    <i>( 55 MB)</i>
 C:\opt\Git-2.37.2\                           <i>(288 MB)</i>
 C:\opt\gradle-7.5.1\                         <i>(127 MB)</i>
-C:\opt\jdk-temurin-1.8.0_322-b06\            <i>(185 MB)</i>
 C:\opt\jdk-temurin-11.0.16_8\                <i>(300 MB)</i>
 C:\opt\kotlinc-1.7.10\                       <i>( 76 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.7.10\  <i>(245 MB)</i>

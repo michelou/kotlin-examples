@@ -40,7 +40,7 @@ LANGUAGE_VERSION = 1.5
 
 JUNIT_VERSION   = 4.13.2
 KOTLIN_VERSION  = 1.7.10
-KOTLINX_VERSION = 1.6.3
+KOTLINX_VERSION = 1.6.4
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(KOTLIN_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(KOTLIN_VERSION).jar)
