@@ -18,10 +18,10 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/
-call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.8.2"
+call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.9.1"
 
 @rem https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-call :add_jar "org.junit.jupiter" "junit-jupiter-api" "5.8.2"
+call :add_jar "org.junit.jupiter" "junit-jupiter-api" "5.9.1"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_jar "org.hamcrest" "hamcrest" "2.2"
