@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -44,7 +44,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 <sup><b>d)</b></sup> Gradle build script written in <a href="https://docs.gradle.org/current/userguide/kotlin_dsl.html">Kotlin DSL</a><br/>&nbsp;
 </div>
 
-> **:mag_right:** Command [**`build help`**](HelloWorld/build.bat) displays the help message:
+> **:mag_right:** Command [**`build.bat help`**](HelloWorld/build.bat) displays the help message:
 > <pre style="font-size:80%;">
 > <b>&gt; <a href="HelloWorld/build.bat">build</a> help</b>
 > Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
@@ -68,7 +68,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 
 ## <span id="hello-jvm">HelloWorld (JVM/native)</span>
 
-Command [**`build clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02">[2](#footnote_02)</sup>:
+Command [**`build.bat clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02">[2](#footnote_02)</sup>:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="HelloWorld/build.bat">build</a> clean run</b>
@@ -86,7 +86,7 @@ Hello World!
 
 > **:mag_right:** We observe the naming convention for generated class files: **`HelloWorldKt.class`** is generated for source file **`HelloWorld.kt`**.
 
-Command [**`build -native clean run`**](HelloWorld/build.bat) generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">1</a></sup>:
+Command [**`build.bat -native clean run`**](HelloWorld/build.bat) generates and executes the native executable for the default target <sup id="anchor_01"><a href="#footnote_01">1</a></sup>:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="HelloWorld/build.bat">build</a> -native clean run</b>
@@ -112,7 +112,7 @@ Hello World!
 
 ## <span id="java_kotlin">JavaToKotlin (JVM only)</span>
 
-Either command [**`build clean run`**](JavaToKotlin/build.bat) or command [**`gradle -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
+Either command [**`build.bat clean run`**](JavaToKotlin/build.bat) or command [**`gradle -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="JavaToKotlin/build.bat">build</a> clean run</b>
@@ -130,7 +130,7 @@ See Kotlin reference documentation: [Calling Java code from Kotlin][java_kotlin]
 
 ## <span id="kotlin_java">KotlinToJava (JVM only)</span>
 
-Either command [**`build clean run`**](KotlinToJava/build.bat) or command [**`gradle -q clean run runJava`**](KotlinToJava/build.gradle) compiles the source files [**`JavaInteropt.java`**](KotlinToJava/src/main/java/JavaInteropt.java) and [**`JavaInterop.kt`**](KotlinToJava/src/main/kotlin/JavaInterop.kt) and produces the following output (Kotlin output first and then Java output):
+Either command [**`build.bat clean run`**](KotlinToJava/build.bat) or command [**`gradle.bat -q clean run runJava`**](KotlinToJava/build.gradle) compiles the source files [**`JavaInteropt.java`**](KotlinToJava/src/main/java/JavaInteropt.java) and [**`JavaInterop.kt`**](KotlinToJava/src/main/kotlin/JavaInterop.kt) and produces the following output (Kotlin output first and then Java output):
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="KotlinToJava/build.bat">build</a> clean run</b>
@@ -154,7 +154,7 @@ See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
 
 ## <span id="features">LanguageFeatures (JVM/native)</span>
 
-Either command [**`build clean run`**](LanguageFeatures/build.bat) or command [**`gradle -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
+Either command [**`build.bat clean run`**](LanguageFeatures/build.bat) or command [**`gradle.bat -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
@@ -181,7 +181,7 @@ null
 
 ## <span id="reflection">Reflection (JVM only)</span>
 
-Command [**`build -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
+Command [**`build.bat -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="Reflection/build.bat">build</a> -timer clean run</b>
@@ -209,7 +209,7 @@ Members:
 Elapsed time: 00:00:06
 </pre>
 
-Alternatively command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
+Alternatively command [**`gradle.bat -q clean run`**][gradle_cli] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
@@ -332,7 +332,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/September 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

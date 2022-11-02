@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>kotlin-cookbook\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="http://shop.oreilly.com/product/0636920224327.do">Ken Kousen's book</a> "<i>Koltin Cookbook</i>" (O'Reilly, 2019).<br/>
-  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -13,7 +13,7 @@
 
 Lazy loading can be implemented the hard way (with a private nullable property) or using a built-in **`lazy`** delegate function.
 
-Command [**`build clean run`**](./Example_03-10/build.bat) compiles the source files [**`Customer.kt`**](./Example_03-10/src/main/kotlin/Customer.kt) and executes the generated Java class files :
+Command [**`build.bat clean run`**](./Example_03-10/build.bat) compiles the source files [**`Customer.kt`**](./Example_03-10/src/main/kotlin/Customer.kt) and executes the generated Java class files :
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a></b>
@@ -53,7 +53,7 @@ Test run finished after 85 ms
 
 ## <span id="ex_03-13">Example 03-13 ― Overriding operator on `Point`</span>
 
-Command [**`build clean run`**](./Example_03-13/build.bat) compiles the source files [**`PointMain.kt`**](./Example_03-13/src/main/kotlin/PointMain.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](./Example_03-13/build.bat) compiles the source files [**`PointMain.kt`**](./Example_03-13/src/main/kotlin/PointMain.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a></b>
@@ -93,7 +93,7 @@ Test run finished after 70 ms
 
 ## <span id="ex_03-14">Example 03-14 ― Extension functions on `Complex`</span>
 
-Command [**`build clean run`**](./Example_03-14/build.bat) compiles the source files [**`ComplexOverloadOperators.kt`**](./Example_03-14/src/main/kotlin/ComplexOverloadOperators.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](./Example_03-14/build.bat) compiles the source files [**`ComplexOverloadOperators.kt`**](./Example_03-14/src/main/kotlin/ComplexOverloadOperators.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a></b>
@@ -106,7 +106,7 @@ x+y = (3.0, 8.0)
 x*y = (-13.0, 11.0)
 </pre>
 
-Command [**`build -verbose test`**](./Example_03-14/build.bat) compiles the source file [**`ComplexOverloadOperatorsKtTest.kt`**](./Example_03-14/src/test/kotlin/ComplexOverloadOperatorsKtTest.kt) and executes the implemented unit tests.
+Command [**`build.bat -verbose test`**](./Example_03-14/build.bat) compiles the source file [**`ComplexOverloadOperatorsKtTest.kt`**](./Example_03-14/src/test/kotlin/ComplexOverloadOperatorsKtTest.kt) and executes the implemented unit tests.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_03-14/build.bat">build</a> -verbose test</b>
@@ -139,7 +139,7 @@ Test run finished after 99 ms
 
 ## <span id="ex_04-01">Example 04-01 ― Summing integers by using `fold`</span>
 
-Command [**`build clean run`**](./Example_04-01/build.bat) compiles the source files [**`FoldMain.kt`**](./Example_04-01/src/main/kotlin/FoldMain.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](./Example_04-01/build.bat) compiles the source files [**`FoldMain.kt`**](./Example_04-01/src/main/kotlin/FoldMain.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a></b>
@@ -160,7 +160,7 @@ factorialFold(20) = 2432902008176640000
 fibonacciFold(20) = 6765
 </pre>
 
-Command [**`build -verbose test`**](./Example_04-01/build.bat) compiles the source file [**`FoldMainKtTest.kt`**](./Example_04-01/src/test/kotlin/FoldMainKtTest.kt) and executes the implemented unit tests.
+Command [**`build.bat -verbose test`**](./Example_04-01/build.bat) compiles the source file [**`FoldMainKtTest.kt`**](./Example_04-01/src/test/kotlin/FoldMainKtTest.kt) and executes the implemented unit tests.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="./Example_04-01/build.bat">build</a> -verbose test</b>
@@ -200,7 +200,7 @@ Test run finished after 100 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

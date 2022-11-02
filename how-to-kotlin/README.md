@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>how-to-kotlin\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="https://events.google.com/io2018/schedule/?section=may-10&sid=7387180b-b1dd-49c3-bddf-de3f87ae1990">Andrey Breslav's talk</a> "<i>How to Koltin</i>" at <a href="https://events.google.com/io2018/schedule/?section=may-10" rel="external">Google I/O 2018</a>  (9:30 am).<br/>
-  It also includes several <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>/<a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a> for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -82,14 +82,14 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 This example is about [data classes][kotlin_data_classes] whose main purpose is to hold data.
 
-Command [**`build clean run`**](01_bean/build.bat) compiles source file [**`Bean.kt`**](01_bean/src/main/kotlin/Bean.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](01_bean/build.bat) compiles source file [**`Bean.kt`**](01_bean/src/main/kotlin/Bean.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="01_bean/build.bat">build</a> clean run</b>
 fist=Jane, last=Doe
 </pre>
 
-Command [**`gradle -q clean run`**][gradle_cli] (build script [**`build.gradle`**](01_bean/build.gradle) and property file [**`gradle.properties`**](01_bean/gradle.properties)) performs the same operations:
+Command [**`gradle.bat -q clean run`**][gradle_cli] (build script [**`build.gradle`**](01_bean/build.gradle) and property file [**`gradle.properties`**](01_bean/gradle.properties)) performs the same operations:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
@@ -137,7 +137,7 @@ Jane
 ## <span id="expressions">Expressions</span>
 
 This example 
-Command **`build clean run`** compiles source files [**`Expressions.kt`**](04_expressions/src/main/kotlin/Expressions.kt) and executes the generated Java class files.
+Command **`build.bat clean run`** compiles source files [**`Expressions.kt`**](04_expressions/src/main/kotlin/Expressions.kt) and executes the generated Java class files.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="04_expressions/build.bat">build</a> clean run</b>
@@ -152,7 +152,7 @@ Not this time
 
 This example is about [higher-order functions and lambdas][kotlin_lambdas] in [Kotlin].
 
-Command [**`build clean run`**](04_functional/build.bat) compiles source file [**`Lambdas.kt`**](04_functional/src/main/kotlin/Lambdas.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](04_functional/build.bat) compiles source file [**`Lambdas.kt`**](04_functional/src/main/kotlin/Lambdas.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="04_functional/build.bat">build</a> clean run</b>
@@ -197,7 +197,7 @@ hi c
 
 ## <span id="lazy_sequence">LazySequence</span>
 
-Command [**`build clean run`**](06_lazy_seq/build.bat) compiles source file [**`LazySequence.kt`**](06_lazy_seq/src/main/kotlin/LazySequence.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](06_lazy_seq/build.bat) compiles source file [**`LazySequence.kt`**](06_lazy_seq/src/main/kotlin/LazySequence.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="06_lazy_seq/build.bat">build</a> clean run</b>
@@ -208,7 +208,7 @@ Command [**`build clean run`**](06_lazy_seq/build.bat) compiles source file [**`
 
 This example is about [operator conventions][kotlin_conventions], an elegant way to overload operators in [Kotlin][kotlin].
 
-Command [**`build clean run`**](07_conventions/build.bat) compiles source file [**`Conventions.kt`**](07_conventions/src/main/kotlin/Conventions.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](07_conventions/build.bat) compiles source file [**`Conventions.kt`**](07_conventions/src/main/kotlin/Conventions.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="07_conventions/build.bat">build</a> clean run</b>
@@ -220,7 +220,7 @@ date range: Date(day=1, month=1, year=2018)..Date(day=31, month=12, year=2018)
 
 ## <span id="local_sealed_casts">LocalSealedCasts</span>
 
-Command [**`build clean run`**](08_DSLs/build.bat) compiles source file [**`LocalSealedCasts.kt`**](08_DSLs/src/main/kotlin/LocalSealedCasts.kt) and executes the generated Java class files:
+Command [**`build.bat clean run`**](08_DSLs/build.bat) compiles source file [**`LocalSealedCasts.kt`**](08_DSLs/src/main/kotlin/LocalSealedCasts.kt) and executes the generated Java class files:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="07_conventions/build.bat">build</a> clean run</b>
@@ -238,7 +238,7 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
