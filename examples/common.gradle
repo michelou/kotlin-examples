@@ -133,10 +133,6 @@ task runJava(type: JavaExec) {
     if (args == null) args ""
 }
 
-plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.18.1"
-}
-
 repositories {
     mavenCentral()
     maven { // e.g. dokka-gradle-plugin
@@ -148,7 +144,7 @@ repositories {
 }
 
 dependencies {
-    implementation "io.gitlab.arturbosch.detekt:detekt-cli:1.18.1"
+    implementation "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     // implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"

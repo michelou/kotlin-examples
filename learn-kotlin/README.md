@@ -77,7 +77,7 @@ Execute Kotlin script file "src\Examples.kts"
 byte10 = 10
 </pre>
 
-## <span id="unit_06">[Unit 6][unit_06]</span>
+## <span id="unit_06">[Unit 6][unit_06]</span> [**&#x25B4;**](#top)
 
 This tutorial part introduces [Kotlin] classes, i.e. class [**`Person.kt`**](Unit_06/src/main/kotlin/example1/Person.kt).
 
@@ -125,7 +125,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
 Source file [`Strings.kt`](Unit_08/src/main/kotlin/Strings.kt) presents the usage of string literals, string templates and string operations.
 
-## <span id="unit_09">Unit 9</span>
+## <span id="unit_09">Unit 9</span> [**&#x25B4;**](#top)
 
 Source file [`Equality.kt`](Unit_09/src/main/kotlin/Equality.kt) presents the differences betwen stuctural and reference equality; other files present their usage with comparison operators ([`Comparison.kt`](Unit_09/src/main/kotlin/Comparison.kt)) and conditional constructs ([`If.kt`](Unit_09/src/main/kotlin/If.kt), [`When.kt`](Unit_09/src/main/kotlin/When.kt)).
 
@@ -152,7 +152,7 @@ The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jste
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

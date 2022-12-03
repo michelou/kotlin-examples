@@ -23,20 +23,20 @@ Optionally one may also install the following software:
 
 - [Apache Maven 3.8][maven_latest] ([*release notes*][maven_relnotes])
 - [detekt 1.22][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 7.5][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 7.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.47][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*November 2022*) <sup id="anchor_03"><a href="#footnote_03">3</a></sup>:
+For instance our development environment looks as follows (*December 2022*) <sup id="anchor_03"><a href="#footnote_03">3</a></sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.12\                   <i>( 39 MB)</i>
 C:\opt\apache-maven-3.8.6\                   <i>( 10 MB)</i>
-C:\opt\detekt-cli-1.21.0\                    <i>( 55 MB)</i>
+C:\opt\detekt-cli-1.22.0\                    <i>( 55 MB)</i>
 C:\opt\Git-2.38.1\                           <i>(317 MB)</i>
-C:\opt\gradle-7.5.1\                         <i>(127 MB)</i>
-C:\opt\jdk-temurin-11.0.16_8\                <i>(300 MB)</i>
-C:\opt\kotlinc-1.7.20\                       <i>( 82 MB)</i>
-C:\opt\kotlin-native-windows-x86_64-1.7.20\  <i>(251 MB)</i>
+C:\opt\gradle-7.6\                           <i>(129 MB)</i>
+C:\opt\jdk-temurin-11.0.17_8\                <i>(301 MB)</i>
+C:\opt\kotlinc-1.7.21\                       <i>( 86 MB)</i>
+C:\opt\kotlin-native-windows-x86_64-1.7.21\  <i>(251 MB)</i>
 C:\opt\ktlint-0.47.1\                        <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
 </pre>
@@ -96,18 +96,18 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.12, bazel 5.3.0, gradle 7.4.2, java 11.0.15, detekt-cli 1.21.0,
-      kotlinc 1.7.20, kotlinc-native 1.7.20, ktlint 0.47.1
+      ant 1.10.12, bazel 5.3.2, gradle 7.6, java 11.0.17, detekt-cli 1.22.0,
+      kotlinc 1.7.21, kotlinc-native 1.7.21, ktlint 0.47.1
       cfr 0.152, make 3.81, mvn 3.8.6, git 2.38.1.windows.1, diff 3.8, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.12\bin\ant.bat
-      C:\opt\bazel-5.3.0\bazel.exe
-      C:\opt\gradle-7.5.1\bin\gradle.bat
-      C:\opt\jdk-temurin-11.0.16_8\bin\java.exe
-      C:\opt\detekt-cli-1.21.0\bin\detekt-cli.bat
-      C:\opt\kotlinc-1.7.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.7.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.7.20\bin\kotlinc-native.bat
+      C:\opt\bazel-5.3.2\bazel.exe
+      C:\opt\gradle-7.6\bin\gradle.bat
+      C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
+      C:\opt\detekt-cli-1.22.0\bin\detekt-cli.bat
+      C:\opt\kotlinc-1.7.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.7.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.7.21\bin\kotlinc-native.bat
       C:\opt\ktlint-0.47.1\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
@@ -118,13 +118,13 @@ We distinguish different sets of batch commands:
    Environment variables:
       "ANT_HOME=C:\opt\apache-ant-1.10.12"
       "CFR_HOME=C:\opt\cfr-0.152"
-      "DETEKT_HOME=C:\opt\detekt-cli-1.21.0"
+      "DETEKT_HOME=C:\opt\detekt-cli-1.22.0"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.38.1"
-      "GRADLE_HOME=C:\opt\gradle-7.5.1"
-      "JAVA_HOME=C:\opt\jdk-temurin-11.0.16_8"
-      "KOTLIN_HOME=C:\opt\kotlinc-1.7.20"
-      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.7.20"
+      "GRADLE_HOME=C:\opt\gradle-7.6"
+      "JAVA_HOME=C:\opt\jdk-temurin-11.0.17_8"
+      "KOTLIN_HOME=C:\opt\kotlinc-1.7.21"
+      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.7.21"
       "KTLINT_HOME=C:\opt\ktlint-0.47.1"
       "MAKE_HOME=C:\opt\make-3.81"
       "MAVEN_HOME=C:\opt\apache-maven-3.8.6"
@@ -201,21 +201,21 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.12-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.8.6-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.22.0-RC1.zip</a>                          <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-7.5.1-bin.zip</a>                               <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.7.20">kotlin-compiler-1.7.20.zip</a>                         <i>( 60 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.7.20">kotlin-native-windows-x86_64-1.7.20.zip</a>            <i>(125 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.22.0.zip</a>                              <i>( 54 MB)</i>
+<a href="https://gradle.org/releases/">gradle-7.6-bin.zip</a>                                 <i>(115 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.7.21">kotlin-compiler-1.7.21.zip</a>                         <i>( 75 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.7.21">kotlin-native-windows-x86_64-1.7.21.zip</a>            <i>(173 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.47.1)</a>                                    <i>( 47 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u345b01.zip</a>     <i>( 99 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.16_8.zip</a>   <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.17_8.zip</a>   <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.38.1-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -225,7 +225,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [cpp_examples]: https://github.com/michelou/cpp-examples
 [deno_examples]: https://github.com/michelou/deno-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.22.0-RC1
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.22.0
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
@@ -235,13 +235,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/7.5/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/7.6/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.7.20
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.7.20
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.7.21
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.7.21
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases

@@ -7,7 +7,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name *.kt)
+SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
 TARGET  = $(TARGET_DIR)/HelloWorld.jar
 
 MAIN_CLASS = _01_bean.BeanKt
@@ -43,7 +43,7 @@ help:
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -name *.kt)
+LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
 lint: $(LINT_TARGET)
@@ -73,7 +73,7 @@ $(DOC_TARGET): $(DOC_SOURCES)
 ##############################################################################
 ## test rules
 
-TEST_SOURCES     = $(shell $(FIND) $(SOURCE_DIR)/test -type f -name *.scala)
+TEST_SOURCES     = $(shell $(FIND) "$(SOURCE_DIR)/test" -type f -name "*.scala")
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
 TEST_TARGET      = $(TARGET_DIR)/.latest-test-build
 

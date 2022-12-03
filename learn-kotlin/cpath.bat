@@ -17,8 +17,8 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
 set __JUNIT_VERSION=4.13.2
-set __KOTLIN_VERSION=1.7.10
-set __KOTLINX_VERSION=1.6.3
+set __KOTLIN_VERSION=1.7.21
+set __KOTLINX_VERSION=1.6.4
 
 set _LIBS_CPATH=
 

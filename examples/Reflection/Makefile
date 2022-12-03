@@ -7,7 +7,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main -name *.kt)
+SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main" -type f -name "*.kt")
 
 TARGET = $(TARGET_DIR)/Reflection.jar
 
@@ -46,7 +46,7 @@ help:
 ## doc rules
 
 DOC_TARGET_DIR = $(TARGET_DIR)/docs
-DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name *.kt)
+DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
 DOC_TARGET     = $(TARGET_DIR)/.latest-doc
 
 PROJECT_NAME    ?= $(shell basename $(CURDIR))
@@ -65,7 +65,7 @@ doc: $(DOC_TARGET)
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -name *.java)
+LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.java")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
 CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -name *.xml)

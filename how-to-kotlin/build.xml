@@ -14,7 +14,7 @@
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
     <property name="cfr.version" value="0.152" />
-    <property name="ktlint.version" value="0.45.2" />
+    <property name="ktlint.version" value="0.47.1" />
     <property name="picocli.version" value="4.6.2" />
 
     <target name="init">

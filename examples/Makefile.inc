@@ -38,12 +38,12 @@ RM         = rm
 TOUCH      = touch
 endif
 
-LANGUAGE_VERSION = 1.5
+LANGUAGE_VERSION = 1.6
 
-DOKKA_VERSION   = 1.6.10
+DOKKA_VERSION   = 1.7.20
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.7.10
-KOTLINX_VERSION = 1.6.3
+KOTLIN_VERSION  = 1.7.21
+KOTLINX_VERSION = 1.6.4
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)

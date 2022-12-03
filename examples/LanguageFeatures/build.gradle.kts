@@ -75,11 +75,11 @@ repositories {
 
 dependencies {
     api(kotlin("stdlib", "${Config.kotlinVersion}"))
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.72")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.21")
     implementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("test-junit", "${Config.kotlinVersion}"))
-    api("junit:junit:4.12")
-    implementation("junit:junit:4.12")
-    testImplementation("junit:junit:4.12")
+    api("junit:junit:4.13.2")
+    implementation("junit:junit:4.13.2")
+    testImplementation("junit:junit:4.13.2")
 }

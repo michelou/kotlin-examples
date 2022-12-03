@@ -10,6 +10,7 @@
 
 ## <span id="articles">Articles</span>
 
+- &#128077; [From zero to 10 million lines of Kotlin][article_strulovich] by Omer Strulovich, October 2022.
 - [Handling exceptions in tests: Junit & Kotest][article_junit] by Jaroslaw Michalik, June 2020.
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Medium]: [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
@@ -36,8 +37,9 @@
 - [First steps into Kotlin Multiplatform](https://blog.karumi.com/first-steps-into-kotlin-multiplatform/) by Sergio Lopez Mota, June 10, 2019.
 - [Getting Started Unit Testing with Kotlin](https://spin.atomicobject.com/2018/10/07/kotlin-unit-testing/) by Molly Alger, October 7, 2018.
 
-## <span id="books">Books</span>
+## <span id="books">Books</span> [**&#x25B4;**](#top)
 
+- [Kotlin - The Ultimate Guide][book_uzayr] by Sufyan bin Uzayr, December 2022.<br/><span style="font-size:80%;">(CRC Press, ISBN 978-1-0323-1170-8, 398 pages)</span>.
 - [Java to Kotlin][book_mcgregor] by Duncan McGregor and Nat Pryce, August 2021.<br/><span style="font-size:80%;">(O'Reilly, ISBN 978-1-492-08227-9)</span>.
 - [Functional Programming in Kotlin][book_vermeulen] by Marco Vermeulen et al., August 2021.<br/><span style="font-size:80%;">(Manning, ISBN 978-1-6172-9716-8, 504 pages)</span>
 - [Effective Kotlin][book_moskala] by Marcin Moskala, February 2021.<br/><span style="font-size:80%;">(LeanPub, 409 pages)</span>
@@ -55,7 +57,7 @@
 - [Kotlin Weekly](http://www.kotlinweekly.net/#latest).
 - [The Daily Kotlin](https://twitter.com/dailykotlin) (*Twitter*).
 
-## <span id="papers">Papers</span>
+## <span id="papers">Papers</span> [**&#x25B4;**](#top)
 
 - [Reflekt: a Library for Compile-Time Reflection in Kotlin](https://arxiv.org/abs/2202.06033) by Anastasiia Birillo &amp; al., February 2022.
 - [Java and Kotlin, a performance comparison][paper_gakis] (*Bachelor thesis*) by S. Gakis and N. Evelönn, 2020.
@@ -73,13 +75,14 @@
 
 ## <span id="tutorials">Tutorials</span>
 
+- [Run detekt using the Detekt Gradle Plugin](https://detekt.dev/docs/gettingstarted/gradle/) - Detekt online documentation.
 - [GeeksforGeeks](https://www.geeksforgeeks.org/) - [Kotlin Programming Language](https://www.geeksforgeeks.org/kotlin-programming-language/).
 - [JournalDev](https://www.journaldev.com/) - [Kotlin][tuto_journaldev]
 - [ZetCode](http://zetcode.com/) - [Kotlin tutorial](http://zetcode.com/all/#kotlin) by Jan Bodnar, 2019.
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2022* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -87,6 +90,7 @@
 [arrow_home]: https://arrow-kt.io/
 [article_junit]: https://kotlintesting.com/handling-exceptions-in-tests/
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
+[article_strulovich]: https://engineering.fb.com/2022/10/24/android/android-java-kotlin-migration/
 [blog_berga]: https://www.imaginarycloud.com/blog/kotlin-vs-java/
 [blog_chandrakant]: https://www.baeldung.com/kotlin/multiplatform-programming
 [blog_dac]: https://dac.digital/scala-vs-kotlin-which-one-is-better-for-your-project/
@@ -100,6 +104,7 @@
 [book_moskala]: https://leanpub.com/effectivekotlin
 [book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
 [book_vermeulen]: https://www.manning.com/books/functional-programming-in-kotlin
+[book_uzayr]: https://www.routledge.com/Kotlin-The-Ultimate-Guide/Uzayr/p/book/9781032311708
 [clikt_home]: https://ajalt.github.io/clikt/
 [detekt_home]: https://detekt.github.io/detekt/
 [kotest_home]: https://github.com/kotest/kotest

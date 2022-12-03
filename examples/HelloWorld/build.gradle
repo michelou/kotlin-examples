@@ -1,9 +1,9 @@
 plugins {
     id "checkstyle"
-    // id "io.gitlab.arturbosch.detekt" version "1.18.1"
     id "java"
     id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
+    id "io.gitlab.arturbosch.detekt" version "$detektVersion"
 }
 
 group "$appGroup"

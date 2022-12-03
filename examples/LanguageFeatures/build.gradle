@@ -3,6 +3,7 @@ plugins {
     id "java"
     id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
+    id "io.gitlab.arturbosch.detekt" version "$detektVersion"
 }
 
 group "$appGroup"

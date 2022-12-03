@@ -17,7 +17,7 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 set _LIBS_CPATH=
 
-@rem https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/
+@rem https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone
 call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.9.1"
 
 @rem https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
