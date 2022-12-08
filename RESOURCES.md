@@ -71,6 +71,7 @@
 - [Kotest][kotest_home] &ndash; a flexible and comprehensive testing tool for Kotlin with multiplatform support.
 - [Kotlin∇](https://github.com/breandan/kotlingrad) - a type-safe automatic differentiation framework for Kotlin.
 - [ktlint] - a Kotlin linter with built-in formatter.
+- [MockK](https://mockk.io/) &ndash; a mocking library for Kotlin.
 - [The Gradle build system][tool_vogella] - a Gradle tutorial by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span>
