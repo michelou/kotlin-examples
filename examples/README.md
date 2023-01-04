@@ -66,7 +66,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 >    test        execute unit tests
 </pre>
 
-## <span id="hello-jvm">HelloWorld (JVM/native)</span>
+## <span id="hello-jvm">HelloWorld (JVM/native)</span> [**&#x25B4;**](#top)
 
 Command [**`build.bat clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02">[2](#footnote_02)</sup>:
 
@@ -152,7 +152,7 @@ Either command [**`build.bat clean run`**](KotlinToJava/build.bat) or command [*
 
 See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
 
-## <span id="features">LanguageFeatures (JVM/native)</span>
+## <span id="features">LanguageFeatures (JVM/native)</span> [**&#x25B4;**](#top)
 
 Either command [**`build.bat clean run`**](LanguageFeatures/build.bat) or command [**`gradle.bat -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
@@ -243,7 +243,7 @@ BUILD SUCCESSFUL in 3s
 
 > **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_cli] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
 
-## <span id="footnotes">Footnotes</span>
+## <span id="footnotes">Footnotes</span> [**&#x25B4;**](#top)
 
 <span id="footnote_01">[1]</span> ***Available targets*** [↩](#anchor_01)
 
@@ -253,15 +253,17 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 <dd>
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.6.21 (JRE 11.0.15+10)
-Kotlin/Native: 1.6.21
+info: kotlinc-native 1.8.0 (JRE 11.0.17+8)
+Kotlin/Native: 1.8.0
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
-mingw_x64:                    (default) mingw
-mingw_x86:
 linux_x64:                              linux
 linux_arm32_hfp:                        raspberrypi
 linux_arm64:
+linux_mips32:
+linux_mipsel32:
+mingw_x86:
+mingw_x64:                    (default) mingw
 android_x86:
 android_x64:
 android_arm32:
@@ -332,7 +334,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

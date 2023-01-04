@@ -7,7 +7,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name *.kt)
+SOURCES = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name "*.kt")
 TARGET = $(TARGET_DIR)/Reflection.jar
 
 MAIN_CLASS = org.example.main.LanguageFeaturesKt
@@ -18,9 +18,9 @@ all: build run
 build: $(TARGET)
 
 $(TARGET): $(SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
-	$(JAR) cf $(TARGET) -C $(CLASSES_DIR) .
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
+	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
 	rm -rf "$(TARGET_DIR)"
@@ -45,7 +45,7 @@ help:
 ## doc rules
 
 DOC_TARGET_DIR = $(TARGET_DIR)/docs
-DOC_SOURCES    = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name *.kt)
+DOC_SOURCES    = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name "*.kt")
 DOC_TARGET     = $(TARGET_DIR)/.latest-doc
 
 PROJECT_NAME    ?= $(shell basename $(CURDIR))
@@ -55,8 +55,8 @@ PROJECT_VERSION ?= 1.0.0
 DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -moduleVersion "$(PROJECT_VERSION)" -outputDir "$(DOC_TARGET_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 $(DOC_TARGET): $(DOC_SOURCES)
-	[ -d "$(DOC_TARGET_DIR)" ] || $(MKDIR) -p "$(DOC_TARGET_DIR)"
-	$(KOTLIN) "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
+	[ -d "$(DOC_TARGET_DIR)" ] || "$(MKDIR)" -p "$(DOC_TARGET_DIR)"
+	"$(KOTLIN)" "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
 	@$(TOUCH) "$(DOC_TARGET)"
 
 doc: $(DOC_TARGET)
@@ -64,13 +64,13 @@ doc: $(DOC_TARGET)
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -name *.kt)
+LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	$(JAVA) -jar $(KTLINT_HOME)/ktlint.jar $^
+	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
 
 ##############################################################################
 ## phony

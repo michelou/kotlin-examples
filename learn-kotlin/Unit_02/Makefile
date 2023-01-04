@@ -18,9 +18,9 @@ all: build run
 build: $(TARGET)
 
 $(TARGET): $(SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	$(KOTLINC) -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
-	$(JAR) cf $(TARGET) -C $(CLASSES_DIR) .
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
+	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
 	$(RM) -rf "$(TARGET_DIR)"
@@ -55,8 +55,8 @@ PROJECT_VERSION ?= 1.0.0
 DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -moduleVersion "$(PROJECT_VERSION)" -outputDir "$(DOC_TARGET_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 $(DOC_TARGET): $(DOC_SOURCES)
-	[ -d "$(DOC_TARGET_DIR)" ] || $(MKDIR) -p "$(DOC_TARGET_DIR)"
-	$(KOTLIN) "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
+	[ -d "$(DOC_TARGET_DIR)" ] || "$(MKDIR)" -p "$(DOC_TARGET_DIR)"
+	"$(KOTLIN)" "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
 	@$(TOUCH) "$(DOC_TARGET)"
 
 doc: $(DOC_TARGET)
@@ -70,7 +70,7 @@ LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	$(JAVA) -jar $(KTLINT_HOME)/ktlint.jar $^
+	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
 	@$(TOUCH) $(LINT_TARGET)
 
 ##############################################################################
@@ -87,9 +87,9 @@ test: $(TARGET) $(TEST_TARGET)
 	$(JAVA) -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
 
 $(TEST_TARGET): $(TEST_SOURCES)
-	[ -d "$(TEST_CLASSES_DIR)" ] || $(MKDIR) -p "$(TEST_CLASSES_DIR)"
-	$(KOTLINC) -cp "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
-	$(JAR) cf $(TEST_TARGET) -C $(TEST_CLASSES_DIR) .
+	[ -d "$(TEST_CLASSES_DIR)" ] || "$(MKDIR)" -p "$(TEST_CLASSES_DIR)"
+	"$(KOTLINC)" -cp "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
+	"$(JAR)" cf $(TEST_TARGET) -C $(TEST_CLASSES_DIR) .
 
 ##############################################################################
 ## phony

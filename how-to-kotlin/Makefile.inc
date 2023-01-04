@@ -48,7 +48,7 @@ endif
 LANGUAGE_VERSION = 1.5
 
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.7.21
+KOTLIN_VERSION  = 1.8.0
 KOTLINX_VERSION = 1.6.4
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
@@ -57,15 +57,17 @@ KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/ko
 HAMCREST_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
 JUNIT_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
-DOKKA_ANALYSIS_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-analysis-$(KOTLIN_VERSION).jar)
-DOKKA_BASE_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-base-$(KOTLIN_VERSION).jar)
-DOKKA_COMPILER_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlin-analysis-compiler-$(KOTLIN_VERSION).jar)
-DOKKA_INTELLIJ_JAR = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlin-analysis-intellij-$(KOTLIN_VERSION).jar)
-DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name dokka-gradle-plugin-$(KOTLIN_VERSION).jar)
-KOTLINX_HTML_JAR   = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name kotlinx-html-jvm-0.8.0.jar)
-MARKDOWN_JAR       = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name markdown-0.1.45.jar)
+KOTLIN_DOKKA_VERSION=1.7.20
 
-ANNOTATIONS_JAR    = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name annotations-7.0.3.jar)
-EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
-INTELLIJ_CORE_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name intellij-core-27.1.3.jar)
-OPENAPI_JAR        = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name openapi-7.0.3.jar)
+DOKKA_ANALYSIS_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-analysis-$(KOTLIN_DOKKA_VERSION).jar)
+DOKKA_BASE_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-base-$(KOTLIN_DOKKA_VERSION).jar)
+DOKKA_COMPILER_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name kotlin-analysis-compiler-$(KOTLIN_DOKKA_VERSION).jar)
+DOKKA_INTELLIJ_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name kotlin-analysis-intellij-$(KOTLIN_DOKKA_VERSION).jar)
+DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-gradle-plugin-$(KOTLIN_DOKKA_VERSION).jar)
+KOTLINX_HTML_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx" -name kotlinx-html-jvm-0.8.0.jar)
+MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-0.3.5.jar)
+
+ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-23.1.0.jar)
+##EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
+##INTELLIJ_CORE_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name intellij-core-27.1.3.jar)
+##OPENAPI_JAR        = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name openapi-7.0.3.jar)

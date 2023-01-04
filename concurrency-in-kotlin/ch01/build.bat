@@ -72,7 +72,7 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-set _LANGUAGE_VERSION=1.4
+set _LANGUAGE_VERSION=1.6
 
 set __PKG_NAME=chapter1.
 set _MAIN_NAME=Main
@@ -340,6 +340,8 @@ if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
 goto :eof
 
 :lint
+if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
+
 set __KTLINT_OPTS=--color "--reporter=checkstyle,output=%_TARGET_DIR%\ktlint-report.xml"
 
 if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%

@@ -24,13 +24,14 @@
 
 ## <span id="blogs">Blogs</span>
 
+- [Using Kotlin to build the Lunaconf 2022 App][blog_karim] by Shabab Karim, December 2022.
 - [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.
 - [Convert a Kotlin data class object to a Map](https://www.baeldung.com/kotlin/data-class-to-map) by [baeldung](https://www.baeldung.com/kotlin/author/baeldung), June 2022.
 - [Scala vs kotlin: Which one is better for your project](blog_dac) by [DAC](https://dac.digital/about/), October 2021.
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
-- [Exploring Kotlin/Native – Part 2 – Interoperability](https://bignerdranch.com/blog/exploring-kotlin-native-part-2-interoperability/) by Jamie Lee, May 12, 2020.
-- [Exploring Kotlin/Native - Part 1][blog_exploring] by Jamie Lee, March 26, 2020.
+- [Exploring Kotlin/Native – Part 2 – Interoperability][blog_lee2] by Jamie Lee, May 12, 2020.
+- [Exploring Kotlin/Native - Part 1][blog_lee1] by Jamie Lee, March 26, 2020.
 - [Why Trailing Commas In Kotlin Are Hype](https://blog.egorand.me/why-trailing-commas-in-kotlin-are-hype/) by Egor Andreevich, March 14, 2020.
 - [Jetbrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
 - [Shared Library in Kotlin Multiplatform](https://blog.karumi.com/shared-library-in-kotlin-multiplatform/) by Sergio Lopez Mota, September 2, 2019.
@@ -83,7 +84,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -95,7 +96,9 @@
 [blog_berga]: https://www.imaginarycloud.com/blog/kotlin-vs-java/
 [blog_chandrakant]: https://www.baeldung.com/kotlin/multiplatform-programming
 [blog_dac]: https://dac.digital/scala-vs-kotlin-which-one-is-better-for-your-project/
-[blog_exploring]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
+[blog_lee1]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
+[blog_lee2]: https://bignerdranch.com/blog/exploring-kotlin-native-part-2-interoperability/
+[blog_karim]: https://blog.lunatech.com/posts/2022-12-17-using-kotlin-to-build-the-lunaconf-2022-app
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
 [book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/

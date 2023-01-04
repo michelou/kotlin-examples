@@ -7,10 +7,10 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name *.kt)
+SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
 TARGET  = $(TARGET_DIR)/JavaToKotlin.jar
 
-JAVA_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/java" -type f -name *.java)
+JAVA_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/java" -type f -name "*.java")
 JAVA_TARGET  = $(TARGET_DIR)/.latest-build
 
 MAIN_CLASS = JavaInteropKt
@@ -23,12 +23,12 @@ all: build run
 build: $(TARGET) $(JAVA_TARGET)
 
 $(JAVA_TARGET): $(JAVA_SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
 	"$(JAVAC)" -cp "$(KOTLIN_CPATH)$(PSEP)$(CLASSES_DIR)" -d "$(CLASSES_DIR)" $^
 	@$(TOUCH) $(JAVA_TARGET)
 
 $(TARGET): $(SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
 	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d "$(CLASSES_DIR)" $^
 	"$(JAR)" cfe $(TARGET) $(MAIN_CLASS) -C "$(CLASSES_DIR)" .
 
@@ -64,7 +64,7 @@ PROJECT_VERSION ?= 1.0.0
 DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -moduleVersion "$(PROJECT_VERSION)" -outputDir "$(DOC_TARGET_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 $(DOC_TARGET): $(DOC_SOURCES)
-	[ -d "$(DOC_TARGET_DIR)" ] || $(MKDIR) -p "$(DOC_TARGET_DIR)"
+	[ -d "$(DOC_TARGET_DIR)" ] || "$(MKDIR)" -p "$(DOC_TARGET_DIR)"
 	"$(KOTLIN)" "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
 	@$(TOUCH) "$(DOC_TARGET)"
 
@@ -73,11 +73,11 @@ doc: $(DOC_TARGET)
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -type f -name *.java)
+LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.java")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
-CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -name *.xml)
-CHECKSTYLE_JAR_FILE    = $(shell $(FIND) $(HOME)/.checkstyle -name checkstyle*.jar)
+CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) "$(HOME)/.checkstyle" -type f -name "*.xml")
+CHECKSTYLE_JAR_FILE    = $(shell $(FIND) "$(HOME)/.checkstyle" -type f -name "checkstyle*.jar")
 
 lint: $(LINT_TARGET)
 
@@ -87,7 +87,7 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ##############################################################################
 ## test rules
 
-TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -type f -name *.kt)
+TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -type f -name "*.kt")
 TEST_TARGET  = $(TARGET_DIR)/JavaToKotlinTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
@@ -99,7 +99,7 @@ test: $(TARGET) $(TEST_TARGET)
 	"$(KOTLIN)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
 
 $(TEST_TARGET): $(TEST_SOURCES)
-	[ -d "$(TEST_CLASSES_DIR)" ] || $(MKDIR) -p "$(TEST_CLASSES_DIR)"
+	[ -d "$(TEST_CLASSES_DIR)" ] || "$(MKDIR)" -p "$(TEST_CLASSES_DIR)"
 	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -cp "$(TEST_CPATH)" -d $(TEST_CLASSES_DIR) $^
 	"$(JAR)" cfe $(TEST_TARGET) $(TEST_MAIN_CLASS) -C $(TEST_CLASSES_DIR) .
 

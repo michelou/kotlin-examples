@@ -5,17 +5,19 @@ import kotlin.reflect.full.memberProperties
 
 data class Person(
     val name: String,
-    var age: Int
+    var age: Int, // see https://kotlinlang.org/docs/coding-conventions.html#trailing-commas
 )
 
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     print("Source code:")
-    printlf("""
-    data class Person(
-        val name: String,
-        var age: Int
-    )""")
+    printlf(
+        """
+        data class Person(
+            val name: String,
+            var age: Int,
+        )""",
+    )
     printlf()
     printlf("Methods:")
     val methods = Person::class.java.declaredMethods

@@ -15,8 +15,7 @@ set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
-set __DOKKA_VERSION=1.7.20
-set __KOTLIN_VERSION=1.7.21
+set __KOTLIN_VERSION=1.8.0
 set __KOTLINX_VERSION=1.6.4
 
 set _LIBS_CPATH=
@@ -39,6 +38,8 @@ call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLIN
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.7.3"
+
+set __DOKKA_VERSION=1.7.20
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"

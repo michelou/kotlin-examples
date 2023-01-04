@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-> **:mag_right:** The following Kotlin code examples, *originally* written by [Steven Perry](https://github.com/jstevenperry) in 2018, have updated to Kotlin 1.4 and formatted with [Ktlint](https://ktlint.github.io/).
+> **:mag_right:** The following Kotlin code examples, *originally* written by [Steven Perry](https://github.com/jstevenperry) in 2018, have been updated to Kotlin 1.6 and formatted with [Ktlint](https://ktlint.github.io/).
 
 ## <span id="unit_04">[Unit 4][unit_04]</span>
 
@@ -152,7 +152,7 @@ The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jste
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2022* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
