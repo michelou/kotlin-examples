@@ -4,8 +4,6 @@ SOURCE_DIR  = src
 TARGET_DIR  = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
-KOTLINC_OPTS=-language-version $(LANGUAGE_VERSION) -jvm-target $(JVM_TARGET)
-
 ##############################################################################
 ## main rules
 
@@ -21,14 +19,14 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" $(KOTLINC_OPTS) -d $(CLASSES_DIR) $^
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
 	$(RM) -rf "$(TARGET_DIR)"
 
 run: build
-	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS) $(MAIN_ARGS)
+	$(KOTLIN) -cp $(TARGET) $(MAIN_CLASS) $(MAIN_ARGS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
@@ -72,7 +70,7 @@ LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar "$(KTLINT_HOME)/ktlint.jar" $^
+	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
 	@$(TOUCH) $(LINT_TARGET)
 
 ##############################################################################
@@ -86,11 +84,11 @@ TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
 TEST_MAIN_CLASS  = org.example.test.HelloWorldTestKt
 
 test: $(TARGET) $(TEST_TARGET)
-	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
+	$(JAVA) -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
 
 $(TEST_TARGET): $(TEST_SOURCES)
 	[ -d "$(TEST_CLASSES_DIR)" ] || "$(MKDIR)" -p "$(TEST_CLASSES_DIR)"
-	"$(KOTLINC)" $(KOTLINC_OPTS) -cp "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
+	"$(KOTLINC)" -cp "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
 	"$(JAR)" cf $(TEST_TARGET) -C $(TEST_CLASSES_DIR) .
 
 ##############################################################################

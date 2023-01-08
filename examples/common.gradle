@@ -72,7 +72,7 @@ clean.doLast {
 task lint(type: JavaExec) {
     description "Analyze Kotlin source files with KtLint"
     mainClass = "-jar"
-    args files("${ktlintHome}") + ktLintOpts + sourceSets.main.allSource.files
+    args "${ktlintHome}/ktlint.jar " + ktLintOpts + sourceSets.main.allSource.files
 }
 
 checkstyle {

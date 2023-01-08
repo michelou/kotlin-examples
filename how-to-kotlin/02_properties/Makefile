@@ -19,7 +19,7 @@ all: build run
 build: $(TARGET)
 
 $(TARGET): $(SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
 	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
@@ -60,7 +60,7 @@ run-native: build-native
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -type f -name *.kt)
+LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
 lint: $(LINT_TARGET)
@@ -71,7 +71,7 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ##############################################################################
 ## doc rules
 
-DOC_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name *.kt)
+DOC_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
 DOC_TARGET  = $(TARGET_DIR)/.latest-doc
 
 DOKKA_CLI_JAR  = $(shell $(FIND) $(DOKKA_HOME)/lib -type f -name dokka-cli*.jar)
@@ -82,7 +82,7 @@ DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 01_bean -moduleV
 doc: $(DOC_TARGET)
 
 $(DOC_TARGET): $(DOC_SOURCES)
-	[ -d "$(DOKKA_OUT_DIR)" ] || $(MKDIR) -p "$(DOKKA_OUT_DIR)"
+	[ -d "$(DOKKA_OUT_DIR)" ] || "$(MKDIR)" -p "$(DOKKA_OUT_DIR)"
 	"$(JAVA)" -jar "$(DOKKA_CLI_JAR)" $(DOKKA_CLI_OPTS)
 	@$(TOUCH) "$(DOC_TARGET)"
 

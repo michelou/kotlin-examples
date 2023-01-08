@@ -16,8 +16,8 @@
 This project depends on the following external software for the **Microsoft Windows** platform:
 
 - [Git 2.39][git_downloads] ([*release notes*][git_relnotes])
-- [Kotlin 1.7][kotlin_latest] ([*release notes*][kotlin_relnotes])
-- [Kotlin/Native 1.7][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
+- [Kotlin 1.8][kotlin_latest] ([*release notes*][kotlin_relnotes])
+- [Kotlin/Native 1.8][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
 Optionally one may also install the following software:
 
@@ -97,8 +97,8 @@ We distinguish different sets of batch commands:
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
       ant 1.10.12, bazel 5.3.2, gradle 7.6, java 11.0.17, detekt-cli 1.22.0,
-      kotlinc 1.8.0, kotlinc-native 1.8.0, ktlint 0.48.1
-      cfr 0.152, make 3.81, mvn 3.8.7, git 2.39.0.windows.1, diff 3.8, bash 4.4.23(1)-release
+      kotlinc 1.8.0, kotlinc-native 1.8.0, ktlint 0.48.1, cfr 0.152,
+      make 3.81, mvn 3.8.7, git 2.39.0.windows.1, diff 3.8, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.12\bin\ant.bat
       C:\opt\bazel-5.3.2\bazel.exe

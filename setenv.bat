@@ -52,8 +52,11 @@ call :kotlin_native
 if not %_EXITCODE%==0 goto end
 
 call :dokka
-if not %_EXITCODE%==0 goto end
-
+if not %_EXITCODE%==0 (
+    echo %_WARNING_LABEL% Dokka CLI not available 1>&2
+    set _EXITCODE=0
+    @rem goto end
+)
 call :detekt
 if not %_EXITCODE%==0 goto end
 
@@ -201,11 +204,11 @@ for /f "tokens=1,2,*" %%f in ('subst ^| findstr /b "%__DRIVE_NAME%" 2^>NUL') do 
     )
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% subst "%__DRIVE_NAME%" "%__GIVEN_PATH%" 1>&2
-) else if %_VERBOSE%==1 ( echo Assign path %__GIVEN_PATH% to drive %__DRIVE_NAME% 1>&2
+) else if %_VERBOSE%==1 ( echo Assign path "%__GIVEN_PATH%" to drive %__DRIVE_NAME% 1>&2
 )
 subst "%__DRIVE_NAME%" "%__GIVEN_PATH%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to assigne drive %__DRIVE_NAME% to path 1>&2
+    echo %_ERROR_LABEL% Failed to assign path "%__GIVEN_PATH%" to drive %__DRIVE_NAME% 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -264,7 +267,7 @@ if defined __ANT_CMD (
     )
 )
 if not exist "%_ANT_HOME%\bin\ant.cmd" (
-    echo %_ERROR_LABEL% Ant executable not found ^(%_ANT_HOME%^) 1>&2
+    echo %_ERROR_LABEL% Ant executable not found ^("%_ANT_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -356,7 +359,7 @@ if defined __GRADLE_CMD (
     )
 )
 if not exist "%_GRADLE_HOME%\bin\gradle.bat" (
-    echo %_ERROR_LABEL% Executable gradle.bat not found ^(%_GRADLE_HOME%^) 1>&2
+    echo %_ERROR_LABEL% Executable gradle.bat not found ^("%_GRADLE_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -375,7 +378,7 @@ if defined __JAVAC_CMD (
     for /f "tokens=1,*" %%i in ('"%__JAVAC_CMD%" -version') do (
         set __JAVAC_VERSION=%%j
         if "!__JAVAC_VERSION:11.=!"=="!__JAVAC_VERSION!" (
-            echo "%_WARNING_LABEL% Expected: Java 11 executable, found: !__JAVAC_VERSION! 1>&2
+            echo %_WARNING_LABEL% Expected: Java 11 executable, found: !__JAVAC_VERSION! 1>&2
             set __JAVAC_CMD=
         )
     )
@@ -467,28 +470,24 @@ if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
 )
 goto :eof
 
-@rem output parameter: _DOKKA_HOME
+@rem output parameter: _DOKKA_DIR
 :dokka
-set _DOKKA_HOME=
+set _DOKKA_DIR=
 
-if defined DOKKA_HOME (
-    set "_DOKKA_HOME=%DOKKA_HOME%"
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DOKKA_HOME 1>&2
-) else (
-    set __PATH=C:\opt
-    if exist "!__PATH!\dokka\" ( set "_DOKKA_HOME=!__PATH!\dokka"
-    ) else (
-        for /f %%f in ('dir /ad /b "!__PATH!\dokka-1.4*" 2^>NUL') do set "_DOKKA_HOME=!__PATH!\%%f"
-        if not defined _DOKKA_HOME (
-            set "__PATH=%ProgramFiles%"
-            for /f %%f in ('dir /ad /b "!__PATH!\dokka-1.4*" 2^>NUL') do set "_DOKKA_HOME=!__PATH!\%%f"
-        )
-    )
+set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
+for /f "delims=" %%f in ('dir /ad /b /s "%__LOCAL_REPO%\org\jetbrains\dokka\dokka-cli\*" 2^>NUL') do (
+     set "_DOKKA_DIR=%%f"
+)
+if not defined _DOKKA_DIR (
+    echo Dokka library not found in local Maven repository ^(%__LOCAL_REPO%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 set __DOKKA_CLI_JAR=
-for %%f in (%_DOKKA_HOME%\lib\dokka-cli*.jar) do set "__DOKKA_CLI_JAR=%%f"
+@rem https://repo1.maven.org/maven2/org/jetbrains/dokka/dokka-cli/1.7.20/dokka-cli-1.7.20.jar
+for /f "delims=" %%f in ('dir /b "%_DOKKA_DIR%\dokka-cli*.jar" 2^>NUL') do set "__DOKKA_CLI_JAR=%%f"
 if not defined __DOKKA_CLI_JAR (
-    echo CLI library not found in Dokka installation directory ^(%_DOKKA_HOME%^) 1>&2
+    echo CLI library not found in Dokka installation directory ^(%_DOKKA_DIR%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -684,12 +683,12 @@ if %ERRORLEVEL%==0 (
 )
 where /q "%KTLINT_HOME%:ktlint.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('"%KTLINT_HOME%\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i"
+    for /f "tokens=*" %%i in ('"%KTLINT_HOME%\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%KTLINT_HOME%:ktlint.bat"
 )
 where /q "%CFR_HOME%\bin:cfr.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,*" %%i in ('"%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
+    for /f "tokens=1,*" %%i in ('"%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% cfr %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
 )
 where /q "%MAKE_HOME%\bin:make.exe"
@@ -724,7 +723,6 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     if defined ANT_HOME echo    "ANT_HOME=%ANT_HOME%" 1>&2
     if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
     if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
-    if defined DOKKA_HOME echo    "DOKKA_HOME=%DOKKA_HOME%" 1>&2
     if defined GIT_HOME echo    "GIT_HOME=%GIT_HOME%" 1>&2
     if defined GRADLE_HOME echo    "GRADLE_HOME=%GRADLE_HOME%" 1>&2
     if defined JAVA_HOME echo    "JAVA_HOME=%JAVA_HOME%" 1>&2
@@ -746,7 +744,6 @@ endlocal & (
     if not defined ANT_HOME set "ANT_HOME=%_ANT_HOME%"
     if not defined CFR_HOME set "CFR_HOME=%_CFR_HOME%"
     if not defined DETEKT_HOME set "DETEKT_HOME=%_DETEKT_HOME%"
-    if not defined DOKKA_HOME set "DOKKA_HOME=%_DOKKA_HOME%"
     if not defined GIT_HOME set "GIT_HOME=%_GIT_HOME%"
     if not defined GRADLE_HOME set "GRADLE_HOME=%_GRADLE_HOME%"
     if not defined JAVA_HOME set "JAVA_HOME=%_JAVA_HOME%"

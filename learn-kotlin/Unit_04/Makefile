@@ -4,11 +4,13 @@ SOURCE_DIR  = src
 TARGET_DIR  = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
+KOTLINC_OPTS=-language-version $(LANGUAGE_VERSION) -jvm-target $(JVM_TARGET)
+
 ##############################################################################
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/HelloWorld.jar
+TARGET = $(TARGET_DIR)/Primitives.jar
 
 MAIN_CLASS = PrimitivesKt
 MAIN_ARGS ?= 
@@ -19,7 +21,7 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
+	"$(KOTLINC)" $(KOTLINC_OPTS) -d $(CLASSES_DIR) $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
@@ -70,25 +72,25 @@ LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
+	"$(JAVA)" -jar "$(KTLINT_HOME)/ktlint.jar" $^
 	@$(TOUCH) $(LINT_TARGET)
 
 ##############################################################################
 ## test rules
 
 TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -name "*.kt" 2>/dev/null)
-TEST_TARGET = $(TARGET_DIR)/HelloWorldTest.jar
+TEST_TARGET = $(TARGET_DIR)/PrimitivesJUnitTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
 TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
-TEST_MAIN_CLASS  = org.example.test.HelloWorldTestKt
+TEST_MAIN_CLASS  = org.example.test.PrimitivesJUnitTestKt
 
 test: $(TARGET) $(TEST_TARGET)
 	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
 
 $(TEST_TARGET): $(TEST_SOURCES)
 	[ -d "$(TEST_CLASSES_DIR)" ] || "$(MKDIR)" -p "$(TEST_CLASSES_DIR)"
-	"$(KOTLINC)" -cp "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
+	"$(KOTLINC)" $(KOTLINC_OPTS) -classpath "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
 	"$(JAR)" cf $(TEST_TARGET) -C $(TEST_CLASSES_DIR) .
 
 ##############################################################################

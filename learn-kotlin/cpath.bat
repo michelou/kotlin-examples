@@ -54,6 +54,9 @@ call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
 @rem https://dl.bintray.com/kotlin/dokka/org/jetbrains/dokka/dokka-base/
 call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
+call :add_maven_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
+
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
 @rem call :add_maven_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
 

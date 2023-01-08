@@ -10,9 +10,9 @@ KOTLINC_OPTS=-language-version $(LANGUAGE_VERSION) -jvm-target $(JVM_TARGET)
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/HelloWorld.jar
+TARGET = $(TARGET_DIR)/Properties.jar
 
-MAIN_CLASS = com.makotojava.learn.kotlin.example2.Example2Kt
+MAIN_CLASS = com.makotogo.learn.kotlin.PropertiesKt
 MAIN_ARGS ?= 
 
 all: build run
@@ -72,21 +72,21 @@ LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar "$(KTLINT_HOME)/ktlint.jar" $^
+	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
 	@$(TOUCH) $(LINT_TARGET)
 
 ##############################################################################
 ## test rules
 
 TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -type f -name "*.kt")
-TEST_TARGET = $(TARGET_DIR)/HelloWorldTest.jar
+TEST_TARGET = $(TARGET_DIR)/PropertiesJUnitTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
 TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
-TEST_MAIN_CLASS  = org.example.test.HelloWorldTestKt
+TEST_MAIN_CLASS  = org.example.main.PropertiesJUnitTestKt
 
 test: $(TARGET) $(TEST_TARGET)
-	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
+	$(JAVA) -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
 
 $(TEST_TARGET): $(TEST_SOURCES)
 	[ -d "$(TEST_CLASSES_DIR)" ] || "$(MKDIR)" -p "$(TEST_CLASSES_DIR)"
