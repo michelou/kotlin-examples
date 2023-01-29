@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [Deno][deno_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other trending topics we are continuously monitoring.
+[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [Deno][deno_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other trending topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -58,6 +58,7 @@ how-to-kotlin\{<a href="how-to-kotlin/README.md">README.md</a>, <a href="how-to-
 <a href="https://github.com/JetBrains/kotlin">kotlin\</a>   <i>(<a href=".gitmodules">Github submodule</a>)</i>
 kotlin-cookbook\{<a href="kotlin-cookbook/README.md">README.md</a>, <a href="kotlin-cookbook/Example_03-10/">Example_03-10</a>, <a href="kotlin-cookbook/Example_03-13/">Example_03-13</a>, ..}
 learn-kotlin\{<a href="learn-kotlin/README.md">README.md</a>, <a href="learn-kotlin/Unit_02/">Unit_02</a>, <a href="learn-kotlin/Unit_04/">Unit_04</a>, ..}
+<a href="CONTRIBUTIONS.md">CONTRIBUTIONS.md</a>
 README.md
 <a href="RESOURCES.md">RESOURCES.md</a>
 <a href="setenv.bat">setenv.bat</a>
@@ -74,6 +75,7 @@ where
 - directory **`kotlin\`** contains a copy of the [JetBrains/kotlin][jetbrains_kotlin] repository as a [Github submodule](.gitmodules).
 - directory [**`kotlin-cookbook\`**](kotlin-cookbook/) contains [Kotlin] code examples (see [**`kotlin-cookbook\README.md`**](kotlin-cookbook/README.md)).
 - directory [**`learn-kotlin\`**](learn-kotlin/) contains [Kotlin] code examples (see [**`learn-kotlin\README.md`**](learn-kotlin/README.md)).
+- file [**`CONTRIBUTIONS.md`**](CONTRIBUTIONS.md) gathers reported issues and pull requests to the [Kotlin] project.
 - file [**`README.md`**](README.md) is the Markdown document for this page.
 - file [**`RESOURCES.md`**](RESOURCES.md) is the [Markdown][github_markdown] document presenting external resources.
 - file [**`setenv.bat`**](setenv.bat) is the batch script for setting up our environment.
@@ -97,12 +99,12 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.13, bazel 5.3.2, gradle 7.6, java 11.0.17, detekt-cli 1.22.0,
+      ant 1.10.13, bazel 6.0.0, gradle 7.6, java 11.0.17, detekt-cli 1.22.0,
       kotlinc 1.8.0, kotlinc-native 1.8.0, ktlint 0.48.2, cfr 0.152,
       make 3.81, mvn 3.8.7, git 2.39.1.windows.1, diff 3.8, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.13\bin\ant.bat
-      C:\opt\bazel-5.3.2\bazel.exe
+      C:\opt\bazel-6.0.0\bazel.exe
       C:\opt\gradle-7.6\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
       C:\opt\detekt-cli-1.22.0\bin\detekt-cli.bat
@@ -243,6 +245,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [gradle_relnotes]: https://docs.gradle.org/7.6/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
+[kafka_examples]: https://github.com/michelou/kafka-examples
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
 [kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.8.0
