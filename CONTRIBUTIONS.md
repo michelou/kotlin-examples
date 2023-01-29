@@ -1,4 +1,4 @@
-# <span id="top">Contributions to the Kotlin Project</span>
+# <span id="top">Contributions to the Kotlin Project</span> <span style="size:30%;"><a href="README.md">↩</a></span>
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
@@ -15,6 +15,10 @@
 | [KT-56082](https://youtrack.jetbrains.com/issue/KT-56082/NullPointerException-in-Dokka-CLI) | 20.01.2023 | - | NullPointerException in Dokka CLI  | *pending* |
 
 ## <span id="pull_requests">Pull Requests</span>
+
+*none*
+
+## <span id="wip">Work in Progress</span>
 
 *none*
 
