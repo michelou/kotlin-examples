@@ -26,15 +26,18 @@
         <maven.jar.version>3.3.0</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
         <exec.maven.version>3.1.0</exec.maven.version>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core -->
+        <dokka.version>1.7.20</dokka.version>
     </properties>
 
     <dependencies>
-        <!-- see https://kotlinlang.org/docs/reference/using-maven.html -->
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
@@ -64,15 +67,30 @@
             <artifactId>maven-jar-plugin</artifactId>
             <version>${maven.jar.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>${exec.maven.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.gantsign.maven/ktlint-maven-plugin -->
         <dependency>
             <groupId>com.github.gantsign.maven</groupId>
             <artifactId>ktlint-maven-plugin</artifactId>
             <version>${ktlint.maven.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli -->
+        <dependency>
+            <groupId>org.jetbrains.dokka</groupId>
+            <artifactId>dokka-cli</artifactId>
+            <version>${dokka.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-cli-jvm -->
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-cli-jvm</artifactId>
+            <version>0.3.5</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

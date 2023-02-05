@@ -2,7 +2,7 @@
 
 <table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://www.rust-lang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This document presents ongoing works, pull requests and issues we have submitted so far to the <a href="https://kotlinlang.org/" rel="external">Kotlin</a> project.<br/>&nbsp;
   </td>
   </tr>
@@ -14,6 +14,7 @@
 |:-------|:-------|:-------|:------------|:------|
 | [KT-56082](https://youtrack.jetbrains.com/issue/KT-56082/NullPointerException-in-Dokka-CLI) | 20.01.2023 | - | NullPointerException in Dokka CLI  | *pending* |
 
+<!-- https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/24 -->
 ## <span id="pull_requests">Pull Requests</span>
 
 *none*
