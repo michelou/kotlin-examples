@@ -22,7 +22,7 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 
 @rem library versions
-set __KOTLIN_VERSION=1.8.0
+set __KOTLIN_VERSION=1.8.10
 set __KOTLINX_VERSION=1.6.4
 
 set _LIBS_CPATH=
@@ -40,55 +40,27 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLINX_VERSION%"
-
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core-jvm" "%__KOTLINX_VERSION%"
-
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.8.0"
-
 set __DOKKA_VERSION=1.7.20
-
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
-call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
-
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
-call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
-
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
-call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
+@rem https://kotlin.github.io/dokka/1.7.0/user_guide/cli/usage/
+@rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-7-10-jar-from-the-command-line/25439
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
 call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
-call :add_maven_jar "org.jetbrains.dokka" "dokka-core" "%__DOKKA_VERSION%"
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
-call :add_maven_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-intellij
+call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
-call :add_maven_jar "org.jetbrains.kotlin" "kotlin-stdlib" "%__DOKKA_VERSION%"
+@rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
+call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
-call :add_maven_jar "org.jetbrains.kotlin" "kotlin-stdlib-jdk8" "%__DOKKA_VERSION%"
+@rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.8.0"
 
-@rem https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
-call :add_maven_jar "org.jetbrains.kotlin" "kotlin-reflect" "%__DOKKA_VERSION%"
-
-@rem https://mvnrepository.com/artifact/com.intellij/openapi
-@rem call :add_maven_jar "com.intellij" "openapi" "7.0.3"
-
-@rem https://mvnrepository.com/artifact/com.intellij/extensions
-@rem call :add_maven_jar "com.intellij" "extensions" "7.0.3"
-
-@rem https://mvnrepository.com/artifact/com.intellij/annotations
-@rem call :add_maven_jar "com.intellij" "annotations" "12.0"
-
-@rem https://mvnrepository.com/artifact/com.intellij/util
-@rem call :add_datanucleaus_jar "com.intellij" "util" "IC-103.255"
+@rem https://mvnrepository.com/artifact/org.freemarker/freemarker
+call :add_maven_jar "org.freemarker" "freemarker" "2.3.32"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
 

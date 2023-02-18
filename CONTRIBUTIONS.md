@@ -1,6 +1,6 @@
 # <span id="top">Contributions to the Kotlin Project</span> <span style="size:30%;"><a href="README.md">↩</a></span>
 
-<table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
+<table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This document presents ongoing works, pull requests and issues we have submitted so far to the <a href="https://kotlinlang.org/" rel="external">Kotlin</a> project.<br/>&nbsp;
