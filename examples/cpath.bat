@@ -13,7 +13,7 @@ if %_DEBUG%==1 echo [%~n0] "_MVN_CMD=%_MVN_CMD%"
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
 )
-set __CENTRAL_REPO=https://repo1.maven.org/maven2
+set _CENTRAL_REPO=https://repo1.maven.org/maven2
 set __DATANUCLEUS_REPO=http://www.datanucleus.org/downloads/maven2
 set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
 
@@ -22,8 +22,8 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 
 @rem library versions
+set __DOKKA_VERSION=1.8.10
 set __KOTLIN_VERSION=1.8.10
-set __KOTLINX_VERSION=1.6.4
 
 set _LIBS_CPATH=
 
@@ -40,7 +40,6 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-set __DOKKA_VERSION=1.7.20
 @rem https://kotlin.github.io/dokka/1.7.0/user_guide/cli/usage/
 @rem https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-7-10-jar-from-the-command-line/25439
 
@@ -79,8 +78,8 @@ goto end
 @rem input parameters: %1=group ID, %2=artifact ID, %3=version
 @rem global variable: _LIBS_CPATH
 :add_maven_jar
-if %_DEBUG%==1 echo [%~n0] call :add_jar "%__CENTRAL_REPO%" %1 %2 %3 1>&2
-call :add_jar "%__CENTRAL_REPO%" %1 %2 %3
+if %_DEBUG%==1 echo [%~n0] call :add_jar "%_CENTRAL_REPO%" %1 %2 %3 1>&2
+call :add_jar "%_CENTRAL_REPO%" %1 %2 %3
 goto :eof
 
 @rem e.g. http://www.datanucleus.org/downloads/maven2/com/intellij/util/IC-103.255/util-IC-103.255.jar

@@ -6,9 +6,14 @@
     <info organisation="myorg" module="examples"/>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
-        <dependency org="commons-lang" name="commons-lang" rev="2.6"/>
+        <!--OLD <dependency org="commons-lang" name="commons-lang" rev="2.6"/>-->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency org="org.apache.commons" name="commons-lang3" rev="3.12.0"/>
+
         <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-        <dependency org="log4j" name="log4j" rev="1.2.17"/>
+        <!--OLD <dependency org="log4j" name="log4j" rev="1.2.17"/>-->
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.20.0"/>
 
         <dependency org="org.benf" name="cfr" rev="0.152"/>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -16,6 +21,7 @@
 
         <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
         <dependency org="info.picocli" name="picocli" rev="4.7.1"/>
+
         <!-- https://mvnrepository.com/artifact/com.pinterest/ktlint -->
         <dependency org="com.pinterest" name="ktlint" rev="0.48.2"/>
     </dependencies>
