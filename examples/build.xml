@@ -63,6 +63,9 @@
         <pathconvert property="ktlint.jar">
             <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-${ktlint.version}.jar" />
         </pathconvert>
+        <pathconvert property="junit.jar">
+            <fileset dir="${ivy.cache}/junit" includes="**/junit-${junit.version}.jar" />
+        </pathconvert>
         <path id="ktlint.classpath">
             <fileset dir="${ivy.cache}/info.picocli" includes="**/jars/picocli-${picocli.version}.jar" />
             <path refid="build.classpath" />

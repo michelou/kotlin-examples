@@ -435,7 +435,7 @@ if defined __KOTLINC_CMD (
     )
 )
 if not exist "%_KOTLIN_HOME%\bin\kotlinc.bat" (
-    echo kotlinc not found in Kotlin installation directory ^(%_KOTLIN_HOME%^) 1>&2
+    echo %_ERROR_LABEL% kotlinc not found in Kotlin installation directory ^(%_KOTLIN_HOME%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -464,7 +464,7 @@ if defined __KOTLINC_NATIVE_CMD (
     )
 )
 if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
-    echo kotlinc-native not found in Kotlin/Native installation directory ^(%_KOTLIN_NATIVE_HOME%^) 1>&2
+    echo %_ERROR_LABEL% kotlinc-native not found in Kotlin/Native installation directory ^(%_KOTLIN_NATIVE_HOME%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -479,7 +479,7 @@ for /f "delims=" %%f in ('dir /ad /b /s "%__LOCAL_REPO%\org\jetbrains\dokka\dokk
      set "_DOKKA_DIR=%%f"
 )
 if not defined _DOKKA_DIR (
-    echo Dokka library not found in local Maven repository ^(%__LOCAL_REPO%^) 1>&2
+    echo %_ERROR_LABEL% Dokka library not found in local Maven repository ^(!__LOCAL_REPO:%USERPROFILE%=%%USERPROFILE%%!^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -487,7 +487,7 @@ set __DOKKA_CLI_JAR=
 @rem https://repo1.maven.org/maven2/org/jetbrains/dokka/dokka-cli/1.7.20/dokka-cli-1.7.20.jar
 for /f "delims=" %%f in ('dir /b "%_DOKKA_DIR%\dokka-cli*.jar" 2^>NUL') do set "__DOKKA_CLI_JAR=%%f"
 if not defined __DOKKA_CLI_JAR (
-    echo CLI library not found in Dokka installation directory ^(%_DOKKA_DIR%^) 1>&2
+    echo %_ERROR_LABEL% CLI library not found in Dokka installation directory ^(%_DOKKA_DIR%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
