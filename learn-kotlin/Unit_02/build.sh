@@ -103,7 +103,7 @@ Usage: $BASENAME { <option> | <subcommand> }
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         display this help message
-    run          execute main class $MAIN_CLASS
+    run          execute main class "$(MAIN_CLASS)"
 EOS
 }
 
@@ -407,7 +407,7 @@ DEBUG=false
 DECOMPILE=false
 DOC=false
 HELP=false
-MAIN_CLASS="com.makotogo.learn.kotlin.defaultargs.DefaultKt"
+MAIN_CLASS="com.makotojava.learn.kotlin.example2.Example2Kt"
 MAIN_ARGS=
 RUN=false
 SCALA_VERSION=3
@@ -438,7 +438,7 @@ if $cygwin || $mingw || $msys; then
     CYGPATH_CMD="$(which cygpath 2>/dev/null)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
-    PSEP=";"
+    [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
     LOCAL_REPO="$(mixed_path $USERPROFILE/.m2/repository)"
 else
     LOCAL_REPO="$USER/.m2/repository"
@@ -451,7 +451,7 @@ JAVA_CMD="$JAVA_HOME/bin/java"
 JAVAC_CMD="$JAVA_HOME/bin/javac"
 JAVADOC_CMD="$JAVA_HOME/bin/javadoc"
 
-if [ ! -x "$KOTLIN_HOME/bin/kotlinc" ]; then
+if [[ ! -x "$KOTLIN_HOME/bin/kotlinc" ]]; then
     error "Kotlin installation not found"
     cleanup 1
 fi

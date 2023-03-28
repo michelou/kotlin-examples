@@ -39,9 +39,9 @@ endif
 LANGUAGE_VERSION = 1.6
 JVM_TARGET=11
 
-DOKKA_VERSION=1.7.20
+DOKKA_VERSION=1.8.10
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.8.0
+KOTLIN_VERSION  = 1.8.10
 KOTLINX_VERSION = 1.6.4
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_VERSION).jar)

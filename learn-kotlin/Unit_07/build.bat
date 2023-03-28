@@ -531,7 +531,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_J
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Generation of HTML documentation failed 1>&2
+    echo %_ERROR_LABEL% Failed to generate HTML documentation with Dokka 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -547,12 +547,13 @@ set __MAIN_CLASS=com.makotogo.learn.kotlin.%_EXAMPLE%.!__MAIN_CLASSES[%_EXAMPLE%
 
 set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %__KOTLIN_OPTS% %__MAIN_CLASS% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %__MAIN_CLASS%  1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS% 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin main class "%__MAIN_CLASS%" 1>&2
 )
 
-call %_KOTLIN_CMD% %__KOTLIN_OPTS% %__MAIN_CLASS%
+call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to execute Kotlin main class "%__MAIN_CLASS%" 1>&2
     set _EXITCODE=1
     goto :eof
 )

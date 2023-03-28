@@ -187,7 +187,7 @@ if exist "%__PROPS_FILE%" (
 goto :eof
 
 @rem input parameter: %*
-@rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
+@rem output parameters: _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
 :args
 set _CLEAN=0
 set _COMPILE=0
@@ -430,7 +430,7 @@ set __N=0
 for /f "delims=" %%f in ('dir /s /b "%_MAIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
-
+)
 if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source files found 1>&2
     goto :eof

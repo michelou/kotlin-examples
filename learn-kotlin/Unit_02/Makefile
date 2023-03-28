@@ -25,7 +25,7 @@ $(TARGET): $(SOURCES)
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
-	$(RM) -rf "$(TARGET_DIR)"
+	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
 	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS) $(MAIN_ARGS)
@@ -40,7 +40,7 @@ help:
 	@$(ECHO) "    doc    generate HTML documentation"
 	@$(ECHO) "    help   display this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
-	@$(ECHO) "    run    execute main program $(MAIN_CLASS)"
+	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "    test   execute unit tests with JUnit"
 
 ##############################################################################

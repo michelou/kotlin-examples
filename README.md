@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.39][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.40][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.8][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 1.8][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -27,14 +27,14 @@ Optionally one may also install the following software:
 - [Gradle 8.0][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.48][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*February 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*April 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.13\                   <i>( 39 MB)</i>
-C:\opt\apache-maven-3.9.0\                   <i>(  9 MB)</i>
+C:\opt\apache-maven-3.9.1\                   <i>(  9 MB)</i>
 C:\opt\detekt-cli-1.22.0\                    <i>( 55 MB)</i>
-C:\opt\Git-2.39.2\                           <i>(314 MB)</i>
-C:\opt\gradle-8.0\                           <i>(129 MB)</i>
+C:\opt\Git-2.40.0\                           <i>(314 MB)</i>
+C:\opt\gradle-8.0.2\                         <i>(129 MB)</i>
 C:\opt\jdk-temurin-11.0.18_10\               <i>(301 MB)</i>
 C:\opt\kotlinc-1.8.10\                       <i>( 86 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.8.10\  <i>(251 MB)</i>
@@ -99,13 +99,13 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.13, bazel 6.0.0, gradle 8.0, java 11.0.17, detekt-cli 1.22.0,
+      ant 1.10.13, bazel 6.1.0, gradle 8.0, java 11.0.17, detekt-cli 1.22.0,
       kotlinc 1.8.10, kotlinc-native 1.8.10, ktlint 0.48.2, cfr 0.152,
-      make 3.81, mvn 3.9.0, git 2.39.2.windows.1, diff 3.8, bash 4.4.23(1)-release
+      make 3.81, mvn 3.9.1, git 2.40.0.windows.1, diff 3.9, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.13\bin\ant.bat
-      C:\opt\bazel-6.0.0\bazel.exe
-      C:\opt\gradle-8.0\bin\gradle.bat
+      C:\opt\bazel-6.1.0\bazel.exe
+      C:\opt\gradle-8.0.2\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
       C:\opt\detekt-cli-1.22.0\bin\detekt-cli.bat
       C:\opt\kotlinc-1.8.10\bin\kotlinc.bat
@@ -114,23 +114,23 @@ We distinguish different sets of batch commands:
       C:\opt\ktlint-0.48.2\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
-      C:\opt\apache-maven-3.9.0\bin\mvn.cmd
-      C:\opt\Git-2.39.2\bin\git.exe
-      C:\opt\Git-2.39.2\mingw64\bin\git.exe
-      C:\opt\Git-2.39.2\usr\bin\diff.exe
+      C:\opt\apache-maven-3.9.1\bin\mvn.cmd
+      C:\opt\Git-2.40.0\bin\git.exe
+      C:\opt\Git-2.40.0\mingw64\bin\git.exe
+      C:\opt\Git-2.40.0\usr\bin\diff.exe
    Environment variables:
       "ANT_HOME=C:\opt\apache-ant-1.10.13"
       "CFR_HOME=C:\opt\cfr-0.152"
       "DETEKT_HOME=C:\opt\detekt-cli-1.22.0"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
-      "GIT_HOME=C:\opt\Git-2.39.2"
-      "GRADLE_HOME=C:\opt\gradle-8.0"
+      "GIT_HOME=C:\opt\Git-2.40.0"
+      "GRADLE_HOME=C:\opt\gradle-8.0.2"
       "JAVA_HOME=C:\opt\jdk-temurin-11.0.17_8"
       "KOTLIN_HOME=C:\opt\kotlinc-1.8.10"
-      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.8.0"
+      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.8.10"
       "KTLINT_HOME=C:\opt\ktlint-0.48.2"
       "MAKE_HOME=C:\opt\make-3.81"
-      "MAVEN_HOME=C:\opt\apache-maven-3.9.0"
+      "MAVEN_HOME=C:\opt\apache-maven-3.9.1"
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -204,22 +204,22 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <dd>
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.13-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.0-bin.zip</a>                         <i>(  9 MB)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.1-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.22.0.zip</a>                              <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-8.0-bin.zip</a>                                 <i>(115 MB)</i>
+<a href="https://gradle.org/releases/">gradle-8.0.2-bin.zip</a>                               <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.8.0">kotlin-compiler-1.8.10.zip</a>                         <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.8.0">kotlin-native-windows-x86_64-1.8.10.zip</a>            <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.48.2)</a>                                    <i>( 47 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u345b01.zip</a>     <i>( 99 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.18_10.zip</a>  <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.39.2-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.40.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/February 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -237,7 +237,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.39.2.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.40.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
@@ -258,7 +258,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.9.0/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.9.1/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples
