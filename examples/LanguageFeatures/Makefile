@@ -1,3 +1,10 @@
+##
+## Copyright (c) 2018-2023 Stéphane Micheloud
+##
+## Licensed under the MIT License.
+##
+##############################################################################
+
 include ../Makefile.inc
 
 SOURCE_DIR  = src
@@ -38,7 +45,7 @@ help:
 	@$(ECHO) "    doc    generate HTML documentation"
 	@$(ECHO) "    help   display this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
-	@$(ECHO) "    run    execute main program $(MAIN_CLASS)"
+	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "    test   execute unit tests with JUnit"
 
 ##############################################################################
@@ -64,15 +71,21 @@ doc: $(DOC_TARGET)
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -type f -name "*.kt")
+LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
+
+CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) "$(HOME)/.checkstyle" -type f -name "*.xml")
+CHECKSTYLE_JAR_FILE    = $(shell $(FIND) "$(HOME)/.checkstyle" -type f -name "checkstyle*.jar")
 
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
+	"$(JAVA)" -jar $(CHECKSTYLE_JAR_FILE) -c=$(CHECKSTYLE_CONFIG_FILE) $^
 
 ##############################################################################
 ## phony
 
 .PHONY: all build clean doc help lint run
+
+.SUFFIXES:
+.SUFFIXES: .class .jar .java .kt .xml

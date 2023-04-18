@@ -1,3 +1,10 @@
+##
+## Copyright (c) 2018-2023 Stéphane Micheloud
+##
+## Licensed under the MIT License.
+##
+##############################################################################
+
 include ../Makefile.inc
 
 SOURCE_DIR  = src
@@ -18,7 +25,7 @@ all: build run
 build: $(TARGET)
 
 $(TARGET): $(SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
 	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
@@ -37,7 +44,7 @@ help:
 	@$(ECHO) "    clean  delete generated files"
 	@$(ECHO) "    help   display this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
-	@$(ECHO) "    run    execute main program $(MAIN_CLASS)"
+	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "    test   execute unit tests with JUnit"
 
 ##############################################################################
@@ -65,7 +72,7 @@ DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 01_bean -moduleV
 doc: $(DOC_TARGET)
 
 $(DOC_TARGET): $(DOC_SOURCES)
-	[ -d "$(DOKKA_OUT_DIR)" ] || $(MKDIR) -p "$(DOKKA_OUT_DIR)"
+	[ -d "$(DOKKA_OUT_DIR)" ] || "$(MKDIR)" -p "$(DOKKA_OUT_DIR)"
 	"$(JAVA)" -jar "$(DOKKA_CLI_JAR)" $(DOKKA_CLI_OPTS)
 	@$(TOUCH) "$(DOC_TARGET)"
 
@@ -73,3 +80,6 @@ $(DOC_TARGET): $(DOC_SOURCES)
 ## phony
 
 .PHONY: all build clean doc help lint run
+
+.SUFFIXES:
+.SUFFIXES: .class .jar .java .kt

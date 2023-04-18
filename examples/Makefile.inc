@@ -45,7 +45,7 @@ DOKKA_VERSION   = 1.8.10
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
-KOTLIN_VERSION  = 1.8.10
+KOTLIN_VERSION  = 1.8.20
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 KOTLINX_VERSION = 1.6.4
 

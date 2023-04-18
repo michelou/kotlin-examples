@@ -48,7 +48,7 @@ endif
 LANGUAGE_VERSION = 1.5
 
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.8.0
+KOTLIN_VERSION  = 1.8.20
 KOTLINX_VERSION = 1.6.4
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)

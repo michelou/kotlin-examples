@@ -20,7 +20,7 @@
         <dependency org="junit" name="junit" rev="4.13.2"/>
 
         <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
-        <dependency org="info.picocli" name="picocli" rev="4.7.1"/>
+        <dependency org="info.picocli" name="picocli" rev="4.7.2"/>
 
         <!-- https://mvnrepository.com/artifact/com.pinterest/ktlint -->
         <dependency org="com.pinterest" name="ktlint" rev="0.48.2"/>

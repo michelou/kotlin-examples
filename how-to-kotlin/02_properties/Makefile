@@ -1,3 +1,10 @@
+##
+## Copyright (c) 2018-2023 Stéphane Micheloud
+##
+## Licensed under the MIT License.
+##
+##############################################################################
+
 include ../Makefile.inc
 
 SOURCE_DIR  = src
@@ -7,7 +14,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" "$(SOURCE_DIR)/main/kotlin-jvm" -type f -name *.kt)
+SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" "$(SOURCE_DIR)/main/kotlin-jvm" -type f -name "*.kt")
 TARGET = $(TARGET_DIR)/Properties.jar
 
 
@@ -38,7 +45,7 @@ help:
 	@$(ECHO) "    clean  delete generated files"
 	@$(ECHO) "    help   display this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
-	@$(ECHO) "    run    execute main program $(MAIN_CLASS)"
+	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "    test   execute unit tests with JUnit"
 
 ##############################################################################
@@ -90,3 +97,6 @@ $(DOC_TARGET): $(DOC_SOURCES)
 ## phony
 
 .PHONY: all build build-native clean doc help lint run run-native
+
+.SUFFIXES:
+.SUFFIXES: .class .jar .java .kt

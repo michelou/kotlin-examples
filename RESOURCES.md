@@ -27,6 +27,10 @@
 - [Using Kotlin to build the Lunaconf 2022 App][blog_karim] by Shabab Karim, December 2022.
 - [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.
 - [Convert a Kotlin data class object to a Map](https://www.baeldung.com/kotlin/data-class-to-map) by [baeldung](https://www.baeldung.com/kotlin/author/baeldung), June 2022.
+- [Quickbird Blog](https://quickbirdstudios.com/blog/) :
+  - [Value Classes in Kotlin: Good-Bye, Type Aliases!?](https://quickbirdstudios.com/blog/kotlin-value-classes/) by Federik Kammel, December 2021.
+  - [Kotlin’s Sealed Interfaces & The Hole in The Sealing](https://quickbirdstudios.com/blog/sealed-interfaces-kotlin/) by Balazs Toth, August 2021. 
+  - [Non-Empty Lists in Kotlin](https://quickbirdstudios.com/blog/non-empty-lists-kotlin/) by Balazs Toth, March 2021.
 - [Scala vs kotlin: Which one is better for your project](blog_dac) by [DAC](https://dac.digital/about/), October 2021.
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
