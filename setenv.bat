@@ -53,7 +53,7 @@ if not %_EXITCODE%==0 goto end
 
 call :dokka
 if not %_EXITCODE%==0 (
-    echo %_WARNING_LABEL% Dokka CLI not available 1>&2
+    echo %_WARNING_LABEL% Dokka CLI library not available 1>&2
     set _EXITCODE=0
     @rem goto end
 )
@@ -470,24 +470,16 @@ if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
 )
 goto :eof
 
-@rem output parameter: _DOKKA_DIR
+@rem output parameter: _DOKKA_CLI_JAR
 :dokka
-set _DOKKA_DIR=
-
-set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
-for /f "delims=" %%f in ('dir /ad /b /s "%__LOCAL_REPO%\org\jetbrains\dokka\dokka-cli\*" 2^>NUL') do (
-     set "_DOKKA_DIR=%%f"
-)
-if not defined _DOKKA_DIR (
-    echo %_ERROR_LABEL% Dokka library not found in local Maven repository ^(!__LOCAL_REPO:%USERPROFILE%=%%USERPROFILE%%!^) 1>&2
-    set _EXITCODE=1
-    goto :eof
-)
-set __DOKKA_CLI_JAR=
+set _DOKKA_CLI_JAR=
 @rem https://repo1.maven.org/maven2/org/jetbrains/dokka/dokka-cli/1.7.20/dokka-cli-1.7.20.jar
-for /f "delims=" %%f in ('dir /b "%_DOKKA_DIR%\dokka-cli*.jar" 2^>NUL') do set "__DOKKA_CLI_JAR=%%f"
-if not defined __DOKKA_CLI_JAR (
-    echo %_ERROR_LABEL% CLI library not found in Dokka installation directory ^(%_DOKKA_DIR%^) 1>&2
+set "__DOKKA_CLI_DIR=%USERPROFILE%\.m2\repository\org\jetbrains\dokka\dokka-cli"
+for /f "delims=" %%f in ('dir /a-d /b /s "%__DOKKA_CLI_DIR%\*.jar" 2^>NUL') do (
+     set "_DOKKA_CLI_JAR=%%f"
+)
+if not defined _DOKKA_CLI_JAR (
+    @rem echo %_ERROR_LABEL% Dokka CLI library not found in Dokka installation directory ^(%__DOKKA_CLI_DIR%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
