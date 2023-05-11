@@ -27,17 +27,17 @@ Optionally one may also install the following software:
 - [Gradle 8.1][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.49][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 
-For instance our development environment looks as follows (*April 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*May 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.13\                   <i>( 39 MB)</i>
 C:\opt\apache-maven-3.9.1\                   <i>(  9 MB)</i>
 C:\opt\detekt-cli-1.23.0\                    <i>( 55 MB)</i>
-C:\opt\Git-2.40.0\                           <i>(314 MB)</i>
+C:\opt\Git-2.40.1\                           <i>(314 MB)</i>
 C:\opt\gradle-8.1.1\                         <i>(129 MB)</i>
 C:\opt\jdk-temurin-11.0.19_7\                <i>(256 MB)</i>
-C:\opt\kotlinc-1.8.20\                       <i>( 80 MB)</i>
-C:\opt\kotlin-native-windows-x86_64-1.8.20\  <i>(251 MB)</i>
+C:\opt\kotlinc-1.8.21\                       <i>( 80 MB)</i>
+C:\opt\kotlin-native-windows-x86_64-1.8.21\  <i>(256 MB)</i>
 C:\opt\ktlint-0.49.0\                        <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
 </pre>
@@ -100,34 +100,34 @@ We distinguish different sets of batch commands:
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
       ant 1.10.13, bazel 6.1.2, gradle 8.1.1, java 11.0.19, detekt-cli 1.22.0,
-      kotlinc 1.8.20, kotlinc-native 1.8.20, ktlint 0.49.0, cfr 0.152,
-      make 3.81, mvn 3.9.1, git 2.40.0.windows.1, diff 3.9, bash 4.4.23(1)-release
+      kotlinc 1.8.21, kotlinc-native 1.8.21, ktlint 0.49.0, cfr 0.152,
+      make 3.81, mvn 3.9.1, git 2.40.1.windows.1, diff 3.9, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.13\bin\ant.bat
       C:\opt\bazel-6.1.0\bazel.exe
       C:\opt\gradle-8.1.1\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
       C:\opt\detekt-cli-1.22.0\bin\detekt-cli.bat
-      C:\opt\kotlinc-1.8.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.8.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.8.20\bin\kotlinc-native.bat
+      C:\opt\kotlinc-1.8.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.8.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.8.21\bin\kotlinc-native.bat
       C:\opt\ktlint-0.49.0\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
       C:\opt\apache-maven-3.9.1\bin\mvn.cmd
-      C:\opt\Git-2.40.0\bin\git.exe
-      C:\opt\Git-2.40.0\mingw64\bin\git.exe
-      C:\opt\Git-2.40.0\usr\bin\diff.exe
+      C:\opt\Git-2.40.1\bin\git.exe
+      C:\opt\Git-2.40.1\mingw64\bin\git.exe
+      C:\opt\Git-2.40.1\usr\bin\diff.exe
    Environment variables:
       "ANT_HOME=C:\opt\apache-ant-1.10.13"
       "CFR_HOME=C:\opt\cfr-0.152"
       "DETEKT_HOME=C:\opt\detekt-cli-1.22.0"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
-      "GIT_HOME=C:\opt\Git-2.40.0"
+      "GIT_HOME=C:\opt\Git-2.40.1"
       "GRADLE_HOME=C:\opt\gradle-8.1.1"
       "JAVA_HOME=C:\opt\jdk-temurin-11.0.19_7"
-      "KOTLIN_HOME=C:\opt\kotlinc-1.8.20"
-      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.8.20"
+      "KOTLIN_HOME=C:\opt\kotlinc-1.8.21"
+      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.8.21"
       "KTLINT_HOME=C:\opt\ktlint-0.49.0"
       "MAKE_HOME=C:\opt\make-3.81"
       "MAVEN_HOME=C:\opt\apache-maven-3.9.1"
@@ -207,19 +207,19 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.1-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.0.zip</a>                              <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.1.1-bin.zip</a>                               <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.8.20">kotlin-compiler-1.8.20.zip</a>                         <i>( 71 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.8.20">kotlin-native-windows-x86_64-1.8.20.zip</a>            <i>(174 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.8.21">kotlin-compiler-1.8.21.zip</a>                         <i>( 71 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.8.21">kotlin-native-windows-x86_64-1.8.21.zip</a>            <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.49.0)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u372b07.zip</a>     <i>( 99 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.19_7.zip</a>   <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.40.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.40.1-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/April 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -237,7 +237,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.40.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.40.1.txt
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
@@ -249,8 +249,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kafka_examples]: https://github.com/michelou/kafka-examples
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.8.20
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.8.20
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.8.21
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.8.21
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases

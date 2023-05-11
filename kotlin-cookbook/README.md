@@ -1,6 +1,6 @@
 # <span id="top">*Kotlin Cookbook* code examples</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
 
-<table style="font-family:Helvetica,Arial;font-size:14px;line-height:1.6;">
+<table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>kotlin-cookbook\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="http://shop.oreilly.com/product/0636920224327.do">Ken Kousen's book</a> "<i>Koltin Cookbook</i>" (O'Reilly, 2019).<br/>
@@ -200,7 +200,7 @@ Test run finished after 100 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/February 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
