@@ -253,8 +253,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 <dd>
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.8.0 (JRE 11.0.17+8)
-Kotlin/Native: 1.8.0
+info: kotlinc-native 1.8.21 (JRE 11.0.19+7)
+Kotlin/Native: 1.8.21
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 linux_x64:                              linux
@@ -334,7 +334,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/June 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
