@@ -493,9 +493,8 @@ set __DETEKT_CMD=
 for /f %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
 if defined __DETEKT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Detekt executable found in PATH 1>&2
-    for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
-    for %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
-    goto :eof
+    for %%i in ("%__DETEKT_CMD%") do set "__DETEKT_BIN_DIR=%%~dpi"
+    for %%f in ("!__DETEKT_BIN_DIR!\.") do set "_DETEKT_HOME=%%~dpf"
 ) else if defined DETEKT_HOME (
     set "_DETEKT_HOME=%DETEKT_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DETEKT_HOME 1>&2
@@ -510,6 +509,11 @@ if defined __DETEKT_CMD (
         )
     )
 )
+if not exist "%_DETEKT_HOME%\bin\detekt-cli.bat" (
+    echo %_ERROR_LABEL% Detekt executable not found ^(%_DETEKT_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
 goto :eof
 
 @rem output parameter: _KTLINT_HOME
@@ -520,7 +524,8 @@ set __KTLINT_CMD=
 for /f %%f in ('where ktlint.bat 2^>NUL') do set "__KTLINT_CMD=%%f"
 if defined __KTLINT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of KtLint executable found in PATH 1>&2
-    for %%f in ("%__KTLINT_CMD%") do set "_KTLINT_HOME=%%~dpf"
+    for %%i in ("%__KTLINT_CMD%") do set "__KTLINT_BIN_DIR=%%~dpi"
+    for %%f in ("!__KTLINT_BIN_DIR!\.") do set "_KTLINT_HOME=%%~dpf"
     goto :eof
 ) else if defined KTLINT_HOME (
     set "_KTLINT_HOME=%KTLINT_HOME%"
@@ -535,6 +540,11 @@ if defined __KTLINT_CMD (
             for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         )
     )
+)
+if not exist "%_KTLINT_HOME%\bin\ktlint.bat" (
+    echo %_ERROR_LABEL% KtLint executable not found ^(%_KTLINT_HOME%^) 1>&2
+    set _EXITCODE=1
+    goto :eof
 )
 goto :eof
 

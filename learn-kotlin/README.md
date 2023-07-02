@@ -21,7 +21,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
     -debug            show commands executed by this script
-    -timer            display total elapsed time
+    -timer            display total execution time
     -verbose          display progress messages
 &nbsp;
   Subcommands:
@@ -57,7 +57,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Options:
     -debug            show commands executed by this script
     -script           execute the Kotlin script
-    -timer            display total elapsed time
+    -timer            display total execution time
     -verbose          display progress messages
 
   Subcommands:
@@ -87,7 +87,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
     -debug         show commands executed by this script
-    -timer         display total elapsed time
+    -timer         display total execution time
     -verbose       display progress messages
 &nbsp;
   Subcommands:
@@ -109,7 +109,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
     -debug            show commands executed by this script
-    -timer            display total elapsed time
+    -timer            display total execution time
     -verbose          display progress messages
 
   Subcommands:
@@ -152,7 +152,7 @@ The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jste
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
