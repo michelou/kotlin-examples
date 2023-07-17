@@ -12,9 +12,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
 
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.7.0-RC</kotlinx.version>
+        <kotlinx.version>1.7.2</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.6</kotlin.compiler.languageVersion>
 
@@ -27,7 +27,7 @@
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
         <exec.maven.version>3.1.0</exec.maven.version>
         <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core -->
-        <dokka.version>1.8.10</dokka.version>
+        <dokka.version>1.8.20</dokka.version>
     </properties>
 
     <dependencies>
