@@ -40,7 +40,7 @@ cleanup() {
     if $TIMER; then
         local TIMER_END=$(date +'%s')
         local duration=$((TIMER_END - TIMER_START))
-        echo "Total elapsed time: $(date -d @$duration +'%H:%M:%S')" 1>&2
+        echo "Total execution time: $(date -d @$duration +'%H:%M:%S')" 1>&2
     fi
     debug "EXITCODE=$EXITCODE"
     exit $EXITCODE
@@ -101,7 +101,7 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
     -debug       show commands executed by this script
-    -timer       display total elapsed time
+    -timer       display total execution time
     -verbose     display progress messages
 
   Subcommands:

@@ -569,7 +569,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
-   goto :eof
+    goto :eof
 )
 goto :eof
 
