@@ -28,7 +28,7 @@ Optionally one may also install the following software:
 - [KtLint 0.50][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 
-For instance our development environment looks as follows (*July 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*August 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.13\                   <i>( 39 MB)</i>
@@ -36,7 +36,7 @@ C:\opt\apache-maven-3.9.3\                   <i>(  9 MB)</i>
 C:\opt\detekt-cli-1.23.0\                    <i>( 55 MB)</i>
 C:\opt\Git-2.41.0\                           <i>(358 MB)</i>
 C:\opt\gradle-8.2.1\                         <i>(135 MB)</i>
-C:\opt\jdk-temurin-11.0.19_7\                <i>(256 MB)</i>
+C:\opt\jdk-temurin-11.0.20_8\                <i>(256 MB)</i>
 C:\opt\kotlinc-1.9.0\                        <i>( 83 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.9.0\   <i>(269 MB)</i>
 C:\opt\ktlint-0.50.0\                        <i>( 53 MB)</i>
@@ -126,7 +126,7 @@ We distinguish different sets of batch commands:
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.41.0"
       "GRADLE_HOME=C:\opt\gradle-8.2.1"
-      "JAVA_HOME=C:\opt\jdk-temurin-11.0.19_7"
+      "JAVA_HOME=C:\opt\jdk-temurin-11.0.20_8"
       "KOTLIN_HOME=C:\opt\kotlinc-1.9.0"
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.0"
       "KTLINT_HOME=C:\opt\ktlint-0.50.0"
@@ -214,15 +214,15 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.0">kotlin-native-windows-x86_64-1.9.0.zip</a>             <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.50.0)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u372b07.zip</a>     <i>( 99 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.19_7.zip</a>   <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u382b05.zip</a>     <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.20_8.zip</a>   <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.41.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
