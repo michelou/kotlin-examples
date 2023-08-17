@@ -14,11 +14,10 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" "$(SOURCE_DIR)/main/kotlin-jvm" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/Properties.jar
+SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+TARGET = $(TARGET_DIR)/Functions.jar
 
-
-MAIN_CLASS = _02_properties.PropertiesKt
+MAIN_CLASS = _04_functional.LambdasKt
 MAIN_ARGS ?= 
 
 all: build run
@@ -31,7 +30,7 @@ $(TARGET): $(SOURCES)
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
-	$(RM) -rf "$(TARGET_DIR)"
+	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
 	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS)
@@ -47,22 +46,6 @@ help:
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
 	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "    test   execute unit tests with JUnit"
-
-##############################################################################
-## native rules
-
-ENTRY_NAME     = _02_properties.main
-SOURCES_NATIVE = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" "$(SOURCE_DIR)/main/kotlin-native" -type f -name "*.kt")
-TARGET_NATIVE  = $(TARGET_DIR)/Properties$(EXT_NATIVE)
-
-build-native: $(TARGET_NATIVE)
-
-
-$(TARGET_NATIVE): $(SOURCES_NATIVE)
-	"$(KOTLINC_NATIVE)" -language-version $(LANGUAGE_VERSION) -o $(TARGET_NATIVE) -e $(ENTRY_NAME) $^
-
-run-native: build-native
-	$(TARGET_NATIVE)
 
 ##############################################################################
 ## lint rules
@@ -96,7 +79,7 @@ $(DOC_TARGET): $(DOC_SOURCES)
 ##############################################################################
 ## phony
 
-.PHONY: all build build-native clean doc help lint run run-native
+.PHONY: all build clean doc help lint run
 
 .SUFFIXES:
 .SUFFIXES: .class .jar .java .kt

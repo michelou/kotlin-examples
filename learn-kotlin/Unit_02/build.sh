@@ -40,7 +40,7 @@ cleanup() {
     if $TIMER; then
         local TIMER_END=$(date +'%s')
         local duration=$((TIMER_END - TIMER_START))
-        echo "Total elapsed time: $(date -d @$duration +'%H:%M:%S')" 1>&2
+        echo "Total execution time: $(date -d @$duration +'%H:%M:%S')" 1>&2
     fi
     debug "EXITCODE=$EXITCODE"
     exit $EXITCODE
@@ -66,6 +66,7 @@ args() {
         decompile) COMPILE=true && DECOMPILE=true ;;
         doc)       COMPILE=true && DOC=true ;;
         help)      HELP=true ;;
+        lint)      LINT=true ;;
         run)       COMPILE=true && RUN=true ;;
         *)
             error "Unknown subcommand $arg"
@@ -73,17 +74,22 @@ args() {
             ;;
         esac
     done
+    if $LINT && [[ ! -x "$KTLINT_CMD" ]]; then
+        warning "ktLint installation not found"
+        LINT=false
+    fi
     if $DECOMPILE && [[ ! -x "$CFR_CMD" ]]; then
         warning "cfr installation not found"
         DECOMPILE=false
     fi
     debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
     debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
-    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP RUN=$RUN"
+    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
+    debug "Variables  : KTLINT_HOME=$KTLINT_HOME"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     $TIMER && TIMER_START=$(date +"%s")
 }
@@ -94,7 +100,7 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
     -debug       display commands executed by this script
-    -timer       display total elapsed time
+    -timer       display total execution time
     -verbose     display progress messages
 
   Subcommands:
@@ -110,9 +116,9 @@ EOS
 clean() {
     if [[ -d "$TARGET_DIR" ]]; then
         if $DEBUG; then
-            debug "Delete directory $TARGET_DIR"
+            debug "Delete directory \"$TARGET_DIR\""
         elif $VERBOSE; then
-            echo "Delete directory ${TARGET_DIR/$ROOT_DIR\//}" 1>&2
+            echo "Delete directory \"${TARGET_DIR/$ROOT_DIR\//}\"" 1>&2
         fi
         rm -rf "$TARGET_DIR"
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
@@ -120,7 +126,27 @@ clean() {
 }
 
 lint() {
-    echo "lint"
+    local klint_opts="--color --reporter=checkstyle,output=$TARGET_DIR/ktlint-report.xml"
+
+    ($DEBUG || $VERBOSE) && klint_opts="--reporter=plain $klint_opts"
+
+    local tmp_file="$TARGET_DIR/ktlint_output.txt"
+
+    # prepend ! to negate the pattern in order to check only certain locations 
+    if $DEBUG; then
+        debug "$KTLINT_CMD $klint_opts src/**/*.kt"
+    elif $VERBOSE; then
+        echo "Analyze $n Kotlin source files with KtLint" 1>&2
+    fi
+    eval "$KTLINT_CMD" $klint_opts "src/**/*.kt"
+    if [[ $? -ne 0 ]]; then
+        warning "Ktlint error found"
+        if [[ -f "$tmp_file" ]]; then
+            ($DEBUG || $VERBOSE) && cat "$tmp_file"
+            rm "$tmp_file"
+       fi
+       # EXITCODE=1
+   fi
 }
 
 compile() {
@@ -171,7 +197,7 @@ compile_java() {
     local sources_file="$TARGET_DIR/javac_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
     local n=0
-    for f in $(find $SOURCE_DIR/main/java/ -name *.java 2>/dev/null); do
+    for f in $(find "$SOURCE_DIR/main/java/" -type f -name "*.java" 2>/dev/null); do
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
@@ -188,7 +214,7 @@ compile_java() {
     fi
     eval "$JAVAC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
         cleanup 1
     fi
 }
@@ -201,7 +227,7 @@ compile_kotlin() {
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
     local n=0
-    for f in $(find $SOURCE_DIR/main/kotlin/ -name *.kt 2>/dev/null); do
+    for f in $(find "$SOURCE_DIR/main/kotlin/" -type f -name "*.kt" 2>/dev/null); do
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
@@ -218,7 +244,7 @@ compile_kotlin() {
     fi
     eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
         cleanup 1
     fi
 }
@@ -246,7 +272,7 @@ decompile() {
         n="$(ls -n $CLASSES_DIR/*.class | wc -l)"
         [[ $n -gt 0 ]] && class_dirs="$class_dirs $f"
     done
-    $VERBOSE && echo "Decompile Java bytecode to directory ${output_dir/$ROOT_DIR\//}" 1>&2
+    $VERBOSE && echo "Decompile Java bytecode to directory \"${output_dir/$ROOT_DIR\//}\"" 1>&2
     for f in $class_dirs; do
         debug "$CFR_CMD $cfr_opts $(mixed_path $f)/*.class"
         eval "$CFR_CMD" $cfr_opts "$(mixed_path $f)/*.class" $STDERR_REDIRECT
@@ -269,7 +295,7 @@ decompile() {
         echo "Save generated Java source files to file ${output_file/$ROOT_DIR\//}" 1>&2
     fi
     local java_files=
-    for f in $(find $output_dir/ -name *.java 2>/dev/null); do
+    for f in $(find "$output_dir/" -type f -name "*.java" 2>/dev/null); do
         java_files="$java_files $(mixed_path $f)"
     done
     [[ -n "$java_files" ]] && cat $java_files >> "$output_file"
@@ -347,7 +373,7 @@ doc() {
     if $DEBUG; then
         debug "$JAVA_CMD -jar \"$DOKKA_CLI_JAR\" $dokka_args"
     elif $VERBOSE; then
-        echo "Generate HTML documentation into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
+        echo "Generate HTML documentation into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVA_CMD" -jar "$DOKKA_CLI_JAR" $dokka_args
     if [[ $? -ne 0 ]]; then
@@ -355,9 +381,9 @@ doc() {
         cleanup 1
     fi
     if $DEBUG; then
-        debug "HTML documentation saved into directory $TARGET_DOCS_DIR"
+        debug "HTML documentation saved into directory \"$TARGET_DOCS_DIR\""
     elif $VERBOSE; then
-        echo "HTML documentation saved into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
+        echo "HTML documentation saved into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     touch "$doc_timestamp_file"
 }
@@ -407,6 +433,7 @@ DEBUG=false
 DECOMPILE=false
 DOC=false
 HELP=false
+LINT=false
 MAIN_CLASS="com.makotojava.learn.kotlin.example2.Example2Kt"
 MAIN_ARGS=
 RUN=false
@@ -425,7 +452,7 @@ mingw=false
 msys=false
 darwin=false
 linux=false
-case "`uname -s`" in
+case "$(uname -s)" in
   CYGWIN*) cygwin=true ;;
   MINGW*)  mingw=true ;;
   MSYS*)   msys=true ;;
@@ -436,8 +463,11 @@ unset CYGPATH_CMD
 PSEP=":"
 if $cygwin || $mingw || $msys; then
     CYGPATH_CMD="$(which cygpath 2>/dev/null)"
+    PSEP=";"
+    [[ -n "$CFR_HOME" ]] && CFR_HOME="$(mixed_path $CFR_HOME)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
+    [[ -n "$KTLINT_HOME" ]] && KTLINT_HOME="$(mixed_path $KTLINT_HOME)"
     [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
     LOCAL_REPO="$(mixed_path $USERPROFILE/.m2/repository)"
 else
@@ -462,8 +492,11 @@ PROJECT_NAME="$(basename $ROOT_DIR)"
 PROJECT_URL="github.com/$USER/kotlin-examples"
 PROJECT_VERSION="1.0-SNAPSHOT"
 
+unset KTLINT_CMD
+[[ -x "$KTLINT_HOME/bin/ktlint" ]] && KTLINT_CMD="$KTLINT_HOME/bin/ktlint"
+
 unset CFR_CMD
-[[ -f "$CFR_HOME/bin/cfr" ]] && CFR_CMD="$CFR_HOME/bin/cfr"
+[[ -x "$CFR_HOME/bin/cfr" ]] && CFR_CMD="$CFR_HOME/bin/cfr"
 
 args "$@"
 [[ $EXITCODE -eq 0 ]] || cleanup 1
@@ -477,6 +510,9 @@ $HELP && help && cleanup
 
 if $CLEAN; then
     clean || cleanup 1
+fi
+if $LINT; then
+    lint || cleanup 1
 fi
 if $COMPILE; then
     compile || cleanup 1

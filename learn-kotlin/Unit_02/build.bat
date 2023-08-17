@@ -78,8 +78,8 @@ if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
     set "_DETEKT_CMD=%DETEKT_HOME%\bin\detekt-cli.bat"
 )
 set _KTLINT_CMD=
-if exist "%KTLINT_HOME%\ktlint.bat" (
-    set "_KTLINT_CMD=%KTLINT_HOME%\ktlint.bat"
+if exist "%KTLINT_HOME%\bin\ktlint.bat" (
+    set "_KTLINT_CMD=%KTLINT_HOME%\bin\ktlint.bat"
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation not found 1>&2
@@ -183,6 +183,7 @@ set _EXAMPLE=*
 set _HELP=0
 set _LINT=0
 set _RUN=0
+set _TARGET=jvm
 set _TEST=0
 set _TIMER=0
 set _VERBOSE=0
@@ -279,7 +280,7 @@ echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
 echo     %__BEG_O%-debug%__END%            display commands executed by this script
-echo     %__BEG_O%-timer%__END%            display total elapsed time
+echo     %__BEG_O%-timer%__END%            display total execution time
 echo     %__BEG_O%-verbose%__END%          display progress messages
 echo.
 echo   %__BEG_P%Subcommands:%__END%

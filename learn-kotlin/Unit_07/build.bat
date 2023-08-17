@@ -77,8 +77,8 @@ if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
     set "_DETEKT_CMD=%DETEKT_HOME%\bin\detekt-cli.bat"
 )
 set _KTLINT_CMD=
-if exist "%KTLINT_HOME%\ktlint.bat" (
-    set "_KTLINT_CMD=%KTLINT_HOME%\ktlint.bat"
+if exist "%KTLINT_HOME%\bin\ktlint.bat" (
+    set "_KTLINT_CMD=%KTLINT_HOME%\bin\ktlint.bat"
 )
 if not exist "%KOTLIN_HOME%\bin\kotlinc.bat" (
     echo %_ERROR_LABEL% Kotlin installation not found 1>&2
@@ -293,7 +293,7 @@ if %_VERBOSE%==1 (
 echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
-echo     %__BEG_O%-debug%__END%            show commands executed by this script
+echo     %__BEG_O%-debug%__END%            display commands executed by this script
 echo     %__BEG_O%-timer%__END%            display total elapsed time
 echo     %__BEG_O%-verbose%__END%          display progress messages
 echo.
@@ -328,6 +328,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%__DIR%" 1>&2
 )
 rmdir /s /q "%__DIR%"
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to delete directory "!__DIR:%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -341,6 +342,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 )
 call "%_DETEKT_CMD%" %__DETEKT_OPTS%
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to analyze Kotlin source files with Detekt 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -361,10 +363,10 @@ if %_DEBUG%==1 ( set __KTLINT_OPTS=--reporter=plain %__KTLINT_OPTS%
 )
 set "__TMP_FILE=%_TARGET_DIR%\ktlint_output.txt"
 
-@rem KtLint does not support absolute path in globs. 
+@rem KtLint does not support absolute path in globs.
 @rem prepend ! to negate the pattern in order to check only certain locations 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 1>&2
-) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Ktlint 1>&2
+) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with KtLint 1>&2
 )
 call "%_KTLINT_CMD%" %__KTLINT_OPTS% "src/**/*.kt" 2>"%__TMP_FILE%"
 if not %ERRORLEVEL%==0 (
@@ -499,6 +501,7 @@ goto :eof
 
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
+set _LIBS_CPATH=
 for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
 if not exist "%__BATCH_FILE%" (
     echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2

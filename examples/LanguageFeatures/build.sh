@@ -200,7 +200,7 @@ compile_kotlin() {
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
     local n=0
-    for f in $(find "$SOURCE_DIR/main/kotlin/" -name "*.kt" 2>/dev/null); do
+    for f in $(find "$SOURCE_DIR/main/kotlin/" -type f -name "*.kt" 2>/dev/null); do
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
@@ -219,7 +219,7 @@ compile_kotlin() {
 mixed_path() {
     if [[ -x "$CYGPATH_CMD" ]]; then
         $CYGPATH_CMD -am $1
-    elif [[ $mingw || $msys ]]; then
+    elif $mingw || $msys; then
         echo $1 | sed 's|/|\\\\|g'
     else
         echo $1
@@ -262,7 +262,7 @@ decompile() {
         echo "Save generated Java source files to file ${output_file/$ROOT_DIR\//}" 1>&2
     fi
     local java_files=
-    for f in $(find "$output_dir/" -name "*.java" 2>/dev/null); do
+    for f in $(find "$output_dir/" -type f -name "*.java" 2>/dev/null); do
         java_files="$java_files $(mixed_path $f)"
     done
     [[ -n "$java_files" ]] && cat $java_files >> "$output_file"
@@ -300,7 +300,7 @@ extra_cpath() {
         lib_path="$SCALA_HOME/lib"
     fi
     local extra_cpath=
-    for f in $(find "$lib_path/" -name "*.jar"); do
+    for f in $(find "$lib_path/" -type f -name "*.jar"); do
         extra_cpath="$extra_cpath$(mixed_path $f)$PSEP"
     done
     echo $extra_cpath
@@ -335,8 +335,8 @@ doc() {
 
     local doc_timestamp_file="$TARGET_DOCS_DIR/.latest-build"
 
-    local action_required="$(compile_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.scala")"
-    [[ $action_required -eq 0 ]] && return 1
+    local required="$(action_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.scala")"
+    [[ $required -eq 0 ]] && return 1
 
     local sources_file="$TARGET_DIR/scaladoc_sources.txt"
     [[ -f "$sources_file" ]] && rm -rf "$sources_file"
@@ -475,7 +475,7 @@ unset KTLINT_CMD
 [[ -x "$KTLINT_HOME/bin/ktlint" ]] && KTLINT_CMD="$KTLINT_HOME/bin/ktlint"
 
 unset CFR_CMD
-[ -x "$CFR_HOME/bin/cfr" ] && CFR_CMD="$CFR_HOME/bin/cfr"
+[[ -x "$CFR_HOME/bin/cfr" ]] && CFR_CMD="$CFR_HOME/bin/cfr"
 
 args "$@"
 [[ $EXITCODE -eq 0 ]] || cleanup 1

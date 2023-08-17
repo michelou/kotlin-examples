@@ -135,12 +135,10 @@ set _STRONG_BG_BLUE=[104m
 goto :eof
 
 @rem input parameter: %*
-@rem output parameter: _BASH, _HELP, _VERBOSE
 :args
 set _BASH=0
 set _HELP=0
 set _VERBOSE=0
-set __N=0
 :args_loop
 set "__ARG=%~1"
 if not defined __ARG goto args_done
@@ -163,7 +161,6 @@ if "%__ARG:~0,1%"=="-" (
         set _EXITCODE=1
         goto args_done
     )
-    set /a __N+=1
 )
 shift
 goto args_loop
@@ -172,8 +169,8 @@ call :drive_name "%_ROOT_DIR%"
 if not %_EXITCODE%==0 goto :eof
 
 if %_DEBUG%==1 (
-    echo %_DEBUG_LABEL% Options    : _VERBOSE=%_VERBOSE% 1>&2
-    echo %_DEBUG_LABEL% Subcommands: _HELP=%_HELP% 1>&2
+    echo %_DEBUG_LABEL% Options    : _BASH=%_BASH% _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Subcommands: _HELP=%_HELP% 1&2
     echo %_DEBUG_LABEL% Variables  : _DRIVE_NAME=%_DRIVE_NAME% 1>&2
 )
 goto :eof
@@ -184,13 +181,13 @@ goto :eof
 set "__GIVEN_PATH=%~1"
 
 @rem https://serverfault.com/questions/62578/how-to-get-a-list-of-drive-letters-on-a-system-through-a-windows-shell-bat-cmd
-set __LETTERS=F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:W:X:Y:Z:
+set __DRIVE_NAMES=F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:W:X:Y:Z:
 for /f %%i in ('wmic logicaldisk get deviceid ^| findstr :') do (
-    set "__LETTERS=!__LETTERS:%%i=!"
+    set "__DRIVE_NAMES=!__DRIVE_NAMES:%%i=!"
 )
-if %_DEBUG%==1 echo %_DEBUG_LABEL% __LETTERS=%__LETTERS% ^(WMIC^) 1>&2
-if not defined __LETTERS (
-    echo %_ERROR_LABEL% No more free drive letter 1>&2
+if %_DEBUG%==1 echo %_DEBUG_LABEL% __DRIVE_NAMES=%__DRIVE_NAMES% ^(WMIC^) 1>&2
+if not defined __DRIVE_NAMES (
+    echo %_ERROR_LABEL% No more free drive name 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -212,13 +209,13 @@ for /f "tokens=1,2,*" %%f in ('subst') do (
         goto :eof
     )
 )
-for /f "tokens=1,2,*" %%f in ('subst') do (
+for /f "tokens=1,2,*" %%i in ('subst') do (
     set __USED=%%i
     call :drive_names "!__USED:~0,2!"
 )
-if %_DEBUG%==1 echo %_DEBUG_LABEL% __LETTERS=%__LETTERS% ^(SUBST^) 1>&2
+if %_DEBUG%==1 echo %_DEBUG_LABEL% __DRIVE_NAMES=%__DRIVE_NAMES% ^(SUBST^) 1>&2
 
-set "_DRIVE_NAME=!__LETTERS:~0,2!"
+set "_DRIVE_NAME=!__DRIVE_NAMES:~0,2!"
 if /i "%_DRIVE_NAME%"=="%__GIVEN_PATH:~0,2%" goto :eof
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% subst "%_DRIVE_NAME%" "%__GIVEN_PATH%" 1>&2
@@ -226,7 +223,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% subst "%_DRIVE_NAME%" "%__GIVEN_PATH%" 1>&2
 )
 subst "%_DRIVE_NAME%" "%__GIVEN_PATH%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to assigned drive %_DRIVE_NAME% to path 1>&2
+    echo %_ERROR_LABEL% Failed to assign drive %_DRIVE_NAME% to path 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -254,7 +251,6 @@ if %_VERBOSE%==1 (
 echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
-echo     %__BEG_O%-bash%__END%       start Git bash shell instead of Windows command prompt
 echo     %__BEG_O%-debug%__END%      display commands executed by this script
 echo     %__BEG_O%-verbose%__END%    display environment settings
 echo.
@@ -786,11 +782,6 @@ endlocal & (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% cd /d %_DRIVE_NAME% 1>&2
         cd /d %_DRIVE_NAME%
     )
-	if %_BASH%==1 (
-		@rem see https://conemu.github.io/en/GitForWindows.html
-		if %_DEBUG%==1 echo %_DEBUG_LABEL% %_GIT_HOME%\usr\bin\bash.exe --login 1>&2
-		cmd.exe /c "%_GIT_HOME%\usr\bin\bash.exe --login"
-	)
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=
 )

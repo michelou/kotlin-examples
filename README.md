@@ -27,15 +27,16 @@ Optionally one may also install the following software:
 - [Gradle 8.2][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 0.50][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
+- [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
 For instance our development environment looks as follows (*August 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.13\                   <i>( 39 MB)</i>
-C:\opt\apache-maven-3.9.3\                   <i>(  9 MB)</i>
-C:\opt\detekt-cli-1.23.0\                    <i>( 55 MB)</i>
+C:\opt\apache-maven-3.9.4\                   <i>(  9 MB)</i>
+C:\opt\detekt-cli-1.23.1\                    <i>( 55 MB)</i>
 C:\opt\Git-2.41.0\                           <i>(358 MB)</i>
-C:\opt\gradle-8.2.1\                         <i>(135 MB)</i>
+C:\opt\gradle\                               <i>(135 MB)</i>
 C:\opt\jdk-temurin-11.0.20_8\                <i>(256 MB)</i>
 C:\opt\kotlinc-1.9.0\                        <i>( 83 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.9.0\   <i>(269 MB)</i>
@@ -81,7 +82,7 @@ where
 - file [**`RESOURCES.md`**](RESOURCES.md) is the [Markdown][github_markdown] document presenting external resources.
 - file [**`setenv.bat`**](setenv.bat) is the batch script for setting up our environment.
 
-We also define a virtual drive **`I:`** in our working environment in order to reduce/hide the real path of our project directory (see article ["Windows command prompt limitation"][windows_limitation] from Microsoft Support).
+We also define a virtual drive &ndash; e.g. drive **`I:`** &ndash; in our working environment in order to reduce/hide the real path of our project directory (see article ["Windows command prompt limitation"][windows_limitation] from Microsoft Support).
 
 > **:mag_right:** We use the Windows external command [**`subst`**][windows_subst] to create virtual drives; for instance:
 >
@@ -100,38 +101,38 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.13, bazel 6.2.1, gradle 8.2.1, java 11.0.19, detekt-cli 1.22.0,
+      ant 1.10.13, bazel 6.2.1, gradle 8.2.1, java 11.0.19, detekt-cli 1.23.1,
       kotlinc 1.9.0, kotlinc-native 1.9.0, ktlint 0.50.0, cfr 0.152,
-      make 3.81, mvn 3.9.3, git 2.41.0.windows.1, diff 3.9, bash 4.4.23(1)-release
+      make 3.81, mvn 3.9.4, git 2.41.0.windows.1, diff 3.9, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant-1.10.13\bin\ant.bat
       C:\opt\bazel-6.1.0\bazel.exe
-      C:\opt\gradle-8.2.1\bin\gradle.bat
+      C:\opt\gradle\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
-      C:\opt\detekt-cli-1.22.0\bin\detekt-cli.bat
+      C:\opt\detekt-cli-1.23.1\bin\detekt-cli.bat
       C:\opt\kotlinc-1.9.0\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-x86_64-1.9.0\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-x86_64-1.9.0\bin\kotlinc-native.bat
       C:\opt\ktlint-0.50.0\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
-      C:\opt\apache-maven-3.9.3\bin\mvn.cmd
+      C:\opt\apache-maven-3.9.4\bin\mvn.cmd
       C:\opt\Git-2.41.0\bin\git.exe
       C:\opt\Git-2.41.0\mingw64\bin\git.exe
       C:\opt\Git-2.41.0\usr\bin\diff.exe
    Environment variables:
       "ANT_HOME=C:\opt\apache-ant-1.10.13"
       "CFR_HOME=C:\opt\cfr-0.152"
-      "DETEKT_HOME=C:\opt\detekt-cli-1.22.0"
+      "DETEKT_HOME=C:\opt\detekt-cli-1.23.1"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git-2.41.0"
-      "GRADLE_HOME=C:\opt\gradle-8.2.1"
+      "GRADLE_HOME=C:\opt\gradle"
       "JAVA_HOME=C:\opt\jdk-temurin-11.0.20_8"
       "KOTLIN_HOME=C:\opt\kotlinc-1.9.0"
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.0"
       "KTLINT_HOME=C:\opt\ktlint-0.50.0"
       "MAKE_HOME=C:\opt\make-3.81"
-      "MAVEN_HOME=C:\opt\apache-maven-3.9.3"
+      "MAVEN_HOME=C:\opt\apache-maven-3.9.4"
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
@@ -207,8 +208,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <dd>
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.13-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.3-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.0.zip</a>                              <i>( 54 MB)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.4-bin.zip</a>                         <i>(  9 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.1.zip</a>                              <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.2.1-bin.zip</a>                               <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.0">kotlin-compiler-1.9.0.zip</a>                          <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.0">kotlin-native-windows-x86_64-1.9.0.zip</a>             <i>(174 MB)</i>
@@ -238,7 +239,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [deno_examples]: https://github.com/michelou/deno-examples
 [docker_examples]: https://github.com/michelou/docker-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.0
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.1
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
@@ -263,7 +264,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.9.3/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.9.4/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples
@@ -279,11 +280,18 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 11.0.17 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2022-October/018119.html
 11.0.18 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-January/020111.html
 11.0.19 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-April/021900.html
-11.0.20 -> 
+11.0.20 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024064.html
 -->
 [temurin_opendjk11_bugfixes]: https://www.oracle.com/java/technologies/javase/11-0-17-bugfixes.html
 [temurin_opendjk11_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2022-October/018119.html
 [temurin_opendjk11]: https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot
+<!--
+17.0.7  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-April/021899.html
+17.0.8  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024063.html
+-->
+[temurin_opendjk17]: https://adoptium.net/releases.html?variant=openjdk17&jvmVariant=hotspot
+[temurin_opendjk17_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
+[temurin_opendjk17_relnotes]: https://github.com/openjdk/jdk/compare/jdk-17%2B20...jdk-17%2B21
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst

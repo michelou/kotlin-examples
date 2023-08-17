@@ -4,7 +4,11 @@ setlocal enabledelayedexpansion
 @rem output parameter: _CPATH
 
 if not defined _DEBUG set _DEBUG=%~1
-if not defined _MVN_CMD set _MVN_CMD=mvn.cmd
+if not defined _DEBUG set _DEBUG=0
+set _VERBOSE=0
+
+if not defined _MVN_CMD set "_MVN_CMD=%MAVEN_HOME%\bin\mvn.cmd"
+if %_DEBUG%==1 echo [%~n0] "_MVN_CMD=%_MVN_CMD%"
 
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
@@ -18,10 +22,10 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone
-call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.9.2"
+call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.10.0"
 
 @rem https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-call :add_jar "org.junit.jupiter" "junit-jupiter-api" "5.9.2"
+call :add_jar "org.junit.jupiter" "junit-jupiter-api" "5.10.0"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_jar "org.hamcrest" "hamcrest" "2.2"

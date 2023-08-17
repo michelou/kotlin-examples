@@ -40,7 +40,7 @@ cleanup() {
     if $TIMER; then
         local TIMER_END=$(date +'%s')
         local duration=$((TIMER_END - TIMER_START))
-        echo "Total execution time: $(date -d @$duration +'%H:%M:%S')" 1>&2
+        echo "Total elapsed time: $(date -d @$duration +'%H:%M:%S')" 1>&2
     fi
     debug "EXITCODE=$EXITCODE"
     exit $EXITCODE
@@ -66,7 +66,6 @@ args() {
         decompile) COMPILE=true && DECOMPILE=true ;;
         doc)       COMPILE=true && DOC=true ;;
         help)      HELP=true ;;
-        lint)      LINT=true ;;
         run)       COMPILE=true && RUN=true ;;
         *)
             error "Unknown subcommand $arg"
@@ -74,23 +73,18 @@ args() {
             ;;
         esac
     done
-    if $LINT && [[ ! -x "$KTLINT_CMD" ]]; then
-        warning "ktLint installation not found"
-        LINT=false
-    fi
     if $DECOMPILE && [[ ! -x "$CFR_CMD" ]]; then
         warning "cfr installation not found"
         DECOMPILE=false
     fi
     debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
     debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
-    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
+    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP RUN=$RUN"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     debug "Variables  : DOKKA_HOME=$DOKKA_HOME"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
-    debug "Variables  : KTLINT_HOME=$KTLINT_HOME"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     $TIMER && TIMER_START=$(date +"%s")
 }
@@ -101,7 +95,7 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
     -debug       display commands executed by this script
-    -timer       display total execution time
+    -timer       display total elapsed time
     -verbose     display progress messages
 
   Subcommands:
@@ -110,16 +104,16 @@ Usage: $BASENAME { <option> | <subcommand> }
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         display this help message
-    run          execute main class "$(MAIN_CLASS}"
+    run          execute main class $MAIN_CLASS
 EOS
 }
 
 clean() {
     if [[ -d "$TARGET_DIR" ]]; then
         if $DEBUG; then
-            debug "Delete directory \"$TARGET_DIR\""
+            debug "Delete directory $TARGET_DIR"
         elif $VERBOSE; then
-            echo "Delete directory \"${TARGET_DIR/$ROOT_DIR\//}\"" 1>&2
+            echo "Delete directory ${TARGET_DIR/$ROOT_DIR\//}" 1>&2
         fi
         rm -rf "$TARGET_DIR"
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
@@ -127,27 +121,7 @@ clean() {
 }
 
 lint() {
-    local klint_opts="--color --reporter=checkstyle,output=$TARGET_DIR/ktlint-report.xml"
-
-    ($DEBUG || $VERBOSE) && klint_opts="--reporter=plain $klint_opts"
-
-    local tmp_file="$TARGET_DIR/ktlint_output.txt"
-
-    # prepend ! to negate the pattern in order to check only certain locations 
-    if $DEBUG; then
-        debug "$KTLINT_CMD $klint_opts src/**/*.kt"
-    elif $VERBOSE; then
-        echo "Analyze $n Kotlin source files with KtLint" 1>&2
-    fi
-    eval "$KTLINT_CMD" $klint_opts "src/**/*.kt"
-    if [[ $? -ne 0 ]]; then
-        warning "Ktlint error found"
-        if [[ -f "$tmp_file" ]]; then
-            ($DEBUG || $VERBOSE) && cat "$tmp_file"
-            rm "$tmp_file"
-       fi
-       # EXITCODE=1
-   fi
+    echo "lint"
 }
 
 compile() {
@@ -202,20 +176,14 @@ compile_java() {
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
-    if [[ $n -eq 0 ]]; then
-        warning "No Java source file found"
-        return 1
-    fi
-    local s=; [[ $n -gt 1 ]] && s="s"
-    local n_files="$n Java source file$s"
     if $DEBUG; then
         debug "$JAVAC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
     elif $VERBOSE; then
-        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+        echo "Compile $n Java source files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVAC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
+        error "Compilation of $n Java source files failed"
         cleanup 1
     fi
 }
@@ -232,20 +200,14 @@ compile_kotlin() {
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
-    if [[ $n -eq 0 ]]; then
-        warning "No Kotlin source file found"
-        return 1
-    fi
-    local s=; [[ $n -gt 1 ]] && s="s"
-    local n_files="$n Kotlin source file$s"
     if $DEBUG; then
         debug "$KOTLINC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
     elif $VERBOSE; then
-        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+        echo "Compile $n Kotlin source files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
+        error "Compilation of $n Kotlin source files failed"
         cleanup 1
     fi
 }
@@ -288,7 +250,7 @@ decompile() {
 
     ## output file contains Kotlin and CFR headers
     local output_file="$TARGET_DIR/cfr-sources$version_suffix.java"
-    echo "// Compiled with $version_string" > "$output_file"
+    echo // Compiled with $version_string > "$output_file"
 
     if $DEBUG; then
         debug "echo $output_dir/*.java >> $output_file"
@@ -338,24 +300,10 @@ extra_cpath() {
 ## output parameter: ($version $suffix)
 version_string() {
     local tool_version="$($KOTLINC_CMD -version 2>&1 | cut -d " " -f 3)"
-    local version="kotlin_$tool_version"
+    local version="kotlin_$tool_version"                                
     local suffix="$tool_version"
     local arr=($version $suffix)
     echo "${arr[@]}"
-}
-
-dokka_cpath() {
-    local path=
-    for f in $(ls $DOKKA_HOME/lib/*.jar|grep -e analysis -e base); do
-        path="$path$(mixed_path $f)$PSEP"
-    done
-    echo $path
-}
-
-dokka_cli_jar() {
-    local path=""
-    for i in $(ls $DOKKA_HOME/lib/dokka-cli*.jar); do path=$i; done
-    echo "$(mixed_path $path)"
 }
 
 doc() {
@@ -367,24 +315,24 @@ doc() {
     [[ $required -eq 0 ]] && return 1
 
     ## see https://github.com/Kotlin/dokka/releases
-    DOKKA_CPATH="$(dokka_cpath)$(extra_cpath)"
-    DOKKA_CLI_JAR="$(dokka_cli_jar)"
+    DOKKA_CPATH="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
+    DOKKA_JAR="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
     local args="-src $(mixed_path $MAIN_SOURCE_DIR)"
-    local dokka_args="-pluginsClasspath \"$DOKKA_CPATH\" -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir \"$(mixed_path $TARGET_DOCS_DIR)\" -sourceSet \"$args\""
+    local dokka_args="-pluginsClasspath $(mixed_path $DOKKA_CPATH) -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir $(mixed_path $TARGET_DOCS_DIR) -sourceSet \"$args\""
     if $DEBUG; then
-        debug "$JAVA_CMD -jar \"$DOKKA_CLI_JAR\" $dokka_args"
+        debug "$JAVA_CMD -jar $(mixed_path $DOKKA_JAR) $dokka_args"
     elif $VERBOSE; then
-        echo "Generate HTML documentation into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
+        echo "Generate HTML documentation into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
     fi
-    eval "$JAVA_CMD" -jar "$DOKKA_CLI_JAR" $dokka_args
+    eval "$JAVA_CMD" -jar "$(mixed_path $DOKKA_JAR)" $dokka_args
     if [[ $? -ne 0 ]]; then
         error "Generation of HTML documentation failed"
         cleanup 1
     fi
     if $DEBUG; then
-        debug "HTML documentation saved into directory \"$TARGET_DOCS_DIR\""
+        debug "HTML documentation saved into directory $TARGET_DOCS_DIR"
     elif $VERBOSE; then
-        echo "HTML documentation saved into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
+        echo "HTML documentation saved into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
     fi
     touch "$doc_timestamp_file"
 }
@@ -434,8 +382,7 @@ DEBUG=false
 DECOMPILE=false
 DOC=false
 HELP=false
-LINT=false
-MAIN_CLASS="org.example.main.HelloWorldKt"
+MAIN_CLASS="MainKt"
 MAIN_ARGS=
 RUN=false
 SCALA_VERSION=3
@@ -452,13 +399,11 @@ cygwin=false
 mingw=false
 msys=false
 darwin=false
-linux=false
 case "$(uname -s)" in
   CYGWIN*) cygwin=true ;;
   MINGW*)  mingw=true ;;
   MSYS*)   msys=true ;;
-  Darwin*) darwin=true ;;   
-  Linux*)  linux=true 
+  Darwin*) darwin=true      
 esac
 unset CYGPATH_CMD
 PSEP=":"
@@ -502,8 +447,6 @@ unset CFR_CMD
 args "$@"
 [[ $EXITCODE -eq 0 ]] || cleanup 1
 
-DIFF_CMD="$(which diff)"
-
 ##############################################################################
 ## Main
 
@@ -511,9 +454,6 @@ $HELP && help && cleanup
 
 if $CLEAN; then
     clean || cleanup 1
-fi
-if $LINT; then
-    lint || cleanup 1
 fi
 if $COMPILE; then
     compile || cleanup 1

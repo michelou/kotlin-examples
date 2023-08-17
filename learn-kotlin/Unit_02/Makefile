@@ -1,3 +1,10 @@
+##
+## Copyright (c) 2018-2023 Stéphane Micheloud
+##
+## Licensed under the MIT License.
+##
+##############################################################################
+
 include ../Makefile.inc
 
 SOURCE_DIR  = src
@@ -10,7 +17,7 @@ KOTLINC_OPTS=-language-version $(LANGUAGE_VERSION) -jvm-target $(JVM_TARGET)
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/HelloWorld.jar
+TARGET  = $(TARGET_DIR)/HelloWorld.jar
 
 MAIN_CLASS = com.makotojava.learn.kotlin.example2.Example2Kt
 MAIN_ARGS ?= 
@@ -21,7 +28,7 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" $(KOTLINC_OPTS) -d $(CLASSES_DIR) $^
+	"$(KOTLINC)" $(KOTLINC_OPTS) -d "$(CLASSES_DIR)" $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
@@ -97,3 +104,6 @@ $(TEST_TARGET): $(TEST_SOURCES)
 ## phony
 
 .PHONY: all build clean doc help lint run test
+
+.SUFFIXES:
+.SUFFIXES: .class .jar .java .kt .xml

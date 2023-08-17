@@ -43,12 +43,12 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.8.0"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.9.1"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
 call :add_maven_jar "org.jetbrains" "markdown" "0.4.1"
 
-set __DOKKA_VERSION=1.8.10
+set __DOKKA_VERSION=1.8.20
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
