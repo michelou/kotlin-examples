@@ -219,11 +219,11 @@ set "_DRIVE_NAME=!__DRIVE_NAMES:~0,2!"
 if /i "%_DRIVE_NAME%"=="%__GIVEN_PATH:~0,2%" goto :eof
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% subst "%_DRIVE_NAME%" "%__GIVEN_PATH%" 1>&2
-) else if %_VERBOSE%==1 ( echo Assign path "%__GIVEN_PATH%" to drive %_DRIVE_NAME% 1>&2
+) else if %_VERBOSE%==1 ( echo Assign drive %_DRIVE_NAME% to path "%__GIVEN_PATH%" 1>&2
 )
 subst "%_DRIVE_NAME%" "%__GIVEN_PATH%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to assign drive %_DRIVE_NAME% to path 1>&2
+    echo %_ERROR_LABEL% Failed to assign drive %_DRIVE_NAME% to path "%__GIVEN_PATH%" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -302,7 +302,7 @@ set _BAZEL_HOME=
 set _BAZEL_PATH=
 
 set __BAZEL_CMD=
-for /f %%f in ('where bazel.exe 2^>NUL') do set "__BAZEL_CMD=%%f"
+for /f "delims=" %%f in ('where bazel.exe 2^>NUL') do set "__BAZEL_CMD=%%f"
 if defined __BAZEL_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Bazel executable found in PATH 1>&2
     for /f "delims=" %%i in ("%__BAZEL_CMD%") do set "_BAZEL_HOME=%%~dpi"
@@ -333,7 +333,7 @@ goto :eof
 set _CFR_HOME=
 
 set __CFR_CMD=
-for /f %%f in ('where cfr.bat 2^>NUL') do set "__CFR_CMD=%%f"
+for /f "delims=" %%f in ('where cfr.bat 2^>NUL') do set "__CFR_CMD=%%f"
 if defined __CFR_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of cfr executable found in PATH 1>&2
     for %%i in ("%__CFR_CMD%") do set "__CFR_BIN_DIR=%%~dpi"
@@ -346,11 +346,11 @@ if defined __CFR_CMD (
     set _PATH=C:\opt
     for /f %%f in ('dir /ad /b "!_PATH!\cfr*" 2^>NUL') do set "_CFR_HOME=!_PATH!\%%f"
     if defined _CFR_HOME (
-        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default cfr installation directory !_CFR_HOME! 1>&2
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default cfr installation directory "!_CFR_HOME!" 1>&2
     )
 )
 if not exist "%_CFR_HOME%\bin\cfr.bat" (
-    echo %_ERROR_LABEL% cfr executable not found ^(%_CFR_HOME%^) 1>&2
+    echo %_ERROR_LABEL% cfr executable not found ^("%_CFR_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -362,7 +362,7 @@ set _GRADLE_HOME=
 set _GRADLE_PATH=
 
 set __GRADLE_CMD=
-for /f %%f in ('where gradle.bat 2^>NUL') do set "__GRADLE_CMD=%%f"
+for /f "delims=" %%f in ('where gradle.bat 2^>NUL') do set "__GRADLE_CMD=%%f"
 if defined __GRADLE_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Gradle executable found in PATH 1>&2
     for %%i in ("%__GRADLE_CMD%") do set "__GRADLE_BIN_DIR=%%~dpi"
@@ -394,7 +394,7 @@ set _JAVA_HOME=
 
 set __JAVA_DISTRO=temurin
 set __JAVAC_CMD=
-for /f %%f in ('where javac.exe 2^>NUL') do set "__JAVAC_CMD=%%f"
+for /f "delims=" %%f in ('where javac.exe 2^>NUL') do set "__JAVAC_CMD=%%f"
 @rem ignore command if Java version is not 11
 if defined __JAVAC_CMD (
     for /f "tokens=1,*" %%i in ('"%__JAVAC_CMD%" -version') do (
@@ -433,7 +433,7 @@ goto :eof
 set _KOTLIN_HOME=
 
 set __KOTLINC_CMD=
-for /f %%f in ('where kotlinc.bat 2^>NUL') do set "__KOTLINC_CMD=%%f"
+for /f "delims=" %%f in ('where kotlinc.bat 2^>NUL') do set "__KOTLINC_CMD=%%f"
 @rem We need to differentiate kotlinc-jvm from kotlinc-native
 if defined __KOTLINC_CMD (
     for /f "tokens=1,2,*" %%i in ('%__KOTLINC_CMD% -version 2^>^&1') do (
@@ -453,7 +453,7 @@ if defined __KOTLINC_CMD (
     for /f %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
     if not defined _KOTLIN_HOME (
         set "__PATH=%ProgramFiles%"
-        for /f %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
     )
 )
 if not exist "%_KOTLIN_HOME%\bin\kotlinc.bat" (
@@ -468,7 +468,7 @@ goto :eof
 set _KOTLIN_NATIVE_HOME=
 
 set __KOTLINC_NATIVE_CMD=
-for /f %%f in ('where kotlinc-native.bat 2^>NUL') do set "__KOTLINC_NATIVE_CMD=%%f"
+for /f "delims=" %%f in ('where kotlinc-native.bat 2^>NUL') do set "__KOTLINC_NATIVE_CMD=%%f"
 if defined __KOTLINC_NATIVE_CMD (
     for %%i in ("%__KOTLINC_NATIVE_CMD%") do set "__KOTLINC_NATIVE_BIN_DIR=%%~dpi"
     for %%f in ("!__KOTLINC_NATIVE_BIN_DIR!\.") do set "_KOTLIN_NATIVE_HOME=%%~dpf"
@@ -482,7 +482,7 @@ if defined __KOTLINC_NATIVE_CMD (
     for /f %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
     if not defined _KOTLIN_HOME (
         set "__PATH=%ProgramFiles%"
-        for /f %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
     )
 )
 if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
@@ -512,7 +512,7 @@ goto :eof
 set _DETEKT_HOME=
 
 set __DETEKT_CMD=
-for /f %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
+for /f "delims=" %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
 if defined __DETEKT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Detekt executable found in PATH 1>&2
     for %%i in ("%__DETEKT_CMD%") do set "__DETEKT_BIN_DIR=%%~dpi"
@@ -543,7 +543,7 @@ goto :eof
 set _KTLINT_HOME=
 
 set __KTLINT_CMD=
-for /f %%f in ('where ktlint.bat 2^>NUL') do set "__KTLINT_CMD=%%f"
+for /f "delims=" %%f in ('where ktlint.bat 2^>NUL') do set "__KTLINT_CMD=%%f"
 if defined __KTLINT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of KtLint executable found in PATH 1>&2
     for %%i in ("%__KTLINT_CMD%") do set "__KTLINT_BIN_DIR=%%~dpi"
@@ -559,7 +559,7 @@ if defined __KTLINT_CMD (
         for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         if not defined _KTLINT_HOME (
             set "__PATH=%ProgramFiles%"
-            for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         )
     )
 )
@@ -576,7 +576,7 @@ set _MAKE_HOME=
 set _MAKE_PATH=
 
 set __MAKE_CMD=
-for /f %%f in ('where make.exe 2^>NUL') do set "__MAKE_CMD=%%f"
+for /f "delims=" %%f in ('where make.exe 2^>NUL') do set "__MAKE_CMD=%%f"
 if defined __MAKE_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Make executable found in PATH 1>&2
     rem keep _MAKE_PATH undefined since executable already in path
@@ -605,7 +605,7 @@ set _MAVEN_HOME=
 set _MAVEN_PATH=
 
 set __MVN_CMD=
-for /f %%f in ('where /q mvn.cmd 2^>NUL') do set "__MVN_CMD=%%f"
+for /f "delims=" %%f in ('where /q mvn.cmd 2^>NUL') do set "__MVN_CMD=%%f"
 if defined __MVN_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Maven executable found in PATH 1>&2
     @rem keep _MAVEN_PATH undefined since executable already in path
@@ -634,7 +634,7 @@ set _GIT_HOME=
 set _GIT_PATH=
 
 set __GIT_CMD=
-for /f %%f in ('where git.exe 2^>NUL') do set "__GIT_CMD=%%f"
+for /f "delims=" %%f in ('where git.exe 2^>NUL') do set "__GIT_CMD=%%f"
 if defined __GIT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Git executable found in PATH 1>&2
     @rem keep _GIT_PATH undefined since executable already in path
@@ -649,7 +649,7 @@ if defined __GIT_CMD (
         for /f %%f in ('dir /ad /b "!__PATH!\Git*" 2^>NUL') do set "_GIT_HOME=!__PATH!\%%f"
         if not defined _GIT_HOME (
             set "__PATH=%ProgramFiles%"
-            for /f %%f in ('dir /ad /b "!__PATH!\Git*" 2^>NUL') do set "_GIT_HOME=!__PATH!\%%f"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\Git*" 2^>NUL') do set "_GIT_HOME=!__PATH!\%%f"
         )
     )
 )

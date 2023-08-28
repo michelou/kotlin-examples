@@ -13,16 +13,20 @@
 - &#128077; [From zero to 10 million lines of Kotlin][article_strulovich] by Omer Strulovich, October 2022.
 - [Handling exceptions in tests: Junit & Kotest][article_junit] by Jaroslaw Michalik, June 2020.
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
-- [Medium]: [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
+- [Medium] Articles :
+  - [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
+  - [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
+  - [Mastering Kotlin Conventions: Part I](https://medium.com/insiden26/mastering-kotlin-conventions-plus-minus-compareto-inc-dec-times-div-part-i-1a34b20aaf4) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
+  - [The Magic of Kotlin/Native: Part 3](https://medium.com/androidiots/the-magic-of-kotlin-native-part-3-9c647bb1c368) by Vivek Singh, February 2019.
+  - [The magic of Kotlin/Native: Part 2](https://medium.com/androidiots/the-magic-of-kotlin-native-part-2-49097c2dea1a) by Vivek Singh, December 2018.
+  - [The magic of Kotlin/Native: Part 1](https://medium.com/androidiots/the-magic-of-kotlin-native-part-1-fad2795632b1) by Vivek Singh, November 2018.
 - [Using Gradle Kotlin DSL with JUnit 5](https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/) by Juan Ara, August 7, 2019.
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Advanced Kotlin - Part 1 - Delegates](https://americanexpress.io/advanced-kotlin-delegates/) by Brent Watson, July 1, 2019.
 - [Stone Soup Programming](https://stonesoupprogramming.com/) - [Kotlin](https://stonesoupprogramming.com/category/kotlin/), 2019.
-- [Medium]: [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
-- [Medium]: [Mastering Kotlin Conventions: Part I](https://medium.com/insiden26/mastering-kotlin-conventions-plus-minus-compareto-inc-dec-times-div-part-i-1a34b20aaf4) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
 - [Kotlin vs Scala: Which Problems Do They Solve?][article_kotlin_scala], June 28, 2017.
 
-## <span id="blogs">Blogs</span>
+## <span id="blogs">Blogs</span> [**&#x25B4;**](#top)
 
 - [Using Kotlin to build the Lunaconf 2022 App][blog_karim] by Shabab Karim, December 2022.
 - [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.

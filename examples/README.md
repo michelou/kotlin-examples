@@ -28,11 +28,11 @@ In this document we present the following [Kotlin] code examples:
 
 We provide several ways to build/run the [Kotlin] code examples:
 
-| Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
-|---------------------|------------------------|----------------|-------------|
+| Build tool          | Build file(s)  | Parent file(s) | Environment(s) |
+|---------------------|----------------|----------------|----------------|
 | [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
-| [**`build.bat`**](HelloWorld/build.bat) | **`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows |
-| [**`build.sh`**](HelloWorld/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
+| [**`cmd.exe`**][cmd_cli] | [**`build.bat`**](HelloWorld/build.bat)<br/>**`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows |
+| [**`sh.exe`**][sh_cli] | [**`build.sh`**](HelloWorld/build.sh) |  | [Cygwin]/[MSYS2]/Unix |
 | [**`gradle.exe`**][gradle_cli]    | [**`build.gradle`**](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [**`common.gradle`**](./common.gradle)  | Any |
 | [**`gradle.exe`**][gradle_cli]    | [**`build.gradle.kts`**](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Any |
 | [**`mvn.cmd`**][apache_maven_cli] | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](./pom.xml)  | Any |
@@ -50,7 +50,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 > Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > &nbsp;
 >  Options:
->    -debug      show commands executed by this script
+>    -debug      display commands executed by this script
 >    -native     generated native executable
 >    -timer      display total execution time
 >    -verbose    display progress messages
@@ -112,7 +112,7 @@ Hello World!
 
 ## <span id="java_kotlin">JavaToKotlin (JVM only)</span>
 
-Either command [**`build.bat clean run`**](JavaToKotlin/build.bat) or command [**`gradle -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
+Either command [**`build.bat clean run`**](JavaToKotlin/build.bat) or command [**`gradle.bat -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="JavaToKotlin/build.bat">build</a> clean run</b>
@@ -253,8 +253,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 <dd>
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.8.21 (JRE 11.0.19+7)
-Kotlin/Native: 1.8.21
+info: kotlinc-native 1.9.10 (JRE 11.0.20+8)
+Kotlin/Native: 1.9.10
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 linux_x64:                              linux
@@ -342,6 +342,7 @@ Hello World!
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
 [apache_maven_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
 [bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
+[cmd_cli]: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
 [cygwin]: https://cygwin.com/install.html
 [gmake_cli]: https://www.gnu.org/software/make/manual/make.html
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
@@ -356,3 +357,4 @@ Hello World!
 [kotlin_native]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options
 [maven]: https://maven.apache.org/what-is-maven.html
 [msys2]: https://www.msys2.org/
+[sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html
