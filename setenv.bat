@@ -29,6 +29,7 @@ set _GRADLE_PATH=
 set _MAKE_PATH=
 set _MAVEN_PATH=
 set _GIT_PATH=
+set _VSCODE_PATH=
 
 call :ant
 if not %_EXITCODE%==0 goto end
@@ -72,6 +73,11 @@ if not %_EXITCODE%==0 goto end
 call :git
 if not %_EXITCODE%==0 goto end
 
+call :vscode
+if not %_EXITCODE%==0 (
+    @rem optional
+    set _EXITCODE=0
+)
 goto end
 
 @rem #########################################################################
@@ -149,7 +155,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
-        echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown option "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -157,7 +163,7 @@ if "%__ARG:~0,1%"=="-" (
     @rem subcommand
     if "%__ARG%"=="help" ( set _HELP=1
     ) else (
-        echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown subcommand "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -264,10 +270,10 @@ set _ANT_HOME=
 set _ANT_PATH=
 
 set __ANT_CMD=
-for /f %%f in ('where ant.bat 2^>NUL') do set "__ANT_CMD=%%f"
+for /f "delims=" %%f in ('where ant.bat 2^>NUL') do set "__ANT_CMD=%%f"
 if defined __ANT_CMD (
-    for %%i in ("%__ANT_CMD%") do set "__ANT_BIN_DIR=%%~dpi"
-    for %%f in ("!__ANT_BIN_DIR!\.") do set "_ANT_HOME=%%~dpf"
+    for /f "delims=" %%i in ("%__ANT_CMD%") do set "__ANT_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__ANT_BIN_DIR!\.") do set "_ANT_HOME=%%~dpf"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Ant executable found in PATH 1>&2
     @rem keep _ANT_PATH undefined since executable already in path
     goto :eof
@@ -285,7 +291,7 @@ if defined __ANT_CMD (
         )
     )
     if defined _ANT_HOME (
-        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Ant installation directory !_ANT_HOME! 1>&2
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Ant installation directory "!_ANT_HOME!" 1>&2
     )
 )
 if not exist "%_ANT_HOME%\bin\ant.cmd" (
@@ -661,6 +667,42 @@ if not exist "%_GIT_HOME%\bin\git.exe" (
 set "_GIT_PATH=;%_GIT_HOME%\bin;%_GIT_HOME%\mingw64\bin;%_GIT_HOME%\usr\bin"
 goto :eof
 
+@rem output parameters: _VSCODE_HOME, _VSCODE_PATH
+:vscode
+set _VSCODE_HOME=
+set _VSCODE_PATH=
+
+set __CODE_CMD=
+for /f "delims=" %%f in ('where code.exe 2^>NUL') do set "__CODE_CMD=%%f"
+if defined __CODE_CMD (
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of VSCode executable found in PATH 1>&2
+    @rem keep _VSCODE_PATH undefined since executable already in path
+    goto :eof
+) else if defined VSCODE_HOME (
+    set "_VSCODE_HOME=%VSCODE_HOME%"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable VSCODE_HOME 1>&2
+) else (
+    set __PATH=C:\opt
+    if exist "!__PATH!\VSCode\" ( set "_VSCODE_HOME=!__PATH!\VSCode"
+    ) else (
+        for /f %%f in ('dir /ad /b "!__PATH!\VSCode-1*" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
+        if not defined _VSCODE_HOME (
+            set "__PATH=%ProgramFiles%"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\VSCode-1*" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
+        )
+    )
+)
+if not exist "%_VSCODE_HOME%\code.exe" (
+    echo %_WARNING_LABEL% VSCode executable not found ^("%_VSCODE_HOME%"^) 1>&2
+    if exist "%_VSCODE_HOME%\Code - Insiders.exe" (
+        echo %_WARNING_LABEL% It looks like you've installed an Insider version of VSCode 1>&2
+    )
+    set _EXITCODE=1
+    goto :eof
+)
+set "_VSCODE_PATH=;%_VSCODE_HOME%"
+goto :eof
+
 @rem %JAVA_HOME%\bin\jar xvf c:\opt\dokka-1.4.20\lib\dokka-cli-1.4.20.jar META-INF/dokka/dokka-version.properties
 @rem type META-INF\dokka\dokka-version.properties
 @rem dokka-version=1.4.20
@@ -672,7 +714,7 @@ set "__VERSIONS_LINE3=  "
 set __WHERE_ARGS=
 where /q "%ANT_HOME%\bin:ant.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,4,*" %%i in ('"%ANT_HOME%\bin\ant.bat" -version ^| findstr version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% ant %%l,"
+    for /f "tokens=1,2,3,4,*" %%i in ('call "%ANT_HOME%\bin\ant.bat" -version ^| findstr version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% ant %%l,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%ANT_HOME%\bin:ant.bat"
 )
 where /q bazel.exe
@@ -680,10 +722,10 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('bazel.exe --version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% bazel %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% bazel.exe
 )
-where /q gradle.bat
+where /q "%GRADLE_HOME%\bin:gradle.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,*" %%i in ('gradle.bat -version 2^<^&1 ^| findstr Gradle') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% gradle %%~j,"
-    set __WHERE_ARGS=%__WHERE_ARGS% gradle.bat
+    for /f "tokens=1,*" %%i in ('call "%GRADLE_HOME%\bin\gradle.bat" -version 2^<^&1 ^| findstr Gradle') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% gradle %%~j,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%GRADLE_HOME%\bin:gradle.bat"
 )
 where /q "%JAVA_HOME%\bin:java.exe"
 if %ERRORLEVEL%==0 (
@@ -692,27 +734,27 @@ if %ERRORLEVEL%==0 (
 )
 where /q "%DETEKT_HOME%\bin:detekt-cli.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('"%DETEKT_HOME%\bin\detekt-cli.bat" --version 2^>^&1') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% detekt-cli %%i,"
+    for /f "tokens=*" %%i in ('call "%DETEKT_HOME%\bin\detekt-cli.bat" --version 2^>^&1') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% detekt-cli %%i,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%DETEKT_HOME%\bin:detekt-cli.bat"
 )
 where /q "%KOTLIN_HOME%\bin:kotlinc.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,*" %%i in ('"%KOTLIN_HOME%\bin\kotlinc.bat" -version 2^>^&1 ^| findstr kotlinc') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc %%k,"
+    for /f "tokens=1,2,3,*" %%i in ('call "%KOTLIN_HOME%\bin\kotlinc.bat" -version 2^>^&1 ^| findstr kotlinc') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc %%k,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%KOTLIN_HOME%\bin:kotlinc.bat"
 )
 where /q "%KOTLIN_NATIVE_HOME%\bin:kotlinc-native.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,*" %%i in ('"%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" -version 2^>^&1 ^| findstr kotlinc-native') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc-native %%k,"
+    for /f "tokens=1,2,3,*" %%i in ('call "%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" -version 2^>^&1 ^| findstr kotlinc-native') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc-native %%k,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%KOTLIN_NATIVE_HOME%\bin:kotlinc-native.bat"
 )
 where /q "%KTLINT_HOME%:ktlint.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('"%KTLINT_HOME%\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i,"
+    for /f "tokens=*" %%i in ('call "%KTLINT_HOME%\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%KTLINT_HOME%:ktlint.bat"
 )
 where /q "%CFR_HOME%\bin:cfr.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,*" %%i in ('"%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% cfr %%j,"
+    for /f "tokens=1,*" %%i in ('call "%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% cfr %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
 )
 where /q "%MAKE_HOME%\bin:make.exe"
@@ -755,8 +797,13 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
     if defined MAKE_HOME echo    "MAKE_HOME=%MAKE_HOME%" 1>&2
     if defined MAVEN_HOME echo    "MAVEN_HOME=%MAVEN_HOME%" 1>&2
+    if defined VSCODE_HOME echo    "VSCODE_HOME=%VSCODE_HOME%" 1>&2
     echo Path associations: 1>&2
-    for /f "delims=" %%i in ('subst') do echo    %%i 1>&2
+    for /f "delims=" %%i in ('subst') do (
+        set "__LINE=%%i"
+        setlocal enabledelayedexpansion
+        echo    !__LINE:%USERPROFILE%=%%USERPROFILE%%! 1>&2
+    )
 )
 goto :eof
 
@@ -776,7 +823,8 @@ endlocal & (
     if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
     if not defined MAKE_HOME set "MAKE_HOME=%_MAKE_HOME%"
     if not defined MAVEN_HOME set "MAVEN_HOME=%_MAVEN_HOME%"
-    set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAKE_PATH%%_MAVEN_PATH%%_GIT_PATH%;%~dp0bin"
+        if not defined VSCODE_HOME set "VSCODE_HOME=%VSCODE_HOME%"
+    set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAKE_PATH%%_MAVEN_PATH%%_GIT_PATH%%_VSCODE_PATH%;%~dp0bin"
     call :print_env %_VERBOSE%
     if not "%CD:~0,2%"=="%_DRIVE_NAME%" (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% cd /d %_DRIVE_NAME% 1>&2

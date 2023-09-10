@@ -4,18 +4,18 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>concurrency-in-kotlin\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples coming from the <a href="https://www.packtpub.com/application-development/learning-concurrency-kotlin">Learn Concurrency in Kotlin</a> book <sup id="anchor_01"><a href="#footnote_01">1</a></sup>.<br/>
-  It also includes several batch scripts for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
 
 Code examples can be built/run with the following tools:
 
-| Build tool                     | Configuration file               | Parent file         | Environment(s) |
-|--------------------------------|------------------------------------|--------------------|----------------|
-| [**`gradle.exe`**][gradle_cli] | [**`build.gradle`**](ch01/build.gradle) |  | Any <sup><b>a)</b></sup> |
+| Build tool | Build&nbsp;file | Parent&nbsp;file | Environment(s) |
+|------------|-----------------|------------------|----------------|
+| [**`gradle.bat`**][gradle_cli] | [**`build.gradle`**](ch01/build.gradle) |  | Any <sup><b>a)</b></sup> |
 | [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](ch01/pom.xml)           | [**`pom.xml`**](./pom.xml) | Any |
-| [**`build.bat`**](ch01/build.bat)   | *none*                             |  | Windows only |
+| [**`cmd.exe`**][cmd_cli] | [**`build.bat`**](ch01/build.bat)   | |  | Windows only |
 <div style="margin:0 20% 0 8px;font-size:90%;">
 <sup>a)</sup></b> Here "Any" means "tested on Windows / Cygwin / MSYS2 / Unix".<br/>&nbsp;
 </div>
@@ -66,10 +66,11 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
+[cmd_cli]: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [maven_cli]: https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html

@@ -12,9 +12,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
 
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <!-- see https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.7.0-RC</kotlinx.version>
+        <kotlinx.version>1.7.3</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.6</kotlin.compiler.languageVersion>
 

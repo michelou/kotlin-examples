@@ -4,7 +4,7 @@ setlocal enabledelayedexpansion
 @rem output parameter: _CPATH, _DOKKA_JAR
 
 if not defined _DEBUG set _DEBUG=%~1
-if not defined _MVN_CMD set _MVN_CMD=mvn.cmd
+if not defined _MVN_CMD set "_MVN_CMD=%MAVEN_HOME%\bin\mvn.cmd"
 
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
@@ -15,8 +15,8 @@ set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
-set __KOTLIN_VERSION=1.8.20
-set __KOTLINX_VERSION=1.6.4
+set __KOTLIN_VERSION=1.9.10
+set __KOTLINX_VERSION=1.7.3
 
 set _LIBS_CPATH=
 
@@ -46,7 +46,7 @@ set _LIBS_CPATH=
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.9.1"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
-call :add_maven_jar "org.jetbrains" "markdown" "0.4.1"
+call :add_maven_jar "org.jetbrains" "markdown" "0.5.0"
 
 set __DOKKA_VERSION=1.8.20
 

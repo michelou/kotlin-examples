@@ -40,10 +40,14 @@ endif
 
 LANGUAGE_VERSION = 1.6
 
-DOKKA_VERSION=1.8.10
+## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
+DOKKA_VERSION=1.8.20
+## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.8.20
-KOTLINX_VERSION = 1.6.4
+## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
+KOTLIN_VERSION  = 1.9.10
+## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+KOTLINX_VERSION = 1.7.3
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)
@@ -62,6 +66,12 @@ JUNIT_JAR              = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit
 
 DOKKA_CPATH = $(KOTLIN_COMPILER_JAR)$(PSEP)$(KOTLINX_COROUTINES_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(KOTLIN_INTELLIJ_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_PLUGIN_JAR)
 
+ifeq (,$(wildcard $(DOKKA_ANALYSIS_JAR)))
+$(error Variable DOKKA_ANALYSIS_JAR is not set)
+endif
+ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
+$(error Variable DOKKA_BASE_JAR is not set)
+endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 $(error Variable HAMCREST_JAR is not set)
 endif

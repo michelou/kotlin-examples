@@ -48,8 +48,8 @@ endif
 LANGUAGE_VERSION = 1.5
 
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.8.20
-KOTLINX_VERSION = 1.6.4
+KOTLIN_VERSION  = 1.9.10
+KOTLINX_VERSION = 1.7.3
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
@@ -57,7 +57,7 @@ KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/ko
 HAMCREST_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
 JUNIT_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
-KOTLIN_DOKKA_VERSION=1.7.20
+KOTLIN_DOKKA_VERSION=1.8.20
 
 DOKKA_ANALYSIS_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-analysis-$(KOTLIN_DOKKA_VERSION).jar)
 DOKKA_BASE_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-base-$(KOTLIN_DOKKA_VERSION).jar)
@@ -71,3 +71,10 @@ ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotat
 ##EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
 ##INTELLIJ_CORE_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name intellij-core-27.1.3.jar)
 ##OPENAPI_JAR        = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name openapi-7.0.3.jar)
+
+ifeq (,$(wildcard $(DOKKA_ANALYSIS_JAR)))
+$(error Variable DOKKA_ANALYSIS_JAR is not set)
+endif
+ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
+$(error Variable DOKKA_BASE_JAR is not set)
+endif

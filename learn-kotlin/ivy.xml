@@ -17,6 +17,6 @@
         <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
         <dependency org="info.picocli" name="picocli" rev="4.7.1"/>
         <!-- https://mvnrepository.com/artifact/com.pinterest/ktlint -->
-        <dependency org="com.pinterest" name="ktlint" rev="0.48.2"/>
+        <dependency org="com.pinterest" name="ktlint" rev="0.50.0"/>
     </dependencies>
 </ivy-module>

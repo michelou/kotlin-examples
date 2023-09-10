@@ -44,7 +44,7 @@ LANGUAGE_VERSION = 1.6
 DOKKA_VERSION   = 1.8.20
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
-## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core
+## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
 KOTLIN_VERSION  = 1.9.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 KOTLINX_VERSION = 1.7.3
@@ -70,6 +70,15 @@ JUNIT_JAR              = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit
 ## https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-7-10-jar-from-the-command-line/25439
 DOKKA_CPATH = $(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(KOTLIN_INTELLIJ_JAR)$(PSEP)$(KOTLIN_ANALYSIS_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(FREEMARKER_JAR)
 
+ifeq (,$(wildcard $(DOKKA_ANALYSIS_JAR)))
+$(error Variable DOKKA_ANALYSIS_JAR is not set)
+endif
+ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
+$(error Variable DOKKA_BASE_JAR is not set)
+endif
+ifeq (,$(wildcard $(DOKKA_CLI_JAR)))
+$(error Variable DOKKA_CLI_JAR is not set)
+endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 $(error Variable HAMCREST_JAR is not set)
 endif

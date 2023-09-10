@@ -24,13 +24,13 @@ In this document we present the following [Kotlin] code examples:
 
 We provide several ways to build/run our [Kotlin] code examples:
 
-| Build tool          | Configuration file(s)  | Parent file(s) | Environment(s) |
-|---------------------|------------------------|----------------|----------------|
+| Build tool          | Build&nbsp;file  | Parent&nbsp;file | Environment(s) |
+|---------------------|------------------|------------------|----------------|
 | [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](01_bean/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
-| [**`build.bat`**](01_bean/build.bat) | &nbsp;                 | [**`cpath.bat`**](cpath.bat) <sup><b>b)</b></sup> | MS Windows |
-| [**`build.sh`**](01_bean/build.sh) | &nbsp; |  | [Cygwin]/[MSYS2]/Unix |
-| **`gradle.exe`**    | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) | Any |
-| **`mvn.cmd`**       | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  | Any |
+| [**`cmd.exe`**][cmd_cli] | [**`build.bat`**](01_bean/build.bat) | [**`cpath.bat`**](cpath.bat) <sup><b>b)</b></sup> | MS Windows |
+| [**`sh.exe`**][sh_cli] | [**`build.sh`**](01_bean/build.sh) |  | [Cygwin]/[MSYS2]/Unix |
+| [**`gradle.bat`**][gradle_cli] | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) | Any |
+| [**`mvn.cmd`**][maven_cli] | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  | Any |
 | [**`make.exe`**][gmake_cli] | [**`Makefile`**](01_bean/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Any |
 <div style="margin:0 15% 0 8px;font-size:90%;">
 <sup><b>a)</b></sup></b> Here "Any" means "tested on MS Windows / Cygwin / MSYS2 / Unix".<br/>
@@ -49,7 +49,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Options:
     -debug      show commands executed by this script
     -native     generated native executable
-    -timer      display total elapsed time
+    -timer      display total execution time
     -verbose    display progress messages
 
   Subcommands:
@@ -67,13 +67,13 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] Properties : _PROJECT_NAME=01_bean _PROJECT_VERSION=0.1-SNAPSHOT
 > [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-1.8.0u345-b01"
-> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.7.20"
-> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.7.20"
+> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-11.0.20_8"
+> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.9.10"
+> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.9.10"
 > [build] Variables  : _LANGUAGE_VERSION=1.5 _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
-> [build] "C:\opt\kotlinc-1.7.20\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
-> [build] "C:\opt\kotlinc-1.7.20\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
+> [build] "C:\opt\kotlinc-1.9.10\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc-1.9.10\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
 > [build] _EXITCODE=0
 > </pre>
@@ -96,7 +96,7 @@ Command [**`gradle.bat -q clean run`**][gradle_cli] (build script [**`build.grad
 fist=Jane, last=Doe
 </pre>
 
-Command [**`mvn -q clean compile exec:java`**][mvn_cli] (build script [**`pom.xml`**](01_bean/pom.xml) prints the same result:
+Command [**`mvn -q clean compile exec:java`**][maven_cli] (build script [**`pom.xml`**](01_bean/pom.xml) prints the same result:
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://maven.apache.org/ref/3.6.3/maven-embedder/cli.html">mvn</a> -q clean compile exec:java</b>
@@ -238,10 +238,11 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
+[cmd_cli]: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
 [cygwin]: https://cygwin.com/install.html
 [gmake_cli]: https://www.gnu.org/software/make/manual/make.html
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
@@ -251,5 +252,6 @@ abcd
 [kotlin_extensions]: https://kotlinlang.org/docs/tutorials/kotlin-for-py/extension-functionsproperties.html
 [kotlin_lambdas]: https://kotlinlang.org/docs/reference/lambdas.html
 [kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/
-[mvn_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
+[maven_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
 [msys2]: https://www.msys2.org/
+[sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html

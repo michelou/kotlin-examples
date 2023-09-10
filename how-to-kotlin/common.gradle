@@ -54,7 +54,7 @@ compileKotlin {
         // verbose = false
         // Common options
         apiVersion = "1.5"
-        languageVersion = "1.5"
+        languageVersion = "1.6"
         // JVM options
         jvmTarget = "11" // "1.8"
     }

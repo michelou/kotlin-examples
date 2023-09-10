@@ -20,8 +20,8 @@ if not exist "%_TEMP_DIR%" mkdir "%_TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "_TEMP_DIR=%_TEMP_DIR%"
 
 @rem library versions
-set __KOTLIN_VERSION=1.8.20
-set __KOTLINX_VERSION=1.6.4
+set __KOTLIN_VERSION=1.9.10
+set __KOTLINX_VERSION=1.7.3
 
 set _LIBS_CPATH=
 
@@ -44,7 +44,7 @@ call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLIN
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.8.0"
 
-set __DOKKA_VERSION=1.8.10
+set __DOKKA_VERSION=1.9.0
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_VERSION%"
