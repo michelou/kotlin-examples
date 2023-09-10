@@ -82,14 +82,19 @@
 - [Kotlin∇](https://github.com/breandan/kotlingrad) - a type-safe automatic differentiation framework for Kotlin.
 - [ktlint] - a Kotlin linter with built-in formatter.
 - [MockK](https://mockk.io/) &ndash; a mocking library for Kotlin.
+- [Moshi](https://github.com/square/moshi) &ndash; a modern JSON library for Kotlin and Java.
 - [The Gradle build system][tool_vogella] - a Gradle tutorial by Lars Vobel and Simon Scholh, June 2018.
 
-## <span id="tutorials">Tutorials</span>
+## <span id="tutorials">Tutorials</span> [**&#x25B4;**](#top)
 
 - [Run detekt using the Detekt Gradle Plugin](https://detekt.dev/docs/gettingstarted/gradle/) - Detekt online documentation.
 - [GeeksforGeeks](https://www.geeksforgeeks.org/) - [Kotlin Programming Language](https://www.geeksforgeeks.org/kotlin-programming-language/).
 - [JournalDev](https://www.journaldev.com/) - [Kotlin][tuto_journaldev]
 - [ZetCode](http://zetcode.com/) - [Kotlin tutorial](http://zetcode.com/all/#kotlin) by Jan Bodnar, 2019.
+
+## <span id="videos">Videos</span>
+
+- [The road to K2 compiler][video_isakova] (32 min) by Svetlana Isakova, October 2021.
 
 ***
 
@@ -128,3 +133,4 @@
 [medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
 [tuto_journaldev]: https://www.journaldev.com/kotlin
+[video_isakova]: https://www.youtube.com/watch?v=iTdJJq_LyoY

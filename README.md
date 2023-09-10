@@ -29,7 +29,7 @@ Optionally one may also install the following software:
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*August 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*September 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant-1.10.14\                   <i>( 39 MB)</i>
@@ -47,7 +47,7 @@ C:\opt\make-3.81\                            <i>(  2 MB)</i>
 > **&#9755;** ***Installation policy***<br/>
 > When possible we install software from a [Zip archive][zip_archive] rather than via a Windows installer. In our case we defined **`C:\opt\`** as the installation directory for optional software tools (*in reference to* the [`/opt/`][linux_opt] directory on Unix).
 
-## <span id="structure">Directory structure</span>
+## <span id="structure">Directory structure</span> [**&#x25B4;**](#top)
 
 This project is organized as follows:
 <pre style="font-size:80%;">
