@@ -26,14 +26,14 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
-	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d "$(CLASSES_DIR)" $^
+	"$(JAR)" cf "$(TARGET)" -C "$(CLASSES_DIR)" .
 
 clean:
-	$(RM) -rf "$(TARGET_DIR)"
+	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
-	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS)
+	"$(KOTLIN)" -cp "$(TARGET)" $(MAIN_CLASS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
@@ -56,7 +56,7 @@ LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
+	"$(JAVA)" -jar "$(KTLINT_HOME)/ktlint.jar" $^
 
 ##############################################################################
 ## doc rules
@@ -67,7 +67,7 @@ DOC_TARGET  = $(TARGET_DIR)/.latest-doc
 DOKKA_CLI_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -type f -name "dokka-cli*.jar")
 DOKKA_OUT_DIR  = $(TARGET_DIR)/docs
 DOKKA_CPATH    = $(KOTLINX_COROUTINES_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(MARKDOWN_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_COMPILER_JAR)$(PSEP)$(DOKKA_INTELLIJ_JAR)$(PSEP)$(DOKKA_PLUGIN_JAR)$(PSEP)$(INTELLIJ_CORE_JAR)$(PSEP)$(OPENAPI_JAR)
-DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 01_bean -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
+DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 03_functions -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 doc: $(DOC_TARGET)
 

@@ -75,13 +75,13 @@ doc: $(DOC_TARGET)
 LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.java")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
-CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -name *.xml)
-CHECKSTYLE_JAR_FILE    = $(shell $(FIND) $(HOME)/.checkstyle -name checkstyle*.jar)
+CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "*.xml")
+CHECKSTYLE_JAR_FILE    = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "checkstyle*.jar")
 
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar $(CHECKSTYLE_JAR_FILE) -c=$(CHECKSTYLE_CONFIG_FILE) $^
+	"$(JAVA)" -jar "$(CHECKSTYLE_JAR_FILE)" -c=$(CHECKSTYLE_CONFIG_FILE) $^
 
 ##############################################################################
 ## phony

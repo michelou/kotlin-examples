@@ -54,6 +54,7 @@ KOTLINX_VERSION = 1.7.3
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
 KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-coroutines-core" -name kotlinx-coroutines-core-$(KOTLINX_VERSION).jar)
+KOTLINX_COROUT_JVM_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm" -name kotlinx-coroutines-core-jvm-$(KOTLINX_VERSION).jar)
 HAMCREST_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
 JUNIT_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
@@ -67,13 +68,16 @@ DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name d
 KOTLINX_HTML_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx" -name kotlinx-html-jvm-0.9.1.jar)
 MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-0.3.5.jar)
 
-ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-24.1.0.jar)
+ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-23.1.0.jar)
 ##EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
 ##INTELLIJ_CORE_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name intellij-core-27.1.3.jar)
 ##OPENAPI_JAR        = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name openapi-7.0.3.jar)
 
 ifeq (,$(wildcard $(KOTLIN_STDLIB_JAR)))
 $(error Variable KOTLIN_STDLIB_JAR is not set)
+endif
+ifeq (,$(wildcard $(KOTLINX_COROUTINES_JAR)))
+$(error Variable KOTLINX_COROUTINES_JAR is not set)
 endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 $(error Variable HAMCREST_JAR is not set)
@@ -86,7 +90,4 @@ $(error Variable DOKKA_ANALYSIS_JAR is not set)
 endif
 ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
 $(error Variable DOKKA_BASE_JAR is not set)
-endif
-ifeq (,$(wildcard $(DOKKA_COMPILER_JAR)))
-$(error Variable DOKKA_COMPILER_JAR is not set)
 endif

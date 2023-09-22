@@ -20,7 +20,7 @@
     </dependencies>
 
     <properties>
-        <mainClass>ch01_2.MainKt</mainClass>
+        <mainClass>chapter1_2.MainKt</mainClass>
     </properties>
 
     <build>

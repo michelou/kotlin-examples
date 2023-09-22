@@ -35,7 +35,7 @@ clean.doLast {
 
 task lint(type: JavaExec) {
     description "Analyze Kotlin source files with KtLint"
-    main "-jar"
+    // main "-jar"
     args files("${ktlintHome}") + ktLintOpts + sourceSets.main.allSource.files
 }
 
@@ -53,7 +53,7 @@ compileKotlin {
         // suppressWarnings = true
         // verbose = false
         // Common options
-        apiVersion = "1.5"
+        apiVersion = "1.6"
         languageVersion = "1.6"
         // JVM options
         jvmTarget = "11" // "1.8"
@@ -88,7 +88,7 @@ task run(type: JavaExec) {
 
     classpath sourceSets.main.runtimeClasspath
 
-    main kotlinMain
+    mainClass = kotlinMain
     if (args == null) args ""
 }
 

@@ -288,7 +288,7 @@ if defined __ANT_CMD (
         for /f %%f in ('dir /ad /b "!__PATH!\apache-ant-*" 2^>NUL') do set "_ANT_HOME=!__PATH!\%%f"
         if not defined _ANT_HOME (
             set "__PATH=%ProgramFiles%"
-            for /f %%f in ('dir /ad /b "!__PATH!\apache-ant-*" 2^>NUL') do set "_ANT_HOME=!__PATH!\%%f"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\apache-ant-*" 2^>NUL') do set "_ANT_HOME=!__PATH!\%%f"
         )
     )
     if defined _ANT_HOME (
@@ -319,11 +319,17 @@ if defined __BAZEL_CMD (
     set "_BAZEL_HOME=%BAZEL_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable BAZEL_HOME 1>&2
 ) else (
-    set "__PATH=%ProgramFiles%"
-    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
-    if not defined _BAZEL_HOME (
-        set __PATH=C:\opt
-        for /f %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
+    set __PATH=C:\opt
+    if exist "!__PATH!\bazel\" ( set "_BAZEL_HOME=!__PATH!\bazel"
+    ) else (
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
+        if not defined _BAZEL_HOME (
+            set "__PATH=%ProgramFiles%"
+            for /f %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
+        )
+    )
+    if defined _BAZEL_HOME (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Bazel installation directory "!_BAZEL_HOME!" 1>&2
     )
 )
 if not exist "%_BAZEL_HOME%\bazel.exe" (
@@ -389,6 +395,9 @@ if defined __GRADLE_CMD (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\gradle*" 2^>NUL') do set "_GRADLE_HOME=!__PATH!\%%f"
     )
+    if defined _GRADLE_HOME (
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Gradle installation directory "!_GRADLE_HOME!" 1>&2
+    )
 )
 if not exist "%_GRADLE_HOME%\bin\gradle.bat" (
     echo %_ERROR_LABEL% Executable gradle.bat not found ^("%_GRADLE_HOME%"^) 1>&2
@@ -417,8 +426,8 @@ if defined __JAVAC_CMD (
 )
 if defined __JAVAC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
-    for %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
-    for %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
+    for /f "delims=" %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
     goto :eof
 ) else if defined JAVA_HOME (
     set "_JAVA_HOME=%JAVA_HOME%"
@@ -432,7 +441,7 @@ if defined __JAVAC_CMD (
     )
 )
 if not exist "%_JAVA_HOME%\bin\javac.exe" (
-    echo %_ERROR_LABEL% Executable javac.exe not found ^(%_JAVA_HOME%^) 1>&2
+    echo %_ERROR_LABEL% Executable javac.exe not found ^("%_JAVA_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -452,8 +461,8 @@ if defined __KOTLINC_CMD (
 )
 if defined __KOTLINC_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
-    for %%i in ("%__KOTLINC_CMD%") do set "__KOTLINC_BIN_DIR=%%~dpi"
-    for %%f in ("!__KOTLINC_BIN_DIR!\.") do set "_KOTLIN_HOME=%%~dpf"
+    for /f "delims=" %%i in ("%__KOTLINC_CMD%") do set "__KOTLINC_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__KOTLINC_BIN_DIR!\.") do set "_KOTLIN_HOME=%%~dpf"
     goto :eof
 ) else if defined KOTLIN_HOME (
     set "_KOTLIN_HOME=%KOTLIN_HOME%"
@@ -464,6 +473,9 @@ if defined __KOTLINC_CMD (
     if not defined _KOTLIN_HOME (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
+    )
+    if defined _KOTLIN_HOME (
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Kotlin installation directory "!_KOTLIN_HOME!" 1>&2
     )
 )
 if not exist "%_KOTLIN_HOME%\bin\kotlinc.bat" (
@@ -493,6 +505,9 @@ if defined __KOTLINC_NATIVE_CMD (
     if not defined _KOTLIN_HOME (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
+    )
+    if defined _KOTLIN_NATIVE_HOME (
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Kotlin/Native installation directory "!_KOTLIN_NATIVE_HOME!" 1>&2
     )
 )
 if not exist "%_KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" (
@@ -537,12 +552,15 @@ if defined __DETEKT_CMD (
         for /f %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
         if not defined _DETEKT_HOME (
             set "__PATH=%ProgramFiles%"
-            for /f %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
         )
+    )
+    if defined _DETEKT_HOME (
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Detekt installation directory "!_DETEKT_HOME!" 1>&2
     )
 )
 if not exist "%_DETEKT_HOME%\bin\detekt-cli.bat" (
-    echo %_ERROR_LABEL% Detekt executable not found ^(%_DETEKT_HOME%^) 1>&2
+    echo %_ERROR_LABEL% Detekt executable not found ^("%_DETEKT_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -556,8 +574,8 @@ set __KTLINT_CMD=
 for /f "delims=" %%f in ('where ktlint.bat 2^>NUL') do set "__KTLINT_CMD=%%f"
 if defined __KTLINT_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of KtLint executable found in PATH 1>&2
-    for %%i in ("%__KTLINT_CMD%") do set "__KTLINT_BIN_DIR=%%~dpi"
-    for %%f in ("!__KTLINT_BIN_DIR!\.") do set "_KTLINT_HOME=%%~dpf"
+    for /f "delims=" %%i in ("%__KTLINT_CMD%") do set "__KTLINT_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__KTLINT_BIN_DIR!\.") do set "_KTLINT_HOME=%%~dpf"
     goto :eof
 ) else if defined KTLINT_HOME (
     set "_KTLINT_HOME=%KTLINT_HOME%"
@@ -572,9 +590,12 @@ if defined __KTLINT_CMD (
             for /f "delims=" %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         )
     )
+    if defined _KTLINT_HOME (
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default KtLint installation directory "!_KTLINT_HOME!" 1>&2
+    )
 )
 if not exist "%_KTLINT_HOME%\bin\ktlint.bat" (
-    echo %_ERROR_LABEL% KtLint executable not found ^(%_KTLINT_HOME%^) 1>&2
+    echo %_ERROR_LABEL% KtLint executable not found ^("%_KTLINT_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -595,14 +616,17 @@ if defined __MAKE_CMD (
     set "_MAKE_HOME=%MAKE_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable MAKE_HOME 1>&2
 ) else (
-    set _PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!_PATH!\make-3*" 2^>NUL') do set "_MAKE_HOME=!_PATH!\%%f"
+    set __PATH=C:\opt
+    if exist "!__PATH!\make\" ( set "_MAKE_HOME=!__PATH!\make"
+    ) else (
+        for /f %%f in ('dir /ad /b "!__PATH!\make-3*" 2^>NUL') do set "_MAKE_HOME=!__PATH!\%%f"
+    )
     if defined _MAKE_HOME (
-        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Make installation directory !_MAKE_HOME! 1>&2
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Make installation directory "!_MAKE_HOME!" 1>&2
     )
 )
 if not exist "%_MAKE_HOME%\bin\make.exe" (
-    echo %_ERROR_LABEL% Make executable not found ^(%_MAKE_HOME%^) 1>&2
+    echo %_ERROR_LABEL% Make executable not found ^("%_MAKE_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -716,6 +740,9 @@ if defined __CODE_CMD (
             set "__PATH=%ProgramFiles%"
             for /f "delims=" %%f in ('dir /ad /b "!__PATH!\VSCode-1*" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
         )
+    )
+    if defined _VSCODE_HOME (
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default VSCode installation directory "!_VSCODE_HOME!" 1>&2
     )
 )
 if not exist "%_VSCODE_HOME%\code.exe" (

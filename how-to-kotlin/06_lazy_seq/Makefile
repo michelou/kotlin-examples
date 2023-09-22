@@ -15,11 +15,9 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET  = $(TARGET_DIR)/Conventions.jar
+TARGET = $(TARGET_DIR)/Functions.jar
 
-CPATH   = $(KOTLINX_COROUTINES_JAR)
-
-MAIN_CLASS = _05_coroutines.ThreadsVsCoroutinesKt
+MAIN_CLASS = _06_lazy_seq.LazySequenceKt
 MAIN_ARGS ?= 
 
 all: build run
@@ -28,14 +26,14 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -cp "$(CPATH)" -d "$(CLASSES_DIR)" $^
-	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d "$(CLASSES_DIR)" $^
+	"$(JAR)" cf "$(TARGET)" -C "$(CLASSES_DIR)" .
 
 clean:
 	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
-	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS)
+	"$(KOTLIN)" -cp "$(TARGET)" $(MAIN_CLASS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
@@ -69,7 +67,7 @@ DOC_TARGET  = $(TARGET_DIR)/.latest-doc
 DOKKA_CLI_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -type f -name "dokka-cli*.jar")
 DOKKA_OUT_DIR  = $(TARGET_DIR)/docs
 DOKKA_CPATH    = $(KOTLINX_COROUTINES_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(MARKDOWN_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_COMPILER_JAR)$(PSEP)$(DOKKA_INTELLIJ_JAR)$(PSEP)$(DOKKA_PLUGIN_JAR)$(PSEP)$(INTELLIJ_CORE_JAR)$(PSEP)$(OPENAPI_JAR)
-DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 05_coroutines -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
+DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 06_lazy_seq -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 doc: $(DOC_TARGET)
 

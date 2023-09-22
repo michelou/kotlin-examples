@@ -15,7 +15,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/Functions.jar
+TARGET = $(TARGET_DIR)/Functional.jar
 
 MAIN_CLASS = _04_functional.LambdasKt
 MAIN_ARGS ?= 
@@ -26,7 +26,7 @@ build: $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d "$(CLASSES_DIR)" $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
@@ -67,7 +67,7 @@ DOC_TARGET  = $(TARGET_DIR)/.latest-doc
 DOKKA_CLI_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -type f -name "dokka-cli*.jar")
 DOKKA_OUT_DIR  = $(TARGET_DIR)/docs
 DOKKA_CPATH    = $(KOTLINX_COROUTINES_JAR)$(PSEP)$(KOTLINX_HTML_JAR)$(PSEP)$(MARKDOWN_JAR)$(PSEP)$(DOKKA_ANALYSIS_JAR)$(PSEP)$(DOKKA_BASE_JAR)$(PSEP)$(DOKKA_COMPILER_JAR)$(PSEP)$(DOKKA_INTELLIJ_JAR)$(PSEP)$(DOKKA_PLUGIN_JAR)$(PSEP)$(INTELLIJ_CORE_JAR)$(PSEP)$(OPENAPI_JAR)
-DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 01_bean -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
+DOKKA_CLI_OPTS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName 04_functional -moduleVersion 1.0 -outputDir "$(DOKKA_OUT_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 doc: $(DOC_TARGET)
 

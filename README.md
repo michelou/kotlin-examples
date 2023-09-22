@@ -32,8 +32,8 @@ Optionally one may also install the following software:
 For instance our development environment looks as follows (*September 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
-C:\opt\apache-ant-1.10.14\                   <i>( 39 MB)</i>
-C:\opt\apache-maven-3.9.4\                   <i>(  9 MB)</i>
+C:\opt\apache-ant\                           <i>( 39 MB)</i>
+C:\opt\apache-maven\                         <i>(  9 MB)</i>
 C:\opt\detekt-cli-1.23.1\                    <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
@@ -105,7 +105,7 @@ We distinguish different sets of batch commands:
       kotlinc 1.9.10, kotlinc-native 1.9.10, ktlint 0.50.0, cfr 0.152,
       make 3.81, mvn 3.9.4, git 2.42.0.windows.1, diff 3.9, bash 4.4.23(1)-release
    Tool paths:
-      C:\opt\apache-ant-1.10.14\bin\ant.bat
+      C:\opt\apache-ant\bin\ant.bat
       C:\opt\bazel-6.3.2\bazel.exe
       C:\opt\gradle\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
@@ -116,12 +116,12 @@ We distinguish different sets of batch commands:
       C:\opt\ktlint-0.50.0\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
-      C:\opt\apache-maven-3.9.4\bin\mvn.cmd
+      C:\opt\apache-maven\bin\mvn.cmd
       C:\opt\Git\bin\git.exe
       C:\opt\Git\mingw64\bin\git.exe
       C:\opt\Git\usr\bin\diff.exe
    Environment variables:
-      "ANT_HOME=C:\opt\apache-ant-1.10.14"
+      "ANT_HOME=C:\opt\apache-ant"
       "CFR_HOME=C:\opt\cfr-0.152"
       "DETEKT_HOME=C:\opt\detekt-cli-1.23.1"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
@@ -132,7 +132,7 @@ We distinguish different sets of batch commands:
       "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.10"
       "KTLINT_HOME=C:\opt\ktlint-0.50.0"
       "MAKE_HOME=C:\opt\make-3.81"
-      "MAVEN_HOME=C:\opt\apache-maven-3.9.4"
+      "MAVEN_HOME=C:\opt\apache-maven"
    </pre>
 
 2. [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat) - This batch command generates the [Kotlin] binary distribution on a Windows machine.
