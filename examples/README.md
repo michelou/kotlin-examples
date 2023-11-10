@@ -30,13 +30,13 @@ We provide several ways to build/run the [Kotlin] code examples:
 
 | Build tool          | Build file(s)  | Parent file(s) | Environment(s) |
 |---------------------|----------------|----------------|----------------|
-| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](HelloWorld/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
-| [**`cmd.exe`**][cmd_cli] | [**`build.bat`**](HelloWorld/build.bat)<br/>**`build.properties`** | [**`cpath.bat`**](./cpath.bat) <sup><b>b)</b></sup> | Windows |
-| [**`sh.exe`**][sh_cli] | [**`build.sh`**](HelloWorld/build.sh) |  | [Cygwin]/[MSYS2]/Unix |
-| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle`**](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [**`common.gradle`**](./common.gradle)  | Any |
-| [**`gradle.exe`**][gradle_cli]    | [**`build.gradle.kts`**](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Any |
-| [**`mvn.cmd`**][apache_maven_cli] | [**`pom.xml`**](HelloWorld/pom.xml) | [**`pom.xml`**](./pom.xml)  | Any |
-| [**`make.exe`**][gmake_cli] | [**`Makefile`**](HelloWorld/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Any |
+| [**`ant.bat`**][apache_ant_cli] | [`build.xml`](HelloWorld/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
+| [**`cmd.exe`**][cmd_cli] | [`build.bat`](HelloWorld/build.bat)<br/>`build.properties` | [`cpath.bat`](./cpath.bat) <sup><b>b)</b></sup> | Windows |
+| [**`sh.exe`**][sh_cli] | [`build.sh`](HelloWorld/build.sh) |  | [Cygwin]/[MSYS2]/Unix |
+| [**`gradle.exe`**][gradle_cli]    | [`build.gradle`](HelloWorld/build.gradle) <sup><b>c)</b></sup> | [`common.gradle`](./common.gradle)  | Any |
+| [**`gradle.exe`**][gradle_cli]    | [`build.gradle.kts`](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Any |
+| [**`mvn.cmd`**][apache_maven_cli] | [`pom.xml`](HelloWorld/pom.xml) | [`pom.xml`](./pom.xml)  | Any |
+| [**`make.exe`**][gmake_cli] | [`Makefile`](HelloWorld/Makefile) | [`Makefile.inc`](./Makefile.inc)  | Any |
 <div style="margin:0 30% 0 8px;font-size:90%;">
 <sup><b>a)</b></sup></b> Here "Any" means "tested on MS Windows / Cygwin / MSYS2 / Unix".<br/>
 <sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
@@ -253,8 +253,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 <dd>
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.9.10 (JRE 11.0.20+8)
-Kotlin/Native: 1.9.10
+info: kotlinc-native 1.9.20 (JRE 11.0.21+9)
+Kotlin/Native: 1.9.20
 &nbsp;
 <b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 linux_x64:                              linux
@@ -334,7 +334,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

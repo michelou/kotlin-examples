@@ -226,11 +226,11 @@ set "_DRIVE_NAME=!__DRIVE_NAMES:~0,2!"
 if /i "%_DRIVE_NAME%"=="%__GIVEN_PATH:~0,2%" goto :eof
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% subst "%_DRIVE_NAME%" "%__GIVEN_PATH%" 1>&2
-) else if %_VERBOSE%==1 ( echo Assign drive %_DRIVE_NAME% to path "%__GIVEN_PATH%" 1>&2
+) else if %_VERBOSE%==1 ( echo Assign drive %_DRIVE_NAME% to path "!__GIVEN_PATH:%USERPROFILE%=%%USERPROFILE%%!" 1>&2
 )
 subst "%_DRIVE_NAME%" "%__GIVEN_PATH%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to assign drive %_DRIVE_NAME% to path "%__GIVEN_PATH%" 1>&2
+    echo %_ERROR_LABEL% Failed to assign drive %_DRIVE_NAME% to path "!__GIVEN_PATH:%USERPROFILE%=%%USERPROFILE%%!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -258,11 +258,11 @@ if %_VERBOSE%==1 (
 echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
-echo     %__BEG_O%-debug%__END%      display commands executed by this script
-echo     %__BEG_O%-verbose%__END%    display progress messages
+echo     %__BEG_O%-debug%__END%      print commands executed by this script
+echo     %__BEG_O%-verbose%__END%    print progress messages
 echo.
 echo   %__BEG_P%Subcommands:%__END%
-echo     %__BEG_O%help%__END%        display this help message
+echo     %__BEG_O%help%__END%        print this help message
 goto :eof
 
 @rem output parameters: _ANT_HOME, _ANT_PATH
@@ -325,7 +325,7 @@ if defined __BAZEL_CMD (
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
         if not defined _BAZEL_HOME (
             set "__PATH=%ProgramFiles%"
-            for /f %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\bazel-*" 2^>NUL') do set "_BAZEL_HOME=!__PATH!\%%f"
         )
     )
     if defined _BAZEL_HOME (
@@ -359,7 +359,7 @@ if defined __CFR_CMD (
     set _PATH=C:\opt
     if exist "!__PATH!\cfr\" ( set "_CFR_HOME=!__PATH!\cfr"
     ) else (
-        for /f %%f in ('dir /ad /b "!_PATH!\cfr*" 2^>NUL') do set "_CFR_HOME=!_PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!_PATH!\cfr*" 2^>NUL') do set "_CFR_HOME=!_PATH!\%%f"
     )
     if defined _CFR_HOME (
        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default cfr installation directory "!_CFR_HOME!" 1>&2
@@ -380,9 +380,9 @@ set _GRADLE_PATH=
 set __GRADLE_CMD=
 for /f "delims=" %%f in ('where gradle.bat 2^>NUL') do set "__GRADLE_CMD=%%f"
 if defined __GRADLE_CMD (
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Gradle executable found in PATH 1>&2
     for /f "delims=" %%i in ("%__GRADLE_CMD%") do set "__GRADLE_BIN_DIR=%%~dpi"
     for /f "delims=" %%f in ("!__GRADLE_BIN_DIR!\.") do set "_GRADLE_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Gradle executable found in PATH 1>&2
     @rem keep _GRADLE_PATH undefined since executable already in path
     goto :eof
 ) else if defined GRADLE_HOME (
@@ -390,7 +390,7 @@ if defined __GRADLE_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable GRADLE_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\gradle*" 2^>NUL') do set "_GRADLE_HOME=!__PATH!\%%f"
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\gradle*" 2^>NUL') do set "_GRADLE_HOME=!__PATH!\%%f"
     if not defined _GRADLE_HOME (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\gradle*" 2^>NUL') do set "_GRADLE_HOME=!__PATH!\%%f"
@@ -425,16 +425,16 @@ if defined __JAVAC_CMD (
     )
 )
 if defined __JAVAC_CMD (
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
     for /f "delims=" %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
     for /f "delims=" %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
     goto :eof
 ) else if defined JAVA_HOME (
     set "_JAVA_HOME=%JAVA_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable JAVA_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\jdk-%__JAVA_DISTRO%-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-%__JAVA_DISTRO%-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     if not defined _JAVA_HOME (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-%__JAVA_DISTRO%-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
@@ -460,16 +460,16 @@ if defined __KOTLINC_CMD (
     )
 )
 if defined __KOTLINC_CMD (
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
     for /f "delims=" %%i in ("%__KOTLINC_CMD%") do set "__KOTLINC_BIN_DIR=%%~dpi"
     for /f "delims=" %%f in ("!__KOTLINC_BIN_DIR!\.") do set "_KOTLIN_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
     goto :eof
 ) else if defined KOTLIN_HOME (
     set "_KOTLIN_HOME=%KOTLIN_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable KOTLIN_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
     if not defined _KOTLIN_HOME (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlinc*" 2^>NUL') do set "_KOTLIN_HOME=!__PATH!\%%f"
@@ -492,8 +492,8 @@ set _KOTLIN_NATIVE_HOME=
 set __KOTLINC_NATIVE_CMD=
 for /f "delims=" %%f in ('where kotlinc-native.bat 2^>NUL') do set "__KOTLINC_NATIVE_CMD=%%f"
 if defined __KOTLINC_NATIVE_CMD (
-    for %%i in ("%__KOTLINC_NATIVE_CMD%") do set "__KOTLINC_NATIVE_BIN_DIR=%%~dpi"
-    for %%f in ("!__KOTLINC_NATIVE_BIN_DIR!\.") do set "_KOTLIN_NATIVE_HOME=%%~dpf"
+    for /f "delims=" %%i in ("%__KOTLINC_NATIVE_CMD%") do set "__KOTLINC_NATIVE_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__KOTLINC_NATIVE_BIN_DIR!\.") do set "_KOTLIN_NATIVE_HOME=%%~dpf"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Kotlin executable found in PATH 1>&2
     goto :eof
 ) else if defined KOTLIN_NATIVE_HOME (
@@ -501,7 +501,7 @@ if defined __KOTLINC_NATIVE_CMD (
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable KOTLIN_NATIVE_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
     if not defined _KOTLIN_HOME (
         set "__PATH=%ProgramFiles%"
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\kotlin-native*" 2^>NUL') do set "_KOTLIN_NATIVE_HOME=!__PATH!\%%f"
@@ -539,9 +539,9 @@ set _DETEKT_HOME=
 set __DETEKT_CMD=
 for /f "delims=" %%f in ('where detekt-cli.bat 2^>NUL') do set "__DETEKT_CMD=%%f"
 if defined __DETEKT_CMD (
+    for /f "delims=" %%i in ("%__DETEKT_CMD%") do set "__DETEKT_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__DETEKT_BIN_DIR!\.") do set "_DETEKT_HOME=%%~dpf"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of Detekt executable found in PATH 1>&2
-    for %%i in ("%__DETEKT_CMD%") do set "__DETEKT_BIN_DIR=%%~dpi"
-    for %%f in ("!__DETEKT_BIN_DIR!\.") do set "_DETEKT_HOME=%%~dpf"
 ) else if defined DETEKT_HOME (
     set "_DETEKT_HOME=%DETEKT_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable DETEKT_HOME 1>&2
@@ -549,7 +549,7 @@ if defined __DETEKT_CMD (
     set __PATH=C:\opt
     if exist "!__PATH!\detekt-cli\" ( set "_DETEKT_HOME=!__PATH!\detekt-cli"
     ) else (
-        for /f %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
         if not defined _DETEKT_HOME (
             set "__PATH=%ProgramFiles%"
             for /f "delims=" %%f in ('dir /ad /b "!__PATH!\detekt-cli*" 2^>NUL') do set "_DETEKT_HOME=!__PATH!\%%f"
@@ -573,9 +573,9 @@ set _KTLINT_HOME=
 set __KTLINT_CMD=
 for /f "delims=" %%f in ('where ktlint.bat 2^>NUL') do set "__KTLINT_CMD=%%f"
 if defined __KTLINT_CMD (
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of KtLint executable found in PATH 1>&2
     for /f "delims=" %%i in ("%__KTLINT_CMD%") do set "__KTLINT_BIN_DIR=%%~dpi"
     for /f "delims=" %%f in ("!__KTLINT_BIN_DIR!\.") do set "_KTLINT_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of KtLint executable found in PATH 1>&2
     goto :eof
 ) else if defined KTLINT_HOME (
     set "_KTLINT_HOME=%KTLINT_HOME%"
@@ -584,7 +584,7 @@ if defined __KTLINT_CMD (
     set __PATH=C:\opt
     if exist "!__PATH!\ktlint\" ( set "_KTLINT_HOME=!__PATH!\ktlint"
     ) else (
-        for /f %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"
         if not defined _KTLINT_HOME (
             set "__PATH=%ProgramFiles%"
             for /f "delims=" %%f in ('dir /ad /b "!__PATH!\ktlint*" 2^>NUL') do set "_KTLINT_HOME=!__PATH!\%%f"

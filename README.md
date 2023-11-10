@@ -24,12 +24,12 @@ Optionally one may also install the following software:
 - [Apache Ant 1.10][apache_ant] (requires Java 8) ([*release notes*][apache_ant_relnotes])
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 8.3][gradle_latest] ([*release notes*][gradle_relnotes])
-- [KtLint 0.50][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
+- [Gradle 8.4][gradle_latest] ([*release notes*][gradle_relnotes])
+- [KtLint 1.0][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*September 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*November 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
@@ -37,10 +37,10 @@ C:\opt\apache-maven\                         <i>(  9 MB)</i>
 C:\opt\detekt-cli-1.23.1\                    <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
-C:\opt\jdk-temurin-11.0.20_8\                <i>(256 MB)</i>
+C:\opt\jdk-temurin-11.0.21_9\                <i>(256 MB)</i>
 C:\opt\kotlinc-1.9.10\                       <i>( 83 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.9.10\  <i>(269 MB)</i>
-C:\opt\ktlint-0.50.0\                        <i>( 53 MB)</i>
+C:\opt\ktlint\                               <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
 </pre>
 
@@ -101,9 +101,9 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.14, bazel 6.3.2, gradle 8.3, java 11.0.20, detekt-cli 1.23.1,
-      kotlinc 1.9.10, kotlinc-native 1.9.10, ktlint 0.50.0, cfr 0.152,
-      make 3.81, mvn 3.9.4, git 2.42.0.windows.1, diff 3.9, bash 4.4.23(1)-release
+      ant 1.10.14, bazel 6.3.2, gradle 8.4, java 11.0.20, detekt-cli 1.23.1,
+      kotlinc 1.9.10, kotlinc-native 1.9.10, ktlint 1.0.1, cfr 0.152,
+      make 3.81, mvn 3.9.5, git 2.42.0.windows.1, diff 3.9, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant\bin\ant.bat
       C:\opt\bazel-6.3.2\bazel.exe
@@ -113,7 +113,7 @@ We distinguish different sets of batch commands:
       C:\opt\kotlinc-1.9.10\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-x86_64-1.9.10\bin\kotlinc.bat
       C:\opt\kotlin-native-windows-x86_64-1.9.10\bin\kotlinc-native.bat
-      C:\opt\ktlint-0.50.0\ktlint.bat
+      C:\opt\ktlint\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
       C:\opt\apache-maven\bin\mvn.cmd
@@ -127,10 +127,10 @@ We distinguish different sets of batch commands:
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git"
       "GRADLE_HOME=C:\opt\gradle"
-      "JAVA_HOME=C:\opt\jdk-temurin-11.0.20_8"
-      "KOTLIN_HOME=C:\opt\kotlinc-1.9.10"
-      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.10"
-      "KTLINT_HOME=C:\opt\ktlint-0.50.0"
+      "JAVA_HOME=C:\opt\jdk-temurin-11.0.21_9"
+      "KOTLIN_HOME=C:\opt\kotlinc-1.9.20"
+      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.20"
+      "KTLINT_HOME=C:\opt\ktlint"
       "MAKE_HOME=C:\opt\make-3.81"
       "MAVEN_HOME=C:\opt\apache-maven"
    </pre>
@@ -149,7 +149,8 @@ We distinguish different sets of batch commands:
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
-<tr><td><a href="hhttps://github.com/JetBrains/kotlin/releases/tag/v1.9.10" rel="external">1.9.10</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
+<tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10" rel="external">1.9.10</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew19.html" rel="external">1.9.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1820.html" rel="external">1.8.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew18.html" rel="external">1.8.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -167,7 +168,7 @@ No Windows distribution is available from the <a href="https://github.com/pinter
 <dd>
 Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as the <a href="https://com-lihaoyi.github.io/mill/mill/Installation.html#_windows" rel="external">Mill assembly</a> distribution):
 <ul>
-<li>we create an installation directory <b><code>c:\opt\ktlint-0.50.0\bin</code></b>.</li>
+<li>we create an installation directory <b><code>c:\opt\ktlint\bin</code></b>.</li>
 <li>we download the shell script from the Github repository <a href="https://github.com/pinterest/ktlint" rel="external"><code>pinterest/ktlint</code></a>.</i>
 <li>we extract the JAR file from the bash script (and check it with command <b><code><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html" rel="external">jar</a> tf</code></b>).</li>
 <li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.bin"><b><code>ktlint_header.bin</code></b></a> and the extracted JAR file.</li>
@@ -178,10 +179,10 @@ Here are the performed operations:
 </dd>
 <dd>
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir" rel="external">mkdir</a> c:\opt\ktlint-0.50.0\bin</b>
-<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a> c:\opt\ktlint-0.50.0\bin</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir" rel="external">mkdir</a> c:\opt\ktlint\bin</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a> c:\opt\ktlint\bin</b>
 &nbsp;
-<b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/0.50.0/ktlint</b>
+<b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh https://github.com/pinterest/ktlint/releases/download/1.0.1/ktlint</b>
 <b>&gt; <a href="https://man7.org/linux/man-pages/man1/tail.1.html">tail</a> -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; %JAVA_HOME%\bin\<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf ktlint.jar | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> ktlint/Main</b>
 com/pinterest/ktlint/Main.class
@@ -193,11 +194,11 @@ The installation directory now contains one single file, namely <b><code>ktlint.
 </dd>
 <dd>
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir" rel="external">dir</a> /b c:\opt\ktlint-0.50.0\bin</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir" rel="external">dir</a> /b c:\opt\ktlint\bin</b>
 ktlint.bat
 &nbsp;
-<b>&gt; c:\opt\ktlint-0.50.0\bin\<a href="https://ktlint.github.io/#command-line" rel="external">ktlint.bat</a> --version</b>
-0.50.0
+<b>&gt; c:\opt\ktlint\bin\<a href="https://ktlint.github.io/#command-line" rel="external">ktlint.bat</a> --version</b>
+1.0.1
 </pre>
 </dd></dl>
 
@@ -209,22 +210,22 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <dd>
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.4-bin.zip</a>                         <i>(  9 MB)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.5-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.1.zip</a>                              <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-8.3-bin.zip</a>                                 <i>(115 MB)</i>
+<a href="https://gradle.org/releases/">gradle-8.4-bin.zip</a>                                 <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10">kotlin-compiler-1.9.10.zip</a>                         <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10">kotlin-native-windows-x86_64-1.9.10.zip</a>            <i>(174 MB)</i>
-<a href="https://github.com/pinterest/ktlint/releases/">ktlint (0.50.0)</a>                                    <i>( 63 MB)</i>
+<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.0.1)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u382b05.zip</a>     <i>( 99 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.20_8.zip</a>   <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.21_9.zip</a>   <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.42.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -261,11 +262,11 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/0.50.0
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.0.1
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.9.4/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.9.5/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples
