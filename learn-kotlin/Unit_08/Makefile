@@ -36,7 +36,7 @@ help:
 	@$(ECHO) "    build  compile Kotlin source files"
 	@$(ECHO) "    clean  delete generated files"
 	@$(ECHO) "    doc    generate HTML documentation"
-	@$(ECHO) "    help   display this help message"
+	@$(ECHO) "    help   print this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
 	@$(ECHO) "    run    execute main program $(MAIN_CLASS)"
 	@$(ECHO) "    test   execute unit tests with JUnit"
@@ -45,7 +45,7 @@ help:
 ## doc rules
 
 DOC_TARGET_DIR = $(TARGET_DIR)/docs
-DOC_SOURCES    = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name *.kt 2>/dev/null)
+DOC_SOURCES    = $(shell $(FIND) $(SOURCE_DIR)/main/kotlin -type f -name "*.kt" 2>/dev/null)
 DOC_TARGET     = $(TARGET_DIR)/.latest-doc
 
 PROJECT_NAME    ?= $(shell basename $(CURDIR))
@@ -64,7 +64,7 @@ doc: $(DOC_TARGET)
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -type f -name *.kt)
+LINT_SOURCES = $(shell $(FIND) $(SOURCE_DIR) -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
 lint: $(LINT_TARGET)
@@ -76,7 +76,7 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ##############################################################################
 ## test rules
 
-TEST_SOURCES = $(shell $(FIND) $(SOURCE_DIR)/test/kotlin -name *.kt 2>/dev/null)
+TEST_SOURCES = $(shell $(FIND) $(SOURCE_DIR)/test/kotlin -name "*.kt" 2>/dev/null)
 TEST_TARGET = $(TARGET_DIR)/HelloWorldTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
@@ -95,3 +95,6 @@ $(TEST_TARGET): $(TEST_SOURCES)
 ## phony
 
 .PHONY: all build clean doc help lint run test
+
+.SUFFIXES:
+.SUFFIXES: .class .jar .kt

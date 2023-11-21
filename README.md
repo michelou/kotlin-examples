@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.42][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.43][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.9][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 1.9][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -34,12 +34,12 @@ For instance our development environment looks as follows (*November 2023*) <sup
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
 C:\opt\apache-maven\                         <i>(  9 MB)</i>
-C:\opt\detekt-cli-1.23.1\                    <i>( 55 MB)</i>
+C:\opt\detekt-cli\                           <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
 C:\opt\jdk-temurin-11.0.21_9\                <i>(256 MB)</i>
-C:\opt\kotlinc-1.9.10\                       <i>( 83 MB)</i>
-C:\opt\kotlin-native-windows-x86_64-1.9.10\  <i>(269 MB)</i>
+C:\opt\kotlinc-1.9.20\                       <i>( 83 MB)</i>
+C:\opt\kotlin-native-windows-x86_64-1.9.20\  <i>(269 MB)</i>
 C:\opt\ktlint\                               <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
 </pre>
@@ -101,18 +101,18 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.14, bazel 6.3.2, gradle 8.4, java 11.0.20, detekt-cli 1.23.1,
-      kotlinc 1.9.10, kotlinc-native 1.9.10, ktlint 1.0.1, cfr 0.152,
-      make 3.81, mvn 3.9.5, git 2.42.0.windows.1, diff 3.9, bash 4.4.23(1)-release
+      ant 1.10.14, bazel 6.4.0, gradle 8.4, java 11.0.21, detekt-cli 1.23.3,
+      kotlinc 1.9.20, kotlinc-native 1.9.20, ktlint 1.0.1, cfr 0.152,
+      make 3.81, mvn 3.9.5, git 2.43.0.windows.1, diff 3.10, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant\bin\ant.bat
-      C:\opt\bazel-6.3.2\bazel.exe
+      C:\opt\bazel\bazel.exe
       C:\opt\gradle\bin\gradle.bat
       C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
-      C:\opt\detekt-cli-1.23.1\bin\detekt-cli.bat
-      C:\opt\kotlinc-1.9.10\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.9.10\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.9.10\bin\kotlinc-native.bat
+      C:\opt\detekt-cli\bin\detekt-cli.bat
+      C:\opt\kotlinc-1.9.20\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.9.20\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.9.20\bin\kotlinc-native.bat
       C:\opt\ktlint\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
@@ -123,7 +123,7 @@ We distinguish different sets of batch commands:
    Environment variables:
       "ANT_HOME=C:\opt\apache-ant"
       "CFR_HOME=C:\opt\cfr-0.152"
-      "DETEKT_HOME=C:\opt\detekt-cli-1.23.1"
+      "DETEKT_HOME=C:\opt\detekt-cli"
       "DOKKA_HOME=C:\opt\dokka-1.4.32"
       "GIT_HOME=C:\opt\Git"
       "GRADLE_HOME=C:\opt\gradle"
@@ -211,15 +211,15 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.5-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.1.zip</a>                              <i>( 54 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.3.zip</a>                              <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.4-bin.zip</a>                                 <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10">kotlin-compiler-1.9.10.zip</a>                         <i>( 71 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10">kotlin-native-windows-x86_64-1.9.10.zip</a>            <i>(174 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.20">kotlin-compiler-1.9.20.zip</a>                         <i>( 71 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.20">kotlin-native-windows-x86_64-1.9.20.zip</a>            <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.0.1)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u382b05.zip</a>     <i>( 99 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_11.0.21_9.zip</a>   <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.42.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.43.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
@@ -241,11 +241,11 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [deno_examples]: https://github.com/michelou/deno-examples
 [docker_examples]: https://github.com/michelou/docker-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.1
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.3
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.42.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.43.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples
@@ -257,8 +257,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kafka_examples]: https://github.com/michelou/kafka-examples
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.10
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.10
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.20
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.20
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
@@ -283,6 +283,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 11.0.18 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-January/020111.html
 11.0.19 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-April/021900.html
 11.0.20 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024064.html
+11.0.21 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 -->
 [temurin_opendjk11_bugfixes]: https://www.oracle.com/java/technologies/javase/11-0-17-bugfixes.html
 [temurin_opendjk11_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2022-October/018119.html
@@ -290,10 +291,18 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <!--
 17.0.7  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-April/021899.html
 17.0.8  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024063.html
+17.0.9  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026352.html
 -->
 [temurin_opendjk17]: https://adoptium.net/releases.html?variant=openjdk17&jvmVariant=hotspot
 [temurin_opendjk17_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
-[temurin_opendjk17_relnotes]: https://github.com/openjdk/jdk/compare/jdk-17%2B20...jdk-17%2B21
+[temurin_opendjk17_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026352.html
+<!--
+21_35   -> https://adoptium.net/fr/temurin/release-notes/?version=jdk-21+35
+21.0.1  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
+-->
+[temurin_openjdk21]: https://adoptium.net/releases.html?variant=openjdk21&jvmVariant=hotspot
+[temurin_openjdk21_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
+[temurin_openjdk21_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst

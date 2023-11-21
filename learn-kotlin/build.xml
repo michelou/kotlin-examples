@@ -22,7 +22,7 @@
     <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
     <property name="cfr.version" value="0.152" />
-    <property name="ktlint.version" value="0.50.0" />
+    <property name="ktlint.version" value="1.0.1" />
     <property name="picocli.version" value="4.7.1" />
 
     <target name="init">
@@ -61,7 +61,7 @@
             <fileset dir="${ivy.cache}/org.benf" includes="**/cfr-${cfr.version}.jar" />
         </pathconvert>
         <pathconvert property="ktlint.jar">
-            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-${ktlint.version}.jar" />
+            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-cli-${ktlint.version}.jar" />
         </pathconvert>
         <path id="ktlint.classpath">
             <fileset dir="${ivy.cache}/info.picocli" includes="**/jars/picocli-${picocli.version}.jar" />

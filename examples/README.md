@@ -28,7 +28,7 @@ In this document we present the following [Kotlin] code examples:
 
 We provide several ways to build/run the [Kotlin] code examples:
 
-| Build tool          | Build file(s)  | Parent file(s) | Environment(s) |
+| Build&nbsp;tool     | Build file(s)  | Parent file(s) | Environment(s) |
 |---------------------|----------------|----------------|----------------|
 | [**`ant.bat`**][apache_ant_cli] | [`build.xml`](HelloWorld/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
 | [**`cmd.exe`**][cmd_cli] | [`build.bat`](HelloWorld/build.bat)<br/>`build.properties` | [`cpath.bat`](./cpath.bat) <sup><b>b)</b></sup> | Windows |
@@ -50,17 +50,17 @@ We provide several ways to build/run the [Kotlin] code examples:
 > Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > &nbsp;
 >  Options:
->    -debug      display commands executed by this script
+>    -debug      print commands executed by this script
 >    -native     generated native executable
->    -timer      display total execution time
->    -verbose    display progress messages
+>    -timer      print total execution time
+>    -verbose    print progress messages
 > &nbsp;
 >  Subcommands:
 >    clean       delete generated files
 >    compile     generate class files
 >    detekt      analyze Kotlin source files with Detekt
 >    doc         generate documentation
->    help        display this help message
+>    help        print this help message
 >    lint        analyze Kotlin source files with KtLint
 >    run         execute the generated program
 >    test        execute unit tests

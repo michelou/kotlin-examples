@@ -2,7 +2,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class JavaToKotlinJUnitTest {
-
+//
     @Test
     fun test1() {
         val stdout = captureStdout { main(arrayOf("Bob")) }

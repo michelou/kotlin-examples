@@ -22,7 +22,7 @@
         <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
         <dependency org="info.picocli" name="picocli" rev="4.7.5"/>
 
-        <!-- https://mvnrepository.com/artifact/com.pinterest/ktlint -->
-        <dependency org="com.pinterest" name="ktlint" rev="0.50.0"/>
+        <!-- https://mvnrepository.com/artifact/com.pinterest.ktlint/ktlint-cli -->
+        <dependency org="com.pinterest" name="ktlint-cli" rev="1.0.1"/>
     </dependencies>
 </ivy-module>

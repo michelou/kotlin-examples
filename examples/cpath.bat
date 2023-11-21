@@ -22,8 +22,8 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 
 @rem library versions
-set __DOKKA_VERSION=1.9.0
-set __KOTLIN_VERSION=1.9.10
+set __DOKKA_VERSION=1.9.10
+set __KOTLIN_VERSION=1.9.20
 
 set _LIBS_CPATH=
 
