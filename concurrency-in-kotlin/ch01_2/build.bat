@@ -275,17 +275,17 @@ if %_VERBOSE%==1 (
 echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
-echo     %__BEG_O%-debug%__END%      display commands executed by this script
+echo     %__BEG_O%-debug%__END%      print commands executed by this script
 echo     %__BEG_O%-native%__END%     generate native executable
-echo     %__BEG_O%-timer%__END%      display total execution time
-echo     %__BEG_O%-verbose%__END%    display progress messages
+echo     %__BEG_O%-timer%__END%      print total execution time
+echo     %__BEG_O%-verbose%__END%    print progress messages
 echo.
 echo   %__BEG_P%Subcommands:%__END%
 echo     %__BEG_O%clean%__END%       delete generated files
 echo     %__BEG_O%compile%__END%     generate class files
 echo     %__BEG_O%detekt%__END%      analyze Kotlin source files with %__BEG_N%Detekt%__END%
 echo     %__BEG_O%doc%__END%         generate HTML documentation with %__BEG_N%Dokka%__END%
-echo     %__BEG_O%help%__END%        display this help message
+echo     %__BEG_O%help%__END%        print this help message
 echo     %__BEG_O%lint%__END%        analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run%__END%         execute the generated program
 if %_VERBOSE%==0 goto :eof
@@ -385,6 +385,8 @@ for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
 if %__N%==0 (
     echo %_WARNING_LABEL% No Kotlin source file found 1>&2
     goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
 )
 set __KOTLIN_CPATH=
 for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do (
@@ -399,11 +401,11 @@ set "__CPATH=%__KOTLIN_CPATH%%_CLASSES_DIR%"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% into directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(JVM^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% into directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -425,6 +427,12 @@ for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
+if %__N%==0 (
+    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
+    goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
+)
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
 ) else ( set __NOWARN_OPT=
@@ -433,11 +441,11 @@ set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -kotlin-home "%KOTLIN_HOME:\=\\%" -o "%_EXE_FILE:\=\\%" -e "%__PKG_NAME%main" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(native^) to executable "!_EXE_FILE:%_ROOT_DIR%=!" 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% into executable "!_EXE_FILE:%_ROOT_DIR%=!" ^(native^) 1>&2
 )
 call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(native^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% into executable "!_EXE_FILE:%_ROOT_DIR%=!" ^(native^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -499,7 +507,7 @@ goto :eof
 
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
-for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
+for /f "delims=" %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
 if not exist "%__BATCH_FILE%" (
     echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
     set _EXITCODE=1
@@ -547,11 +555,11 @@ for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coro
 set __KOTLIN_OPTS=-cp "%__KOTLIN_CPATH%%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin main class "%_MAIN_CLASS%" 1>&2
 )
 call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Execution failure ^(%_MAIN_CLASS%^) 1>&2
+    echo %_ERROR_LABEL% Failed to execute Kotlin main class "%_MAIN_CLASS%" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -568,6 +576,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to execute Kotlin native application "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )

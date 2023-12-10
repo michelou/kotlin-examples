@@ -53,10 +53,6 @@ if %_TEST%==1 (
     call :test_%_TARGET%
     if not !_EXITCODE!==0 goto end
 )
-if %_TEST%==1 (
-    call :test
-    if not !_EXITCODE!==0 goto end
-)
 goto end
 
 @rem #########################################################################

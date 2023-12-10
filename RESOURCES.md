@@ -14,6 +14,7 @@
 - [Handling exceptions in tests: Junit & Kotest][article_junit] by Jaroslaw Michalik, June 2020.
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Medium] Articles :
+  - [Kotlin Unknotting][article_pherwani] by Nirbhay Pherwani, November 2023.
   - [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
   - [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
   - [Mastering Kotlin Conventions: Part I](https://medium.com/insiden26/mastering-kotlin-conventions-plus-minus-compareto-inc-dec-times-div-part-i-1a34b20aaf4) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
@@ -98,7 +99,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -106,6 +107,7 @@
 [arrow_home]: https://arrow-kt.io/
 [article_junit]: https://kotlintesting.com/handling-exceptions-in-tests/
 [article_kotlin_scala]: https://superkotlin.com/kotlin-vs-scala/
+[article_pherwani]: https://medium.com/proandroiddev/kotlin-unknotting-from-realizing-anti-patterns-to-becoming-a-better-developer-c1dfa6c3bab6
 [article_strulovich]: https://engineering.fb.com/2022/10/24/android/android-java-kotlin-migration/
 [blog_berga]: https://www.imaginarycloud.com/blog/kotlin-vs-java/
 [blog_chandrakant]: https://www.baeldung.com/kotlin/multiplatform-programming

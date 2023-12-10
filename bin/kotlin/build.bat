@@ -78,7 +78,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="-timer" ( set _TIMER=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
-        echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown option "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -88,7 +88,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="dist" ( set _DIST=1
     ) else if "%__ARG%"=="help" ( set _HELP=1
     ) else (
-        echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown subcommand "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -108,14 +108,14 @@ goto :eof
 echo Usage: %_BASENAME% { ^<option^> ^| ^<subcommand^> }
 echo.
 echo   Options:
-echo     -debug      show commands executed by this script
-echo     -timer      display total elapsed time
-echo     -verbose    display progress messages
+echo     -debug      print commands executed by this script
+echo     -timer      print total execution time
+echo     -verbose    print progress messages
 echo.
 echo   Subcommands:
 echo     clean       delete generated files
 echo     dist        generate component archive
-echo     help        display this help message
+echo     help        print this help message
 goto :eof
 
 :clean
@@ -160,7 +160,7 @@ goto :eof
 if %_TIMER%==1 (
     for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Total elapsed time: !_DURATION! 1>&2
+    echo Total execution time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%

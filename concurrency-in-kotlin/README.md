@@ -13,14 +13,16 @@ Code examples can be built/run with the following tools:
 
 | Build tool | Build&nbsp;file | Parent&nbsp;file | Environment(s) |
 |------------|-----------------|------------------|----------------|
-| [**`gradle.bat`**][gradle_cli] | [**`build.gradle`**](ch01/build.gradle) |  | Any <sup><b>a)</b></sup> |
-| [**`mvn.cmd`**][maven_cli]     | [**`pom.xml`**](ch01/pom.xml)           | [**`pom.xml`**](./pom.xml) | Any |
-| [**`cmd.exe`**][cmd_cli] | [**`build.bat`**](ch01/build.bat)   | |  | Windows only |
-<div style="margin:0 20% 0 8px;font-size:90%;">
+| [**`gradle.bat`**][gradle_cli] | [`build.gradle`](ch01/build.gradle) |  | Any <sup><b>a)</b></sup> |
+| [**`mvn.cmd`**][maven_cli]     | [`pom.xml`](ch01/pom.xml)           | [`pom.xml`](./pom.xml) | Any |
+| [**`cmd.exe`**][cmd_cli] | [`build.bat`](ch01/build.bat)   | |  | Windows only |
+<div style="margin:0 20% 0 8px;font-size:80%;">
 <sup>a)</sup></b> Here "Any" means "tested on Windows / Cygwin / MSYS2 / Unix".<br/>&nbsp;
 </div>
 
 ## <span id="coroutine_example">Coroutine Example</span>
+
+The code source consists of file [`Main.kt`](./ch01/src/main/kotlin/Main.kt).
 
 The Gradle build configuration is defined by the two files <a href="ch01/build.gradle"><code>build.gradle</code></a> and 
 <a href="ch01/gradle.properties"><code>gradle.properties</code></a>.
@@ -66,7 +68,7 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

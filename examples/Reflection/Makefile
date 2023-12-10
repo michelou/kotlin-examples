@@ -14,8 +14,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main" -type f -name "*.kt")
-
+SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
 TARGET = $(TARGET_DIR)/Reflection.jar
 
 MAIN_CLASS = ReflectionKt
@@ -23,18 +22,18 @@ MAIN_ARGS ?=
 
 all: build run
 
-build: $(TARGET)
+build: deps $(TARGET)
 
 $(TARGET): $(SOURCES)
-	[ -d "$(CLASSES_DIR)" ] || $(MKDIR) -p "$(CLASSES_DIR)"
-	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $<
+	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
+	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
 
 clean:
 	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
-	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS)
+	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS) $(MAIN_ARGS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
@@ -44,7 +43,7 @@ help:
 	@$(ECHO) "    build  compile Kotlin source files"
 	@$(ECHO) "    clean  delete generated files"
 	@$(ECHO) "    doc    generate HTML documentation"
-	@$(ECHO) "    help   display this help message"
+	@$(ECHO) "    help   print this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
 	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "    test   execute unit tests with JUnit"
@@ -72,7 +71,7 @@ doc: $(DOC_TARGET)
 ##############################################################################
 ## lint rules
 
-LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.java")
+LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
 CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "*.xml")
@@ -82,11 +81,30 @@ lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
 	"$(JAVA)" -jar "$(CHECKSTYLE_JAR_FILE)" -c=$(CHECKSTYLE_CONFIG_FILE) $^
+	@$(TOUCH) $(LINT_TARGET)
+
+##############################################################################
+## test rules
+
+TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -name "*.kt")
+TEST_TARGET = $(TARGET_DIR)/ReflectionTest.jar
+
+TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
+TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
+TEST_MAIN_CLASS  = ReflectionTestKt
+
+test: $(TARGET) $(TEST_TARGET)
+	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
+
+$(TEST_TARGET): $(TEST_SOURCES)
+	[ -d "$(TEST_CLASSES_DIR)" ] || "$(MKDIR)" -p "$(TEST_CLASSES_DIR)"
+	"$(KOTLINC)" -cp "$(TEST_CPATH)" -d "$(TEST_CLASSES_DIR)" $^
+	"$(JAR)" cf $(TEST_TARGET) -C $(TEST_CLASSES_DIR) .
 
 ##############################################################################
 ## phony
 
-.PHONY: all build clean doc help lint run
+.PHONY: all build clean deps doc help lint run test
 
 .SUFFIXES:
-.SUFFIXES: .class .flix .jar .java
+.SUFFIXES: .class .jar .java .kt

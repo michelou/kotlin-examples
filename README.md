@@ -24,12 +24,12 @@ Optionally one may also install the following software:
 - [Apache Ant 1.10][apache_ant] (requires Java 8) ([*release notes*][apache_ant_relnotes])
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 8.4][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 8.5][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 1.0][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*November 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*December 2023*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
@@ -38,8 +38,8 @@ C:\opt\detekt-cli\                           <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
 C:\opt\jdk-temurin-11.0.21_9\                <i>(256 MB)</i>
-C:\opt\kotlinc-1.9.20\                       <i>( 83 MB)</i>
-C:\opt\kotlin-native-windows-x86_64-1.9.20\  <i>(269 MB)</i>
+C:\opt\kotlinc-1.9.21\                       <i>( 83 MB)</i>
+C:\opt\kotlin-native-windows-x86_64-1.9.21\  <i>(269 MB)</i>
 C:\opt\ktlint\                               <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
 </pre>
@@ -101,18 +101,18 @@ We distinguish different sets of batch commands:
    <pre style="font-size:80%;">
    <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
    Tool versions:
-      ant 1.10.14, bazel 6.4.0, gradle 8.4, java 11.0.21, detekt-cli 1.23.3,
-      kotlinc 1.9.20, kotlinc-native 1.9.20, ktlint 1.0.1, cfr 0.152,
-      make 3.81, mvn 3.9.5, git 2.43.0.windows.1, diff 3.10, bash 4.4.23(1)-release
+      ant 1.10.14, bazel 6.4.0, gradle 8.4, java 11.0.21, detekt-cli 1.23.4,
+      kotlinc 1.9.21, kotlinc-native 1.9.21, ktlint 1.0.1, cfr 0.152,
+      make 3.81, mvn 3.9.6, git 2.43.0.windows.1, diff 3.10, bash 4.4.23(1)-release
    Tool paths:
       C:\opt\apache-ant\bin\ant.bat
       C:\opt\bazel\bazel.exe
       C:\opt\gradle\bin\gradle.bat
-      C:\opt\jdk-temurin-11.0.17_8\bin\java.exe
+      C:\opt\jdk-temurin-11.0.21_9\bin\java.exe
       C:\opt\detekt-cli\bin\detekt-cli.bat
-      C:\opt\kotlinc-1.9.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.9.20\bin\kotlinc.bat
-      C:\opt\kotlin-native-windows-x86_64-1.9.20\bin\kotlinc-native.bat
+      C:\opt\kotlinc-1.9.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.9.21\bin\kotlinc.bat
+      C:\opt\kotlin-native-windows-x86_64-1.9.21\bin\kotlinc-native.bat
       C:\opt\ktlint\ktlint.bat
       C:\opt\cfr-0.152\bin\cfr.bat
       C:\opt\make-3.81\bin\make.exe
@@ -128,8 +128,8 @@ We distinguish different sets of batch commands:
       "GIT_HOME=C:\opt\Git"
       "GRADLE_HOME=C:\opt\gradle"
       "JAVA_HOME=C:\opt\jdk-temurin-11.0.21_9"
-      "KOTLIN_HOME=C:\opt\kotlinc-1.9.20"
-      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.20"
+      "KOTLIN_HOME=C:\opt\kotlinc-1.9.21"
+      "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.21"
       "KTLINT_HOME=C:\opt\ktlint"
       "MAKE_HOME=C:\opt\make-3.81"
       "MAVEN_HOME=C:\opt\apache-maven"
@@ -149,6 +149,7 @@ We distinguish different sets of batch commands:
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.21</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.21/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10" rel="external">1.9.10</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew19.html" rel="external">1.9.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -210,11 +211,11 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <dd>
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.5-bin.zip</a>                         <i>(  9 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.3.zip</a>                              <i>( 54 MB)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.6-bin.zip</a>                         <i>(  9 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.4.zip</a>                              <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.4-bin.zip</a>                                 <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.20">kotlin-compiler-1.9.20.zip</a>                         <i>( 71 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.20">kotlin-native-windows-x86_64-1.9.20.zip</a>            <i>(174 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.21">kotlin-compiler-1.9.21.zip</a>                         <i>( 71 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.21">kotlin-native-windows-x86_64-1.9.21.zip</a>            <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.0.1)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk8&jvmVariant=hotspot">OpenJDK8U-jdk_x64_windows_hotspot_8u382b05.zip</a>     <i>( 99 MB)</i>
@@ -225,7 +226,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -241,7 +242,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [deno_examples]: https://github.com/michelou/deno-examples
 [docker_examples]: https://github.com/michelou/docker-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.3
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.4
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
@@ -266,7 +267,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.9.5/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.9.6/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples

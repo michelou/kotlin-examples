@@ -64,10 +64,11 @@ args() {
         clean)     CLEAN=true ;;
         compile)   COMPILE=true ;;
         decompile) COMPILE=true && DECOMPILE=true ;;
-        doc)       COMPILE=true && DOC=true ;;
+        doc)       DOC=true ;;
         help)      HELP=true ;;
         lint)      LINT=true ;;
         run)       COMPILE=true && RUN=true ;;
+        test)      COMPILE=true && TEST=true ;;
         *)
             error "Unknown subcommand $arg"
             EXITCODE=1 && return 0
@@ -84,9 +85,8 @@ args() {
     fi
     debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
     debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
-    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
+    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN TEST=$TEST"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
-    debug "Variables  : DOKKA_HOME=$DOKKA_HOME"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
@@ -110,18 +110,18 @@ Usage: $BASENAME { <option> | <subcommand> }
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         print this help message
-    run          execute main class "$(MAIN_CLASS}"
+    run          execute main class "$MAIN_CLASS"
 EOS
 }
 
 clean() {
     if [[ -d "$TARGET_DIR" ]]; then
         if $DEBUG; then
-            debug "Delete directory \"$TARGET_DIR\""
+            debug "Delete directory \"$(mixed_path $TARGET_DIR)\""
         elif $VERBOSE; then
             echo "Delete directory \"${TARGET_DIR/$ROOT_DIR\//}\"" 1>&2
         fi
-        rm -rf "$TARGET_DIR"
+        rm -rf "$(mixed_path $TARGET_DIR)"
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
 }
@@ -161,7 +161,7 @@ compile() {
         compile_java
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
-    required=$(action_required "$timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")
+    required=$(action_required "$timestamp_file" "$SOURCE_MAIN_DIR/" "*.kt")
     if [[ $required -eq 1 ]]; then
         compile_kotlin
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
@@ -211,11 +211,11 @@ compile_java() {
     if $DEBUG; then
         debug "$JAVAC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
     elif $VERBOSE; then
-        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+        echo "Compile $n_files into directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVAC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
+        error "Failed to compile $n_files into directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
         cleanup 1
     fi
 }
@@ -344,18 +344,33 @@ version_string() {
     echo "${arr[@]}"
 }
 
-dokka_cpath() {
-    local path=
-    for f in $(ls $DOKKA_HOME/lib/*.jar|grep -e analysis -e base); do
-        path="$path$(mixed_path $f)$PSEP"
+dokka_cli_jar() {
+    local repo_dir="$HOME/.m2/repository"
+    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+    jar_file=
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
+        jar_file="$f"
     done
-    echo $path
+    echo "$(mixed_path $jar_file)"
 }
 
-dokka_cli_jar() {
-    local path=""
-    for i in $(ls $DOKKA_HOME/lib/dokka-cli*.jar); do path=$i; done
-    echo "$(mixed_path $path)"
+## output parameter: DOKKA_CPATH
+dokka_cpath() {
+    local repo_dir="$HOME/.m2/repository"
+    local cpath=
+    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
+    jar_file=
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
+        jar_file="$f"
+    done
+	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
+    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+    jar_file=
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
+        jar_file="$f"
+    done
+	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
+    echo "$cpath"
 }
 
 doc() {
@@ -363,13 +378,13 @@ doc() {
 
     local doc_timestamp_file="$TARGET_DOCS_DIR/.latest-build"
 
-    local required="$(action_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")"
+    local required="$(action_required "$doc_timestamp_file" "$SOURCE_MAIN_DIR/" "*.kt")"
     [[ $required -eq 0 ]] && return 1
 
     ## see https://github.com/Kotlin/dokka/releases
     DOKKA_CPATH="$(dokka_cpath)$(extra_cpath)"
     DOKKA_CLI_JAR="$(dokka_cli_jar)"
-    local args="-src $(mixed_path $MAIN_SOURCE_DIR)"
+    local args="-src $(mixed_path $SOURCE_MAIN_DIR)"
     local dokka_args="-pluginsClasspath \"$DOKKA_CPATH\" -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir \"$(mixed_path $TARGET_DOCS_DIR)\" -sourceSet \"$args\""
     if $DEBUG; then
         debug "$JAVA_CMD -jar \"$DOKKA_CLI_JAR\" $dokka_args"
@@ -382,7 +397,7 @@ doc() {
         cleanup 1
     fi
     if $DEBUG; then
-        debug "HTML documentation saved into directory \"$TARGET_DOCS_DIR\""
+        debug "HTML documentation saved into directory \"$(mixed_path $TARGET_DOCS_DIR)\""
     elif $VERBOSE; then
         echo "HTML documentation saved into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
@@ -409,8 +424,97 @@ run() {
     fi
 }
 
-run_tests() {
-    echo "tests"
+test_compile() {
+    [[ -d "$TEST_CLASSES_DIR" ]] || mkdir -p "$TEST_CLASSES_DIR"
+
+    local timestamp_file="$TARGET_DIR/.latest-test-build"
+
+    local required=0
+    required=$(action_required "$timestamp_file" "$SOURCE_DIR/test/java/" "*.java")
+    if [[ $required -eq 1 ]]; then
+        test_compile_java
+        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
+    fi
+    required=$(action_required "$timestamp_file" "$SOURCE_DIR/test/kotlin" "*.kt")
+    if [[ $required -eq 1 ]]; then
+        test_compile_kotlin
+        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
+    fi
+    touch "$timestamp_file"
+}
+
+test_compile_java() {
+    echo "nyi"
+}
+
+## output parameter: LIBS_CPATH
+libs_cpath() {
+    local repo_dir="$HOME/.m2/repository"
+    local cpath=
+    ## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+	local jar_file=
+    for f in $(find "$repo_dir/org/hamcrest/hamcrest" -name "hamcrest-2.2.jar" 2>/dev/null); do 
+        jar_file="$f"
+    done
+	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
+    ## https://mvnrepository.com/artifact/junit/junit
+    jar_file=
+    for f in $(find "$repo_dir/junit/junit" -name "junit-4.13.2.jar" 2>/dev/null); do 
+        jar_file="$f"
+    done
+	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
+    echo "$cpath"
+}
+
+test_compile_kotlin() {
+    local opts_file="$TARGET_DIR/test_kotlinc_opts.txt"
+    local cpath="$(libs_cpath)$PSEP$(mixed_path $CLASSES_DIR)"
+    echo -classpath "$cpath" -d "$(mixed_path $TEST_CLASSES_DIR)" > "$opts_file"
+
+    local sources_file="$TARGET_DIR/test_kotlinc_sources.txt"
+    [[ -f "$sources_file" ]] && rm "$sources_file"
+    local n=0
+    for f in $(find "$SOURCE_DIR/test/kotlin/" -type f -name "*.kt" 2>/dev/null); do
+        echo $(mixed_path $f) >> "$sources_file"
+        n=$((n + 1))
+    done
+    if [[ $n -eq 0 ]]; then
+        warning "No Kotlin testsource file found"
+        return 1
+    fi
+    local s=; [[ $n -gt 1 ]] && s="s"
+    local n_files="$n Kotlin test source file$s"
+    if $DEBUG; then
+        debug "$KOTLINC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
+    elif $VERBOSE; then
+        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+    fi
+    eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
+    if [[ $? -ne 0 ]]; then
+        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
+        cleanup 1
+    fi
+}
+
+test_run() {
+    test_compile
+    [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
+
+    local cpath="$(libs_cpath)$PSEP$(mixed_path $CLASSES_DIR)$PSEP$(mixed_path $TEST_CLASSES_DIR)"
+    local test_kotlin_opts="-classpath \"$cpath\""
+    local test_main_class=""
+
+    ## see https://github.com/junit-team/junit4/wiki/Getting-started
+    for f in $(find "$TEST_CLASSES_DIR/" -type f -name "*JUnitTest.class" 2>/dev/null); do
+        test_main_class="$(basename $f .class)"
+        if $DEBUG; then
+            debug "\"$KOTLIN_CMD\" $test_kotlin_opts org.junit.runner.JUnitCore $test_main_class"
+        elif $VERBOSE; then
+            echo "Execute test $test_main_class" 1>&2
+        fi
+        eval "$KOTLIN_CMD" $test_kotlin_opts org.junit.runner.JUnitCore $test_main_class
+        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
+    done
 }
 
 ##############################################################################
@@ -423,10 +527,12 @@ EXITCODE=0
 ROOT_DIR="$(getHome)"
 
 SOURCE_DIR=$ROOT_DIR/src
-MAIN_SOURCE_DIR=$SOURCE_DIR/main/kotlin
+SOURCE_MAIN_DIR=$SOURCE_DIR/main/kotlin
 TARGET_DIR=$ROOT_DIR/target
 TARGET_DOCS_DIR=$TARGET_DIR/docs
 CLASSES_DIR=$TARGET_DIR/classes
+
+TEST_CLASSES_DIR=$TARGET_DIR/test-classes
 
 CLEAN=false
 COMPILE=false
@@ -438,9 +544,6 @@ LINT=false
 MAIN_CLASS="org.example.main.HelloWorldKt"
 MAIN_ARGS=
 RUN=false
-SCALA_VERSION=3
-SCALAC_OPTS_PRINT=false
-TASTY=false
 TEST=false
 TIMER=false
 VERBOSE=false
@@ -469,7 +572,6 @@ if $cygwin || $mingw || $msys; then
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
     [[ -n "$KTLINT_HOME" ]] && KTLINT_HOME="$(mixed_path $KTLINT_HOME)"
-    [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
     DIFF_CMD="$GIT_HOME/usr/bin/diff.exe"
 else
     DIFF_CMD="$(which diff)"
@@ -528,6 +630,6 @@ if $RUN; then
     run || cleanup 1
 fi
 if $TEST; then
-    run_tests || cleanup 1
+    test_run || cleanup 1
 fi
 cleanup

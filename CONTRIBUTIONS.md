@@ -12,7 +12,7 @@
 
 | Id     | Opened | Closed | Description | Action |
 |:-------|:-------|:-------|:------------|:------|
-| [KT-56082](https://youtrack.jetbrains.com/issue/KT-56082/NullPointerException-in-Dokka-CLI) | 20.01.2023 | - | NullPointerException in Dokka CLI  | *pending* |
+| [KT-56082](https://youtrack.jetbrains.com/issue/KT-56082/NullPointerException-in-Dokka-CLI) | 20.01.2023 | - | NullPointerException in Dokka CLI  | closed |
 
 <!-- https://discuss.kotlinlang.org/t/problems-running-dokka-cli-1-4-0-rc-jar-from-the-command-line/18855/24 -->
 ## <span id="pull_requests">Pull Requests</span>
@@ -25,7 +25,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/September 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2023* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
