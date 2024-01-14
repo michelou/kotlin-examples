@@ -42,7 +42,7 @@ help:
 	@$(ECHO) "   all    alias for build"
 	@$(ECHO) "   build  compile Kotlin source files"
 	@$(ECHO) "   clean  delete generated files"
-	@$(ECHO) "   help   display this help message"
+	@$(ECHO) "   help   print this help message"
 	@$(ECHO) "   lint   analyse Kotlin source files with KtLint"
 	@$(ECHO) "   run    execute main program \"$(MAIN_CLASS)\""
 	@$(ECHO) "   test   execute unit tests with JUnit"

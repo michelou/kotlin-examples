@@ -24,7 +24,7 @@ if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 @rem library versions
 set __DOKKA_VERSION=1.9.10
 set __DOKKA_ANALYSIS_VERSION=1.8.20
-set __KOTLIN_VERSION=1.9.20
+set __KOTLIN_VERSION=1.9.22
 
 set _LIBS_CPATH=
 

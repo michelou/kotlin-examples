@@ -29,6 +29,7 @@
 
 ## <span id="blogs">Blogs</span> [**&#x25B4;**](#top)
 
+- [Say Hello to the Kotlin Compiler Plugin][blog_sungbin] by Ji Sungbin, May 2023.
 - [Using Kotlin to build the Lunaconf 2022 App][blog_karim] by Shabab Karim, December 2022.
 - [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.
 - [Convert a Kotlin data class object to a Map](https://www.baeldung.com/kotlin/data-class-to-map) by [baeldung](https://www.baeldung.com/kotlin/author/baeldung), June 2022.
@@ -77,14 +78,15 @@
 ## <span id="tools">Tools and Frameworks</span>
 
 - [&Lambda;rrow][arrow_home] &ndash; a library for typed functional programming in Kotlin.
-- [Clikt][clikt_home] - a multiplatform Kotlin library for writing command line interfaces.
-- [detekt][detekt_home] - a Static code analysis for Kotlin.
+- [Clikt][clikt_home] &ndash; a multiplatform Kotlin library for writing command line interfaces.
+- [Data Class Generator](https://toolbox.http4k.org/dataclass) &ndash; a Kotlin Data class code generatoe for JSON, XML or YAML.
+- [detekt][detekt_home] &ndash; a Static code analysis for Kotlin.
 - [Kotest][kotest_home] &ndash; a flexible and comprehensive testing tool for Kotlin with multiplatform support.
-- [Kotlin∇](https://github.com/breandan/kotlingrad) - a type-safe automatic differentiation framework for Kotlin.
-- [ktlint] - a Kotlin linter with built-in formatter.
+- [Kotlin∇](https://github.com/breandan/kotlingrad) &ndash; a type-safe automatic differentiation framework for Kotlin.
+- [ktlint] &ndash; a Kotlin linter with built-in formatter.
 - [MockK](https://mockk.io/) &ndash; a mocking library for Kotlin.
 - [Moshi](https://github.com/square/moshi) &ndash; a modern JSON library for Kotlin and Java.
-- [The Gradle build system][tool_vogella] - a Gradle tutorial by Lars Vobel and Simon Scholh, June 2018.
+- [The Gradle build system][tool_vogella] &ndash; a Gradle tutorial by Lars Vobel and Simon Scholh, June 2018.
 
 ## <span id="tutorials">Tutorials</span> [**&#x25B4;**](#top)
 
@@ -99,7 +101,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -115,6 +117,7 @@
 [blog_lee1]: https://www.bignerdranch.com/blog/exploring-kotlin-native-part-1/
 [blog_lee2]: https://bignerdranch.com/blog/exploring-kotlin-native-part-2-interoperability/
 [blog_karim]: https://blog.lunatech.com/posts/2022-12-17-using-kotlin-to-build-the-lunaconf-2022-app
+[blog_sungbin]: https://betterprogramming.pub/say-hello-to-kotlin-compiler-plugin-f4e857be9a1
 [book_functional_kotlin]: https://www.packtpub.com/application-development/functional-kotlin
 [book_joy_kotlin]: https://www.manning.com/books/the-joy-of-kotlin
 [book_kotlin_cookbook]: https://www.oreilly.com/library/view/kotlin-cookbook/9781492046660/

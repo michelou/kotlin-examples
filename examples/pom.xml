@@ -13,7 +13,7 @@
         <java.version>11</java.version>
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
-        <kotlin.version>1.9.20</kotlin.version>
+        <kotlin.version>1.9.22</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
         <kotlinx.version>1.7.3</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
@@ -22,7 +22,7 @@
         <!-- https://gantsign.com/ktlint-maven-plugin/ -->
         <ktlint.maven.version>3.0.0</ktlint.maven.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-        <maven.compiler.version>3.11.0</maven.compiler.version>
+        <maven.compiler.version>3.12.1</maven.compiler.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
         <maven.jar.version>3.3.0</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->

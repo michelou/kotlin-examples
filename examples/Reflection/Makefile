@@ -86,7 +86,7 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ##############################################################################
 ## test rules
 
-TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -name "*.kt")
+TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -type f -name "*.kt")
 TEST_TARGET = $(TARGET_DIR)/ReflectionTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes

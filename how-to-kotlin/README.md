@@ -26,12 +26,12 @@ We provide several ways to build/run our [Kotlin] code examples:
 
 | Build tool          | Build&nbsp;file  | Parent&nbsp;file | Environment(s) |
 |---------------------|------------------|------------------|----------------|
-| [**`ant.bat`**][apache_ant_cli] | [**`build.xml`**](01_bean/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
-| [**`cmd.exe`**][cmd_cli] | [**`build.bat`**](01_bean/build.bat) | [**`cpath.bat`**](cpath.bat) <sup><b>b)</b></sup> | MS Windows |
-| [**`sh.exe`**][sh_cli] | [**`build.sh`**](01_bean/build.sh) |  | [Cygwin]/[MSYS2]/Unix |
-| [**`gradle.bat`**][gradle_cli] | [**`build.gradle`**](01_bean/build.gradle) | [**`common.gradle`**](common.gradle) | Any |
-| [**`mvn.cmd`**][maven_cli] | [**`pom.xml`**](01_bean/pom.xml) | [**`pom.xml`**](pom.xml)  | Any |
-| [**`make.exe`**][gmake_cli] | [**`Makefile`**](01_bean/Makefile) | [**`Makefile.inc`**](./Makefile.inc)  | Any |
+| [**`ant.bat`**][apache_ant_cli] | [`build.xml`](01_bean/build.xml) | &nbsp; | Any <sup><b>a)</b></sup> |
+| [**`cmd.exe`**][cmd_cli] | [`build.bat`](01_bean/build.bat) | [`cpath.bat`](cpath.bat) <sup><b>b)</b></sup> | MS Windows |
+| [**`sh.exe`**][sh_cli] | [`build.sh`](01_bean/build.sh) |  | [Cygwin]/[MSYS2]/Unix |
+| [**`gradle.bat`**][gradle_cli] | [`build.gradle`](01_bean/build.gradle) | [`common.gradle`](common.gradle) | Any |
+| [**`mvn.cmd`**][maven_cli] | [`pom.xml`](01_bean/pom.xml) | [`pom.xml`](pom.xml)  | Any |
+| [**`make.exe`**][gmake_cli] | [`Makefile`](01_bean/Makefile) | [`Makefile.inc`](./Makefile.inc)  | Any |
 <div style="margin:0 15% 0 8px;font-size:90%;">
 <sup><b>a)</b></sup></b> Here "Any" means "tested on MS Windows / Cygwin / MSYS2 / Unix".<br/>
 <sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>&nbsp;
@@ -49,13 +49,13 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
   Options:
     -debug      show commands executed by this script
     -native     generated native executable
-    -timer      display total execution time
-    -verbose    display progress messages
+    -timer      print total execution time
+    -verbose    print progress messages
 
   Subcommands:
     clean       delete generated files
     compile     generate class files
-    help        display this help message
+    help        print this help message
     lint        analyze Kotlin source files with KtLint
     run         execute the generated program
 </pre>
@@ -67,9 +67,9 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] Properties : _PROJECT_NAME=01_bean _PROJECT_VERSION=0.1-SNAPSHOT
 > [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-11.0.20_8"
-> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.9.10"
-> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.9.10"
+> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-11.0.21_9"
+> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.9.21"
+> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.9.21"
 > [build] Variables  : _LANGUAGE_VERSION=1.5 _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
 > [build] "C:\opt\kotlinc-1.9.10\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
@@ -238,7 +238,7 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/September 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html

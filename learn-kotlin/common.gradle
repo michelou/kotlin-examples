@@ -2,8 +2,8 @@
 buildDir file("target")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11 // VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17 // VERSION_11
+    targetCompatibility = JavaVersion.VERSION_17 // VERSION_11
 }
 
 ext {
@@ -94,18 +94,6 @@ task run(type: JavaExec) {
 
 repositories {
     mavenCentral()
-    maven { // e.g. dokka-gradle-plugin
-        url "https://dl.bintray.com/kotlin/dokka"
-    }
-    maven { // e.g. kotlinx-html-jvm
-        url "https://dl.bintray.com/kotlin/kotlinx"
-    }
-    maven {
-        url "https://dl.bintray.com/kotlin/kotlin-dev"
-    }
-    maven {
-        url "https://dl.bintray.com/jetbrains/markdown"
-    }
 }
 
 dependencies {

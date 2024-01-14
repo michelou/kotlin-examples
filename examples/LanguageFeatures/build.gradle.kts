@@ -23,8 +23,8 @@ sourceSets["main"].withConvention(KotlinSourceSet::class) {
 buildDir = file("target")   // Default: buildDir = file("build")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17  // VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_17  // VERSION_1_8
 }
 
 // see https://github.com/JetBrains/kotlin/blob/master/libraries/tools/
@@ -41,7 +41,7 @@ val compileKotlin: KotlinCompile by tasks
 
 // Common options
 compileKotlin.kotlinOptions.apiVersion = "1.3"
-compileKotlin.kotlinOptions.languageVersion = "1.3"
+compileKotlin.kotlinOptions.languageVersion = "1.6"
 
 // JVM options
 // compileKotlin.kotlinOptions.includeRuntime = false
@@ -75,7 +75,7 @@ repositories {
 
 dependencies {
     api(kotlin("stdlib", "${Config.kotlinVersion}"))
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.21")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
     implementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("stdlib", "${Config.kotlinVersion}"))
     testImplementation(kotlin("test-junit", "${Config.kotlinVersion}"))

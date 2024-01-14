@@ -11,7 +11,7 @@
     </condition>
     <property name="ivy.cache" value="${user.home}/.ivy2/cache" />
 
-    <!-- installed: C:\opt\apache-ant-1.10.12\lib\ant-contrib-0.6.jar -->
+    <!-- installed: C:\opt\apache-ant-1.10.14\lib\ant-contrib-0.6.jar -->
     <fail message="ant-contrib.jar is missing in %ANT_HOME%\lib\">
         <condition><not>
             <resourcecount count="1">

@@ -53,7 +53,7 @@ DOKKA_VERSION   = 1.9.10
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 1.9.21
+KOTLIN_VERSION  = 1.9.22
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 KOTLINX_VERSION = 1.7.3
 
@@ -88,48 +88,50 @@ deps:
 ifeq (,$(wildcard $(DOKKA_ANALYSIS_JAR)))
 	$(eval GROUP_ID := org.jetbrains.dokka)
 	$(eval ARTIFACT_ID := dokka-analysis)
-	$(eval DOKKA_ANALYSIS_VERSION := 1.8.20)
-	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(DOKKA_ANALYSIS_VERSION).jar)
-	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(DOKKA_ANALYSIS_VERSION)/$(ARTIFACT_ID)-$(DOKKA_ANALYSIS_VERSION).jar)
-	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(DOKKA_ANALYSIS_VERSION).jar)
-	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(DOKKA_ANALYSIS_VERSION) -Dpackaging=jar
-	$(eval DOKKA_ANALYSIS_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(DOKKA_ANALYSIS_VERSION).jar))
+	$(eval VERSION := $(DOKKA_ANALYSIS_VERSION))
+	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
+	$(eval DOKKA_ANALYSIS_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif
 ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
 	$(eval GROUP_ID := org.jetbrains.dokka)
 	$(eval ARTIFACT_ID := dokka-base)
-	$(eval DOKKA_VERSION := 1.9.10)
-	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(DOKKA_VERSION).jar)
-	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(DOKKA_VERSION)/$(ARTIFACT_ID)-$(DOKKA_VERSION).jar)
-	$(WGET) $(WGET_OPTS) $(URL)
-	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(DOKKA_VERSION) -Dpackaging=jar
-	$(eval DOKKA_BASE_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(DOKKA_VERSION).jar))
+	$(eval VERSION := $(DOKKA_VERSION))
+	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
+	$(eval DOKKA_BASE_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif
 ifeq (,$(wildcard $(DOKKA_CLI_JAR)))
 	$(eval GROUP_ID := org.jetbrains.dokka)
 	$(eval ARTIFACT_ID := dokka-cli)
-	$(eval DOKKA_VERSION := 1.9.10)
-	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(DOKKA_VERSION).jar)
-	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(DOKKA_VERSION)/$(ARTIFACT_ID)-$(DOKKA_VERSION).jar)
-	$(WGET) $(WGET_OPTS) $(URL)
-	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(DOKKA_VERSION) -Dpackaging=jar
-	$(eval DOKKA_CLI_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(DOKKA_VERSION).jar))
+	$(eval VERSION := $(DOKKA_VERSION))
+	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
+	$(eval DOKKA_CLI_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 	$(eval GROUP_ID := org.hamcrest)
 	$(eval ARTIFACT_ID := hamcrest)
-	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(JUNIT_VERSION).jar)
-	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(JUNIT_VERSION)/$(ARTIFACT_ID)-$(JUNIT_VERSION).jar)
-	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(JUNIT_VERSION).jar)
-	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(JUNIT_VERSION) -Dpackaging=jar
-	$(eval HAMCREST_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(JUNIT_VERSION).jar))
+	$(eval VERSION := 2.2)
+	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
+	$(eval HAMCREST_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif
 ifeq (,$(wildcard $(JUNIT_JAR)))
 	$(eval GROUP_ID := junit)
 	$(eval ARTIFACT_ID := junit)
-	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(JUNIT_VERSION).jar)
-	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(JUNIT_VERSION)/$(ARTIFACT_ID)-$(JUNIT_VERSION).jar)
-	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(JUNIT_VERSION).jar)
-	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(JUNIT_VERSION) -Dpackaging=jar
-	$(eval JUNIT_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(JUNIT_VERSION).jar))
+	$(eval VERSION := $(JUNIT_VERSION))
+	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
+	$(eval JUNIT_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif

@@ -43,7 +43,8 @@ if not %_EXITCODE%==0 goto end
 call :gradle
 if not %_EXITCODE%==0 goto end
 
-call :java11
+@rem last call to :java defines variable JAVA_HOME
+call :java 17 "temurin"
 if not %_EXITCODE%==0 goto end
 
 call :kotlin_jvm
@@ -407,43 +408,71 @@ if not exist "%_GRADLE_HOME%\bin\gradle.bat" (
 set "_GRADLE_PATH=;%_GRADLE_HOME%\bin"
 goto :eof
 
+@rem input parameters:%1=required version %2=vendor 
 @rem output parameter: _JAVA_HOME
-:java11
+:java
 set _JAVA_HOME=
 
-set __JAVA_DISTRO=temurin
+set __VERSION=%~1
+set __VENDOR=%~2
+if not defined __VENDOR ( set __JDK_NAME=jdk-%__VERSION%
+) else ( set __JDK_NAME=jdk-%__VENDOR%-%__VERSION%
+)
 set __JAVAC_CMD=
-for /f "delims=" %%f in ('where javac.exe 2^>NUL') do set "__JAVAC_CMD=%%f"
-@rem ignore command if Java version is not 11
-if defined __JAVAC_CMD (
-    for /f "tokens=1,*" %%i in ('"%__JAVAC_CMD%" -version') do (
-        set __JAVAC_VERSION=%%j
-        if "!__JAVAC_VERSION:11.=!"=="!__JAVAC_VERSION!" (
-            echo %_WARNING_LABEL% Expected: Java 11 executable, found: !__JAVAC_VERSION! 1>&2
-            set __JAVAC_CMD=
-        )
-    )
+for /f "delims=" %%f in ('where javac.exe 2^>NUL') do (
+    set "__JAVAC_CMD=%%f"
+    @rem we ignore Scoop managed Java installation
+    if not "!__JAVAC_CMD:scoop=!"=="!__JAVAC_CMD!" set __JAVAC_CMD=
 )
 if defined __JAVAC_CMD (
-    for /f "delims=" %%i in ("%__JAVAC_CMD%") do set "__JAVA_BIN_DIR=%%~dpi"
-    for /f "delims=" %%f in ("!__JAVA_BIN_DIR!\.") do set "_JAVA_HOME=%%~dpf"
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of javac executable found in PATH 1>&2
-    goto :eof
-) else if defined JAVA_HOME (
+    call :jdk_version "%__JAVAC_CMD%"
+    if !_JDK_VERSION!==%__VERSION% (
+        for /f "delims=" %%i in ("%__JAVAC_CMD%") do set "__BIN_DIR=%%~dpi"
+        for /f "delims=" %%f in ("%__BIN_DIR%") do set "_JAVA_HOME=%%~dpf"
+    ) else (
+        echo %_ERROR_LABEL% Required JDK installation not found ^("%__JDK_NAME%"^) 1>&2
+        set _EXITCODE=1
+        goto :eof
+    )
+)
+if defined JAVA_HOME (
     set "_JAVA_HOME=%JAVA_HOME%"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using environment variable JAVA_HOME 1>&2
 ) else (
     set __PATH=C:\opt
-    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-%__JAVA_DISTRO%-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+    for /f "delims=" %%f in ('dir /ad /b "!__PATH!\%__JDK_NAME%*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
     if not defined _JAVA_HOME (
-        set "__PATH=%ProgramFiles%"
-        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\jdk-%__JAVA_DISTRO%-11*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+        set "__PATH=%ProgramFiles%\Java"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\%__JDK_NAME%*" 2^>NUL') do set "_JAVA_HOME=!__PATH!\%%f"
+    )
+    if defined _JAVA_HOME (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default Java SDK installation directory "!_JAVA_HOME!" 1>&2
     )
 )
 if not exist "%_JAVA_HOME%\bin\javac.exe" (
     echo %_ERROR_LABEL% Executable javac.exe not found ^("%_JAVA_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
+)
+call :jdk_version "%_JAVA_HOME%\bin\javac.exe"
+set "_JAVA!_JDK_VERSION!_HOME=%_JAVA_HOME%"
+goto :eof
+
+@rem input parameter: %1=javac file path
+@rem output parameter: _JDK_VERSION
+:jdk_version
+set "__JAVAC_CMD=%~1"
+if not exist "%__JAVAC_CMD%" (
+    echo %_ERROR_LABEL% Command javac.exe not found ^("%__JAVAC_CMD%"^) 1>&2
+    set _EXITCODE=1
+    goto :eof
+)
+set __JAVAC_VERSION=
+for /f "usebackq tokens=1,*" %%i in (`"%__JAVAC_CMD%" -version 2^>^&1`) do set __JAVAC_VERSION=%%j
+set "__PREFIX=%__JAVAC_VERSION:~0,2%"
+@rem either 1.7, 1.8 or 11..18
+if "%__PREFIX%"=="1." ( set _JDK_VERSION=%__JAVAC_VERSION:~2,1%
+) else ( set _JDK_VERSION=%__PREFIX%
 )
 goto :eof
 

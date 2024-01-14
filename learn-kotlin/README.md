@@ -55,15 +55,15 @@ This tutorial part presents [Kotlin] binary operators and basic functions
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
-    -debug            show commands executed by this script
+    -debug            print commands executed by this script
     -script           execute the Kotlin script
-    -timer            display total execution time
-    -verbose          display progress messages
+    -timer            print total execution time
+    -verbose          print progress messages
 
   Subcommands:
     clean             delete generated files
     compile[:&lt;name&gt;]  generate class files
-    help              display this help message
+    help              print this help message
     lint[:&lt;name&gt;]     analyze Kotlin source files and flag programming/stylistic errors
     run[:&lt;name&gt;]      execute the generated program
   Valid names are: all (default), examples
@@ -86,14 +86,14 @@ This tutorial part introduces [Kotlin] classes, i.e. class [**`Person.kt`**](Uni
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 &nbsp;
   Options:
-    -debug         show commands executed by this script
-    -timer         display total execution time
-    -verbose       display progress messages
+    -debug         print commands executed by this script
+    -timer         print total execution time
+    -verbose       print progress messages
 &nbsp;
   Subcommands:
     clean          delete generated files
     compile[:&lt;n&gt;]  generate class files
-    help           display this help message
+    help           print this help message
     lint[:&lt;n&gt;]     analyze Kotlin source files and flag programming/stylistic errors
     run[:&lt;n&gt;]      execute the generated program
   Valid values: n=1..4 (default=2)
@@ -108,14 +108,14 @@ This tutorial part presents more advanced [Kotlin] features, such as default arg
 Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 
   Options:
-    -debug            show commands executed by this script
-    -timer            display total execution time
-    -verbose          display progress messages
+    -debug            print commands executed by this script
+    -timer            print total execution time
+    -verbose          print progress messages
 
   Subcommands:
     clean             delete generated files
     compile[:&lt;name&gt;]  generate class files
-    help              display this help message
+    help              print this help message
     lint[:&lt;name&gt;]     analyze Kotlin source files and flag programming/stylistic errors
     run[:&lt;name&gt;]      execute the generated program
   Valid names are: defaultargs (default), functiontypes, namedargs, nullable
@@ -152,7 +152,7 @@ The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jste
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2023* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
