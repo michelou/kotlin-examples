@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Akka][akka_examples], [C++][cpp_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples] and [TruffleSqueak][trufflesqueak_examples] are other trending topics we are continuously monitoring. [Ada][ada_examples], [Modula-2][m2_examples] and [WiX Toolset][wix_examples] are further topics we worked with quite many years ago.
+[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -25,7 +25,7 @@ Optionally one may also install the following software:
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 8.5][gradle_latest] ([*release notes*][gradle_relnotes])
-- [KtLint 1.0][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
+- [KtLint 1.1][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
@@ -37,7 +37,7 @@ C:\opt\apache-maven\                         <i>(  9 MB)</i>
 C:\opt\detekt-cli\                           <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
-C:\opt\jdk-temurin-17.0.9_9\                 <i>(256 MB)</i>
+C:\opt\jdk-temurin-17.0.10_7\                <i>(301 MB)</i>
 C:\opt\kotlinc-1.9.22\                       <i>( 83 MB)</i>
 C:\opt\kotlin-native-windows-x86_64-1.9.22\  <i>(269 MB)</i>
 C:\opt\ktlint\                               <i>( 53 MB)</i>
@@ -108,7 +108,7 @@ Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
    C:\opt\gradle\bin\gradle.bat
-   C:\opt\jdk-temurin-17.0.9_9\bin\java.exe
+   C:\opt\jdk-temurin-17.0.10_7\bin\java.exe
    C:\opt\detekt-cli\bin\detekt-cli.bat
    C:\opt\kotlinc-1.9.22\bin\kotlinc.bat
    C:\opt\kotlin-native-windows-x86_64-1.9.22\bin\kotlinc.bat
@@ -126,7 +126,7 @@ Environment variables:
    "DETEKT_HOME=C:\opt\detekt-cli"
    "GIT_HOME=C:\opt\Git"
    "GRADLE_HOME=C:\opt\gradle"
-   "JAVA_HOME=C:\opt\jdk-temurin-17.0.9_9"
+   "JAVA_HOME=C:\opt\jdk-temurin-17.0.10_7"
    "KOTLIN_HOME=C:\opt\kotlinc-1.9.22"
    "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.22"
    "KTLINT_HOME=C:\opt\ktlint"
@@ -220,7 +220,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-native-windows-x86_64-1.9.22.zip</a>           <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.1.0)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.9_9.zip</a>   <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.10_7.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.43.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
 </pre>
 </dd></dl>
@@ -259,12 +259,12 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kafka_examples]: https://github.com/michelou/kafka-examples
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.20
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.20
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.22
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.22
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.0.1
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.1.1
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [m2_examples]: https://github.com/michelou/m2-examples
