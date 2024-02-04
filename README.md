@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html" rel="external">Gradle scripts</a> or <a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html">Maven scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts (<a href="https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_02_01.html" rel="external">Bash scripts</a>, <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html" rel="external">Gradle scripts</a>, <a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html">Maven scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -24,12 +24,12 @@ Optionally one may also install the following software:
 - [Apache Ant 1.10][apache_ant] (requires Java 8) ([*release notes*][apache_ant_relnotes])
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 8.5][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 8.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 1.1][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*January 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*February 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
@@ -96,12 +96,12 @@ In the next section we give a brief description of the batch files present in th
 
 ### [**`setenv.bat`**](setenv.bat)
 
-We execute command [**`setenv.bat`**](setenv.bat) once to setup our development environment; it makes external tools such as [**`gradle.bat`**][gradle_bat], [**`kotlinc.bat`**][kotlinc_bat] and [**`git.exe`**][git_exe] directly available from the command prompt.
+We execute command [**`setenv.bat`**](setenv.bat) once to setup our development environment; it makes external tools such as [**`git.exe`**][git_exe], [**`gradle.bat`**][gradle_bat] and [**`sh.exe`**][sh_cli] directly available from the command prompt.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.14, bazel 7.0.0, gradle 8.5, java 17.0.9, detekt-cli 1.23.4,
+   ant 1.10.14, bazel 7.0.1, gradle 8.6, java 17.0.10, detekt-cli 1.23.5,
    kotlinc 1.9.22, kotlinc-native 1.9.22, ktlint 1.0.1, cfr 0.152,
    make 3.81, mvn 3.9.6, git 2.43.0.windows.1, diff 3.10, bash 4.4.23(1)-release
 Tool paths:
@@ -201,7 +201,7 @@ The installation directory now contains one single file, namely <b><code>ktlint.
 ktlint.bat
 &nbsp;
 <b>&gt; c:\opt\ktlint\bin\<a href="https://ktlint.github.io/#command-line" rel="external">ktlint.bat</a> --version</b>
-1.1.0
+1.1.1
 </pre>
 </dd></dl>
 
@@ -214,8 +214,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.6-bin.zip</a>                        <i>(  9 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.4.zip</a>                             <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-8.5-bin.zip</a>                                <i>(115 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.5.zip</a>                             <i>( 54 MB)</i>
+<a href="https://gradle.org/releases/">gradle-8.6-bin.zip</a>                                <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-compiler-1.9.22.zip</a>                        <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-native-windows-x86_64-1.9.22.zip</a>           <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.1.0)</a>                                    <i>( 63 MB)</i>
@@ -227,7 +227,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/January 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/February 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -243,7 +243,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [deno_examples]: https://github.com/michelou/deno-examples
 [docker_examples]: https://github.com/michelou/docker-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.4
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.5
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
@@ -273,6 +273,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [nodejs_examples]: https://github.com/michelou/nodejs-examples
 [rust_examples]: https://github.com/michelou/rust-examples
 [scala3_examples]: https://github.com/michelou/dotty-examples
+[sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html
 [spark_examples]: https://github.com/michelou/spark-examples
 [spring_examples]: https://github.com/michelou/spring-examples
 <!--
@@ -286,7 +287,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 11.0.18 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-January/020111.html
 11.0.19 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-April/021900.html
 11.0.20 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024064.html
-17.0.9 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
+11.0.21 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
+11.0.22 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029215.html
 -->
 [temurin_opendjk11_bugfixes]: https://www.oracle.com/java/technologies/javase/11-0-17-bugfixes.html
 [temurin_opendjk11_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2022-October/018119.html
@@ -295,6 +297,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 17.0.7  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-April/021899.html
 17.0.8  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024063.html
 17.0.9  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026352.html
+17.0.10 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029089.html
 -->
 [temurin_opendjk17]: https://adoptium.net/releases.html?variant=openjdk17&jvmVariant=hotspot
 [temurin_opendjk17_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
@@ -302,6 +305,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <!--
 21_35   -> https://adoptium.net/fr/temurin/release-notes/?version=jdk-21+35
 21.0.1  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
+21.0.2  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029090.html
 -->
 [temurin_openjdk21]: https://adoptium.net/releases.html?variant=openjdk21&jvmVariant=hotspot
 [temurin_openjdk21_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
