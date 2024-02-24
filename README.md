@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.43][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.44][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.9][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 1.9][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -101,9 +101,9 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.14, bazel 7.0.1, gradle 8.6, java 17.0.10, detekt-cli 1.23.5,
-   kotlinc 1.9.22, kotlinc-native 1.9.22, ktlint 1.0.1, cfr 0.152,
-   make 3.81, mvn 3.9.6, git 2.43.0.windows.1, diff 3.10, bash 4.4.23(1)-release
+   ant 1.10.14, bazel 7.0.2, gradle 8.6, java 17.0.10, detekt-cli 1.23.5,
+   kotlinc 1.9.22, kotlinc-native 1.9.22, ktlint 1.1.1, cfr 0.152,
+   make 3.81, mvn 3.9.6, git 2.44.0.windows.1, diff 3.10, bash 4.4.26(1)-release
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
@@ -218,10 +218,10 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-8.6-bin.zip</a>                                <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-compiler-1.9.22.zip</a>                        <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-native-windows-x86_64-1.9.22.zip</a>           <i>(174 MB)</i>
-<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.1.0)</a>                                    <i>( 63 MB)</i>
+<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.1.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.10_7.zip</a>  <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.43.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.44.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
@@ -247,7 +247,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.43.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.44.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples
 [graalvm_examples]: https://github.com/michelou/graalvm-examples

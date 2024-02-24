@@ -20,32 +20,30 @@ set _KODDA_VERSION_OLD=dokkaVersion=0.10.0
 set _KODDA_VERSION_NEW=dokkaVersion=0.10.1
 
 @rem files gradle.properties
-set _KOTLIN_VERSION_OLD=kotlinVersion=1.4.10
-set _KOTLIN_VERSION_NEW=kotlinVersion=1.4.32
+set _KOTLIN_VERSION_OLD=kotlinVersion=1.4.32
+set _KOTLIN_VERSION_NEW=kotlinVersion=1.9.22
 
 @rem files gradle.properties
 set _JUNIT_VERSION_OLD=junitVersion=4.13
 set _JUNIT_VERSION_NEW=junitVersion=4.13.2
 
 @rem files gradle.properties
-set _KTLINT_VERSION_OLD=ktLintJar=C:/opt/ktlint-0.40.0/ktlint.jar
-set _KTLINT_VERSION_NEW=ktLintJar=C:/opt/ktlint-0.41.0/ktlint.jar
 
 @rem files pom.xml
-set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.4.10
-set _MVN_KOTLIN_VERSION_NEW=kotlin.version^>1.4.32
+set _MVN_KOTLIN_VERSION_OLD=kotlin.version^>1.4.22
+set _MVN_KOTLIN_VERSION_NEW=kotlin.version^>1.9.22
 
 @rem files pom.xml
-set _MVN_KOTLINX_VERSION_OLD=kotlinx.version^>1.3.7
-set _MVN_KOTLINX_VERSION_NEW=kotlinx.version^>1.3.9
+set _MVN_KOTLINX_VERSION_OLD=kotlinx.version^>1.7.3
+set _MVN_KOTLINX_VERSION_NEW=kotlinx.version^>1.8.0
 
 @rem files pom.xml
-set _MVN_JAR_VERSION_OLD=maven.jar.version^>3.1.2
-set _MVN_JAR_VERSION_NEW=maven.jar.version^>3.2.0
+set _MVN_JAR_VERSION_OLD=maven.jar.version^>3.2.0
+set _MVN_JAR_VERSION_NEW=maven.jar.version^>3.3.0
 
 @rem files pom.xml
-set _MVN_EXEC_VERSION_OLD=exec.maven.version^>1.6.0
-set _MVN_EXEC_VERSION_NEW=exec.maven.version^>3.0.0
+set _MVN_EXEC_VERSION_OLD=exec.maven.version^>3.1.1
+set _MVN_EXEC_VERSION_NEW=exec.maven.version^>3.2.0
 
 call :env
 if not %_EXITCODE%==0 goto end
@@ -82,10 +80,6 @@ goto :eof
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -123,6 +117,12 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _INVERSE=[7m
+set _UNDERSCORE=[4m
+set _RESET=[0m
 goto :eof
 
 :args
@@ -139,7 +139,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="-help" ( set _HELP=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
-        echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown option "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
    )
@@ -147,7 +147,7 @@ if "%__ARG:~0,1%"=="-" (
     @rem subcommand
     if "%__ARG%"=="help" ( set _HELP=1
     ) else (
-        echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown subcommand "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -181,8 +181,8 @@ goto :eof
 
 :update_project
 set "__PARENT_DIR=%~1"
-set __N1=0
-set __N2=0
+set __N_GRA=0
+set __N_POM=0
 echo Parent directory: %__PARENT_DIR%
 for /f %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr /v /c:"lib"') do (
 	set "__GRADLE_PROPS_FILE=%__PARENT_DIR%\%%i\gradle.properties"
@@ -196,10 +196,7 @@ for /f %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr /v /c:"lib"') do (
         @rem junitVersion 
         if %_DEBUG%==1 echo %_DEBUG_LABEL% call :replace "!__GRADLE_PROPS_FILE!" "%_JUNIT_VERSION_OLD%" "%_JUNIT_VERSION_NEW%" 1>&2
         call :replace "!__GRADLE_PROPS_FILE!" "%_JUNIT_VERSION_OLD%" "%_JUNIT_VERSION_NEW%"
-        @rem ktLintJar
-        if %_DEBUG%==1 echo %_DEBUG_LABEL% call :replace "!__GRADLE_PROPS_FILE!" "%_KTLINT_VERSION_OLD%" "%_KTLINT_VERSION_NEW%" 1>&2
-        call :replace "!__GRADLE_PROPS_FILE!" "%_KTLINT_VERSION_OLD%" "%_KTLINT_VERSION_NEW%"
-        set /a __N1+=1
+        set /a __N_GRA+=1
     ) else (
        echo    %_WARNING_LABEL% Could not find file %%i\gradle.properties 1>&2
     )
@@ -207,7 +204,7 @@ for /f %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr /v /c:"lib"') do (
 @rem Configuration files common to all projects
 set "__POM_XML=%__PARENT_DIR%\pom.xml"
 if exist "%__POM_XML%" (
-    set /a __N2+=1
+    set /a __N_POM+=1
     @rem kotlin.version
 	if %_DEBUG%==1 echo %_DEBUG_LABEL% call :replace "%__POM_XML%" "%_MVN_KOTLIN_VERSION_OLD%" "%_MVN_KOTLIN_VERSION_NEW%" 1>&2
 	call :replace "%__POM_XML%" "%_MVN_KOTLIN_VERSION_OLD%" "%_MVN_KOTLIN_VERSION_NEW%"
@@ -223,10 +220,10 @@ if exist "%__POM_XML%" (
 ) else (
    echo    %_WARNING_LABEL% Could not find file %__POM_XML% 1>&2
 )
-if %__N1% gtr 1 ( set __FILES1=files ) else ( set __FILES1=file )
-if %__N2% gtr 1 ( set __FILES2=files ) else ( set __FILES2=file )
-echo    Updated %__N1% gradle.properties %__FILES1%
-echo    Updated %__N2% pom.xml %__FILES2%
+if %__N_GRA% gtr 1 ( set __FILES1=files ) else ( set __FILES1=file )
+if %__N_POM% gtr 1 ( set __FILES2=files ) else ( set __FILES2=file )
+echo    Updated %__N_GRA% gradle.properties %__FILES1%
+echo    Updated %__N_POM% pom.xml %__FILES2%
 goto :eof
 
 @rem #########################################################################

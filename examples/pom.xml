@@ -15,7 +15,7 @@
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
         <kotlin.version>1.9.22</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.7.3</kotlinx.version>
+        <kotlinx.version>1.8.0</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.6</kotlin.compiler.languageVersion>
 
@@ -26,7 +26,7 @@
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
         <maven.jar.version>3.3.0</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <exec.maven.version>3.1.1</exec.maven.version>
+        <exec.maven.version>3.2.0</exec.maven.version>
         <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core -->
         <dokka.version>1.9.10</dokka.version>
     </properties>
