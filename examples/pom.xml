@@ -29,6 +29,8 @@
         <exec.maven.version>3.2.0</exec.maven.version>
         <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core -->
         <dokka.version>1.9.10</dokka.version>
+		<!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis -->
+		<dokka-analysis.version>1.8.20</dokka-analysis.version>
     </properties>
 
     <dependencies>
@@ -84,7 +86,7 @@
         <dependency>
             <groupId>org.jetbrains.dokka</groupId>
             <artifactId>dokka-analysis</artifactId>
-            <version>${dokka.version}</version>
+            <version>${dokka-analysis.version}</version>
             <scope>runtime</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base -->
