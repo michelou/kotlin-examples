@@ -25,11 +25,11 @@ Optionally one may also install the following software:
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 8.6][gradle_latest] ([*release notes*][gradle_relnotes])
-- [KtLint 1.1][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
+- [KtLint 1.2][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*February 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*March 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
@@ -102,7 +102,7 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
    ant 1.10.14, bazel 7.0.2, gradle 8.6, java 17.0.10, detekt-cli 1.23.5,
-   kotlinc 1.9.22, kotlinc-native 1.9.22, ktlint 1.1.1, cfr 0.152,
+   kotlinc 1.9.22, kotlinc-native 1.9.22, ktlint 1.2.1, cfr 0.152,
    make 3.81, mvn 3.9.6, git 2.44.0.windows.1, diff 3.10, bash 4.4.26(1)-release
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
@@ -201,7 +201,7 @@ The installation directory now contains one single file, namely <b><code>ktlint.
 ktlint.bat
 &nbsp;
 <b>&gt; c:\opt\ktlint\bin\<a href="https://ktlint.github.io/#command-line" rel="external">ktlint.bat</a> --version</b>
-1.1.1
+1.2.1
 </pre>
 </dd></dl>
 
@@ -218,7 +218,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-8.6-bin.zip</a>                                <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-compiler-1.9.22.zip</a>                        <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-native-windows-x86_64-1.9.22.zip</a>           <i>(174 MB)</i>
-<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.1.1)</a>                                    <i>( 63 MB)</i>
+<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.2.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.10_7.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.44.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
@@ -227,7 +227,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/February 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/March 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -264,7 +264,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.1.1
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.2.1
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples
 [m2_examples]: https://github.com/michelou/m2-examples
