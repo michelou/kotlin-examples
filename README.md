@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
+[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -24,12 +24,12 @@ Optionally one may also install the following software:
 - [Apache Ant 1.10][apache_ant] (requires Java 8) ([*release notes*][apache_ant_relnotes])
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 8.6][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 8.7][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 1.2][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*March 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*April 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
@@ -101,8 +101,8 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.14, bazel 7.0.2, gradle 8.6, java 17.0.10, detekt-cli 1.23.5,
-   kotlinc 1.9.22, kotlinc-native 1.9.22, ktlint 1.2.1, cfr 0.152,
+   ant 1.10.14, bazel 7.1.1, gradle 8.7, java 17.0.10, detekt-cli 1.23.6,
+   kotlinc 1.9.23, kotlinc-native 1.9.23, ktlint 1.2.1, cfr 0.152,
    make 3.81, mvn 3.9.6, git 2.44.0.windows.1, diff 3.10, bash 4.4.26(1)-release
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
@@ -110,9 +110,9 @@ Tool paths:
    C:\opt\gradle\bin\gradle.bat
    C:\opt\jdk-temurin-17.0.10_7\bin\java.exe
    C:\opt\detekt-cli\bin\detekt-cli.bat
-   C:\opt\kotlinc-1.9.22\bin\kotlinc.bat
-   C:\opt\kotlin-native-windows-x86_64-1.9.22\bin\kotlinc.bat
-   C:\opt\kotlin-native-windows-x86_64-1.9.22\bin\kotlinc-native.bat
+   C:\opt\kotlinc-1.9.23\bin\kotlinc.bat
+   C:\opt\kotlin-native-windows-x86_64-1.9.23\bin\kotlinc.bat
+   C:\opt\kotlin-native-windows-x86_64-1.9.23\bin\kotlinc-native.bat
    C:\opt\ktlint\ktlint.bat
    C:\opt\cfr-0.152\bin\cfr.bat
    C:\opt\make-3.81\bin\make.exe
@@ -127,8 +127,8 @@ Environment variables:
    "GIT_HOME=C:\opt\Git"
    "GRADLE_HOME=C:\opt\gradle"
    "JAVA_HOME=C:\opt\jdk-temurin-17.0.10_7"
-   "KOTLIN_HOME=C:\opt\kotlinc-1.9.22"
-   "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.22"
+   "KOTLIN_HOME=C:\opt\kotlinc-1.9.23"
+   "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.23"
    "KTLINT_HOME=C:\opt\ktlint"
    "MAKE_HOME=C:\opt\make-3.81"
    "MAVEN_HOME=C:\opt\apache-maven"
@@ -150,6 +150,7 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
+<tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.22</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.22/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.21</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.21/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -214,8 +215,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.6-bin.zip</a>                        <i>(  9 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.5.zip</a>                             <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-8.6-bin.zip</a>                                <i>(115 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.6.zip</a>                             <i>( 54 MB)</i>
+<a href="https://gradle.org/releases/">gradle-8.7-bin.zip</a>                                <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-compiler-1.9.22.zip</a>                        <i>( 71 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-native-windows-x86_64-1.9.22.zip</a>           <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.2.1)</a>                                    <i>( 63 MB)</i>
@@ -227,7 +228,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -238,12 +239,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
 [apache_ant_relnotes]: https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.14.html
 [apache_maven_history]: https://maven.apache.org/docs/history.html
+[cobol_examples]: https://github.com/michelou/cobol-examples
 [cpp_examples]: https://github.com/michelou/cpp-examples
 [dart_examples]: https://github.com/michelou/dart-examples
 [deno_examples]: https://github.com/michelou/deno-examples
 [docker_examples]: https://github.com/michelou/docker-examples
 [detekt_latest]: https://github.com/detekt/detekt/releases
-[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.5
+[detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.6
 [flix_examples]: https://github.com/michelou/flix-examples
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
@@ -259,8 +261,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kafka_examples]: https://github.com/michelou/kafka-examples
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.22
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.22
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.23
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.23
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases

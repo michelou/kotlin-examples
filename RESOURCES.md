@@ -103,10 +103,12 @@
 ## <span id="videos">Videos</span>
 
 - [The road to K2 compiler][video_isakova] (32 min) by Svetlana Isakova, October 2021.
+- [Deep Dive into Kotlin/Native][video_breslav] by Andrey Breslav, November 2017.
+- [Deep Dive into Coroutines on JVM][video_elizarov] by Roman Elizarov, November 2017.
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/March 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/April 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -143,4 +145,6 @@
 [medium]: https://medium.com/
 [tool_vogella]: https://www.vogella.com/tutorials/Gradle/article.html
 [tuto_journaldev]: https://www.journaldev.com/kotlin
+[video_breslav]: https://www.youtube.com/watch?v=3Lqiupxo4CE
+[video_elizarov]: https://www.youtube.com/watch?v=YrrUCSi72E8
 [video_isakova]: https://www.youtube.com/watch?v=iTdJJq_LyoY
