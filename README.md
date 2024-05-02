@@ -29,7 +29,7 @@ Optionally one may also install the following software:
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 
-For instance our development environment looks as follows (*April 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*May 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
@@ -37,9 +37,9 @@ C:\opt\apache-maven\                         <i>(  9 MB)</i>
 C:\opt\detekt-cli\                           <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
-C:\opt\jdk-temurin-17.0.10_7\                <i>(301 MB)</i>
-C:\opt\kotlinc-1.9.22\                       <i>( 83 MB)</i>
-C:\opt\kotlin-native-windows-x86_64-1.9.22\  <i>(269 MB)</i>
+C:\opt\jdk-temurin-17.0.11_9\                <i>(301 MB)</i>
+C:\opt\kotlinc-1.9.23\                       <i>( 83 MB)</i>
+C:\opt\kotlin-native-windows-x86_64-1.9.23\  <i>(269 MB)</i>
 C:\opt\ktlint\                               <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
 </pre>
@@ -108,7 +108,7 @@ Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
    C:\opt\gradle\bin\gradle.bat
-   C:\opt\jdk-temurin-17.0.10_7\bin\java.exe
+   C:\opt\jdk-temurin-17.0.11_9\bin\java.exe
    C:\opt\detekt-cli\bin\detekt-cli.bat
    C:\opt\kotlinc-1.9.23\bin\kotlinc.bat
    C:\opt\kotlin-native-windows-x86_64-1.9.23\bin\kotlinc.bat
@@ -126,7 +126,7 @@ Environment variables:
    "DETEKT_HOME=C:\opt\detekt-cli"
    "GIT_HOME=C:\opt\Git"
    "GRADLE_HOME=C:\opt\gradle"
-   "JAVA_HOME=C:\opt\jdk-temurin-17.0.10_7"
+   "JAVA_HOME=C:\opt\jdk-temurin-17.0.11_9"
    "KOTLIN_HOME=C:\opt\kotlinc-1.9.23"
    "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.23"
    "KTLINT_HOME=C:\opt\ktlint"
@@ -150,10 +150,9 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
-<tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td></td></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.22</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.22/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.21</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.21/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew-eap.html">2.0.0-RC2</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0-RC2/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a> - <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10" rel="external">1.9.10</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew19.html" rel="external">1.9.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1820.html" rel="external">1.8.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -217,18 +216,18 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.6-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.6.zip</a>                             <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.7-bin.zip</a>                                <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-compiler-1.9.22.zip</a>                        <i>( 71 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.22">kotlin-native-windows-x86_64-1.9.22.zip</a>           <i>(174 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23">kotlin-compiler-1.9.23.zip</a>                        <i>( 71 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23">kotlin-native-windows-x86_64-1.9.23.zip</a>           <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.2.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.10_7.zip</a>  <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.11_9.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.44.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/April 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

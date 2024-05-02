@@ -10,11 +10,11 @@ set _DEBUG=0
 set _EXITCODE=0
 
 @rem files README.md, RESOURCES.md, etc.
-set _LAST_MODIFIED_OLD=michelou/)/March 2024
-set _LAST_MODIFIED_NEW=michelou/)/April 2024
+set _LAST_MODIFIED_OLD=michelou/)/April 2024
+set _LAST_MODIFIED_NEW=michelou/)/May 2024
 
-set _LAST_DOWNLOAD_OLD=(\*March 2024\*)
-set _LAST_DOWNLOAD_NEW=(*April 2024*)
+set _LAST_DOWNLOAD_OLD=(\*April 2024\*)
+set _LAST_DOWNLOAD_NEW=(*May 2024*)
 
 @rem to be transformed into -not -path "./<dirname>/*"
 set _EXCLUDE_DIRS=bin docs docs_LOCAL kotlin
@@ -67,10 +67,6 @@ goto :eof
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -108,6 +104,12 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET% in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+set _RESET=[0m
 goto :eof
 
 @rem input parameter: %*
