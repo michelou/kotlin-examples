@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018-2023 Stéphane Micheloud
+# Copyright (c) 2018-2024 Stéphane Micheloud
 #
 # Licensed under the MIT License.
 #
@@ -10,7 +10,7 @@
 
 getHome() {
     local source="${BASH_SOURCE[0]}"
-    while [ -h "$source" ] ; do
+    while [[ -h "$source" ]]; do
         local linked="$(readlink "$source")"
         local dir="$( cd -P $(dirname "$source") && cd -P $(dirname "$linked") && pwd )"
         source="$dir/$(basename "$linked")"
@@ -40,7 +40,7 @@ cleanup() {
     if $TIMER; then
         local TIMER_END=$(date +'%s')
         local duration=$((TIMER_END - TIMER_START))
-        echo "Total elapsed time: $(date -d @$duration +'%H:%M:%S')" 1>&2
+        echo "Total execution time: $(date -d @$duration +'%H:%M:%S')" 1>&2
     fi
     debug "EXITCODE=$EXITCODE"
     exit $EXITCODE

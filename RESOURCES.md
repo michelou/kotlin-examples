@@ -46,7 +46,7 @@
 - [Kotlin vs Java: the 12 differences you should know][blog_berga] by Mariana Berga and Rute Figueiredo, June 2021.
 - [Talking Kotlin](https://talkingkotlin.com/) by JetBrains.
 - [Exploring Kotlin/Native – Part 2 – Interoperability][blog_lee2] by Jamie Lee, May 12, 2020.
-- [Exploring Kotlin/Native - Part 1][blog_lee1] by Jamie Lee, March 26, 2020.
+- [Exploring Kotlin/Native – Part 1][blog_lee1] by Jamie Lee, March 26, 2020.
 - [Why Trailing Commas In Kotlin Are Hype](https://blog.egorand.me/why-trailing-commas-in-kotlin-are-hype/) by Egor Andreevich, March 14, 2020.
 - [Jetbrains Kotlin Blog](https://blog.jetbrains.com/kotlin/).
 - [Shared Library in Kotlin Multiplatform](https://blog.karumi.com/shared-library-in-kotlin-multiplatform/) by Sergio Lopez Mota, September 2, 2019.
@@ -55,6 +55,7 @@
 
 ## <span id="books">Books</span> [**&#x25B4;**](#top)
 
+- [Kotlin Design Patterns and Best Practices][book_soshin] by Alexey Soshin, April 2024.<br/><span style="font-size:80%;">(Packt, ISBN 978-1-80512-776-5, 475 pages)</span>
 - [Kotlin Coroutines][book_moskala_coroutines] by Marcin Moskala, April 2023.<br/><span style="font-size:80%;">(Leanpub, ? pages).</span>
 - [Kotlin - The Ultimate Guide][book_uzayr] by Sufyan bin Uzayr, December 2022.<br/><span style="font-size:80%;">(CRC Press, ISBN 978-1-0323-1170-8, 398 pages)</span>.
 - [Java to Kotlin][book_mcgregor] by Duncan McGregor and Nat Pryce, August 2021.<br/><span style="font-size:80%;">(O'Reilly, ISBN 978-1-492-08227-9)</span>.
@@ -134,6 +135,7 @@
 [book_moskala_coroutines]: https://leanpub.com/coroutines/
 [book_moskala_effective]: https://leanpub.com/effectivekotlin
 [book_programming_kotlin]: https://www.packtpub.com/in/application-development/programming-kotlin
+[book_soshin]: https://www.packtpub.com/product/kotlin-design-patterns-and-best-practices-third-edition/9781805127765
 [book_vermeulen]: https://www.manning.com/books/functional-programming-in-kotlin
 [book_uzayr]: https://www.routledge.com/Kotlin-The-Ultimate-Guide/Uzayr/p/book/9781032311708
 [clikt_home]: https://ajalt.github.io/clikt/

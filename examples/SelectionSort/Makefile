@@ -15,9 +15,9 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/HelloWorld.jar
+TARGET = $(TARGET_DIR)/QuickSort.jar
 
-MAIN_CLASS = org.example.main.HelloWorldKt
+MAIN_CLASS = SelectionSortKt
 MAIN_ARGS ?= 
 
 all: build run
@@ -62,8 +62,8 @@ PROJECT_VERSION ?= 1.0.0
 DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -moduleVersion "$(PROJECT_VERSION)" -outputDir "$(DOC_TARGET_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
 
 $(DOC_TARGET): $(DOC_SOURCES)
-	[ -d "$(DOC_TARGET_DIR)" ] || "$(MKDIR)" -p "$(DOC_TARGET_DIR)"
-	"$(JAVA)" -jar "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
+	[ -d "$(DOC_TARGET_DIR)" ] || $(MKDIR) -p "$(DOC_TARGET_DIR)"
+	"$(KOTLIN)" "$(DOKKA_CLI_JAR)" $(DOKKA_ARGS)
 	@$(TOUCH) "$(DOC_TARGET)"
 
 doc: $(DOC_TARGET)
@@ -74,21 +74,24 @@ doc: $(DOC_TARGET)
 LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
+CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "*.xml")
+CHECKSTYLE_JAR_FILE    = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "checkstyle*.jar")
+
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
+	"$(JAVA)" -jar "$(CHECKSTYLE_JAR_FILE)" -c=$(CHECKSTYLE_CONFIG_FILE) $^
 	@$(TOUCH) $(LINT_TARGET)
 
 ##############################################################################
 ## test rules
 
-TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -name "*.kt")
-TEST_TARGET = $(TARGET_DIR)/HelloWorldTest.jar
+TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -type f -name "*.kt")
+TEST_TARGET = $(TARGET_DIR)/ReflectionTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
 TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
-TEST_MAIN_CLASS  = org.example.test.HelloWorldTestKt
+TEST_MAIN_CLASS  = ReflectionTestKt
 
 test: $(TARGET) $(TEST_TARGET)
 	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
