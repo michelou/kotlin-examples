@@ -7,6 +7,9 @@ endif
 ifndef KOTLIN_HOME
 $(error Variable KOTLIN_HOME is not set)
 endif
+ifndef KOTLIN_NATIVE_HOME
+$(error Variable KOTLIN_NATIVE_HOME is not set)
+endif
 ifndef MAVEN_HOME
 $(error Variable MAVEN_HOME is not set)
 endif
@@ -17,9 +20,11 @@ JAVA       = $(subst \,/,$(JAVA_HOME))/bin/java.exe
 JAVAC      = $(subst \,/,$(JAVA_HOME))/bin/javac.exe
 KOTLIN     = $(subst \,/,$(KOTLIN_HOME))/bin/kotlin.bat
 KOTLINC    = $(subst \,/,$(KOTLIN_HOME))/bin/kotlinc.bat
+KOTLINC_NATIVE = $(subst \,/,$(KOTLIN_NATIVE_HOME))/bin/kotlinc-native.bat
 MVN        = $(subst \,/,$(MAVEN_HOME))/bin/mvn.cmd
 LOCAL_REPO = $(subst \,/,$(USERPROFILE))/.m2/repository
 PSEP       = ;
+TARGET_EXT = .exe
 ## $(MSYS_HOME)\usr\bin\{cp.exe, make.exe, wget.exe}
 CP         = /usr/bin/cp.exe
 ECHO       = /usr/bin/echo.exe
@@ -33,8 +38,10 @@ JAVA       = $(JAVA_HOME)/bin/java
 JAVAC      = $(JAVA_HOME)/bin/javac
 KOTLIN     = $(KOTLIN_HOME)/bin/kotlin
 KOTLINC    = $(KOTLIN_HOME)/bin/kotlinc
+KOTLINC_NATIVE = $(KOTLIN_NATIVE_HOME)/bin/kotlinc-native
 LOCAL_REPO = $(HOME)/.m2/repository
 PSEP       = :
+TARGET_EXT =
 CP         = cp
 ECHO       = echo
 FIND       = find
@@ -44,18 +51,19 @@ RM         = rm
 TOUCH      = touch
 endif
 
-LANGUAGE_VERSION = 1.6
+## https://kotlinlang.org/docs/compatibility-guide-17.html
+LANGUAGE_VERSION = 1.7
 
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 DOKKA_ANALYSIS_VERSION = 1.8.20
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
-DOKKA_VERSION   = 1.9.10
+DOKKA_VERSION   = 1.8.20
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 1.9.22
+KOTLIN_VERSION  = 1.9.23
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-KOTLINX_VERSION = 1.7.3
+KOTLINX_VERSION = 1.8.0
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_ANALYSIS_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)

@@ -54,6 +54,8 @@ args() {
         ## options
         -debug)    DEBUG=true ;;
         -help)     HELP=true ;;
+        -jvm)      TOOLSET=jvm ;;
+        -native)   TOOLSET=native ;;
         -timer)    TIMER=true ;;
         -verbose)  VERBOSE=true ;;
         -*)
@@ -84,7 +86,7 @@ args() {
         DECOMPILE=false
     fi
     debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
-    debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
+    debug "Options    : TIMER=$TIMER TOOLSET=$TOOLSET VERBOSE=$VERBOSE"
     debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN TEST=$TEST"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
@@ -101,6 +103,8 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
     -debug       print commands executed by this script
+    -jvm         generate/run Java program
+    -native      generate/run native program
     -timer       print total execution time
     -verbose     print progress messages
 
@@ -150,7 +154,7 @@ lint() {
    fi
 }
 
-compile() {
+compile_jvm() {
     [[ -d "$CLASSES_DIR" ]] || mkdir -p "$CLASSES_DIR"
 
     local timestamp_file="$TARGET_DIR/.latest-build"
@@ -167,6 +171,17 @@ compile() {
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
     touch "$timestamp_file"
+}
+
+compile_native() {
+    [[ -d "$TARGET_DIR" ]] || mkdir -p "$TARGET_DIR"
+
+    local required=0
+    required=$(action_required "$TARGET_NATIVE" "$SOURCE_MAIN_DIR/" "*.kt")
+    if [[ $required -eq 1 ]]; then
+        compile_native_kotlin
+        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
+    fi
 }
 
 action_required() {
@@ -220,10 +235,10 @@ compile_java() {
     fi
 }
 
-compile_kotlin() {
+compile_jvm_kotlin() {
     local opts_file="$TARGET_DIR/kotlinc_opts.txt"
     local cpath="$CLASSES_DIR"
-    echo -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
+    echo -language-version "$LANGUAGE_VERSION" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
 
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
@@ -244,6 +259,36 @@ compile_kotlin() {
         echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
+    if [[ $? -ne 0 ]]; then
+        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
+        cleanup 1
+    fi
+}
+
+compile_native_kotlin() {
+    local opts_file="$TARGET_DIR/kotlinc_opts.txt"
+    local cpath="$CLASSES_DIR"
+    echo -language-version "$LANGUAGE_VERSION" -o "$(mixed_path $TARGET_NATIVE)" -e "main" > "$opts_file"
+
+    local sources_file="$TARGET_DIR/kotlinc_sources.txt"
+    [[ -f "$sources_file" ]] && rm "$sources_file"
+    local n=0
+    for f in $(find "$SOURCE_DIR/main/kotlin/" -type f -name "*.kt" 2>/dev/null); do
+        echo $(mixed_path $f) >> "$sources_file"
+        n=$((n + 1))
+    done
+    if [[ $n -eq 0 ]]; then
+        warning "No Kotlin source file found"
+        return 1
+    fi
+    local s=; [[ $n -gt 1 ]] && s="s"
+    local n_files="$n Kotlin source file$s"
+    if $DEBUG; then
+        debug "$KOTLINC_NATIVE_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
+    elif $VERBOSE; then
+        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+    fi
+    eval "$KOTLINC_NATIVE_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
         error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
         cleanup 1
@@ -404,7 +449,7 @@ doc() {
     touch "$doc_timestamp_file"
 }
 
-run() {
+run_jvm() {
     local main_class_file="$CLASSES_DIR/${MAIN_CLASS//.//}.class"
     if [[ ! -f "$main_class_file" ]]; then
         error "Kotlin main class '$MAIN_CLASS' not found ($main_class_file)"
@@ -420,6 +465,19 @@ run() {
     eval "$KOTLIN_CMD" $kotlin_opts $MAIN_CLASS $MAIN_ARGS
     if [[ $? -ne 0 ]]; then
         error "Program execution failed ($MAIN_CLASS)"
+        cleanup 1
+    fi
+}
+
+run_native() {
+    if $DEBUG; then
+        debug "eval \"$TARGET_NATIVE\""
+    elif $VERBOSE; then
+        echo "Execute Kotlin native program $TARGET_NATIVE" 1>&2
+    fi
+    eval "$TARGET_NATIVE"
+    if [[ $? -ne 0 ]]; then
+        error "Program execution failed ($TARGET_NATIVE)"
         cleanup 1
     fi
 }
@@ -469,7 +527,7 @@ libs_cpath() {
 test_compile_kotlin() {
     local opts_file="$TARGET_DIR/test_kotlinc_opts.txt"
     local cpath="$(libs_cpath)$PSEP$(mixed_path $CLASSES_DIR)"
-    echo -classpath "$cpath" -d "$(mixed_path $TEST_CLASSES_DIR)" > "$opts_file"
+    echo -language-version "$LANGUAGE_VERSION" -classpath "$cpath" -d "$(mixed_path $TEST_CLASSES_DIR)" > "$opts_file"
 
     local sources_file="$TARGET_DIR/test_kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
@@ -534,6 +592,13 @@ CLASSES_DIR=$TARGET_DIR/classes
 
 TEST_CLASSES_DIR=$TARGET_DIR/test-classes
 
+## https://kotlinlang.org/docs/compatibility-guide-17.html
+LANGUAGE_VERSION=1.7
+
+MAIN_NAME=HelloWorld
+MAIN_CLASS="org.example.main.${MAIN_NAME}Kt"
+MAIN_ARGS=
+
 CLEAN=false
 COMPILE=false
 DEBUG=false
@@ -541,11 +606,10 @@ DECOMPILE=false
 DOC=false
 HELP=false
 LINT=false
-MAIN_CLASS="org.example.main.HelloWorldKt"
-MAIN_ARGS=
 RUN=false
 TEST=false
 TIMER=false
+TOOLSET=jvm
 VERBOSE=false
 
 COLOR_START="[32m"
@@ -571,10 +635,13 @@ if $cygwin || $mingw || $msys; then
     [[ -n "$CFR_HOME" ]] && CFR_HOME="$(mixed_path $CFR_HOME)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
+    [[ -n "$KOTLIN_NATIVE_HOME" ]] && KOTLIN_NATIVE_HOME="$(mixed_path $KOTLIN_NATIVE_HOME)"
     [[ -n "$KTLINT_HOME" ]] && KTLINT_HOME="$(mixed_path $KTLINT_HOME)"
     DIFF_CMD="$GIT_HOME/usr/bin/diff.exe"
+    TARGET_EXT=.exe
 else
     DIFF_CMD="$(which diff)"
+    TARGET_EXT=
 fi
 if [[ ! -x "$JAVA_HOME/bin/javac" ]]; then
     error "Java SDK installation not found"
@@ -591,9 +658,17 @@ fi
 KOTLIN_CMD="$KOTLIN_HOME/bin/kotlin"
 KOTLINC_CMD="$KOTLIN_HOME/bin/kotlinc"
 
+if [[ ! -x "$KOTLIN_NATIVE_HOME/bin/kotlinc-native" ]]; then
+    error "Kotlin/Native installation not found"
+    cleanup 1
+fi
+KOTLINC_NATIVE_CMD="$KOTLIN_NATIVE_HOME/bin/kotlinc-native"
+
 PROJECT_NAME="$(basename $ROOT_DIR)"
 PROJECT_URL="github.com/$USER/kotlin-examples"
 PROJECT_VERSION="1.0-SNAPSHOT"
+
+TARGET_NATIVE="$TARGET_DIR/$MAIN_NAME$TARGET_EXT"
 
 unset KTLINT_CMD
 [[ -x "$KTLINT_HOME/bin/ktlint" ]] && KTLINT_CMD="$KTLINT_HOME/bin/ktlint"
@@ -618,7 +693,7 @@ if $LINT; then
     lint || cleanup 1
 fi
 if $COMPILE; then
-    compile || cleanup 1
+    compile_$TOOLSET || cleanup 1
 fi
 if $DECOMPILE; then
     decompile || cleanup 1
@@ -627,7 +702,7 @@ if $DOC; then
     doc || cleanup 1
 fi
 if $RUN; then
-    run || cleanup 1
+    run_$TOOLSET || cleanup 1
 fi
 if $TEST; then
     test_run || cleanup 1

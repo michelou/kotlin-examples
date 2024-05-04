@@ -53,7 +53,7 @@
             <fileset dir="${ivy.cache}/org.benf" includes="**/cfr-${cfr.version}.jar" />
         </pathconvert>
         <pathconvert property="ktlint.jar">
-            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-${ktlint.version}.jar" />
+            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-cli-${ktlint-cli.version}.jar" />
         </pathconvert>
         <path id="ktlint.classpath">
             <fileset dir="${ivy.cache}/info.picocli" includes="**/jars/picocli-${picocli.version}.jar" />

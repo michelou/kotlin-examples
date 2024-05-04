@@ -15,7 +15,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.44][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.45][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 1.9][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 1.9][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -61,6 +61,7 @@ how-to-kotlin\{<a href="how-to-kotlin/README.md">README.md</a>, <a href="how-to-
 kotlin-cookbook\{<a href="kotlin-cookbook/README.md">README.md</a>, <a href="kotlin-cookbook/Example_03-10/">Example_03-10</a>, <a href="kotlin-cookbook/Example_03-13/">Example_03-13</a>, ..}
 learn-kotlin\{<a href="learn-kotlin/README.md">README.md</a>, <a href="learn-kotlin/Unit_02/">Unit_02</a>, <a href="learn-kotlin/Unit_04/">Unit_04</a>, ..}
 <a href="CONTRIBUTIONS.md">CONTRIBUTIONS.md</a>
+<a href="LANGUAGE.md">LANGUAGE.md</a>
 README.md
 <a href="RESOURCES.md">RESOURCES.md</a>
 <a href="setenv.bat">setenv.bat</a>
@@ -78,6 +79,7 @@ where
 - directory [**`kotlin-cookbook\`**](kotlin-cookbook/) contains [Kotlin] code examples (see [**`kotlin-cookbook\README.md`**](kotlin-cookbook/README.md)).
 - directory [**`learn-kotlin\`**](learn-kotlin/) contains [Kotlin] code examples (see [**`learn-kotlin\README.md`**](learn-kotlin/README.md)).
 - file [**`CONTRIBUTIONS.md`**](CONTRIBUTIONS.md) gathers reported issues and pull requests to the [Kotlin] project.
+- file [**`LANGUAGE.md`**](LANGUAGE.md) resumes [Kotlin] language changes.
 - file [**`README.md`**](README.md) is the Markdown document for this page.
 - file [**`RESOURCES.md`**](RESOURCES.md) is the [Markdown][github_markdown] document presenting external resources.
 - file [**`setenv.bat`**](setenv.bat) is the batch script for setting up our environment.

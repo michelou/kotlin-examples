@@ -9,13 +9,15 @@
   </tr>
 </table>
 
-In this document we present the following [Kotlin] code examples:
+In this document we present the following [Kotlin] code examples (unless):
 
-- [HelloWorld](#hello-jvm) (JVM/native)
+- [HelloWorld](#hello-jvm)
 - [JavaToKotlin](#java_kotlin) (JVM only)
 - [KotlinToJava](#kotlin_java) (JVM only)
-- [LanguageFeatures](#features) (JVM/native)
+- [LanguageFeatures](#features)
+- [QuickSort](#quicksort)
 - [Reflection](#reflection) (JVM only)
+- [SelectionSort](#selectionsort)
 
 > **:mag_right:** There exist three Kotlin compilers and some code examples are only valid with one of them:
 > - The [Kotlin/JVM][kotlin_jvm] compiler generates class/JAR files.
@@ -66,7 +68,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 >    test        execute unit tests
 </pre>
 
-## <span id="hello-jvm">HelloWorld (JVM/native)</span> [**&#x25B4;**](#top)
+## <span id="hello-jvm">`HelloWorld` Example</span> [**&#x25B4;**](#top)
 
 Command [**`build.bat clean run`**](HelloWorld/build.bat) compiles source file [**`HelloWorld.kt`**](HelloWorld/src/main/kotlin/HelloWorld.kt) and executes the generated Java class file(s) <sup id="anchor_02">[2](#footnote_02)</sup>:
 
@@ -110,7 +112,7 @@ Hello World!
 > linkver:              2.32
 </pre>
 
-## <span id="java_kotlin">JavaToKotlin (JVM only)</span>
+## <span id="java_kotlin">`JavaToKotlin` Example (JVM only)</span>
 
 Either command [**`build.bat clean run`**](JavaToKotlin/build.bat) or command [**`gradle.bat -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
 
@@ -128,7 +130,9 @@ three=3
 
 See Kotlin reference documentation: [Calling Java code from Kotlin][java_kotlin].
 
-## <span id="kotlin_java">KotlinToJava (JVM only)</span>
+<!--=======================================================================-->
+
+## <span id="kotlin_java">`KotlinToJava` Example (JVM only)</span>
 
 Either command [**`build.bat clean run`**](KotlinToJava/build.bat) or command [**`gradle.bat -q clean run runJava`**](KotlinToJava/build.gradle) compiles the source files [**`JavaInteropt.java`**](KotlinToJava/src/main/java/JavaInteropt.java) and [**`JavaInterop.kt`**](KotlinToJava/src/main/kotlin/JavaInterop.kt) and produces the following output (Kotlin output first and then Java output):
 
@@ -152,7 +156,7 @@ Either command [**`build.bat clean run`**](KotlinToJava/build.bat) or command [*
 
 See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
 
-## <span id="features">LanguageFeatures (JVM/native)</span> [**&#x25B4;**](#top)
+## <span id="features">`LanguageFeatures` Example</span> [**&#x25B4;**](#top)
 
 Either command [**`build.bat clean run`**](LanguageFeatures/build.bat) or command [**`gradle.bat -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
@@ -179,7 +183,56 @@ null
 
 > **:mag_right:** The list of error messages associated with the `@Suppress` annotation can be found in source file [`DefaultErrorMessages.java`](https://github.com/JetBrains/kotlin/blob/master/compiler/frontend/src/org/jetbrains/kotlin/diagnostics/rendering/DefaultErrorMessages.java).
 
-## <span id="reflection">Reflection (JVM only)</span>
+<!--=======================================================================-->
+
+## <span id="quicksort">`QuickSort` Example</span>
+
+The project directory is organized as follows :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+|   <a href="./QuickSort/00download.txt">00download.txt</a>
+|   <a href="./QuickSort/build.bat">build.bat</a>
+|   <a href="./QuickSort/build.gradle">build.gradle</a>
+|   <a href="./QuickSort/build.sh">build.sh</a>
+|   <a href="./QuickSort/build.xml">build.xml</a>
+|   <a href="./QuickSort/gradle.properties">gradle.properties</a>
+|   <a href="./QuickSort/Makefile">Makefile</a>
+|   <a href="./QuickSort/pom.xml">pom.xml</a>
+\---src
+    +---main
+    |   \---kotlin
+    |           <a href="./QuickSort/src/main/kotlin/QuickSort.kt">QuickSort.kt</a>
+    \---test
+        \---kotlin
+                <a href="./QuickSort/src/test/kotlin/QuickSortJUnitTest.kt">QuickSortJUnitTest.kt</a>
+</pre>
+
+Command [**`build.bat`**](./QuickSort/build.bat) builds and runs the Java main program `QuickSortKt.class` :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="./QuickSort/build.bat">build</a> clean run</b>
+Original Array: 64, 34, 25, 12, 22, 11, 90
+Sorted Array: 11, 12, 22, 25, 34, 64, 90
+</pre>
+
+Command [**`make TOOLSET=native clean run`**](./QuickSort/Makefile) builds and runs the native main program `QuickSort.exe` :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://www.gnu.org/software/make/manual/html_node/Running.html">make</a> TOOLSET=native clean run</b>
+"/usr/bin/rm.exe" -rf "target"
+## Check Maven dependencies on https://repo1.maven.org/maven2
+[ -d "target/classes" ] || "/usr/bin/mkdir.exe" -p "target/classes"
+"C:/opt/kotlinc-1.9.23/bin/kotlinc.bat" -language-version 1.7 -d target/classes src/main/kotlin/QuickSort.kt
+"C:/opt/jdk-temurin-17.0.11_9/bin/jar.exe" cf target/QuickSort.jar -C target/classes .
+"C:/opt/kotlinc-1.9.23/bin/kotlin.bat" -cp target/QuickSort.jar QuickSortKt
+Original Array: 64, 34, 25, 12, 22, 11, 90
+Sorted Array: 11, 12, 22, 25, 34, 64, 90
+</pre>
+
+<!--=======================================================================-->
+
+## <span id="reflection">`Reflection` Example (JVM only)</span>
 
 Command [**`build.bat -timer clean run`**](Reflection/build.bat) compiles source file [**`Reflection.kt`**](Reflection/src/main/kotlin/Reflection.kt) and produces the following output:
 
@@ -242,6 +295,41 @@ BUILD SUCCESSFUL in 3s
 </pre>
 
 > **:mag_right:** Execution time for command [**`build.bat`**](Reflection/build.bat) is always 6 seconds while with command [**`gradle.bat`**][gradle_cli] that time goes down from 15 seconds to 3 seconds once the [Gradle daemon][gradle_daemon] is running (see command **`gradle --status`**).
+
+<!--=======================================================================-->
+
+## <span id="selectionsort">`SelectionSort` Example</span>
+
+The project directory is organized as follows :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+|   <a href="./SelectionSort/00download.txt">00download.txt</a>
+|   <a href="./SelectionSort/build.bat">build.bat</a>
+|   <a href="./SelectionSort/build.gradle">build.gradle</a>
+|   <a href="./SelectionSort/build.sh">build.sh</a>
+|   <a href="./SelectionSort/build.xml">build.xml</a>
+|   <a href="./SelectionSort/gradle.properties">gradle.properties</a>
+|   <a href="./SelectionSort/Makefile">Makefile</a>
+|   <a href="./SelectionSort/pom.xml">pom.xml</a>
+\---src
+    +---main
+    |   \---kotlin
+    |           <a href="./SelectionSort/src/main/kotlin/QuickSort.kt">SelectionSort.kt</a>
+    \---test
+        \---kotlin
+                <a href="./SelectionSort/src/test/kotlin/QuickSortJUnitTest.kt">SelectionSortJUnitTest.kt</a>
+</pre>
+
+Command [**`build.bat`**](./SelectionSort/build.bat) builds and runs the Java main program `SelectionSortKt.class` :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="./SelectionSort/build.bat">build</a> clean run</b>
+Original Array: 64, 34, 25, 12, 22, 11, 90
+Sorted Array: 11, 12, 22, 25, 34, 64, 90
+</pre>
+
+<!--=======================================================================-->
 
 ## <span id="footnotes">Footnotes</span> [**&#x25B4;**](#top)
 

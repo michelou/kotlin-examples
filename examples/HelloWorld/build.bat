@@ -52,7 +52,7 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-set _PKG_NAME=org.example.main
+set _PKG_NAME=org.example
 
 set _MAIN_NAME=HelloWorld
 set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
@@ -93,10 +93,6 @@ goto :eof
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -134,6 +130,12 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+set _RESET=[0m
 goto :eof
 
 @rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION
@@ -142,7 +144,8 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-set _LANGUAGE_VERSION=1.6
+@rem https://kotlinlang.org/docs/compatibility-guide-17.html
+set _LANGUAGE_VERSION=1.7
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -397,9 +400,7 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-set "__TIMESTAMP_FILE=%_TARGET_DIR%\.latest-native-build"
-
-call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+call :action_required "%_EXE_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
@@ -431,7 +432,6 @@ if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
 )
-echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 @rem input parameter: 1=target file 2,3,..=path (wildcards accepted)

@@ -52,8 +52,9 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-set _MAIN_CLASS=BubbleSortKt
-set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_CLASS%.exe"
+set _MAIN_NAME=BubbleSort
+set _MAIN_CLASS=%_MAIN_NAME%Kt
+set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
 set _DETEKT_CMD=
 if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
@@ -141,7 +142,8 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-set _LANGUAGE_VERSION=1.6
+@rem https://kotlinlang.org/docs/compatibility-guide-17.html
+set _LANGUAGE_VERSION=1.7
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (

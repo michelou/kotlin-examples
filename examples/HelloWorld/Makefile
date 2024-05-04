@@ -5,6 +5,8 @@
 ##
 ##############################################################################
 
+TOOLSET ?= jvm
+
 include ../Makefile.inc
 
 SOURCE_DIR  = src
@@ -15,25 +17,43 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/HelloWorld.jar
 
-MAIN_CLASS = org.example.main.HelloWorldKt
+PKG_NAME = org.example
+
+MAIN_NAME = HelloWorld
+MAIN_CLASS = $(PKG_NAME).$(MAIN_NAME)Kt
 MAIN_ARGS ?= 
+
+TARGET = $(TARGET_DIR)/$(MAIN_NAME).jar
+TARGET_NATIVE = $(TARGET_DIR)/$(MAIN_NAME)$(TARGET_EXT)
 
 all: build run
 
 build: deps $(TARGET)
 
 $(TARGET): $(SOURCES)
+ifeq ($(TOOLSET),jvm)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
 	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d $(CLASSES_DIR) $^
 	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
+else ifeq ($(TOOLSET),native)
+	[ -d "$(TARGET_DIR)" ] || "$(MKDIR)" -p "$(TARGET_DIR)"
+	"$(KOTLINC_NATIVE)" -language-version $(LANGUAGE_VERSION) -o $(TARGET_NATIVE) -e "$(PKG_NAME).main" $^
+else
+	@$(ECHO) "Unknown toolset $(TOOLSET)"
+endif
 
 clean:
 	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
+ifeq ($(TOOLSET),jvm)
 	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS) $(MAIN_ARGS)
+else ifeq ($(TOOLSET),native)
+	exec "$(TARGET_NATIVE)"
+else
+	@$(ECHO) "Unknown toolset $(TOOLSET)"
+endif
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"
@@ -42,11 +62,14 @@ help:
 	@$(ECHO) "    all    alias for build"
 	@$(ECHO) "    build  compile Kotlin source files"
 	@$(ECHO) "    clean  delete generated files"
-	@$(ECHO) "    doc    generate HTML documentation"
-	@$(ECHO) "    help   print this help message"
+	@$(ECHO) "    doc           generate HTML documentation"
+	@$(ECHO) "    help          print this help message"
 	@$(ECHO) "    lint   analyse Kotlin source files with KtLint"
-	@$(ECHO) "    run    execute main program \"$(MAIN_CLASS)\""
-	@$(ECHO) "    test   execute unit tests with JUnit"
+	@$(ECHO) "    run    execute Java main program \"$(MAIN_CLASS)\""
+	@$(ECHO) "    test          execute unit tests with JUnit"
+	@$(ECHO) ""
+	@$(ECHO) "  Variables:"
+	@$(ECHO) "    TOOLSET=jvm (default), native"
 
 ##############################################################################
 ## doc rules
@@ -84,11 +107,11 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ## test rules
 
 TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -name "*.kt")
-TEST_TARGET = $(TARGET_DIR)/HelloWorldTest.jar
+TEST_TARGET = $(TARGET_DIR)/$(MAIN_NAME)Test.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
 TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
-TEST_MAIN_CLASS  = org.example.test.HelloWorldTestKt
+TEST_MAIN_CLASS  = org.example.test.$(MAIN_NAME)TestKt
 
 test: $(TARGET) $(TEST_TARGET)
 	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)
@@ -104,4 +127,4 @@ $(TEST_TARGET): $(TEST_SOURCES)
 .PHONY: all build clean deps doc help lint run test
 
 .SUFFIXES:
-.SUFFIXES: .class .jar .java .kt
+.SUFFIXES: .class .exe .jar .java .kt

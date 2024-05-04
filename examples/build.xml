@@ -22,7 +22,8 @@
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
     <property name="cfr.version" value="0.152" />
-    <property name="ktlint.version" value="1.0.1" />
+    <!-- https://mvnrepository.com/artifact/com.pinterest.ktlint/ktlint-cli -->
+    <property name="ktlint-cli.version" value="1.2.1" />
     <!-- https://mvnrepository.com/artifact/info.picocli/picocli -->
     <property name="picocli.version" value="4.7.5" />
 
@@ -62,7 +63,7 @@
             <fileset dir="${ivy.cache}/org.benf" includes="**/cfr-${cfr.version}.jar" />
         </pathconvert>
         <pathconvert property="ktlint.jar">
-            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-${ktlint.version}.jar" />
+            <fileset dir="${ivy.cache}/com.pinterest" includes="**/ktlint-cli-${ktlint-cli.version}.jar" />
         </pathconvert>
         <pathconvert property="junit.jar">
             <fileset dir="${ivy.cache}/junit" includes="**/junit-${junit.version}.jar" />

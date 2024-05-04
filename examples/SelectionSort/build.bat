@@ -52,8 +52,9 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-set _MAIN_CLASS=SelectionSortKt
-set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_CLASS%.exe"
+set _MAIN_NAME=SelectionSort
+set _MAIN_CLASS=%_MAIN_NAME%Kt
+set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
 set _DETEKT_CMD=
 if exist "%DETEKT_HOME%\bin\detekt-cli.bat" (
@@ -396,9 +397,7 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-set "__TIMESTAMP_FILE=%_TARGET_DIR%\.latest-native-build"
-
-call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+call :action_required "%_EXE_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
@@ -419,7 +418,7 @@ if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
 ) else ( set __NOWARN_OPT=
 )
 set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
-echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -o "%_EXE_FILE:\=\\%" -e "%_PKG_NAME%.main" > "%__OPTS_FILE%"
+echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -o "%_EXE_FILE:\=\\%" -e "main" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
 ) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to executable "!_EXE_FILE:%_ROOT_DIR%=!" ^(native^) 1>&2
@@ -430,7 +429,6 @@ if not %ERRORLEVEL%==0 (
     set _EXITCODE=1
     goto :eof
 )
-echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 @rem input parameter: 1=target file 2,3,..=path (wildcards accepted)

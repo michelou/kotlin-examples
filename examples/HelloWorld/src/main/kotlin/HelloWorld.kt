@@ -1,4 +1,4 @@
-package org.example.main
+package org.example
 
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {

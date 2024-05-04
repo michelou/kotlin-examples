@@ -1,4 +1,4 @@
-package org.example.main
+package org.example
 
 // Sources:
 //   https://kotlinexpertise.com/kotlin-features-miss-java/
