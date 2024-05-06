@@ -54,6 +54,8 @@ args() {
         ## options
         -debug)    DEBUG=true ;;
         -help)     HELP=true ;;
+		-jvm)      TOOLSET=jvm ;;
+		-native)   TOOLSET=native ;;
         -timer)    TIMER=true ;;
         -verbose)  VERBOSE=true ;;
         -*)
@@ -77,7 +79,7 @@ args() {
         warning "cfr installation not found"
         DECOMPILE=false
     fi
-    debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
+    debug "Options    : TIMER=$TIMER TOOLSET=$TOOLSET VERBOSE=$VERBOSE"
     debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
@@ -93,6 +95,7 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
     -debug       print commands executed by this script
+    -native      generate native executable
     -timer       print total execution time
     -verbose     print progress messages
 
@@ -122,7 +125,7 @@ lint() {
     echo "lint"
 }
 
-compile() {
+compile_jvm() {
     [[ -d "$CLASSES_DIR" ]] || mkdir -p "$CLASSES_DIR"
 
     local timestamp_file="$TARGET_DIR/.latest-build"
@@ -139,6 +142,12 @@ compile() {
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
     touch "$timestamp_file"
+}
+
+compile_native() {
+    [[ -d "$TARGET_DIR" ]] || mkdir -p "$TARGET_DIR"
+
+    echo "NYI"
 }
 
 action_required() {
@@ -370,7 +379,7 @@ doc() {
     touch "$doc_timestamp_file"
 }
 
-run() {
+run_jvm() {
     local main_class_file="$CLASSES_DIR/${MAIN_CLASS//.//}.class"
     if [[ ! -f "$main_class_file" ]]; then
         error "Kotlin main class '$MAIN_CLASS' not found ($main_class_file)"
@@ -388,6 +397,10 @@ run() {
         error "Program execution failed ($MAIN_CLASS)"
         cleanup 1
     fi
+}
+
+run_native() {
+    echo "NYI"
 }
 
 run_tests() {
@@ -415,7 +428,8 @@ DEBUG=false
 DECOMPILE=false
 DOC=false
 HELP=false
-MAIN_CLASS="org.example.main.LanguageFeaturesKt"
+LINT=false
+MAIN_CLASS="org.example.LanguageFeaturesKt"
 MAIN_ARGS=
 RUN=false
 SCALA_VERSION=3
@@ -423,6 +437,7 @@ SCALAC_OPTS_PRINT=false
 TASTY=false
 TEST=false
 TIMER=false
+TOOLSET=jvm
 VERBOSE=false
 
 COLOR_START="[32m"
@@ -446,6 +461,7 @@ if $cygwin || $mingw || $msys; then
     [[ -n "$CFR_HOME" ]] && CFR_HOME="$(mixed_path $CFR_HOME)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
+    [[ -n "$KOTLIN_NATIVE_HOME" ]] && KOTLIN_NATIVE_HOME="$(mixed_path $KOTLIN_NATIVE_HOME)"
     [[ -n "$KTLINT_HOME" ]] && KTLINT_HOME="$(mixed_path $KTLINT_HOME)"
     [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
     DIFF_CMD="$GIT_HOME/usr/bin/diff.exe"
@@ -466,6 +482,12 @@ if [[ ! -x "$KOTLIN_HOME/bin/kotlinc" ]]; then
 fi
 KOTLIN_CMD="$KOTLIN_HOME/bin/kotlin"
 KOTLINC_CMD="$KOTLIN_HOME/bin/kotlinc"
+
+if [[ ! -x "$KOTLIN_NATIVE_HOME/bin/kotlinc-native" ]]; then
+    error "Kotlin/Native installation not found"
+    cleanup 1
+fi
+KOTLINC_NATIVE_CMD="$KOTLIN_NATIVE_HOME/bin/kotlin-native"
 
 PROJECT_NAME="$(basename $ROOT_DIR)"
 PROJECT_URL="github.com/$USER/kotlin-examples"
@@ -489,7 +511,7 @@ if $CLEAN; then
     clean || cleanup 1
 fi
 if $COMPILE; then
-    compile || cleanup 1
+    compile_$TOOLSET || cleanup 1
 fi
 if $DECOMPILE; then
     decompile || cleanup 1
@@ -498,7 +520,7 @@ if $DOC; then
     doc || cleanup 1
 fi
 if $RUN; then
-    run || cleanup 1
+    run_$TOOLSET || cleanup 1
 fi
 if $TEST; then
     run_tests || cleanup 1

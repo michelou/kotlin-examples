@@ -38,7 +38,7 @@ if %_LINT%==1 (
     if not !_EXITCODE!==0 goto end
 )
 if %_COMPILE%==1 (
-    call :compile_%_TARGET%
+    call :compile_%_TOOLSET%
     if not !_EXITCODE!==0 goto end
 )
 if %_DOC%==1 (
@@ -46,11 +46,11 @@ if %_DOC%==1 (
     if not !_EXITCODE!==0 goto end
 )
 if %_RUN%==1 (
-    call :run_%_TARGET%
+    call :run_%_TOOLSET%
     if not !_EXITCODE!==0 goto end
 )
 if %_TEST%==1 (
-    call :test_%_TARGET%
+    call :test_%_TOOLSET%
     if not !_EXITCODE!==0 goto end
 )
 goto end
@@ -79,7 +79,7 @@ set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 @rem https://kotlinlang.org/docs/compatibility-guide-17.html
 set _LANGUAGE_VERSION=1.7
 
-set _PKG_NAME=org.example.main
+set _PKG_NAME=org.example
 
 set _MAIN_NAME=LanguageFeatures
 set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
@@ -200,9 +200,9 @@ set _DOC=0
 set _HELP=0
 set _LINT=0
 set _RUN=0
-set _TARGET=jvm
 set _TEST=0
 set _TIMER=0
+set _TOOLSET=jvm
 set _VERBOSE=0
 set __N=0
 :args_loop
@@ -215,7 +215,7 @@ if "%__ARG:~0,1%"=="-" (
     @rem option
     if "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if "%__ARG%"=="-help" ( set _HELP=1
-    ) else if "%__ARG%"=="-native" ( set _TARGET=native
+    ) else if "%__ARG%"=="-native" ( set _TOOLSET=native
     ) else if "%__ARG%"=="-timer" ( set _TIMER=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
@@ -256,7 +256,7 @@ if %_LINT%==1 if not defined _KTLINT_CMD (
 )
 if %_DEBUG%==1 (
     echo %_DEBUG_LABEL% Properties : _PROJECT_NAME=%_PROJECT_NAME% _PROJECT_VERSION=%_PROJECT_VERSION% 1>&2
-    echo %_DEBUG_LABEL% Options    : _TARGET=%_TARGET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Options    : _TOOLSET=%_TOOLSET% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _CLEAN=%_CLEAN% _COMPILE=%_COMPILE% _DETEKT=%_DETEKT% _DOC=%_DOC% _LINT=%_LINT% _RUN=%_RUN% _TEST=%_TEST% 1>&2
     if defined _DETEKT_CMD echo %_DEBUG_LABEL% Variables  : "DETEKT_HOME=%DETEKT_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : "JAVA_HOME=%JAVA_HOME%" 1>&2
