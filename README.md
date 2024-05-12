@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
+[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -23,25 +23,29 @@ Optionally one may also install the following software:
 
 - [Apache Ant 1.10][apache_ant] (requires Java 8) ([*release notes*][apache_ant_relnotes])
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
+- [ConEmu][conemu_downloads] ([*release notes*][conemu_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 8.7][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 1.2][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
+- [Visual Studio Code 1.89][vscode_downloads] ([*release notes*][vscode_relnotes])
 
 For instance our development environment looks as follows (*May 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\                           <i>( 39 MB)</i>
 C:\opt\apache-maven\                         <i>(  9 MB)</i>
+C:\opt\ConEmu\                               <i>( 26 MB)</i>
 C:\opt\detekt-cli\                           <i>( 55 MB)</i>
 C:\opt\Git\                                  <i>(367 MB)</i>
 C:\opt\gradle\                               <i>(135 MB)</i>
 C:\opt\jdk-temurin-17.0.11_9\                <i>(301 MB)</i>
-C:\opt\kotlinc-1.9.23\                       <i>( 83 MB)</i>
-C:\opt\kotlin-native-windows-x86_64-1.9.23\  <i>(269 MB)</i>
+C:\opt\kotlinc-1.9.24\                       <i>( 83 MB)</i>
+C:\opt\kotlin-native-windows-x86_64-1.9.24\  <i>(269 MB)</i>
 C:\opt\ktlint\                               <i>( 53 MB)</i>
 C:\opt\make-3.81\                            <i>(  2 MB)</i>
+C:\opt\VSCode\                               <i>(341 MB)</i>
 </pre>
 
 > **&#9755;** ***Installation policy***<br/>
@@ -104,17 +108,17 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
    ant 1.10.14, bazel 7.1.1, gradle 8.7, java 17.0.10, detekt-cli 1.23.6,
-   kotlinc 1.9.23, kotlinc-native 1.9.23, ktlint 1.2.1, cfr 0.152,
-   make 3.81, mvn 3.9.6, git 2.44.0.windows.1, diff 3.10, bash 4.4.26(1)-release
+   kotlinc 1.9.24, kotlinc-native 1.9.24, ktlint 1.2.1, cfr 0.152,
+   make 3.81, mvn 3.9.6, git 2.45.0, diff 3.10, bash 4.4.26(1)-release
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
    C:\opt\gradle\bin\gradle.bat
    C:\opt\jdk-temurin-17.0.11_9\bin\java.exe
    C:\opt\detekt-cli\bin\detekt-cli.bat
-   C:\opt\kotlinc-1.9.23\bin\kotlinc.bat
-   C:\opt\kotlin-native-windows-x86_64-1.9.23\bin\kotlinc.bat
-   C:\opt\kotlin-native-windows-x86_64-1.9.23\bin\kotlinc-native.bat
+   C:\opt\kotlinc-1.9.24\bin\kotlinc.bat
+   C:\opt\kotlin-native-windows-x86_64-1.9.24\bin\kotlinc.bat
+   C:\opt\kotlin-native-windows-x86_64-1.9.24\bin\kotlinc-native.bat
    C:\opt\ktlint\ktlint.bat
    C:\opt\cfr-0.152\bin\cfr.bat
    C:\opt\make-3.81\bin\make.exe
@@ -129,8 +133,8 @@ Environment variables:
    "GIT_HOME=C:\opt\Git"
    "GRADLE_HOME=C:\opt\gradle"
    "JAVA_HOME=C:\opt\jdk-temurin-17.0.11_9"
-   "KOTLIN_HOME=C:\opt\kotlinc-1.9.23"
-   "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.23"
+   "KOTLIN_HOME=C:\opt\kotlinc-1.9.24"
+   "KOTLIN_NATIVE_HOME=C:\opt\kotlinc-1.9.24"
    "KTLINT_HOME=C:\opt\ktlint"
    "MAKE_HOME=C:\opt\make-3.81"
    "MAVEN_HOME=C:\opt\apache-maven"
@@ -153,8 +157,8 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
 <tr><td></td><td></td></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew-eap.html">2.0.0-RC2</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0-RC2/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a> - <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew-eap.html">2.0.0-RC3</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0-RC2/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew1920.html" rel="external">1.9.20</a> - <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.24" rel="external">1.9.24</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.10" rel="external">1.9.10</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew19.html" rel="external">1.9.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1820.html" rel="external">1.8.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -216,14 +220,16 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.6-bin.zip</a>                        <i>(  9 MB)</i>
+<a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                              <i>(  5 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.6.zip</a>                             <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.7-bin.zip</a>                                <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23">kotlin-compiler-1.9.23.zip</a>                        <i>( 71 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23">kotlin-native-windows-x86_64-1.9.23.zip</a>           <i>(174 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.24">kotlin-compiler-1.9.24.zip</a>                        <i>( 71 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.24">kotlin-native-windows-x86_64-1.9.24.zip</a>           <i>(174 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.2.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.11_9.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.44.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.89.1.zip</a>                       <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
@@ -234,14 +240,17 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 <!-- link refs -->
 
-[ada_examples]: https://github.com/michelou/ada-examples
+[ada_examples]: https://github.com/michelou/ada-examples?tab=readme-ov-file#playing-with-ada-on-windows
 [akka_examples]: https://github.com/michelou/akka-examples
 [apache_ant]: https://ant.apache.org/
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
 [apache_ant_relnotes]: https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.14.html
 [apache_maven_history]: https://maven.apache.org/docs/history.html
 [cobol_examples]: https://github.com/michelou/cobol-examples
+[conemu_downloads]: https://github.com/Maximus5/ConEmu/releases
+[conemu_relnotes]: https://conemu.github.io/blog/2023/07/24/Build-230724.html
 [cpp_examples]: https://github.com/michelou/cpp-examples
+[erlang_examples]: https://github.com/michelou/erlang-examples
 [dart_examples]: https://github.com/michelou/dart-examples
 [deno_examples]: https://github.com/michelou/deno-examples
 [docker_examples]: https://github.com/michelou/docker-examples
@@ -262,8 +271,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kafka_examples]: https://github.com/michelou/kafka-examples
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.23
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.23
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.24
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.24
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
@@ -301,6 +310,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 17.0.8  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024063.html
 17.0.9  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026352.html
 17.0.10 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029089.html
+17.0.11 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-April/032197.html
 -->
 [temurin_opendjk17]: https://adoptium.net/releases.html?variant=openjdk17&jvmVariant=hotspot
 [temurin_opendjk17_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
@@ -309,11 +319,14 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 21_35   -> https://adoptium.net/fr/temurin/release-notes/?version=jdk-21+35
 21.0.1  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 21.0.2  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029090.html
+21.0.3  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-April/032196.html
 -->
 [temurin_openjdk21]: https://adoptium.net/releases.html?variant=openjdk21&jvmVariant=hotspot
 [temurin_openjdk21_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
 [temurin_openjdk21_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
+[vscode_downloads]: https://code.visualstudio.com/#alt-downloads
+[vscode_relnotes]: https://code.visualstudio.com/updates/
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
 [wix_examples]: https://github.com/michelou/wix-examples
