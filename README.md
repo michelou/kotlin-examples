@@ -109,7 +109,7 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 Tool versions:
    ant 1.10.14, bazel 7.1.1, gradle 8.7, java 17.0.10, detekt-cli 1.23.6,
    kotlinc 1.9.24, kotlinc-native 1.9.24, ktlint 1.2.1, cfr 0.152,
-   make 3.81, mvn 3.9.6, git 2.45.0, diff 3.10, bash 4.4.26(1)-release
+   make 3.81, mvn 3.9.6, git 2.45.1, diff 3.10, bash 4.4.26(1)-release
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
@@ -240,35 +240,35 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 <!-- link refs -->
 
-[ada_examples]: https://github.com/michelou/ada-examples?tab=readme-ov-file#playing-with-ada-on-windows
-[akka_examples]: https://github.com/michelou/akka-examples
+[ada_examples]: https://github.com/michelou/ada-examples#top
+[akka_examples]: https://github.com/michelou/akka-examples#top
 [apache_ant]: https://ant.apache.org/
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
 [apache_ant_relnotes]: https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.14.html
 [apache_maven_history]: https://maven.apache.org/docs/history.html
-[cobol_examples]: https://github.com/michelou/cobol-examples
+[cobol_examples]: https://github.com/michelou/cobol-examples#top
 [conemu_downloads]: https://github.com/Maximus5/ConEmu/releases
 [conemu_relnotes]: https://conemu.github.io/blog/2023/07/24/Build-230724.html
-[cpp_examples]: https://github.com/michelou/cpp-examples
-[erlang_examples]: https://github.com/michelou/erlang-examples
-[dart_examples]: https://github.com/michelou/dart-examples
-[deno_examples]: https://github.com/michelou/deno-examples
-[docker_examples]: https://github.com/michelou/docker-examples
+[cpp_examples]: https://github.com/michelou/cpp-examples#top
+[erlang_examples]: https://github.com/michelou/erlang-examples#top
+[dart_examples]: https://github.com/michelou/dart-examples#top
+[deno_examples]: https://github.com/michelou/deno-examples#top
+[docker_examples]: https://github.com/michelou/docker-examples#top
 [detekt_latest]: https://github.com/detekt/detekt/releases
 [detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v1.23.6
-[flix_examples]: https://github.com/michelou/flix-examples
+[flix_examples]: https://github.com/michelou/flix-examples#top
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.44.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.45.1.txt
 [github_markdown]: https://github.github.com/gfm/
-[golang_examples]: https://github.com/michelou/golang-examples
-[graalvm_examples]: https://github.com/michelou/graalvm-examples
+[golang_examples]: https://github.com/michelou/golang-examples#top
+[graalvm_examples]: https://github.com/michelou/graalvm-examples#top
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
 [gradle_relnotes]: https://docs.gradle.org/8.2/release-notes.html
-[haskell_examples]: https://github.com/michelou/haskell-examples
+[haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
-[kafka_examples]: https://github.com/michelou/kafka-examples
+[kafka_examples]: https://github.com/michelou/kafka-examples#top
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
 [kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v1.9.24
@@ -278,16 +278,16 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
 [ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.2.1
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
-[llvm_examples]: https://github.com/michelou/llvm-examples
-[m2_examples]: https://github.com/michelou/m2-examples
+[llvm_examples]: https://github.com/michelou/llvm-examples#top
+[m2_examples]: https://github.com/michelou/m2-examples#top
 [maven_latest]: https://maven.apache.org/download.cgi
 [maven_relnotes]: https://maven.apache.org/docs/3.9.6/release-notes.html
-[nodejs_examples]: https://github.com/michelou/nodejs-examples
-[rust_examples]: https://github.com/michelou/rust-examples
-[scala3_examples]: https://github.com/michelou/dotty-examples
+[nodejs_examples]: https://github.com/michelou/nodejs-examples#top
+[rust_examples]: https://github.com/michelou/rust-examples#top
+[scala3_examples]: https://github.com/michelou/dotty-examples#top
 [sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html
-[spark_examples]: https://github.com/michelou/spark-examples
-[spring_examples]: https://github.com/michelou/spring-examples
+[spark_examples]: https://github.com/michelou/spark-examples#top
+[spring_examples]: https://github.com/michelou/spring-examples#top
 <!--
 11.0.3  -> http://mail.openjdk.java.net/pipermail/jdk-updates-dev/2019-April/000951.html
 11.0.11 -> https://mail.openjdk.java.net/pipermail/jdk-updates-dev/2021-April/005860.html
@@ -324,10 +324,10 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [temurin_openjdk21]: https://adoptium.net/releases.html?variant=openjdk21&jvmVariant=hotspot
 [temurin_openjdk21_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
 [temurin_openjdk21_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
-[trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples
+[trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples#top
 [vscode_downloads]: https://code.visualstudio.com/#alt-downloads
 [vscode_relnotes]: https://code.visualstudio.com/updates/
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
-[wix_examples]: https://github.com/michelou/wix-examples
+[wix_examples]: https://github.com/michelou/wix-examples#top
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/
