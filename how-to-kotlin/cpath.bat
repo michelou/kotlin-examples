@@ -15,8 +15,8 @@ set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
-set __KOTLIN_VERSION=1.9.22
-set __KOTLINX_VERSION=1.7.3
+set __KOTLIN_VERSION=2.0.0
+set __KOTLINX_VERSION=1.9.0-RC
 
 set _LIBS_CPATH=
 
@@ -43,10 +43,10 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
-call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.10.1"
+call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.11.0"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
-call :add_maven_jar "org.jetbrains" "markdown" "0.6.1"
+call :add_maven_jar "org.jetbrains" "markdown" "0.7.3"
 
 set __DOKKA_ANALYSIS_VERSION=1.8.20
 
@@ -59,7 +59,7 @@ call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_A
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_ANALYSIS_VERSION%"
 
-set __DOKKA_VERSION=1.9.10
+set __DOKKA_VERSION=1.9.20
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
 call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"

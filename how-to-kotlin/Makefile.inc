@@ -48,10 +48,10 @@ endif
 LANGUAGE_VERSION = 1.6
 
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.9.22
-KOTLINX_VERSION = 1.7.3
+KOTLIN_VERSION  = 2.0.0
+KOTLINX_VERSION = 1.9.0-RC
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
-KOTLINX_HTML_VERSION = 0.10.1
+KOTLINX_HTML_VERSION = 0.11.0
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)

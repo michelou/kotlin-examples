@@ -78,9 +78,30 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] _EXITCODE=0
 > </pre>
 
-## <span id="bean">Bean</span>
+## <span id="bean">`01_bean` Example</span> [**&#x25B4;**](#top)
 
 This example is about [data classes][kotlin_data_classes] whose main purpose is to hold data.
+
+Example `01_bean` has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="">findstr</a> /v /b [A-Z]</b>
+|   <a href="./01_bean/build.bat">build.bat</a>
+|   <a href="./01_bean/build.gradle">build.gradle</a>
+|   <a href="./01_bean/build.sh">build.sh</a>
+|   <a href="./01_bean/build.xml">build.xml</a>
+|   <a href="./01_bean/gradle.properties">gradle.properties</a>
+|   <a href="./01_bean/Makefile">Makefile</a>
+|   <a href="./01_bean/pom.xml">pom.xml</a>
+\---src
+    +---main
+    |   +---kotlin
+    |   |       <a href="./01_bean/src/main/kotlin/Bean.kt">Bean.kt</a>
+    |   \---resources
+    \---test
+        \---kotlin
+                <a href="./01_bean/src/test/kotlin/BeanJUnitTest.kt">BeanJUnitTest.kt</a>
+</pre>
 
 Command [**`build.bat clean run`**](01_bean/build.bat) compiles source file [**`Bean.kt`**](01_bean/src/main/kotlin/Bean.kt) and executes the generated Java class files:
 
@@ -103,9 +124,31 @@ Command [**`mvn -q clean compile exec:java`**][maven_cli] (build script [**`pom.
 fist=Jane, last=Doe
 </pre>
 
-## <span id="properties">Properties</span>
+## <span id="properties">`02_properties` Example</span> [**&#x25B4;**](#top)
 
 This example is about [lazy properties][kotlin_lazy_props] whose value is initialized at the moment of the first access.
+
+Example `02_properties` has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+|   <a href="./02_properties/build.bat">build.bat</a>
+|   <a href="./02_properties/build.gradle">build.gradle</a>
+|   <a href="./02_properties/build.sh">build.sh</a>
+|   <a href="./02_properties/gradle.properties">gradle.properties</a>
+|   <a href="./02_properties/Makefile">Makefile</a>
+|   <a href="./02_properties/pom.xml">pom.xml</a>
+\---src
+    \---main
+        +---kotlin
+        |       <a href="./02_properties/src/main/kotlin/MyDelegatedProperties.kt">MyDelegatedProperties.kt</a>
+        |       <a href="./02_properties/src/main/kotlin/Observable.kt">Observable.kt</a>
+        |       Properties.kt</a>
+        +---kotlin-jvm
+        |       <a href="./02_properties/src/main/kotlin-jvm/System.kt">System.kt</a>
+        \---kotlin-native
+                <a href="./02_properties/src/main/kotlin-native/System.kt">System.kt</a>
+</pre>
 
 Command [**`build clean run`**](02_properties/build.bat) compiles source file [**`Properties.kt`**](02_properties/src/main/kotlin/Properties.kt) and executes the generated Java class files:
 
@@ -121,9 +164,24 @@ Windows 10 v10.0 (amd64)
 Windows 10 v10.0 (amd64)
 </pre>
 
-## <span id="functions">Functions</span>
+## <span id="functions">`03_functions` Example</span> [**&#x25B4;**](#top)
 
 This example is about [extension functions][kotlin_extensions].
+
+Example `03_functions` has the following structure : 
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+|   <a href="./03_functions/build.bat">build.bat</a>
+|   <a href="./03_functions/build.gradle">build.gradle</a>
+|   <a href="./03_functions/gradle.properties">gradle.properties</a>
+|   <a href="./03_functions/Makefile">Makefile</a>
+|   <a href="./03_functions/pom.xml">pom.xml</a>
+\---src
+    \---main
+        \---kotlin
+                <a href="./03_functions/src/main/kotlin/Functions.kt">Functions.kt</a>
+</pre>
 
 Command **`build clean run`** compiles source file [**`Functions.kt`**](03_functions/src/main/kotlin/Functions.kt) and executes the generated Java class files:
 
@@ -134,10 +192,24 @@ Jane
 Jane
 </pre>
 
-## <span id="expressions">Expressions</span>
+## <span id="expressions">`04_expressions` Example</span>
 
-This example 
-Command **`build.bat clean run`** compiles source files [**`Expressions.kt`**](04_expressions/src/main/kotlin/Expressions.kt) and executes the generated Java class files.
+Example `Expressions` has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+|   <a href="./04_expressions/build.bat">build.bat</a>
+|   <a href="./04_expressions/build.gradle">build.gradle</a>
+|   <a href="./04_expressions/gradle.properties">gradle.properties</a>
+|   <a href="./04_expressions/Makefile">Makefile</a>
+|   <a href="./04_expressions/pom.xml">pom.xml</a>
+\---src
+    \---main
+        \---kotlin
+                <a href="./04_expressions/src/main/kotlin/Expressions.kt">Expressions.kt</a>
+</pre>
+
+Command [**`build.bat clean run`**](./04_expressions/build.bat) compiles source files [**`Expressions.kt`**](04_expressions/src/main/kotlin/Expressions.kt) and executes the generated Java class files.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="04_expressions/build.bat">build</a> clean run</b>
@@ -148,9 +220,25 @@ k3 -> 3
 Not this time
 </pre>
 
-## <span id="lambdas">Lambdas</span>
+## <span id="lambdas">`04_functional` Example</span> [**&#x25B4;**](#top)
 
 This example is about [higher-order functions and lambdas][kotlin_lambdas] in [Kotlin].
+
+Example `04_functional` has the following structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+|   <a href="./04_functional/build.bat">build.bat</a>
+|   <a href="./04_functional/build.gradle">build.gradle</a>
+|   <a href="./04_functional/build.gradle.kts">build.gradle.kts</a>
+|   <a href="./04_functional/gradle.properties">gradle.properties</a>
+|   <a href="./04_functional/Makefile">Makefile</a>
+|   <a href="./04_functional/pom.xml">pom.xml</a>
+\---src
+    \---main
+        \---kotlin
+                <a href="./04_functional/src/main/kotlin/Lambdas.kt">Lambdas.kt</a>
+</pre>
 
 Command [**`build.bat clean run`**](04_functional/build.bat) compiles source file [**`Lambdas.kt`**](04_functional/src/main/kotlin/Lambdas.kt) and executes the generated Java class files:
 
@@ -238,7 +326,7 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/June 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
