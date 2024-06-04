@@ -11,6 +11,8 @@
 
 [Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
 
+> **&#9755;** Read the document ["Kotlin Language Specification"](https://kotlinlang.org/spec/introduction.html) to know more about of the design decisions behind the <a href="https://kotlinlang.org/" rel="external">Kotlin</a> programming language.
+
 ## <span id="proj_deps">Project dependencies</span>
 
 This project depends on the following external software for the **Microsoft Windows** platform:
@@ -263,7 +265,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples#top
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/8.2/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/8.8/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kafka_examples]: https://github.com/michelou/kafka-examples#top
