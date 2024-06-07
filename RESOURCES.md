@@ -55,6 +55,7 @@
 
 ## <span id="books">Books</span> [**&#x25B4;**](#top)
 
+- [Kotlin in Action][book_kotlin_in_action] (2<sup>nd</sup> Edition) by Sebastian Aigner &amp; al., 2024.<br/><span style="font-size:80%;">(Manning Publications, ISBN 978-1-6172-9960-5, 643 pages)</span>
 - [Kotlin Design Patterns and Best Practices][book_soshin] by Alexey Soshin, April 2024.<br/><span style="font-size:80%;">(Packt, ISBN 978-1-80512-776-5, 475 pages)</span>
 - [Kotlin Coroutines][book_moskala_coroutines] by Marcin Moskala, April 2023.<br/><span style="font-size:80%;">(Leanpub, ? pages).</span>
 - [Kotlin - The Ultimate Guide][book_uzayr] by Sufyan bin Uzayr, December 2022.<br/><span style="font-size:80%;">(CRC Press, ISBN 978-1-0323-1170-8, 398 pages)</span>.
@@ -66,8 +67,10 @@
 - [Learn Kotlin Programming][book_kotlin_programming] by Stephen Samuel and Stefan Bocutiu, May 2019.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7898-0235-1, 514 pages)</span>
 - [The Joy of Kotlin][book_joy_kotlin] by Pierre-Yves Saumont, 2018.<br/><span style="font-size:80%;">(Manning Publications,  ISBN 978-1-6172-9536-2, 480 pages)</span>.
 - [Functional Kotlin][book_functional_kotlin] by Mario Arias and Rivu Chakraborty, February 2018.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7884-7648-5, 350 pages)</span>.
-- [Kotlin in Action][book_kotlin_in_action] by Dmitry Jemerov and Svetlana Isakova, 2017.<br/><span style="font-size:80%;">(Manning Publications, ISBN 978-1-6172-9329-0, 360 pages)</span>
 - [Programming Koltin][book_programming_kotlin] by Stephen Samuel and Sefan Bocutiu, January 2017.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7871-2636-7, 420 pages)</span>.
+<!--
+- [Kotlin in Action][book_kotlin_in_action] by Dmitry Jemerov and Svetlana Isakova, 2017.<br/><span style="font-size:80%;">(Manning Publications, ISBN 978-1-6172-9329-0, 360 pages)</span>
+-->
 
 ## <span id="news">News</span>
 
