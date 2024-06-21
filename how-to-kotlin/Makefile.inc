@@ -45,8 +45,11 @@ EXT_NATIVE     =
 KOTLINC_NATIVE = $(KOTLIN_NATIVE_HOME)/bin/kotlinc-native
 endif
 
-LANGUAGE_VERSION = 1.6
+## https://kotlinlang.org/docs/compatibility-guide-19.html
+LANGUAGE_VERSION = 1.9
 
+## https://mvnrepository.com/artifact/org.jetbrains/annotations
+ANNOTATIONS_VERSION = 24.1.0
 JUNIT_VERSION   = 4.13.2
 KOTLIN_VERSION  = 2.0.0
 KOTLINX_VERSION = 1.9.0-RC
@@ -69,7 +72,7 @@ DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name d
 KOTLINX_HTML_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx" -name kotlinx-html-jvm-$(KOTLINX_HTML_VERSION).jar)
 MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-0.3.5.jar)
 
-ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-24.1.0.jar)
+ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-$(ANNOTATIONS_VERSION).jar)
 ##EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
 ##INTELLIJ_CORE_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name intellij-core-27.1.3.jar)
 ##OPENAPI_JAR        = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name openapi-7.0.3.jar)

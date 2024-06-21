@@ -8,7 +8,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples] and [WiX Toolset][wix_examples] are other topics we are continuously monitoring.
+[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Golang][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [TruffleSqueak][trufflesqueak_examples], [WiX Toolset][wix_examples] and [Zig][zig_examples] are other topics we are continuously monitoring.
 
 > **&#9755;** Read the document ["Kotlin Language Specification"](https://kotlinlang.org/spec/introduction.html) to know more about of the design decisions behind the <a href="https://kotlinlang.org/" rel="external">Kotlin</a> programming language.
 
@@ -110,7 +110,7 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 Tool versions:
    ant 1.10.14, bazel 7.1.1, gradle 8.8, java 17.0.10, detekt-cli 1.23.6,
    kotlinc 2.0.0, kotlinc-native 2.0.0, ktlint 1.2.1, cfr 0.152,
-   make 3.81, mvn 3.9.7, git 2.45.2, diff 3.10, bash 4.4.26(1)-release
+   make 3.81, mvn 3.9.8, git 2.45.2, diff 3.10, bash 4.4.26(1)-release
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
@@ -218,7 +218,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <dd>
 <pre style="font-size:80%;">
 <a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.14-bin.zip</a>                        <i>(  9 MB)</i>
-<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.7-bin.zip</a>                        <i>(  9 MB)</i>
+<a href="https://maven.apache.org/download.cgi">apache-maven-3.9.8-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                              <i>(  5 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.6.zip</a>                             <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.8-bin.zip</a>                                <i>(115 MB)</i>
@@ -280,7 +280,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [llvm_examples]: https://github.com/michelou/llvm-examples#top
 [m2_examples]: https://github.com/michelou/m2-examples#top
 [maven_latest]: https://maven.apache.org/download.cgi
-[maven_relnotes]: https://maven.apache.org/docs/3.9.7/release-notes.html
+[maven_relnotes]: https://maven.apache.org/docs/3.9.8/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples#top
 [rust_examples]: https://github.com/michelou/rust-examples#top
 [scala3_examples]: https://github.com/michelou/dotty-examples#top
@@ -329,4 +329,5 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
 [wix_examples]: https://github.com/michelou/wix-examples#top
+[zig_examples]: https://github.com/michelou/zig-examples#top
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/

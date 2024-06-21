@@ -1,4 +1,4 @@
-# <span id="top">*How to Kotlin* code examples</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
+# <span id="top">*How to Kotlin* code examples</span> <span style="font-size:90%;">[⬆](../README.md#top)</span>
 
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>

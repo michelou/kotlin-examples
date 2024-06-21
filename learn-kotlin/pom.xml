@@ -11,15 +11,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <kotlin.version>1.9.22</kotlin.version>
+        <kotlin.version>2.0.0</kotlin.version>
         <kotlinx.version>1.8.0</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.6</kotlin.compiler.languageVersion>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
-        <maven.jar.version>3.3.0</maven.jar.version>
+        <maven.jar.version>3.4.2</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <exec.maven.version>3.2.0</exec.maven.version>
+        <exec.maven.version>3.3.0</exec.maven.version>
     </properties>
 
     <dependencies>

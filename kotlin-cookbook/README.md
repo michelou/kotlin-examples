@@ -1,10 +1,12 @@
-# <span id="top">*Kotlin Cookbook* code examples</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
+# <span id="top">*Kotlin Cookbook* code examples</span> <span style="font-size:90%;">[⬆](../README.md#top)</span>
 
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:120px;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">Directory <code>kotlin-cookbook\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="http://shop.oreilly.com/product/0636920224327.do">Ken Kousen's book</a> "<i>Koltin Cookbook</i>" (O'Reilly, 2019).<br/>
-  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  <td style="border:0;padding:0 10px 0 0;min-width:120px;">
+    <a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="120" alt="Kotlin project"/></a></td>
+  <td style="border:0;padding:0;vertical-align:text-top;">
+    Directory <code>kotlin-cookbook\</code> contains <a href="https://kotlinlang.org/">Kotlin</a> code examples from <a href="http://shop.oreilly.com/product/0636920224327.do">Ken Kousen's book</a> "<i>Koltin Cookbook</i>" (O'Reilly, 2019).<br/>
+     It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -12,6 +14,24 @@
 ## <span id="ex_03-10">Example 03-10 ― `Customer` class</span>
 
 Lazy loading can be implemented the hard way (with a private nullable property) or using a built-in **`lazy`** delegate function.
+
+This example has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /f /a . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./Example_03-10/build.bat">build.bat</a>
+|   <a href="./Example_03-10/build.gradle">build.gradle</a>
+|   <a href="./Example_03-10/gradle.properties">gradle.properties</a>
+|   <a href="./Example_03-10/Makefile">Makefile</a>
+|   <a href="./Example_03-10/pom.xml">pom.xml</a>
+\---src
+    +---main
+    |   \---kotlin
+    |           <a href="./Example_03-10/src/main/kotlin/Customer.kt">Customer.kt</a>
+    \---test
+        \---kotlin
+                <a href="./Example_03-10/src/test/kotlin/CustomerKtTest.kt">CustomerKtTest.kt</a>
+</pre>
 
 Command [**`build.bat clean run`**](./Example_03-10/build.bat) compiles the source files [**`Customer.kt`**](./Example_03-10/src/main/kotlin/Customer.kt) and executes the generated Java class files :
 
@@ -52,6 +72,24 @@ Test run finished after 85 ms
 </pre>
 
 ## <span id="ex_03-13">Example 03-13 ― Overriding operator on `Point`</span>
+
+This example has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /f /a . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./Example_03-13/build.bat">build.bat</a>
+|   <a href="./Example_03-13/build.gradle">build.gradle</a>
+|   <a href="./Example_03-13/gradle.properties">gradle.properties</a>
+|   <a href="./Example_03-13/Makefile">Makefile</a>
+|   <a href="./Example_03-13/pom.xml">pom.xml</a>
+\---src
+    +---main
+    |   \---kotlin
+    |           <a href="./Example_03-13/src/main/kotlin/PointMain.kt">PointMain.kt</a>
+    \---test
+        \---kotlin
+                <a href="./Example_03-13/src/test/kotlin/PointMainKtTest.kt">PointMainKtTest.kt</a>
+</pre>
 
 Command [**`build.bat clean run`**](./Example_03-13/build.bat) compiles the source files [**`PointMain.kt`**](./Example_03-13/src/main/kotlin/PointMain.kt) and executes the generated Java class files:
 

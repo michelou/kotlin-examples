@@ -1,4 +1,4 @@
-# <span id="top">Kotlin language changes</span> <span style="size:30%;">[↩](README.md#top)</span>
+# <span id="top">Kotlin language changes</span> <span style="font-size:90%;">[↩](README.md#top)</span>
   
 
 ## <span id="1.7">1.7</span>

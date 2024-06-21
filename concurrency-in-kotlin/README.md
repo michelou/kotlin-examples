@@ -1,4 +1,4 @@
-# <span id="top">Book &ndash; *Concurrency in Kotlin*</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
+# <span id="top">Book &ndash; *Concurrency in Kotlin*</span> <span style="font-size:90%;">[⬆](../README.md#top)</span>
 
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
@@ -23,9 +23,21 @@ Code examples can be built/run with the following tools:
 ## <span id="coroutine_example">Coroutine Example</span>
 
 The code source consists of file [`Main.kt`](./ch01/src/main/kotlin/Main.kt).
+This example has the following directory structure :
 
-The Gradle build configuration is defined by the two files <a href="ch01/build.gradle"><code>build.gradle</code></a> and 
-<a href="ch01/gradle.properties"><code>gradle.properties</code></a>.
+<pre style="font-size:80%;">
+<b>&gt; <a href="">tree</a> /f /a . | <a href="">findstr</a> /v /b [A-Z]</b>
+|   <a href="./ch01/build.bat">build.bat</a>
+|   <a href="./ch01/build.gradle">build.gradle</a>
+|   <a href="./ch01/gradle.properties">gradle.properties</a>
+|   <a href="./ch01/pom.xml">pom.xml</a>
+\---src
+    \---main
+        \---kotlin
+                <a href="./ch01/src/main/kotlin/Main.kt">Main.kt</a>
+</pre>
+
+Command [`gradle`]`clean run` generates and executes the Kotlin program `target\.
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>

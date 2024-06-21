@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018-2023 Stéphane Micheloud
+# Copyright (c) 2018-2024 Stéphane Micheloud
 #
 # Licensed under the MIT License.
 #
@@ -93,16 +93,16 @@ help() {
 Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
-    -debug       display commands executed by this script
-    -timer       display total elapsed time
-    -verbose     display progress messages
+    -debug       print commands executed by this script
+    -timer       print total execution time
+    -verbose     print progress messages
 
   Subcommands:
     clean        delete generated files
     compile      compile Java/Kotlin source files
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
-    help         display this help message
+    help         print this help message
     run          execute main class "$(MAIN_CLASS)"
 EOS
 }
@@ -395,11 +395,11 @@ EXITCODE=0
 
 ROOT_DIR="$(getHome)"
 
-SOURCE_DIR=$ROOT_DIR/src
-MAIN_SOURCE_DIR=$SOURCE_DIR/main/kotlin
-TARGET_DIR=$ROOT_DIR/target
-TARGET_DOCS_DIR=$TARGET_DIR/docs
-CLASSES_DIR=$TARGET_DIR/classes
+SOURCE_DIR="$ROOT_DIR/src"
+MAIN_SOURCE_DIR="$SOURCE_DIR/main/kotlin"
+TARGET_DIR="$ROOT_DIR/target"
+TARGET_DOCS_DIR="$TARGET_DIR/docs"
+CLASSES_DIR="$TARGET_DIR/classes"
 
 CLEAN=false
 COMPILE=false
