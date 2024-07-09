@@ -1,4 +1,4 @@
-# <span id="top">Kotlin code examples</span> <span style="size:30%;"><a href="../README.md">⬆</a></span>
+# <span id="top">Kotlin code examples</span> <span style="font-size:90%;">[⬆](../README.md#top)</span>
 
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
@@ -79,10 +79,9 @@ Hello World!
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target\classes | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v "^[A-Z]"</b>
 +---META-INF
 |       main.kotlin_module
-|
-\---org
-    \---example
-        \---main
+\---<b>org</b>
+    \---<b>example</b>
+        \---<b>main</b>
                 HelloWorldKt.class
 </pre>
 
@@ -113,6 +112,33 @@ Hello World!
 </pre>
 
 ## <span id="java_kotlin">`JavaToKotlin` Example (JVM only)</span>
+
+This example has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /f /a . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./JavaToKotlin/build.bat">build.bat</a>
+|   <a href="./JavaToKotlin/build.gradle">build.gradle</a>  <i>(parent: <a href="./common.gradle">common.gradle</a>)</i>
+|   <a href="./JavaToKotlin/build.sh">build.sh</a>
+|   <a href="./JavaToKotlin/build.xml">build.xml</a>     <i>(parent: <a href="./build.xml">build.xml</a>)</i>
+|   <a href="./JavaToKotlin/gradle.properties">gradle.properties</a>
+|   <a href="./JavaToKotlin/Makefile">Makefile</a>      <i>(parent: <a href="./Makefile.inc">Makefile.inc</a>)</i>
+|   <a href="./JavaToKotlin/pom.xml">pom.xml</a>       <i>(parent: <a href="./pom.xml">pom.xml</a>)</i>
++---<b>config</b>
+|   \---<b>checkstyle</b>
+|           <a href="./JavaToKotlin/config/checkstyle/checkstyle.xml">checkstyle.xml</a>
+|           <a href="./JavaToKotlin/config/checkstyle/suppressions.xml">suppressions.xml</a>
+\---<b>src</b>
+    +---<b>main</b>
+    |   +---<b>java</b>
+    |   |       <a href="./JavaToKotlin/src/main/java/IntBox.java">IntBox.java</a>
+    |   |       <a href="./JavaToKotlin/src/main/java/User.java">User.java</a>
+    |   \---<b>kotlin</b>
+    |           <a href="./JavaToKotlin/src/main/kotlin/Main.kt">Main.kt</a>
+    \---<b>test</b>
+        \---<b>kotlin</b>
+                <a href="./JavaToKotlin/src/test/kotlin/JavaToKotlinJUnitTest.kt">JavaToKotlinJUnitTest.kt</a>
+</pre>
 
 Either command [**`build.bat clean run`**](JavaToKotlin/build.bat) or command [**`gradle.bat -q clean run`**](JavaToKotlin/build.gradle) compiles the source files [**`IntBox.java`**](JavaToKotlin/src/main/java/IntBox.java), [**`User.java`**](JavaToKotlin/src/main/java/User.java) and [**`Main.kt`**](JavaToKotlin/src/main/kotlin/Main.kt) and produces the following output:
 
@@ -422,7 +448,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
