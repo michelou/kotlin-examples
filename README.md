@@ -109,7 +109,7 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
    ant 1.10.14, bazel 7.1.1, gradle 8.8, java 17.0.10, detekt-cli 1.23.6,
-   kotlinc 2.0.0, kotlinc-native 2.0.0, ktlint 1.2.1, cfr 0.152,
+   kotlinc 2.0.0, kotlinc-native 2.0.0, ktlint 1.3.1, cfr 0.152,
    make 3.81, mvn 3.9.8, git 2.45.2, diff 3.10, bash 4.4.26(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
@@ -190,7 +190,7 @@ Here are the performed operations:
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir" rel="external">mkdir</a> c:\opt\ktlint\bin</b>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a> c:\opt\ktlint\bin</b>
 &nbsp;
-<b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh <a href="https://github.com/pinterest/ktlint/releases/tag/1.1.0">https://github.com/pinterest/ktlint/releases/download/1.1.0/ktlint</a></b>
+<b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh <a href="https://github.com/pinterest/ktlint/releases/tag/1.3.1">https://github.com/pinterest/ktlint/releases/download/1.3.1/ktlint</a></b>
 <b>&gt; <a href="https://man7.org/linux/man-pages/man1/tail.1.html">tail</a> -n+5 ktlint.sh > ktlint.jar</b>
 <b>&gt; %JAVA_HOME%\bin\<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf ktlint.jar | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> ktlint/Main</b>
 com/pinterest/ktlint/Main.class
@@ -224,7 +224,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://gradle.org/releases/">gradle-8.8-bin.zip</a>                                <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.0">kotlin-compiler-2.0.0.zip</a>                         <i>( 80 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.0">kotlin-native-windows-x86_64-2.0.0.zip</a>            <i>(169 MB)</i>
-<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.2.1)</a>                                    <i>( 63 MB)</i>
+<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.3.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.11_9.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.45.2-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
@@ -275,7 +275,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.2.1
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.3.1
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples#top
 [m2_examples]: https://github.com/michelou/m2-examples#top
