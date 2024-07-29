@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018-2023 Stéphane Micheloud
+# Copyright (c) 2018-2024 Stéphane Micheloud
 #
 # Licensed under the MIT License.
 #
@@ -93,6 +93,7 @@ args() {
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
     debug "Variables  : KTLINT_HOME=$KTLINT_HOME"
+    debug "Variables  : LANGUAGE_VERSION=$LANGUAGE_VERSION"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     $TIMER && TIMER_START=$(date +"%s")
 }
@@ -179,9 +180,8 @@ compile_native() {
     local timestamp_file="$TARGET_DIR/.latest-native-build"
 
     local opts_file="$TARGET_DIR/kotlinc-native_opts.txt"
-    local language_version=1.6
     local exe_file="$TARGET_DIR/${MAIN_NAME}.exe"
-    echo -language-version "$language_version" -o "$(mixed_path $exe_file)" -e "_02_properties.main" > "$opts_file"
+    echo -language-version "$LANGUAGE_VERSION" -o "$(mixed_path $exe_file)" -e "_02_properties.main" > "$opts_file"
 
     local sources_file="$TARGET_DIR/kotlinc-native_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
@@ -265,9 +265,8 @@ compile_java() {
 
 compile_kotlin() {
     local opts_file="$TARGET_DIR/kotlinc_opts.txt"
-    local language_version=1.6
     local cpath="$CLASSES_DIR"
-    echo -language-version "$language_version" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
+    echo -language-version "$LANGUAGE_VERSION" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
 
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
@@ -396,7 +395,7 @@ dokka_cli_jar() {
     local repo_dir="$HOME/.m2/repository"
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -type f -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
     echo "$(mixed_path $jar_file)"
@@ -408,13 +407,13 @@ dokka_cpath() {
     local cpath=
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -type f -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -type f -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
@@ -501,13 +500,13 @@ libs_cpath() {
     local cpath=
     ## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 	local jar_file=
-    for f in $(find "$repo_dir/org/hamcrest/hamcrest" -name "hamcrest-2.2.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/hamcrest/hamcrest" -type f -name "hamcrest-2.2.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
     ## https://mvnrepository.com/artifact/junit/junit
     jar_file=
-    for f in $(find "$repo_dir/junit/junit" -name "junit-4.13.2.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/junit/junit" -type f -name "junit-4.13.2.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
@@ -574,13 +573,15 @@ EXITCODE=0
 
 ROOT_DIR="$(getHome)"
 
-SOURCE_DIR=$ROOT_DIR/src
-SOURCE_MAIN_DIR=$SOURCE_DIR/main/kotlin
-TARGET_DIR=$ROOT_DIR/target
-TARGET_DOCS_DIR=$TARGET_DIR/docs
-CLASSES_DIR=$TARGET_DIR/classes
+SOURCE_DIR="$ROOT_DIR/src"
+SOURCE_MAIN_DIR="$SOURCE_DIR/main/kotlin"
+TARGET_DIR="$ROOT_DIR/target"
+TARGET_DOCS_DIR="$TARGET_DIR/docs"
+CLASSES_DIR="$TARGET_DIR/classes"
 
-TEST_CLASSES_DIR=$TARGET_DIR/test-classes
+TEST_CLASSES_DIR="$TARGET_DIR/test-classes"
+
+LANGUAGE_VERSION=1.8
 
 CLEAN=false
 COMPILE=false

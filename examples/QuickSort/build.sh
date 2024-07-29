@@ -106,7 +106,7 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Subcommands:
     clean        delete generated files
-    compile      compile Java/Kotlin source files
+    compile      compile Kotlin source files
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         print this help message

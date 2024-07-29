@@ -1,4 +1,4 @@
-# <span id="top">Kotlin Resources</span> <span style="size:30%;"><a href="README.md">↩</a></span>
+# <span id="top">Kotlin Resources</span> <span style="font-size:90%;">[↩](README.md#top)</span>
 
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
@@ -34,6 +34,7 @@
 
 ## <span id="blogs">Blogs</span> [**&#x25B4;**](#top)
 
+- [Kotlin Flows - The Ultimate Guide](https://blog.rockthejvm.com/kotlin-flows/) by Daniel Ciocîrlan, April 2024. 
 - [Say Hello to the Kotlin Compiler Plugin][blog_sungbin] by Ji Sungbin, May 2023.
 - [Using Kotlin to build the Lunaconf 2022 App][blog_karim] by Shabab Karim, December 2022.
 - [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.
@@ -99,6 +100,7 @@
 
 ## <span id="tutorials">Tutorials</span> [**&#x25B4;**](#top)
 
+- [The Big Kotlin Tutorial](https://blog.rockthejvm.com/big-kotlin-tutorial/) by Daniel Ciocîrlan, March 2024.
 - [Run detekt using the Detekt Gradle Plugin](https://detekt.dev/docs/gettingstarted/gradle/) - Detekt online documentation.
 - [GeeksforGeeks](https://www.geeksforgeeks.org/) - [Kotlin Programming Language](https://www.geeksforgeeks.org/kotlin-programming-language/).
 - [JournalDev](https://www.journaldev.com/) - [Kotlin][tuto_journaldev]
