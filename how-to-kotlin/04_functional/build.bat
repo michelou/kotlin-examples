@@ -119,6 +119,12 @@ if not exist "%JAVA_HOME%\bin\javac.exe" (
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
@@ -171,7 +177,7 @@ goto :eof
 
 @rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION
 :props
-for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
+for /f "delims=" %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=0.1-SNAPSHOT
 
@@ -195,7 +201,7 @@ if exist "%__PROPS_FILE%" (
 goto :eof
 
 @rem input parameter: %*
-@rem output parameter(s): _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
+@rem output parameters: _CLEAN, _COMPILE, _DEBUG, _RUN, _TIMER, _VERBOSE
 :args
 set _CLEAN=0
 set _COMPILE=0
@@ -223,7 +229,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="-timer" ( set _TIMER=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
-        echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown option "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
    )
@@ -238,7 +244,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="run" ( set _COMPILE=1& set _RUN=1
     ) else if "%__ARG%"=="test" ( set _COMPILE=1& set _TEST=1
     ) else (
-        echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown subcommand "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -268,7 +274,7 @@ if %_DEBUG%==1 (
     if defined _KTLINT_CMD echo %_DEBUG_LABEL% Variables  : "KTLINT_HOME=%KTLINT_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _MAIN_CLASS=%_MAIN_CLASS% 1>&2
 )
-if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
+if %_TIMER%==1 for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
 :help
@@ -321,6 +327,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%__DIR%" 1>&2
 )
 rmdir /s /q "%__DIR%"
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to delete directory "!__DIR:%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -394,8 +401,10 @@ for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
     set /a __N+=1
 )
 if %__N%==0 (
-    echo %_WARNING_LABEL% No Kotlin source file found 1>&2
+    echo %_WARNING_LABEL% No source file found 1>&2
     goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
 )
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
@@ -409,11 +418,11 @@ set "__CPATH=%_LIBS_CPATH%%_CLASSES_DIR%"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(JVM^) to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(JVM^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -435,6 +444,12 @@ for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
+if %__N%==0 (
+    echo %_WARNING_LABEL% No source file found 1>&2
+    goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin source file
+) else ( set __N_FILES=%__N% Kotlin source files
+)
 set /a __WARN_ENABLED=_VERBOSE+_DEBUG
 if %__WARN_ENABLED%==0 ( set __NOWARN_OPT=-nowarn
 ) else ( set __NOWARN_OPT=
@@ -443,11 +458,11 @@ set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo -language-version %_LANGUAGE_VERSION% %__NOWARN_OPT% -o "%_EXE_FILE:\=\\%" -e "%_PKG_NAME%main" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin source files ^(native^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to native application "!_EXE_FILE:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin source files failed ^(native^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to native application "!_EXE_FILE:%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -471,11 +486,11 @@ goto action_path
 
 :action_next
 set __TARGET_TIMESTAMP=00000000000000
-for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+for /f "usebackq" %%i in (`call "%_PWSH_CMD%" -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
      set __TARGET_TIMESTAMP=%%i
 )
 set __SOURCE_TIMESTAMP=00000000000000
-for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+for /f "usebackq" %%i in (`call "%_PWSH_CMD%" -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
     set __SOURCE_TIMESTAMP=%%i
 )
 call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
@@ -509,7 +524,7 @@ goto :eof
 
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
-for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
+for /f "delims=" %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
 if not exist "%__BATCH_FILE%" (
     echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
     set _EXITCODE=1
@@ -537,7 +552,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_J
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Generation of HTML documentation failed 1>&2
+    echo %_ERROR_LABEL% Failed to generate HTML documentation into directory "!_TARGET_DOCS_DIR=%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -556,11 +571,11 @@ if not exist "%__MAIN_CLASS_FILE%" (
 set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin main class "%_MAIN_CLASS%" 1>&2
 )
 call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Execution failure ^(%_MAIN_CLASS%^) 1>&2
+    echo %_ERROR_LABEL% Failed to execute Kotlin main class "%_MAIN_CLASS%" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -577,6 +592,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to execute Kotlin native application "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -591,24 +607,26 @@ if not exist "%_TEST_CLASSES_DIR%" mkdir "%_TEST_CLASSES_DIR%" 1>NUL
 set "__SOURCES_FILE=%_TARGET_DIR%\test_kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_SOURCE_DIR%\test\kotlin\*.kt" 2^>NUL') do (
+for /f "delims=" %%i in ('dir /s /b "%_SOURCE_DIR%\test\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
 if %__N%==0 (
-    echo %_WARNING_LABEL% No Kotlin test source files found 1>&2
+    echo %_WARNING_LABEL% No Kotlin test source file found 1>&2
     goto :eof
+) else if %__N%==1 ( set __N_FILES=%__N% Kotlin test source file
+) else ( set __N_FILES=%__N% Kotlin test source files
 )
 set "__OPTS_FILE=%_TARGET_DIR%\test_kotlinc_opts.txt"
 set "__CPATH=%_CPATH%%_CLASSES_DIR%"
 echo -cp "%__CPATH:\=\\%" -d "%_TEST_CLASSES_DIR:\=\\%" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N% Kotlin test source files ^(JVM^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to directory "!_TEST_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Compilation of %__N% Kotlin test source files failed ^(JVM^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_TEST_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -624,10 +642,11 @@ set __TEST_KOTLIN_OPTS=-classpath "%_CPATH%%_CLASSES_DIR%;%_TEST_CLASSES_DIR%"
 for /f "usebackq" %%f in (`dir /s /b "%_TEST_CLASSES_DIR%\*JUnitTest.class" 2^>NUL`) do (
     call :test_main_class "%%f"
     if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__TEST_KOTLIN_OPTS% org.junit.runner.JUnitCore !_TEST_MAIN_CLASS! 1>&2
-    ) else if %_VERBOSE%==1 ( echo Execute test !_TEST_MAIN_CLASS! 1>&2
+    ) else if %_VERBOSE%==1 ( echo Execute test "!_TEST_MAIN_CLASS!" 1>&2
     )
     call "%_KOTLIN_CMD%" %__TEST_KOTLIN_OPTS% org.junit.runner.JUnitCore !_TEST_MAIN_CLASS!
     if not !ERRORLEVEL!==0 (
+        echo %_ERROR_LABEL% Failed to execute test "!_TEST_MAIN_CLASS!" 1>&2
         set _EXITCODE=1
         goto :eof
     )
@@ -655,7 +674,7 @@ goto :eof
 set __START=%~1
 set __END=%~2
 
-for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
 @rem #########################################################################
@@ -663,9 +682,9 @@ goto :eof
 
 :end
 if %_TIMER%==1 (
-    for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
+    for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Total elapsed time: !_DURATION! 1>&2
+    echo Total execution time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%

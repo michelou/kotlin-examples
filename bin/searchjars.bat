@@ -78,15 +78,17 @@ if not exist "%JAVA_HOME%\lib\" (
 )
 set "_JAR_CMD=%JAVA_HOME%\bin\jar.exe"
 set "_JAVAP_CMD=%JAVA_HOME%\bin\javap.exe"
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -124,6 +126,12 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+set _RESET=[0m
 goto :eof
 
 @rem input parameter: %*
@@ -224,7 +232,7 @@ for /f "delims=" %%i in ('dir %__DIR_OPTS% "%__LIB_DIR%\*.jar" ') do (
     if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAR_CMD%" -tf "!__JAR_FILE!" 1>&2
     ) else if %_VERBOSE%==1 ( echo %__SEARCH_FOR% class name %_CLASS_NAME% in file "!__JAR_FILE:%USERPROFILE%=%%USERPROFILE%%!" 1>&2
     )
-    for /f "delims=" %%f in ('powershell -c "%_JAR_CMD% -tvf "!__JAR_FILE!" | Where {$_.endsWith('class') -And $_.split('/.')[-2].contains('%_CLASS_NAME%')}"') do (
+    for /f "delims=" %%f in ('call "%_PWSH_CMD%" -c "%_JAR_CMD% -tvf "!__JAR_FILE!" | Where {$_.endsWith('class') -And $_.split('/.')[-2].contains('%_CLASS_NAME%')}"') do (
         for /f "delims=" %%x in ("%%f") do set "__LAST=%%x"
         if defined _METH_NAME (
             set "__CLASS_NAME=!__LAST:~0,-6!"

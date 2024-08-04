@@ -8,10 +8,15 @@ if not defined _DEBUG set _DEBUG=0
 set _VERBOSE=0
 
 if not defined _MVN_CMD set "_MVN_CMD=%MAVEN_HOME%\bin\mvn.cmd"
-if %_DEBUG%==1 echo [%~n0] "_MVN_CMD=%_MVN_CMD%"
+if %_DEBUG%==1 echo [%~n0] "_MVN_CMD=%_MVN_CMD%" 1>&2
 
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
+)
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
 )
 set __CENTRAL_REPO=https://repo1.maven.org/maven2
 set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
@@ -22,10 +27,10 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone
-call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.10.0"
+call :add_jar "org.junit.platform" "junit-platform-console-standalone" "1.10.3"
 
 @rem https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-call :add_jar "org.junit.jupiter" "junit-jupiter-api" "5.10.0"
+call :add_jar "org.junit.jupiter" "junit-jupiter-api" "5.10.3"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 call :add_jar "org.hamcrest" "hamcrest" "2.2"
@@ -55,10 +60,10 @@ if not exist "%__JAR_FILE%" (
     set __JAR_URL=%__CENTRAL_REPO%/%__GROUP_ID:.=/%/%__ARTIFACT_ID%/%__VERSION%/%__JAR_NAME%
     set "__JAR_FILE=%__TEMP_DIR%\%__JAR_NAME%"
     if not exist "!__JAR_FILE!" (
-        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% powershell -c "Invoke-WebRequest -Uri !__JAR_URL! -Outfile '!__JAR_FILE!'" 1>&2
+        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_PWSH_CMD%" -c "Invoke-WebRequest -Uri !__JAR_URL! -Outfile '!__JAR_FILE!'" 1>&2
         ) else if %_VERBOSE%==1 ( echo Download file %__JAR_NAME% to directory "%%USERPROFILE%%!__TEMP_DIR:%USERPROFILE%=!" 1>&2
         )
-        powershell -c "$progressPreference='silentlyContinue';Invoke-WebRequest -Uri !__JAR_URL! -Outfile '!__JAR_FILE!'"
+        call "%_PWSH_CMD%" -c "$progressPreference='silentlyContinue';Invoke-WebRequest -Uri !__JAR_URL! -Outfile '!__JAR_FILE!'"
         if not !ERRORLEVEL!==0 (
             echo %_ERROR_LABEL% Failed to download file "%__JAR_NAME%" 1>&2
             set _EXITCODE=1

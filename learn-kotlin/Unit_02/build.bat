@@ -96,6 +96,12 @@ if not exist "%JAVA_HOME%\bin\java.exe" (
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
@@ -148,11 +154,11 @@ goto :eof
 
 @rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION
 :props
-for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
+for /f "delims=" %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-set _LANGUAGE_VERSION=1.6
+set _LANGUAGE_VERSION=1.8
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -244,14 +250,14 @@ if %_DEBUG%==1 (
     if defined _KTLINT_CMD echo %_DEBUG_LABEL% Variables  : "KTLINT_HOME=%KTLINT_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% 1>&2
 )
-if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
+if %_TIMER%==1 for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
 @rem input parameter: %~1=primitive type (or "all")
 @rem output parameter: _EXAMPLE
 :args_example
 @rem apply title case to input parameter
-for /f %%i in ('powershell -C "(Get-Culture).TextInfo.ToTitleCase(('%~1').ToLower())"') do set __EXAMPLE=%%i
+for /f %%i in ('call "%_PWSH_CMD%" -C "(Get-Culture).TextInfo.ToTitleCase(('%~1').ToLower())"') do set __EXAMPLE=%%i
 if "%__EXAMPLE%"=="All" (
     set "__EXAMPLE_FILE=%_SOURCE_DIR%\main\kotlin\Primitives.kt"
     set _EXAMPLE=*
@@ -422,11 +428,11 @@ goto action_path
 
 :action_next
 set __TARGET_TIMESTAMP=00000000000000
-for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+for /f "usebackq" %%i in (`call "%_PWSH_CMD%" -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
      set __TARGET_TIMESTAMP=%%i
 )
 set __SOURCE_TIMESTAMP=00000000000000
-for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+for /f "usebackq" %%i in (`call "%_PWSH_CMD%" -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
     set __SOURCE_TIMESTAMP=%%i
 )
 call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
@@ -470,6 +476,7 @@ if not exist "%__BATCH_FILE%" (
 if %_DEBUG%==1 echo %_DEBUG_LABEL% "%__BATCH_FILE%" %_DEBUG% 1>&2
 call "%__BATCH_FILE%" %_DEBUG%
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to execute batch file "%__BATCH_FILE%" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -518,7 +525,7 @@ goto :eof
 set __START=%~1
 set __END=%~2
 
-for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
 @rem #########################################################################
@@ -526,7 +533,7 @@ goto :eof
 
 :end
 if %_TIMER%==1 (
-    for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
+    for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
     echo Total execution time: !_DURATION! 1>&2
 )

@@ -22,7 +22,8 @@ if %_HELP%==1 (
     call :help
     exit /b !_EXITCODE!
 )
-for %%i in (concurrency-in-kotlin effective-kotlin examples functional-kotlin kotlin-cookbook learn-kotlin) do (
+
+for %%i in (concurrency-in-kotlin dsl-in-kotlin examples functional-kotlin how-to-kotlin kotlin-cookbook learn-kotlin) do (
     set "__PROJECT_DIR=%_ROOT_DIR%%%i"
     if exist "!__PROJECT_DIR!\" (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% call :clean_dir "!__PROJECT_DIR!" 1>&2
@@ -47,17 +48,17 @@ call :env_colors
 set _DEBUG_LABEL=%_NORMAL_BG_CYAN%[%_BASENAME%]%_RESET%
 set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
-set _COLOR_START=%_NORMAL_FG_GREEN%
-set _COLOR_END=%_RESET%
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -95,6 +96,12 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+set _RESET=[0m
 goto :eof
 
 @rem input parameter: %*
@@ -132,7 +139,7 @@ shift
 goto :args_loop
 :args_done
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _HELP=%_HELP% _TIMER=%_TIMER% _VERBOSE=%_VERBOSE% 1>&2
-if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
+if %_TIMER%==1 for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
 :help
@@ -161,14 +168,14 @@ goto :eof
 
 @rem input parameter: %1=parent directory
 :clean_dir
-set __PARENT_DIR=%~1
+set "__PARENT_DIR=%~1"
 if not exist "%__PARENT_DIR%" (
     echo %_WARNING_LABEL% Directory not found ^(%__PARENT_DIR%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
 set __N=0
-for /f %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr -v bin') do (
+for /f "delims=" %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr -v bin') do (
     set "_BUILD_FILE=%__PARENT_DIR%\%%i\build.bat"
     if exist "!_BUILD_FILE!" (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% _BUILD_FILE=!_BUILD_FILE! 1>&2
@@ -190,7 +197,7 @@ goto :eof
 set __START=%~1
 set __END=%~2
 
-for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
 @rem #########################################################################
@@ -198,9 +205,9 @@ goto :eof
 
 :end
 if %_TIMER%==1 (
-    for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
+    for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
-    echo Total elapsed time: !_DURATION! 1>&2
+    echo Total execution time: !_DURATION! 1>&2
 )
 if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
 exit /b %_EXITCODE%

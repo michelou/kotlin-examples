@@ -102,15 +102,17 @@ if not exist "%JAVA_HOME%\bin\java.exe" (
 )
 set "_JAVA_CMD=%JAVA_HOME%\bin\java.exe"
 set "_JAVAC_CMD=%JAVA_HOME%\bin\javac.exe"
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -148,15 +150,21 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+set _RESET=[0m
 goto :eof
 
-@rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION
+@rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION, _LANGUAGE_VERSION
 :props
 for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-set _LANGUAGE_VERSION=1.6
+set _LANGUAGE_VERSION=1.8
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -209,7 +217,7 @@ if "%__ARG:~0,1%"=="-" (
     ) else if "%__ARG%"=="-timer" ( set _TIMER=1
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
-        echo %_ERROR_LABEL% Unknown option %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown option "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
    )
@@ -236,7 +244,7 @@ if "%__ARG:~0,1%"=="-" (
         if not !_EXITCODE!==0 goto args_done
         set _COMPILE=1& set _RUN=1
     ) else (
-        echo %_ERROR_LABEL% Unknown subcommand %__ARG% 1>&2
+        echo %_ERROR_LABEL% Unknown subcommand "%__ARG%" 1>&2
         set _EXITCODE=1
         goto args_done
     )
@@ -266,14 +274,14 @@ if %_DEBUG%==1 (
     if defined _KTLINT_CMD echo %_DEBUG_LABEL% Variables  : "KTLINT_HOME=%KTLINT_HOME%" 1>&2
     echo %_DEBUG_LABEL% Variables  : _LANGUAGE_VERSION=%_LANGUAGE_VERSION% _TARGET=%_TARGET% 1>&2
 )
-if %_TIMER%==1 for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIMER_START=%%i
+if %_TIMER%==1 for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
 @rem input parameter: %~1=primitive type (or "all")
 @rem output parameter: _EXAMPLE
 :args_example
 @rem apply title case to input parameter
-for /f %%i in ('powershell -C "(Get-Culture).TextInfo.ToTitleCase(('%~1').ToLower())"') do set __EXAMPLE=%%i
+for /f %%i in ('call "%_PWSH_CMD%" -C "(Get-Culture).TextInfo.ToTitleCase(('%~1').ToLower())"') do set __EXAMPLE=%%i
 if "%__EXAMPLE%"=="All" (
     set "__EXAMPLE_FILE=%_MAIN_SOURCE_DIR%\Primitives.kt"
     set _EXAMPLE=*
@@ -303,16 +311,16 @@ if %_VERBOSE%==1 (
 echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
-echo     %__BEG_O%-debug%__END%            display commands executed by this script
-echo     %__BEG_O%-timer%__END%            display total elapsed time
-echo     %__BEG_O%-verbose%__END%          display progress messages
+echo     %__BEG_O%-debug%__END%            print commands executed by this script
+echo     %__BEG_O%-timer%__END%            print total execution time
+echo     %__BEG_O%-verbose%__END%          print progress messages
 echo.
 echo   %__BEG_P%Subcommands:%__END%
 echo     %__BEG_O%clean%__END%             delete generated files
 echo     %__BEG_O%compile[:^<name^>]%__END%  generate class files
 echo     %__BEG_O%detekt%__END%            analyze Kotlin source files with %__BEG_N%Detekt%__END%
 echo     %__BEG_O%doc%__END%               generate HTML documentation with %__BEG_N%Dokka%__END%
-echo     %__BEG_O%help%__END%              display this help message
+echo     %__BEG_O%help%__END%              print this help message
 echo     %__BEG_O%lint[:^<name^>]%__END%     analyze Kotlin source files with %__BEG_N%KtLint%__END%
 echo     %__BEG_O%run[:^<name^>]%__END%      execute the generated program
 echo.
@@ -345,8 +353,13 @@ set __DETEKT_OPTS=%__DETEKT_OPTS% --report "xml:%_TARGET_DIR%\detekt-report.xml"
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_DETEKT_CMD%" %__DETEKT_OPTS% 1>&2
 ) else if %_VERBOSE%==1 ( echo Analyze Kotlin source files with Detekt 1>&2
 )
-call "%_DETEKT_CMD%" %__DETEKT_OPTS%
+call "%_DETEKT_CMD%" %__DETEKT_OPTS% %_STDERR_REDIRECT%
 if not %ERRORLEVEL%==0 (
+    if %_DEBUG%==1 if exist "%_TARGET_DIR%\detekt-report.xml" (
+        set __SIZE=0
+        for %%f in (%_TARGET_DIR%\detekt-report.xml) do set __SIZE=%%~zf
+        if !__SIZE! gtr 79 type "%_TARGET_DIR%\detekt-report.xml" 1>&2
+    )
     set _EXITCODE=1
     goto :eof
 )
@@ -409,7 +422,7 @@ echo -language-version %_LANGUAGE_VERSION% -cp "%__CPATH:\=\\%" -d "%_CLASSES_DI
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('where /r "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_DIR%\main\kotlin" *.kt 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -424,10 +437,11 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOUR
 )
 call "%_KOTLINC_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to compile %__N_files% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to directory "!_CLASSES_DIR:%_ROOT_DIR%=!" ^(JVM^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
+echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 :compile_native
@@ -436,7 +450,7 @@ if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
+for /f "delims=" %%i in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
     echo %%i >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -450,14 +464,15 @@ set "__OPTS_FILE=%_TARGET_DIR%\kotlinc-native_opts.txt"
 echo -Werror -kotlin-home "%KOTLIN_HOME:\=\\%" -o "%_EXE_FILE:\=\\%" -e "%__PKG_NAME%main" > "%__OPTS_FILE%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% ^(native^) 1>&2
+) else if %_VERBOSE%==1 ( echo Compile %__N_FILES% to native application "!_EXE_FILE:%_ROOT_DIR%=!" 1>&2
 )
 call "%_KOTLINC_NATIVE_CMD%" "@%__OPTS_FILE%" "@%__SOURCES_FILE%"
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to compile %__N_FILES% ^(native^) 1>&2
+    echo %_ERROR_LABEL% Failed to compile %__N_FILES% to native application "!_EXE_FILE:%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
+echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 @rem input parameter: 1=target file 2,3,..=path (wildcards accepted)
@@ -477,11 +492,11 @@ goto action_path
 
 :action_next
 set __TARGET_TIMESTAMP=00000000000000
-for /f "usebackq" %%i in (`powershell -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+for /f "usebackq" %%i in (`call "%_PWSH_CMD%" -c "gci -path '%__TARGET_FILE%' -ea Stop | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
      set __TARGET_TIMESTAMP=%%i
 )
 set __SOURCE_TIMESTAMP=00000000000000
-for /f "usebackq" %%i in (`powershell -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
+for /f "usebackq" %%i in (`call "%_PWSH_CMD%" -c "gci -recurse -path %__PATH_ARRAY:~1% -ea Stop | sort LastWriteTime | select -last 1 -expandProperty LastWriteTime | Get-Date -uformat %%Y%%m%%d%%H%%M%%S" 2^>NUL`) do (
     set __SOURCE_TIMESTAMP=%%i
 )
 call :newer %__SOURCE_TIMESTAMP% %__TARGET_TIMESTAMP%
@@ -516,7 +531,7 @@ goto :eof
 @rem output parameter: _LIBS_CPATH
 :libs_cpath
 set _LIBS_CPATH=
-for %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
+for /f "delims=" %%f in ("%~dp0\.") do set "__BATCH_FILE=%%~dpfcpath.bat"
 if not exist "%__BATCH_FILE%" (
     echo %_ERROR_LABEL% Batch file "%__BATCH_FILE%" not found 1>&2
     set _EXITCODE=1
@@ -544,11 +559,11 @@ set __ARGS=-src %_SOURCE_DIR%\main\kotlin
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
-) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2
+) else if %_VERBOSE%==1 ( echo Generate HTML documentation into directory "!_TARGET_DOCS_DIR:%_ROOT_DIR%=!" 1>&2
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Failed to generate HTML documentation with Dokka 1>&2
+    echo %_ERROR_LABEL% Failed to generate HTML documentation into directory "!_TARGET_DOCS_DIR:%_ROOT_DIR%=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -578,10 +593,11 @@ if not exist "%_EXE_FILE%" (
     goto :eof
 )
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_EXE_FILE%" 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin native "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin native application "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
 )
 call "%_EXE_FILE%"
 if not %ERRORLEVEL%==0 (
+    echo %_ERROR_LABEL% Failed to execute Kotlin native application "!_EXE_FILE:%_ROOT_DIR%\=!" 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -592,7 +608,7 @@ goto :eof
 set __START=%~1
 set __END=%~2
 
-for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
 @rem #########################################################################
@@ -600,7 +616,7 @@ goto :eof
 
 :end
 if %_TIMER%==1 (
-    for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIMER_END=%%i
+    for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set __TIMER_END=%%i
     call :duration "%_TIMER_START%" "!__TIMER_END!"
     echo Total execution time: !_DURATION! 1>&2
 )

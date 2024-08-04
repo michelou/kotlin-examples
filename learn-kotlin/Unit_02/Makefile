@@ -24,7 +24,7 @@ MAIN_ARGS ?=
 
 all: build run
 
-build: $(TARGET)
+build: deps $(TARGET)
 
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"

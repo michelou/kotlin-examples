@@ -22,8 +22,8 @@
     <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
     <property name="cfr.version" value="0.152" />
-    <property name="ktlint.version" value="1.0.1" />
-    <property name="picocli.version" value="4.7.1" />
+    <property name="ktlint.version" value="1.3.1" />
+    <property name="picocli.version" value="4.7.6" />
 
     <target name="init">
         <propertyregex
@@ -53,7 +53,7 @@
             <pathelement location="${build.dir}" />
         </path>
 
-        <!-- installed: C:/opt/apache-ant-1.10.20/lib/ivy-2.5.1.jar -->
+        <!-- installed: C:/opt/apache-ant/lib/ivy-2.5.1.jar -->
         <taskdef resource="org/apache/ivy/ant/antlib.xml"
             uri="antlib:org.apache.ivy.ant" />
         <ivy:resolve file="../ivy.xml" showprogress="false" log="download-only" />

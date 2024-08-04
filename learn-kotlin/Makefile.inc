@@ -36,11 +36,13 @@ RM         = rm
 TOUCH      = touch
 endif
 
-LANGUAGE_VERSION = 1.6
+LANGUAGE_VERSION = 1.8
 JVM_TARGET=11
 
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
 DOKKA_VERSION=1.9.20
+## https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
+DOKKA_ANALYSIS_VERSION=1.8.20
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
@@ -48,12 +50,12 @@ KOTLIN_VERSION  = 2.0.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 KOTLINX_VERSION = 1.9.0-RC
 
-DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_VERSION).jar)
+DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -type f -name dokka-analysis-$(DOKKA_ANALYSIS_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)
 DOKKA_CLI_JAR          = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-cli" -name dokka-cli-$(DOKKA_VERSION).jar)
 DOKKA_PLUGIN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-gradle-plugin" -name dokka-gradle-plugin-$(DOKKA_VERSION).jar)
-KOTLIN_ANALYSIS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/kotlin-analysis-compiler" -name kotlin-analysis-compiler-$(DOKKA_VERSION).jar)
-KOTLIN_INTELLIJ_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/kotlin-analysis-intellij" -name kotlin-analysis-intellij-$(DOKKA_VERSION).jar)
+KOTLIN_ANALYSIS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/kotlin-analysis-compiler" -name kotlin-analysis-compiler-$(DOKKA_ANALYSIS_VERSION).jar)
+KOTLIN_INTELLIJ_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/kotlin-analysis-intellij" -name kotlin-analysis-intellij-$(DOKKA_ANALYSIS_VERSION).jar)
 
 KOTLIN_COMPILER_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-compiler" -name kotlin-compiler-$(KOTLIN_VERSION).jar)
 KOTLIN_STDLIB_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
@@ -110,6 +112,16 @@ ifeq (,$(wildcard $(DOKKA_PLUGIN_JAR)))
 	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
 	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
 	$(eval DOKKA_PLUGIN_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
+endif
+ifeq (,$(wildcard $(KOTLIN_ANALYSIS_JAR)))
+	$(eval GROUP_ID := org.jetbrains.dokka)
+	$(eval ARTIFACT_ID := kotlin-analysis-compiler)
+	$(eval VERSION := $(DOKKA_ANALYSIS_VERSION))
+	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
+	$(eval KOTLIN_ANALYSIS_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 	$(eval GROUP_ID := org.hamcrest)

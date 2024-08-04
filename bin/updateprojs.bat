@@ -75,6 +75,12 @@ call :env_colors
 set _DEBUG_LABEL=%_NORMAL_BG_CYAN%[%_BASENAME%]%_RESET%
 set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
@@ -120,8 +126,8 @@ set _STRONG_BG_BLUE=[104m
 
 @rem we define _RESET in last position to avoid crazy console output with type command
 set _BOLD=[1m
-set _INVERSE=[7m
 set _UNDERSCORE=[4m
+set _INVERSE=[7m
 set _RESET=[0m
 goto :eof
 
@@ -170,8 +176,8 @@ set __PS1_SCRIPT=^
 Foreach { $_ -replace '%__PATTERN_FROM:>=^>%','%__PATTERN_TO:>=^>%' } ^| ^
 Set-Content '%__FILE%'
 
-if %_DEBUG%==1 echo %_DEBUG_LABEL% powershell -C "%__PS1_SCRIPT%" 1>&2
-powershell -C "%__PS1_SCRIPT%"
+if %_DEBUG%==1 echo %_DEBUG_LABEL% "%_PWSH_CMD%" -C "%__PS1_SCRIPT%" 1>&2
+call "%_PWSH_CMD%" -C "%__PS1_SCRIPT%"
 if not %ERRORLEVEL%==0 (
     echo %_ERROR_LABEL% Execution of ps1 cmdlet failed 1>&2
     set _EXITCODE=1
@@ -184,7 +190,7 @@ set "__PARENT_DIR=%~1"
 set __N_GRA=0
 set __N_POM=0
 echo Parent directory: %__PARENT_DIR%
-for /f %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr /v /c:"lib"') do (
+for /f "delims=" %%i in ('dir /ad /b "%__PARENT_DIR%" ^| findstr /v /c:"lib"') do (
 	set "__GRADLE_PROPS_FILE=%__PARENT_DIR%\%%i\gradle.properties"
     if exist "!__GRADLE_PROPS_FILE!" (
         @rem koddaVersion

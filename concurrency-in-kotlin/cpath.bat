@@ -9,6 +9,11 @@ if not defined _MVN_CMD set "_MVN_CMD=%MAVEN_HOME%\bin\mvn.cmd"
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
 )
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
 
 set "__TEMP_DIR=%TEMP%\lib"
@@ -26,7 +31,7 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-set __KOTLINX_VERSION=1.7.3
+set __KOTLINX_VERSION=1.8.1
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLINX_VERSION%"
@@ -48,7 +53,7 @@ call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-intellij" "%__DOKKA_A
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 call :add_maven_jar "org.jetbrains.dokka" "dokka-analysis" "%__DOKKA_ANALYSIS_VERSION%"
 
-set __DOKKA_VERSION=1.9.10
+set __DOKKA_VERSION=1.9.20
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
 call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
@@ -96,10 +101,10 @@ if not exist "%__JAR_FILE%" (
     set __JAR_URL=%__REPOSITORY%/%__GROUP_ID:.=/%/%__ARTIFACT_ID%/%__VERSION%/%__JAR_NAME%
     set "__JAR_FILE=%__TEMP_DIR%\%__JAR_NAME%"
     if not exist "!__JAR_FILE!" (
-        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% powershell -c "Invoke-WebRequest -Uri '!__JAR_URL!' -Outfile '!__JAR_FILE!'" 1>&2
+        if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_PWSH_CMD%" -c "Invoke-WebRequest -Uri '!__JAR_URL!' -Outfile '!__JAR_FILE!'" 1>&2
         ) else if %_VERBOSE%==1 ( echo Download file %__JAR_NAME% to directory "!__TEMP_DIR:%USERPROFILE%=%%USERPROFILE%%!" 1>&2
         )
-        powershell -c "$progressPreference='silentlyContinue';Invoke-WebRequest -Uri '!__JAR_URL!' -Outfile '!__JAR_FILE!'"
+        call "%_PWSH_CMD%" -c "$progressPreference='silentlyContinue';Invoke-WebRequest -Uri '!__JAR_URL!' -Outfile '!__JAR_FILE!'"
         if not !ERRORLEVEL!==0 (
             echo %_ERROR_LABEL% Failed to download file %__JAR_NAME% 1>&2
             set _EXITCODE=1

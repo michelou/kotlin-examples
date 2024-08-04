@@ -15,7 +15,7 @@ if not %_EXITCODE%==0 goto end
 @rem #########################################################################
 @rem ## Main
 
-for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set _TIME_START=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set _TIME_START=%%i
 
 if "%1"=="" (
     echo %_ERROR_LABEL% timeit expects a single command or several chained commands 1>&2
@@ -35,7 +35,7 @@ if "%1"=="" goto loop_end
 set _CH1=%_CMDS:~0,1%
 if not [%_CH1:"=@%]==[@] set _CMDS="%_CMDS:^^=%"
 
-if %_DEBUG%==1 echo %_DEBUG_LABEL% cmd /c %_CMDS%
+if %_DEBUG%==1 echo %_DEBUG_LABEL% cmd /c %_CMDS% 1>&2
 cmd /c %_CMDS%
 if not %ERRORLEVEL%==0 (
     echo %_ERROR_LABEL% Failed to execute commands 1>&2
@@ -50,7 +50,7 @@ goto end
 @rem #########################################################################
 @rem ## Subroutines
 
-@rem output parameter(s): _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
+@rem output parameters: _DEBUG_LABEL, _ERROR_LABEL, _WARNING_LABEL
 :env
 set _BASENAME=%~n0
 
@@ -58,15 +58,17 @@ call :env_colors
 set _DEBUG_LABEL=%_NORMAL_BG_CYAN%[%_BASENAME%]%_RESET%
 set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
+
+@rem use newer PowerShell version if available
+where /q pwsh.exe
+if %ERRORLEVEL%==0 ( set _PWSH_CMD=pwsh.exe
+) else ( set _PWSH_CMD=powershell.exe
+)
 goto :eof
 
 :env_colors
 @rem ANSI colors in standard Windows 10 shell
 @rem see https://gist.github.com/mlocati/#file-win10colors-cmd
-set _RESET=[0m
-set _BOLD=[1m
-set _UNDERSCORE=[4m
-set _INVERSE=[7m
 
 @rem normal foreground colors
 set _NORMAL_FG_BLACK=[30m
@@ -104,11 +106,17 @@ set _STRONG_BG_RED=[101m
 set _STRONG_BG_GREEN=[102m
 set _STRONG_BG_YELLOW=[103m
 set _STRONG_BG_BLUE=[104m
+
+@rem we define _RESET in last position to avoid crazy console output with type command
+set _BOLD=[1m
+set _UNDERSCORE=[4m
+set _INVERSE=[7m
+set _RESET=[0m
 goto :eof
 
 :execution_time
 set __TIME_START=%~1
-for /f "delims=" %%i in ('powershell -c "(Get-Date)"') do set __TIME_END=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set __TIME_END=%%i
 
 call :duration "%__TIME_START%" "%__TIME_END%"
 echo Execution time: %_DURATION%
@@ -119,7 +127,7 @@ goto :eof
 set __START=%~1
 set __END=%~2
 
-for /f "delims=" %%i in ('powershell -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
+for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "$interval = New-TimeSpan -Start '%__START%' -End '%__END%'; Write-Host $interval"') do set _DURATION=%%i
 goto :eof
 
 @rem #########################################################################
