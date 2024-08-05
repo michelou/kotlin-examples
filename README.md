@@ -16,7 +16,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.45][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.46][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 2.0][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 2.0][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -26,11 +26,11 @@ Optionally one may also install the following software:
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [ConEmu 2023][conemu_downloads] ([*release notes*][conemu_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 8.8][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Gradle 8.9][gradle_latest] ([*release notes*][gradle_relnotes])
 - [KtLint 1.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
-- [Visual Studio Code 1.91][vscode_downloads] ([*release notes*][vscode_relnotes])
+- [Visual Studio Code 1.92][vscode_downloads] ([*release notes*][vscode_relnotes])
 
 For instance our development environment looks as follows (*July 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
@@ -108,9 +108,9 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.14, bazel 7.1.1, gradle 8.8, java 17.0.10, detekt-cli 1.23.6,
+   ant 1.10.14, bazel 7.1.1, gradle 8.9, java 17.0.10, detekt-cli 1.23.6,
    kotlinc 2.0.0, kotlinc-native 2.0.0, ktlint 1.3.1, cfr 0.152,
-   make 3.81, mvn 3.9.8, git 2.45.2, diff 3.10, bash 4.4.26(1)
+   make 3.81, mvn 3.9.8, git 2.46.0, diff 3.10, bash 4.4.26(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\bazel\bazel.exe
@@ -221,14 +221,14 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.8-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                              <i>(  5 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.6.zip</a>                             <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-8.8-bin.zip</a>                                <i>(115 MB)</i>
+<a href="https://gradle.org/releases/">gradle-8.9-bin.zip</a>                                <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.0">kotlin-compiler-2.0.0.zip</a>                         <i>( 80 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.0">kotlin-native-windows-x86_64-2.0.0.zip</a>            <i>(169 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.3.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.11_9.zip</a>  <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.45.2-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
-<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.91.0.zip</a>                       <i>(131 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.46.0-64-bit.7z.exe</a>                  <i>( 43 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.92.0.zip</a>                       <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
@@ -258,13 +258,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [flix_examples]: https://github.com/michelou/flix-examples#top
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.45.2.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.46.0.txt
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples#top
 [graalvm_examples]: https://github.com/michelou/graalvm-examples#top
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/8.8/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/8.9/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kafka_examples]: https://github.com/michelou/kafka-examples#top

@@ -144,6 +144,7 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
+@rem https://kotlinlang.org/docs/compatibility-guide-18.html
 set _LANGUAGE_VERSION=1.8
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
@@ -523,7 +524,7 @@ set __ARGS=-src %_SOURCE_DIR%\main\kotlin
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS% 1>&2
-) else if %_VERBOSE%==1 ( echo Generate HTML documentation with Dokka 1>&2
+) else if %_VERBOSE%==1 ( echo Generate HTML documentation into directory "!_TARGET_DOCS_DIR:%_ROOT_DIR%=!" 1>&2
 )
 call "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_JAR%" %__DOKKA_ARGS%
 if not %ERRORLEVEL%==0 (
@@ -543,7 +544,7 @@ if %_DEBUG%==1 ( echo %_DEBUG_LABEL% %_KOTLIN_CMD% %__KOTLIN_OPTS% %__MAIN_CLASS
 )
 call %_KOTLIN_CMD% %__KOTLIN_OPTS% %__MAIN_CLASS%
 if not %ERRORLEVEL%==0 (
-   echo %_ERROR_LABEL% Failed to execute Kotlin main class "__MAIN_CLASS!" 1>&2
+   echo %_ERROR_LABEL% Failed to execute Kotlin main class "!__MAIN_CLASS!" 1>&2
    set _EXITCODE=1
    goto :eof
 )
