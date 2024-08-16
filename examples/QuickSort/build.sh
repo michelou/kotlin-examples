@@ -346,9 +346,9 @@ version_string() {
 
 dokka_cli_jar() {
     local repo_dir="$HOME/.m2/repository"
-    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -type f -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
     echo "$(mixed_path $jar_file)"
@@ -360,13 +360,13 @@ dokka_cpath() {
     local cpath=
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -type f -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -type f -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
@@ -453,13 +453,13 @@ libs_cpath() {
     local cpath=
     ## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 	local jar_file=
-    for f in $(find "$repo_dir/org/hamcrest/hamcrest" -name "hamcrest-2.2.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/hamcrest/hamcrest" -type f -name "hamcrest-2.2.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
     ## https://mvnrepository.com/artifact/junit/junit
     jar_file=
-    for f in $(find "$repo_dir/junit/junit" -name "junit-4.13.2.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/junit/junit" -type f -name "junit-4.13.2.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
@@ -526,11 +526,11 @@ EXITCODE=0
 
 ROOT_DIR="$(getHome)"
 
-SOURCE_DIR=$ROOT_DIR/src
-SOURCE_MAIN_DIR=$SOURCE_DIR/main/kotlin
-TARGET_DIR=$ROOT_DIR/target
-TARGET_DOCS_DIR=$TARGET_DIR/docs
-CLASSES_DIR=$TARGET_DIR/classes
+SOURCE_DIR="$ROOT_DIR/src"
+SOURCE_MAIN_DIR="$SOURCE_DIR/main/kotlin"
+TARGET_DIR="$ROOT_DIR/target"
+TARGET_DOCS_DIR="$TARGET_DIR/docs"
+CLASSES_DIR="$TARGET_DIR/classes"
 
 TEST_CLASSES_DIR=$TARGET_DIR/test-classes
 

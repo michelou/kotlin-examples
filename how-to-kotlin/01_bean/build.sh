@@ -347,7 +347,7 @@ version_string() {
 
 dokka_cli_jar() {
     local repo_dir="$HOME/.m2/repository"
-    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
     jar_file=
     for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -type f -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
         jar_file="$f"

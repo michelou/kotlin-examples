@@ -25,8 +25,11 @@ if not exist "%_TEMP_DIR%" mkdir "%_TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "_TEMP_DIR=%_TEMP_DIR%" 1>&2
 
 @rem library versions
-set __KOTLIN_VERSION=2.0.0
-set __KOTLINX_VERSION=1.9.0-RC
+set __KOTLIN_VERSION=2.0.10
+set __KOTLINX_VERSION=1.9.0-RC.2
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH1
 
 set _LIBS_CPATH=
 
@@ -37,6 +40,9 @@ call :add_maven_jar "junit" "junit" "4.13.2"
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 
 set "_LIBS_CPATH1=%_LIBS_CPATH%"
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH2
 
 set _LIBS_CPATH=
 
@@ -74,6 +80,9 @@ call :add_maven_jar "org.jetbrains.dokka" "dokka-cli" "%__DOKKA_VERSION%"
 call :add_maven_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH3
 
 set _LIBS_CPATH=
 

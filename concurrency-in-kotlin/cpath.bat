@@ -4,7 +4,11 @@ setlocal enabledelayedexpansion
 @rem output parameter: _CPATH, _DOKKA_JAR
 
 if not defined _DEBUG set _DEBUG=%~1
+if not defined _DEBUG set _DEBUG=0
+set _VERBOSE=0
+
 if not defined _MVN_CMD set "_MVN_CMD=%MAVEN_HOME%\bin\mvn.cmd"
+if %_DEBUG%==1 echo [%~n0] "_MVN_CMD=%_MVN_CMD%" 1>&2
 
 if %_DEBUG%==1 ( set _MVN_OPTS=
 ) else ( set _MVN_OPTS=--quiet
@@ -18,6 +22,10 @@ set "__LOCAL_REPO=%USERPROFILE%\.m2\repository"
 
 set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
+if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%" 1>&2
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH1
 
 set _LIBS_CPATH=
 
@@ -28,6 +36,9 @@ call :add_maven_jar "junit" "junit" "4.13.2"
 call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 
 set "_LIBS_CPATH1=%_LIBS_CPATH%"
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH2
 
 set _LIBS_CPATH=
 
@@ -65,6 +76,9 @@ call :add_maven_jar "org.jetbrains.dokka" "dokka-base" "%__DOKKA_VERSION%"
 call :add_maven_jar "org.jetbrains.dokka" "dokka-gradle-plugin" "%__DOKKA_VERSION%"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH3
 
 set _LIBS_CPATH=
 

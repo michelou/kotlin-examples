@@ -182,7 +182,30 @@ Either command [**`build.bat clean run`**](KotlinToJava/build.bat) or command [*
 
 See Kotlin reference documentation: [Calling Kotlin from Java][kotlin_java].
 
+<!--=======================================================================-->
+
 ## <span id="features">`LanguageFeatures` Example</span> [**&#x25B4;**](#top)
+
+This example has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /f /a . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./LanguageFeatures/00download.txt">00download.txt</a>
+|   <a href="./LanguageFeatures/build.bat">build.bat</a>
+|   <a href="./LanguageFeatures/build.gradle">build.gradle</a>
+|   <a href="./LanguageFeatures/build.sh">build.sh</a>
+|   <a href="./LanguageFeatures/build.xml">build.xml</a>
+|   <a href="./LanguageFeatures/gradle.properties">gradle.properties</a>
+|   <a href="./LanguageFeatures/Makefile">Makefile</a>
+|   pom.xml</a>
+\---<b>src</b>
+    +---<b>main</b>
+    |   \---<b>kotlin</b>
+    |           <a href="./LanguageFeatures/src/main/kotlin/LanguageFeatures.kt">LanguageFeatures.kt</a>
+    \---<b>test</b>
+        \---<b>kotlin</b>
+                <a href="./LanguageFeatures/src/test/kotlin/LanguageFeaturesJUnitTest.kt">LanguageFeaturesJUnitTest.kt</a>
+</pre>
 
 Either command [**`build.bat clean run`**](LanguageFeatures/build.bat) or command [**`gradle.bat -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
@@ -213,7 +236,7 @@ null
 
 ## <span id="quicksort">`QuickSort` Example</span>
 
-The project directory is organized as follows :
+This project has the following directory structure :
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
@@ -227,7 +250,7 @@ The project directory is organized as follows :
 |   <a href="./QuickSort/pom.xml">pom.xml</a>
 \---src
     +---main
-    |   \---kotlin
+    |   \---<b>kotlin</b>
     |           <a href="./QuickSort/src/main/kotlin/QuickSort.kt">QuickSort.kt</a>
     \---test
         \---kotlin
@@ -326,7 +349,7 @@ BUILD SUCCESSFUL in 3s
 
 ## <span id="selectionsort">`SelectionSort` Example</span>
 
-The project directory is organized as follows :
+This project has the following directory structure :
 
 <pre style="font-size:80%;">
 <b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
@@ -448,7 +471,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

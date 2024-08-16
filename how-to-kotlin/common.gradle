@@ -89,7 +89,7 @@ compileKotlin {
         // verbose = false
         // Common options
         apiVersion = "1.6"
-        languageVersion = "1.6"
+        languageVersion = "1.8"
         // JVM options
         jvmTarget = "17"  // "11", "1.8"
     }
@@ -149,7 +149,7 @@ dependencies {
     // implementation "org.jetbrains.dokka:kotlin-analysis-compiler:$dokkaVersion"
     // implementation "org.jetbrains.dokka:kotlin-analysis-intellij:$dokkaVersion"
     implementation "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
-    implementation "org.jetbrains:markdown:0.2.4"
+    implementation "org.jetbrains:markdown:0.7.3"
     //dokkaGfmPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokkaVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     api "junit:junit:$junitVersion"

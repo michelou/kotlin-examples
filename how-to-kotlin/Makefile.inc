@@ -53,9 +53,9 @@ ANNOTATIONS_VERSION = 24.1.0
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.0.0
+KOTLIN_VERSION  = 2.0.10
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-KOTLINX_VERSION = 1.9.0-RC
+KOTLINX_VERSION = 1.9.0-RC.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 KOTLINX_HTML_VERSION = 0.11.0
 
