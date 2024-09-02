@@ -31,6 +31,9 @@ set __DOKKA_VERSION=1.9.20
 set __DOKKA_ANALYSIS_VERSION=1.8.20
 set __KOTLIN_VERSION=2.0.0
 
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH1
+
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/junit/junit
@@ -43,6 +46,9 @@ call :add_maven_jar "org.hamcrest" "hamcrest" "2.2"
 call :add_maven_jar "org.jetbrains.kotlin" "kotlin-stdlib-jdk8" "%__KOTLIN_VERSION%"
 
 set "_LIBS_CPATH1=%_LIBS_CPATH%"
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH2
 
 set _LIBS_CPATH=
 
@@ -68,6 +74,9 @@ call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.11.0"
 call :add_maven_jar "org.freemarker" "freemarker" "2.3.33"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
+
+@rem #########################################################################
+@rem ## Libraries to be added to _LIBS_CPATH3
 
 set _LIBS_CPATH=
 

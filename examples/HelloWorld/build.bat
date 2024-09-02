@@ -146,7 +146,7 @@ goto :eof
 
 @rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION
 :props
-for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
+for /f "delims=" %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 

@@ -33,8 +33,12 @@
 - [Kotlin vs Scala: Which Problems Do They Solve?][article_kotlin_scala], June 28, 2017.
 
 ## <span id="blogs">Blogs</span> [**&#x25B4;**](#top)
-
 - [Kotlin Flows - The Ultimate Guide](https://blog.rockthejvm.com/kotlin-flows/) by Daniel Ciocîrlan, April 2024. 
+- [Okumu's Blog](https://otsembo.hashnode.dev/) :
+  - [Implement a LinkedList using Kotlin/Native](https://otsembo.hashnode.dev/implement-a-linkedlist-using-kotlinnative), July 2023.
+  - [Kotlin/Native: An Introduction](https://otsembo.hashnode.dev/kotlin-native-an-introduction), June 2023.
+  - [Reactive Programming with Kotlin](https://otsembo.hashnode.dev/reactive-programming-with-kotlin), October 2022.
+  - [Getting more concise with Kotlin Generics](https://otsembo.hashnode.dev/getting-more-concise-with-kotlin-generics), December 2021.
 - [Say Hello to the Kotlin Compiler Plugin][blog_sungbin] by Ji Sungbin, May 2023.
 - [Using Kotlin to build the Lunaconf 2022 App][blog_karim] by Shabab Karim, December 2022.
 - [Introduction to Multiplatform Programming in Kotlin][blog_chandrakant] by Kumar Chandrakant, June 2022.
@@ -114,7 +118,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

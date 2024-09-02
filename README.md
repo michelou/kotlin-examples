@@ -32,21 +32,21 @@ Optionally one may also install the following software:
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
 - [Visual Studio Code 1.92][vscode_downloads] ([*release notes*][vscode_relnotes])
 
-For instance our development environment looks as follows (*August 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*September 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 39 MB)</i>
 C:\opt\apache-maven\             <i>(  9 MB)</i>
 C:\opt\ConEmu\                   <i>( 26 MB)</i>
-C:\opt\detekt-cli\               <i>( 55 MB)</i>
+C:\opt\detekt-cli\               <i>( 67 MB)</i>
 C:\opt\Git\                      <i>(367 MB)</i>
-C:\opt\gradle\                   <i>(135 MB)</i>
+C:\opt\gradle\                   <i>(144 MB)</i>
 C:\opt\jdk-temurin-17.0.12_7\    <i>(301 MB)</i>
-C:\opt\kotlinc\                  <i>( 87 MB)</i>
-C:\opt\kotlin-native\            <i>(236 MB)</i>
-C:\opt\ktlint\                   <i>( 53 MB)</i>
+C:\opt\kotlinc\                  <i>( 90 MB)</i>
+C:\opt\kotlin-native\            <i>(242 MB)</i>
+C:\opt\ktlint\                   <i>( 77 MB)</i>
 C:\opt\make-3.81\                <i>(  2 MB)</i>
-C:\opt\VSCode\                   <i>(341 MB)</i>
+C:\opt\VSCode\                   <i>(370 MB)</i>
 </pre>
 
 > **&#9755;** ***Installation policy***<br/>
@@ -109,7 +109,7 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
    ant 1.10.14, gradle 8.10, java 17.0.10, detekt-cli 1.23.6,
-   kotlinc 2.0.10, kotlinc-native 2.0.10, ktlint 1.3.1, cfr 0.152,
+   kotlinc 2.0.20, kotlinc-native 2.0.20, ktlint 1.3.1, cfr 0.152,
    make 3.81, mvn 3.9.8, git 2.46.0, diff 3.10, bash 4.4.26(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
@@ -155,8 +155,7 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
-<tr><td></td><td></td></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew20.html" rel="external">2.0.0 - 2.0.10</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew20.html" rel="external">2.0.0</a> - <a href="https://kotlinlang.org/docs/whatsnew2020.html">2.0.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1910.html" rel="external">1.9.10</a> - <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew19.html" rel="external">1.9.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1820.html" rel="external">1.8.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -221,8 +220,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                              <i>(  5 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.6.zip</a>                             <i>( 54 MB)</i>
 <a href="https://gradle.org/releases/">gradle-8.10-bin.zip</a>                               <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.10">kotlin-compiler-2.0.10.zip</a>                        <i>( 80 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.10">kotlin-native-windows-x86_64-2.0.10.zip</a>           <i>(169 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.20">kotlin-compiler-2.0.20.zip</a>                        <i>( 80 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.20">kotlin-native-windows-x86_64-2.0.20.zip</a>           <i>(169 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.3.1)</a>                                    <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                 <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.12_7.zip</a>  <i>( 99 MB)</i>
@@ -233,7 +232,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/August 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/September 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -269,8 +268,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [kafka_examples]: https://github.com/michelou/kafka-examples#top
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.0.10
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.0.10
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.0.20
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.0.20
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
