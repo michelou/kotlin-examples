@@ -11,6 +11,7 @@
 ## <span id="articles">Articles</span>
 
 - [Reflectoring Articles](https://reflectoring.io/#recent-articles) :
+  - [Inheritance, Polymorphism, and Encapsulation in Kotlin](https://reflectoring.io/kotlin-object-oriented-programming/), May 2024.
   - [Extension Functions in Kotlin](https://reflectoring.io/extension%20functions%20in%20kotlin/), February 2024.
   - [High-Order Functions vs. Inline Functions in Kotlin](https://reflectoring.io/kotlin-high-order-vs-inline-functions/), January 2024.
   - [Introduction to Kotest](https://reflectoring.io/introduction-to-kotest/), October 2023.
@@ -19,6 +20,8 @@
 - [Handling exceptions in tests: Junit & Kotest][article_junit] by Jaroslaw Michalik, June 2020.
 - [Advanced Kotlin - Part 2 - Use-Site Targets](https://americanexpress.io/advanced-kotlin-use-site-targets/) by Brent Watson, December 3, 2019.
 - [Medium] Articles :
+  - [Guide to Kotlin 2.0 and 2.1 Beta New Features](https://medium.com/@niranjanky14/guide-to-kotlin-2-0-and-2-1-beta-new-features-975e3a27d246), September 2024.
+  - [Kotlin Coroutines: how to merge asynchronous results in Kotlin?](https://medium.com/@jtlalka/kotlin-coroutines-how-to-merge-asynchronous-results-in-kotlin-674c3079edba), July 2024.
   - [Kotlin Unknotting][article_pherwani] by Nirbhay Pherwani, November 2023.
   - [Mastering Kotlin Scoped and Higher-Order Functions](https://blog.kotlin-academy.com/mastering-kotlin-scoped-and-higher-order-functions-23e2dd34d660), November 12, 2019.
   - [Mastering Kotlin Conventions: Part II](https://medium.com/insiden26/mastering-kotlin-conventions-get-set-in-rangeto-part-ii-6b0cce3fbe16) by [Gopinath Langote](https://medium.com/@gopinathlangote), December 2018.
@@ -118,7 +121,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/September 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/October 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

@@ -11,26 +11,60 @@
 
 > **:mag_right:** The following Kotlin code examples, *originally* written by [Steven Perry](https://github.com/jstevenperry) in 2018, have been updated to Kotlin 1.6 and formatted with [Ktlint](https://ktlint.github.io/).
 
-## <span id="unit_04">[Unit 4][unit_04]</span>
-
-This tutorial part presents the Kotlin primitive types and literals, i.e. [Boolean](Unit_04/src/main/kotlin/BooleanExample.kt), [Byte](Unit_04/src/main/kotlin/ByteExample.kt), [Char](Unit_04/src/main/kotlin/CharExample.kt), [Double](Unit_04/src/main/kotlin/DoubleExample.kt), [Float](Unit_04/src/main/kotlin/FloatExample.kt), [Int](Unit_04/src/main/kotlin/IntExample.kt), [Long](Unit_04/src/main/kotlin/LongExample.kt) and [Short](Unit_04/src/main/kotlin/ShortExample.kt).
+## <span id="unit_02">[Unit 2][unit_02]</span>
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_04/build.bat">build</a></b>
-Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
-&nbsp;
-  Options:
-    -debug            print commands executed by this script
-    -timer            print total execution time
-    -verbose          print progress messages
-&nbsp;
-  Subcommands:
-    clean             delete generated files
-    compile[:&lt;name&gt;]  generate class files
-    help              print this help message
-    lint[:&lt;name&gt;]     analyze Kotlin source files and flag programming/stylistic errors
-    run[:&lt;name&gt;]      execute the generated program
-  Valid names are: All (default), Boolean, Byte, Char, Double, Float, Int, Long, Short
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /a /f | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./Unit_02/build.bat">build.bat</a>
+|   <a href="./Unit_02/build.gradle">build.gradle</a>
+|   <a href="./Unit_02/build.sh">build.sh</a>
+|   <a href="./Unit_02/build.xml">build.xml</a>
+|   <a href="./Unit_02/gradle.properties">gradle.properties</a>
+|   <a href="./Unit_02/Makefile">Makefile</a>
+|   <a href="./Unit_02/pom.xml">pom.xml</a>
+\---<b>src</b>
+    \---<b>main</b>
+        \---<b>kotlin</b>
+                <a href="./Unit_02/src/main/kotlin/Example1.kt">Example1.kt</a>
+                <a href="./Unit_02/src/main/kotlin/Example2.kt">Example2.kt</a>
+</pre>
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="./Unit_02/build.bat">build</a> -verbose clean run</b>
+Compile 2 Kotlin source files to directory "target\classes"
+Execute Kotlin main class "com.makotojava.learn.kotlin.example2.Example2Kt"
+Greetings from example 2
+</pre>
+
+## <span id="unit_04">[Unit 4][unit_04]</span>
+
+This tutorial part presents the Kotlin primitive types and literals; it has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /a /f | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./Unit_04/00download.txt">00download.txt</a>
+|   <a href="./Unit_04/build.bat">build.bat</a>
+|   <a href="./Unit_04/build.gradle">build.gradle</a>
+|   <a href="./Unit_04/build.sh">build.sh</a>
+|   <a href="./Unit_04/build.xml">build.xml</a>
+|   <a href="./Unit_04/gradle.properties">gradle.properties</a>
+|   <a href="./Unit_04/Makefile">Makefile</a>
+|   <a href="./Unit_04/pom.xml">pom.xml</a>
+\---<b>src</b>
+    +---<b>main</b>
+    |   \---<b>kotlin</b>
+    |           <a href="./Unit_04/src/main/kotlin/BooleanExample.kt">BooleanExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/ByteExample.kt">ByteExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/CharExample.kt">CharExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/DoubleExample.kt">DoubleExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/FloatExample.kt">FloatExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/IntExample.kt">IntExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/LongExample.kt">LongExample.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/Primitives.kt">Primitives.kt</a>
+    |           <a href="./Unit_04/src/main/kotlin/ShortExample.kt">ShortExample.kt</a>
+    \---<b>test</b>
+        \---<b>kotlin</b>
+                <a href="./Unit_04/src/test/kotlin/PrimitivesTest.kt">PrimitivesTest.kt</a>
 </pre>
 
 For instance, command **`build clean run`** executes all examples while command **`build clean run:Double`** executes *only* example [**`DoubleExample.kt`**](Unit_04/src/main/kotlin/DoubleExample.kt):
@@ -79,24 +113,37 @@ byte10 = 10
 
 ## <span id="unit_06">[Unit 6][unit_06]</span> [**&#x25B4;**](#top)
 
-This tutorial part introduces [Kotlin] classes, i.e. class [**`Person.kt`**](Unit_06/src/main/kotlin/example1/Person.kt).
+This tutorial part introduces [Kotlin] classes; it has the following directory structure :
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="Unit_06/build.bat">build</a></b>
-Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
-&nbsp;
-  Options:
-    -debug         print commands executed by this script
-    -timer         print total execution time
-    -verbose       print progress messages
-&nbsp;
-  Subcommands:
-    clean          delete generated files
-    compile[:&lt;n&gt;]  generate class files
-    help           print this help message
-    lint[:&lt;n&gt;]     analyze Kotlin source files and flag programming/stylistic errors
-    run[:&lt;n&gt;]      execute the generated program
-  Valid values: n=1..4 (default=2)
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /a /f | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
+|   <a href="./Unit_06/00download.txt">00download.txt</a>
+|   <a href="./Unit_06/build.bat">build.bat</a>
+|   <a href="./Unit_06/build.gradle">build.gradle</a>
+|   <a href="./Unit_06/build.sh">build.sh</a>
+|   <a href="./Unit_06/build.xml">build.xml</a>
+|   <a href="./Unit_06/gradle.properties">gradle.properties</a>
+|   <a href="./Unit_06/Makefile">Makefile</a>
+|   <a href="./Unit_06/pom.xml">pom.xml</a>
+\---<b>src</b>
+    \---<b>main</b>
+        \---<b>kotlin</b>
+            +---<b>example1</b>
+            |       <a href="./Unit_06/src/main/kotlin/example1/Person.kt">Person.kt</a>
+            +---<b>example2</b>
+            |       <a href="./Unit_06/src/main/kotlin/example2/Person.kt">Person.kt</a>
+            +---<b>example3</b>
+            |       <a href="./Unit_06/src/main/kotlin/example3/Person.kt">Person.kt</a>
+            \---<b>example4</b>
+                    <a href="./Unit_06/src/main/kotlin/example4/Family.kt">Family.kt</a>
+                    <a href="./Unit_06/src/main/kotlin/example4/Neighbor.kt">Neighbor.kt</a>
+</pre>
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="Unit_06/build.bat">build</a> -verbose clean run</b>
+Compile 5 Kotlin source files to directory "target\classes"
+Execute Kotlin main class "com.makotogo.learn.kotlin.example2.PersonKt"
+Person: Family Name=Neumann, Given Name=Susan, Date of Birth=1980-03-17
 </pre>
 
 ## <span id="unit_07">[Unit 7][unit_07]</span>
@@ -131,11 +178,29 @@ Source file [`Equality.kt`](Unit_09/src/main/kotlin/Equality.kt) presents the di
 
 ## <span id="unit_10">Unit 10</span>
 
-Source files present iterative constructs ()
+This unit presents iterative constructs; it has the following directory structure :
+
+<pre style="font-size:80%;">
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /a /f | <a href="">findstr</a> /v /b [A-Z]</b>
+|   <a href="./Unit_10/build.bat">build.bat</a>
+|   <a href="./Unit_10/build.gradle">build.gradle</a>
+|   <a href="./Unit_10/build.xml">build.xml</a>
+|   <a href="./Unit_10/gradle.properties">gradle.properties</a>
+|   <a href="./Unit_10/Makefile">Makefile</a>
+|   <a href="./Unit_10/pom.xml">pom.xml</a>
+\---<b>src</b>
+    \---<b>main</b>
+        \---<b>kotlin</b>
+                <a href="./Unit_10/src/main/kotlin/Arrays.kt">Arrays.kt</a>
+                <a href="./Unit_10/src/main/kotlin/For.kt">For.kt</a>
+                <a href="./Unit_10/src/main/kotlin/Main.kt">Main.kt</a>
+                <a href="./Unit_10/src/main/kotlin/Ranges.kt">Ranges.kt</a>
+                <a href="./Unit_10/src/main/kotlin/While.kt">While.kt</a>
+</pre>
 
 ## <span id="footnotes">Footnotes</span>
 
-<b name="footnote_01">[1]</b> ***Learn Kotlin* Tutorial** [↩](#anchor_01)
+<span name="footnote_01">[1]</span> ***Learn Kotlin* Tutorial** [↩](#anchor_01)
 
 <p style="margin:0 0 1em 20px;">
 The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jstevenperry/IBM-Developer/tree/master/Kotlin">GitHub</a> repository) are available from <a href="https://developer.ibm.com">IBM Developer</a> network :
@@ -152,12 +217,13 @@ The 7 first units from Steven Perry's tutorial (<a href="https://github.com/jste
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/September 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/October 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
 [kotlin]: https://kotlinlang.org/
+[unit_02]: https://developer.ibm.com/tutorials/learn-kotlin-2/
 [unit_04]: https://developer.ibm.com/tutorials/learn-kotlin-4/
 [unit_05]: https://developer.ibm.com/tutorials/learn-kotlin-5/
 [unit_06]: https://developer.ibm.com/tutorials/learn-kotlin-6/
