@@ -63,13 +63,13 @@
 
 ## <span id="books">Books</span> [**&#x25B4;**](#top)
 
+- [Effective Kotling][book_moskala_effective] by Marcin Moskala, October 2024.<br/><span style="font-size:80%;">(LeanPub, 385 pages)</span>
 - [Kotlin in Action][book_kotlin_in_action] (2<sup>nd</sup> Edition) by Sebastian Aigner &amp; al., 2024.<br/><span style="font-size:80%;">(Manning Publications, ISBN 978-1-6172-9960-5, 643 pages)</span>
 - [Kotlin Design Patterns and Best Practices][book_soshin] by Alexey Soshin, April 2024.<br/><span style="font-size:80%;">(Packt, ISBN 978-1-80512-776-5, 475 pages)</span>
 - [Kotlin Coroutines][book_moskala_coroutines] by Marcin Moskala, April 2023.<br/><span style="font-size:80%;">(Leanpub, ? pages).</span>
 - [Kotlin - The Ultimate Guide][book_uzayr] by Sufyan bin Uzayr, December 2022.<br/><span style="font-size:80%;">(CRC Press, ISBN 978-1-0323-1170-8, 398 pages)</span>.
 - [Java to Kotlin][book_mcgregor] by Duncan McGregor and Nat Pryce, August 2021.<br/><span style="font-size:80%;">(O'Reilly, ISBN 978-1-492-08227-9)</span>.
 - [Functional Programming in Kotlin][book_vermeulen] by Marco Vermeulen et al., August 2021.<br/><span style="font-size:80%;">(Manning, ISBN 978-1-6172-9716-8, 504 pages)</span>
-- [Effective Kotlin][book_moskala_effective] by Marcin Moskala, February 2021.<br/><span style="font-size:80%;">(LeanPub, 409 pages)</span>
 - [Kotlin Cookbook][book_kotlin_cookbook] by Ken Kousen, November 2019.<br/><span style="font-size:80%;">(O'Reilly, ISBN 978-1-4920-4666-0, 254 pages)</span>
 - [Mastering Kotlin](https://www.packtpub.com/application-development/mastering-kotlin) by Nate Ebel, October 2019.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-8385-5572-6, 434 pages)</span>
 - [Learn Kotlin Programming][book_kotlin_programming] by Stephen Samuel and Stefan Bocutiu, May 2019.<br/><span style="font-size:80%;">(Packt Publishing, ISBN 978-1-7898-0235-1, 514 pages)</span>
