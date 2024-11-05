@@ -33,7 +33,7 @@ Optionally one may also install the following software:
 <!--
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 -->
-For instance our development environment looks as follows (*October 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*November 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 44 MB)</i>
@@ -42,7 +42,7 @@ C:\opt\ConEmu\                   <i>( 26 MB)</i>
 C:\opt\detekt-cli\               <i>( 67 MB)</i>
 C:\opt\Git\                      <i>(389 MB)</i>
 C:\opt\gradle\                   <i>(144 MB)</i>
-C:\opt\jdk-temurin-17.0.23_11\   <i>(304 MB)</i>
+C:\opt\jdk-temurin-17.0.13_11\   <i>(304 MB)</i>
 C:\opt\kotlinc\                  <i>( 90 MB)</i>
 C:\opt\kotlin-native\            <i>(242 MB)</i>
 C:\opt\ktlint\                   <i>( 77 MB)</i>
@@ -234,7 +234,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/November 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
