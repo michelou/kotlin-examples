@@ -1,3 +1,10 @@
+##
+## Copyright (c) 2018-2024 Stéphane Micheloud
+##
+## Licensed under the MIT License.
+##
+##############################################################################
+
 include ../Makefile.inc
 
 SOURCE_DIR  = src
@@ -8,7 +15,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/HelloWorld.jar
+TARGET = $(TARGET_DIR)/Customer.jar
 
 MAIN_CLASS = CustomerKt
 MAIN_ARGS ?= 

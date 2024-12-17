@@ -20,7 +20,7 @@ getHome() {
 
 debug() {
     local DEBUG_LABEL="[46m[DEBUG][0m"
-    $DEBUG && echo "$DEBUG_LABEL $1" 1>&2
+    [[ $DEBUG -eq 1 ]] && echo "$DEBUG_LABEL $1" 1>&2
 }
 
 warning() {
@@ -37,7 +37,7 @@ error() {
 cleanup() {
     [[ $1 =~ ^[0-1]$ ]] && EXITCODE=$1
 
-    if $TIMER; then
+    if [[ $TIMER -eq 1 ]]; then
         local TIMER_END=$(date +'%s')
         local duration=$((TIMER_END - TIMER_START))
         echo "Total elapsed time: $(date -d @$duration +'%H:%M:%S')" 1>&2
@@ -47,37 +47,37 @@ cleanup() {
 }
 
 args() {
-    [[ $# -eq 0 ]] && HELP=true && return 1
+    [[ $# -eq 0 ]] && HELP=1 && return 1
 
     for arg in "$@"; do
         case "$arg" in
         ## options
-        -debug)    DEBUG=true ;;
-        -help)     HELP=true ;;
+        -debug)    DEBUG=1 ;;
+        -help)     HELP=1 ;;
 		-jvm)      TOOLSET=jvm ;;
 		-native)   TOOLSET=native ;;
-        -timer)    TIMER=true ;;
-        -verbose)  VERBOSE=true ;;
+        -timer)    TIMER=1 ;;
+        -verbose)  VERBOSE=1 ;;
         -*)
             error "Unknown option $arg"
             EXITCODE=1 && return 0
             ;;
         ## subcommands
-        clean)     CLEAN=true ;;
-        compile)   COMPILE=true ;;
-        decompile) COMPILE=true && DECOMPILE=true ;;
-        doc)       COMPILE=true && DOC=true ;;
-        help)      HELP=true ;;
-        run)       COMPILE=true && RUN=true ;;
+        clean)     CLEAN=1 ;;
+        compile)   COMPILE=1 ;;
+        decompile) COMPILE=1 && DECOMPILE=1 ;;
+        doc)       COMPILE=1 && DOC=1 ;;
+        help)      HELP=1 ;;
+        run)       COMPILE=1 && RUN=1 ;;
         *)
             error "Unknown subcommand $arg"
             EXITCODE=1 && return 0
             ;;
         esac
     done
-    if $DECOMPILE && [[ ! -x "$CFR_CMD" ]]; then
+    if [[ $DECOMPILE -eq 1 ]] && [[ ! -x "$CFR_CMD" ]]; then
         warning "cfr installation not found"
-        DECOMPILE=false
+        DECOMPILE=0
     fi
     debug "Options    : TIMER=$TIMER TOOLSET=$TOOLSET VERBOSE=$VERBOSE"
     debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
@@ -86,7 +86,7 @@ args() {
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
-    $TIMER && TIMER_START=$(date +"%s")
+    [[ $TIMER -eq 1 ]] && TIMER_START=$(date +"%s")
 }
 
 help() {
@@ -111,9 +111,9 @@ EOS
 
 clean() {
     if [[ -d "$TARGET_DIR" ]]; then
-        if $DEBUG; then
+        if [[ $DEBUG -eq 1 ]]; then
             debug "Delete directory $TARGET_DIR"
-        elif $VERBOSE; then
+        elif [[ $VERBOSE -eq 1 ]]; then
             echo "Delete directory ${TARGET_DIR/$ROOT_DIR\//}" 1>&2
         fi
         rm -rf "$TARGET_DIR"
@@ -186,9 +186,9 @@ compile_java() {
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
-    if $DEBUG; then
+    if [[ $DEBUG -eq 1 ]]; then
         debug "$JAVAC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
-    elif $VERBOSE; then
+    elif [[ $VERBOSE -eq 1 ]]; then
         echo "Compile $n Java source files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVAC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
@@ -213,9 +213,9 @@ compile_kotlin() {
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
-    if $DEBUG; then
+    if [[ $DEBUG -eq 1 ]]; then
         debug "$KOTLINC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
-    elif $VERBOSE; then
+    elif [[ $VERBOSE -eq 1 ]]; then
         echo "Compile $n Kotlin source files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
@@ -228,7 +228,7 @@ compile_kotlin() {
 mixed_path() {
     if [[ -x "$CYGPATH_CMD" ]]; then
         $CYGPATH_CMD -am $1
-    elif $mingw || $msys; then
+    elif [[ $(($mingw + $msys)) -gt 0 ]]; then
         echo $1 | sed 's|/|\\\\|g'
     else
         echo $1
@@ -248,7 +248,7 @@ decompile() {
         n="$(ls -n $CLASSES_DIR/*.class | wc -l)"
         [[ $n -gt 0 ]] && class_dirs="$class_dirs $f"
     done
-    $VERBOSE && echo "Decompile Java bytecode to directory \"${output_dir/$ROOT_DIR\//}\"" 1>&2
+    [[ $VERBOSE -eq 1 ]] && echo "Decompile Java bytecode to directory \"${output_dir/$ROOT_DIR\//}\"" 1>&2
     for f in $class_dirs; do
         debug "$CFR_CMD $cfr_opts $(mixed_path $f)/*.class"
         eval "$CFR_CMD" $cfr_opts "$(mixed_path $f)/*.class" $STDERR_REDIRECT
@@ -265,9 +265,9 @@ decompile() {
     local output_file="$TARGET_DIR/cfr-sources$version_suffix.java"
     echo "// Compiled with $version_string" > "$output_file"
 
-    if $DEBUG; then
+    if [[ $DEBUG -eq 1 ]]; then
         debug "echo $output_dir/*.java >> $output_file"
-    elif $VERBOSE; then
+    elif [[ $VERBOSE -eq 1 ]]; then
         echo "Save generated Java source files to file ${output_file/$ROOT_DIR\//}" 1>&2
     fi
     local java_files=
@@ -277,9 +277,9 @@ decompile() {
     [[ -n "$java_files" ]] && cat $java_files >> "$output_file"
 
     if [[ ! -x "$DIFF_CMD" ]]; then
-        if $DEBUG; then
+        if [[ $DEBUG -eq 1 ]]; then
             warning "diff command not found"
-        elif $VERBOSE; then
+        elif [[ $VERBOSE -eq 1 ]]; then
             echo "diff command not found" 1>&2
         fi
         return 0
@@ -288,9 +288,9 @@ decompile() {
 
     local check_file="$SOURCE_DIR/build/cfr-source$VERSION_SUFFIX.java"
     if [[ -f "$check_file" ]]; then
-        if $DEBUG; then
+        if [[ $DEBUG -eq 1 ]]; then
             debug "$DIFF_CMD $diff_opts $(mixed_path $output_file) $(mixed_path $check_file)"
-        elif $VERBOSE; then
+        elif [[ $VERBOSE -eq 1 ]]; then
             echo "Compare output file with check file ${check_file/$ROOT_DIR\//}" 1>&2
         fi
         eval "$DIFF_CMD" $diff_opts "$(mixed_path $output_file)" "$(mixed_path $check_file)"
@@ -303,7 +303,7 @@ decompile() {
 
 ## output parameter: _EXTRA_CPATH
 extra_cpath() {
-    if [[ $SCALA_VERSION==3 ]]; then
+    if [[ $SCALA_VERSION -eq 3 ]]; then
         lib_path="$SCALA3_HOME/lib"
     else
         lib_path="$SCALA_HOME/lib"
@@ -361,9 +361,9 @@ doc() {
     else
         echo -siteroot "$(mixed_path $TARGET_DOCS_DIR)" -project "$PROJECT_NAME" -project-url "$PROJECT_URL" -project-version "$PROJECT_VERSION" > "$opts_file"
     fi
-    if $DEBUG; then
+    if [[ $DEBUG -eq 1 ]]; then
         debug "$SCALADOC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
-    elif $VERBOSE; then
+    elif [[ $VERBOSE -eq 1 ]]; then
         echo "Generate HTML documentation into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$SCALADOC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
@@ -371,9 +371,9 @@ doc() {
         error "Generation of HTML documentation failed"
         cleanup 1
     fi
-    if $DEBUG; then
+    if [[ $DEBUG -eq 1 ]]; then
         debug "HTML documentation saved into directory $TARGET_DOCS_DIR"
-    elif $VERBOSE; then
+    elif [[ $VERBOSE -eq 1 ]]; then
         echo "HTML documentation saved into directory ${TARGET_DOCS_DIR/$ROOT_DIR\//}" 1>&2
     fi
     touch "$doc_timestamp_file"
@@ -387,9 +387,9 @@ run_jvm() {
     fi
     local kotlin_opts="-classpath $(mixed_path $CLASSES_DIR)"
 
-    if $DEBUG; then
+    if [[ $DEBUG -eq 1 ]]; then
         debug "$KOTLIN_CMD $kotlin_opts $MAIN_CLASS $MAIN_ARGS"
-    elif $VERBOSE; then
+    elif [[ $VERBOSE -eq 1 ]]; then
         echo "Execute Kotlin main class $MAIN_CLASS" 1>&2
     fi
     eval "$KOTLIN_CMD" $kotlin_opts $MAIN_CLASS $MAIN_ARGS
@@ -422,40 +422,42 @@ TARGET_DIR="$ROOT_DIR/target"
 TARGET_DOCS_DIR="$TARGET_DIR/docs"
 CLASSES_DIR="$TARGET_DIR/classes"
 
-CLEAN=false
-COMPILE=false
-DEBUG=false
-DECOMPILE=false
-DOC=false
-HELP=false
-LINT=false
+## We refrain from using `true` and `false` which are Bash commands
+## (see https://man7.org/linux/man-pages/man1/false.1.html)
+CLEAN=0
+COMPILE=0
+DEBUG=0
+DECOMPILE=0
+DOC=0
+HELP=0
+LINT=0
 MAIN_CLASS="org.example.LanguageFeaturesKt"
 MAIN_ARGS=
-RUN=false
+RUN=0
 SCALA_VERSION=3
-SCALAC_OPTS_PRINT=false
-TASTY=false
-TEST=false
-TIMER=false
+SCALAC_OPTS_PRINT=0
+TASTY=0
+TEST=0
+TIMER=0
 TOOLSET=jvm
-VERBOSE=false
+VERBOSE=0
 
 COLOR_START="[32m"
 COLOR_END="[0m"
 
-cygwin=false
-mingw=false
-msys=false
-darwin=false
+cygwin=0
+mingw=0
+msys=0
+darwin=0
 case "$(uname -s)" in
-    CYGWIN*) cygwin=true ;;
-    MINGW*)  mingw=true ;;
-    MSYS*)   msys=true ;;
-    Darwin*) darwin=true      
+    CYGWIN*) cygwin=1 ;;
+    MINGW*)  mingw=1 ;;
+    MSYS*)   msys=1 ;;
+    Darwin*) darwin=1      
 esac
 unset CYGPATH_CMD
 PSEP=":"
-if $cygwin || $mingw || $msys; then
+if [[ $(($cygwin + $mingw + $msys)) -gt 0 ]]; then
     CYGPATH_CMD="$(which cygpath 2>/dev/null)"
     PSEP=";"
     [[ -n "$CFR_HOME" ]] && CFR_HOME="$(mixed_path $CFR_HOME)"
@@ -505,24 +507,24 @@ args "$@"
 ##############################################################################
 ## Main
 
-$HELP && help && cleanup
+[[ $HELP -eq 1 ]] && help && cleanup
 
-if $CLEAN; then
+if [[ $CLEAN -eq 1 ]]; then
     clean || cleanup 1
 fi
-if $COMPILE; then
+if [[ $COMPILE -eq 1 ]]; then
     compile_$TOOLSET || cleanup 1
 fi
-if $DECOMPILE; then
+if [[ $DECOMPILE -eq 1 ]]; then
     decompile || cleanup 1
 fi
-if $DOC; then
+if [[ $DOC -eq 1 ]]; then
     doc || cleanup 1
 fi
-if $RUN; then
+if [[ $RUN -eq 1 ]]; then
     run_$TOOLSET || cleanup 1
 fi
-if $TEST; then
+if [[ $TEST -eq 1 ]]; then
     run_tests || cleanup 1
 fi
 cleanup

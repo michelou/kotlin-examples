@@ -13,16 +13,16 @@
         <java.version>17</java.version>
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
-        <kotlin.version>2.0.0</kotlin.version>
+        <kotlin.version>2.1.0</kotlin.version>
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core -->
-        <kotlinx.version>1.9.0-RC</kotlinx.version>
+        <kotlinx.version>1.9.0</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.6</kotlin.compiler.languageVersion>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
         <maven.jar.version>3.4.2</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <exec.maven.version>3.3.0</exec.maven.version>
+        <exec.maven.version>3.5.0</exec.maven.version>
     </properties>
 
     <dependencies>

@@ -17,8 +17,8 @@
 This project depends on the following external software for the **Microsoft Windows** platform:
 
 - [Git 2.47][git_downloads] ([*release notes*][git_relnotes])
-- [Kotlin 2.0][kotlin_latest] ([*release notes*][kotlin_relnotes])
-- [Kotlin/Native 2.0][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
+- [Kotlin 2.1][kotlin_latest] ([*release notes*][kotlin_relnotes])
+- [Kotlin/Native 2.1][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
 Optionally one may also install the following software:
 
@@ -26,14 +26,14 @@ Optionally one may also install the following software:
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [ConEmu 2023][conemu_downloads] ([*release notes*][conemu_relnotes])
 - [detekt 1.23][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 8.10][gradle_latest] ([*release notes*][gradle_relnotes])
-- [KtLint 1.3][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
+- [Gradle 8.11][gradle_latest] ([*release notes*][gradle_relnotes])
+- [KtLint 1.5][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
-- [Visual Studio Code 1.94][vscode_downloads] ([*release notes*][vscode_relnotes])
+- [Visual Studio Code 1.96][vscode_downloads] ([*release notes*][vscode_relnotes])
 <!--
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 -->
-For instance our development environment looks as follows (*November 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*December 2024*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 44 MB)</i>
@@ -45,7 +45,7 @@ C:\opt\gradle\                   <i>(144 MB)</i>
 C:\opt\jdk-temurin-17.0.13_11\   <i>(304 MB)</i>
 C:\opt\kotlinc\                  <i>( 90 MB)</i>
 C:\opt\kotlin-native\            <i>(242 MB)</i>
-C:\opt\ktlint\                   <i>( 77 MB)</i>
+C:\opt\ktlint\                   <i>( 70 MB)</i>
 C:\opt\make-3.81\                <i>(  2 MB)</i>
 C:\opt\VSCode\                   <i>(370 MB)</i>
 </pre>
@@ -109,9 +109,9 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.15, gradle 8.10.2, java 17.0.13, detekt-cli 1.23.7,
-   kotlinc 2.0.21, kotlinc-native 2.0.21, ktlint 1.3.1, cfr 0.152,
-   make 3.81, mvn 3.9.9, git 2.47.0, diff 3.10, bash 4.4.37(1)
+   ant 1.10.15, gradle 8.11.1, java 17.0.13, detekt-cli 1.23.7,
+   kotlinc 2.1.0, kotlinc-native 2.1.0, ktlint 1.5.0, cfr 0.152,
+   make 3.81, mvn 3.9.9, git 2.47.1, diff 3.10, bash 4.4.37(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\gradle\bin\gradle.bat
@@ -156,7 +156,7 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew20.html" rel="external">2.0.0</a> - <a href="https://kotlinlang.org/docs/whatsnew2020.html">2.0.21</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew20.html" rel="external">2.0.0</a> - <a href="https://kotlinlang.org/docs/whatsnew2020.html">2.1.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1910.html" rel="external">1.9.10</a> - <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew19.html" rel="external">1.9.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1820.html" rel="external">1.8.20</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -190,8 +190,8 @@ Here are the performed operations:<br/>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mkdir" rel="external">mkdir</a> c:\opt\ktlint\bin</b>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd">cd</a> c:\opt\ktlint\bin</b>
 &nbsp;
-<b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh <a href="https://github.com/pinterest/ktlint/releases/tag/1.4.0">https://github.com/pinterest/ktlint/releases/download/1.4.0/ktlint</a></b>
-<b>&gt; <a href="https://man7.org/linux/man-pages/man1/tail.1.html">tail</a> -n+5 ktlint.sh > ktlint.jar</b>
+<b>&gt; <a href="https://ec.haxx.se/cmdline/cmdline-options">curl</a> -sL -o ktlint.sh <a href="https://github.com/pinterest/ktlint/releases/tag/1.4.0">https://github.com/pinterest/ktlint/releases/download/1.5.0/ktlint</a></b>
+<b>&gt; <a href="https://man7.org/linux/man-pages/man1/tail.1.html">tail</a> -n+13 ktlint.sh > ktlint.jar</b>
 <b>&gt; %JAVA_HOME%\bin\<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf ktlint.jar | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> ktlint/Main</b>
 com/pinterest/ktlint/Main.class
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy">copy</a> /y /b i:\bin\ktlint_header.bin + /b ktlint.jar ktlint.bat</b>
@@ -206,7 +206,7 @@ The installation directory now contains one single file, namely <b><code>ktlint.
 ktlint.bat
 &nbsp;
 <b>&gt; c:\opt\ktlint\bin\<a href="https://ktlint.github.io/#command-line" rel="external">ktlint.bat</a> --version</b>
-1.4.0
+1.5.0
 </pre>
 </dd></dl>
 
@@ -221,20 +221,20 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.9-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                               <i>(  5 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-1.23.7.zip</a>                              <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-8.10.2-bin.zip</a>                              <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.21">kotlin-compiler-2.0.21.zip</a>                         <i>( 80 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.0.21">kotlin-native-windows-x86_64-2.0.21.zip</a>            <i>(169 MB)</i>
-<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.4.0)</a>                                     <i>( 63 MB)</i>
+<a href="https://gradle.org/releases/">gradle-8.11.1-bin.zip</a>                              <i>(115 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.1.0">kotlin-compiler-2.1.0.zip</a>                          <i>( 80 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.1.0">kotlin-native-windows-x86_64-2.1.0.zip</a>             <i>(169 MB)</i>
+<a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.5.0)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.23_11.zip</a>  <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.47.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
-<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.94.2.zip</a>                        <i>(131 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.47.1-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.96.0.zip</a>                        <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/November 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -259,24 +259,24 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [flix_examples]: https://github.com/michelou/flix-examples#top
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.47.0.txt
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.47.1.txt
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples#top
 [graalvm_examples]: https://github.com/michelou/graalvm-examples#top
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/8.10.2/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/8.11.1/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kafka_examples]: https://github.com/michelou/kafka-examples#top
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.0.21-RC
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.0.21-RC
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.1.0
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.1.0
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
-[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.3.1
+[ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.5.0
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 [llvm_examples]: https://github.com/michelou/llvm-examples#top
 [m2_examples]: https://github.com/michelou/m2-examples#top
@@ -301,6 +301,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 11.0.20 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-July/024064.html
 11.0.21 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 11.0.22 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029215.html
+11.0.23 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-April/032198.html
+11.0.24 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-July/035797.html
+11.0.25 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-October/038512.html
 -->
 [temurin_opendjk11_bugfixes]: https://www.oracle.com/java/technologies/javase/11-0-17-bugfixes.html
 [temurin_opendjk11_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2022-October/018119.html
@@ -311,6 +314,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 17.0.9  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026352.html
 17.0.13 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029089.html
 17.0.11 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-April/032197.html
+17.0.12 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-July/035798.html
+17.0.13 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-October/038867.html
 -->
 [temurin_opendjk17]: https://adoptium.net/releases.html?variant=openjdk17&jvmVariant=hotspot
 [temurin_opendjk17_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
@@ -320,6 +325,8 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 21.0.1  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 21.0.2  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-January/029090.html
 21.0.3  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-April/032196.html
+21.0.4  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-July/035862.html
+21.0.5  -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2024-October/038866.html
 -->
 [temurin_openjdk21]: https://adoptium.net/releases.html?variant=openjdk21&jvmVariant=hotspot
 [temurin_openjdk21_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html

@@ -25,8 +25,8 @@ if not exist "%_TEMP_DIR%" mkdir "%_TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "_TEMP_DIR=%_TEMP_DIR%" 1>&2
 
 @rem library versions
-set __KOTLIN_VERSION=2.0.10
-set __KOTLINX_VERSION=1.9.0-RC.2
+set __KOTLIN_VERSION=2.1.0
+set __KOTLINX_VERSION=1.9.0
 
 @rem #########################################################################
 @rem ## Libraries to be added to _LIBS_CPATH1

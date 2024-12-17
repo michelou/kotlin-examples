@@ -15,7 +15,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET  = $(TARGET_DIR)/HelloWorld.jar
+TARGET  = $(TARGET_DIR)/Bean.jar
 
 MAIN_CLASS = _01_bean.BeanKt
 MAIN_ARGS ?= 

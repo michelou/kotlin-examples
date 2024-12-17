@@ -51,9 +51,12 @@ endif
 
 LANGUAGE_VERSION = 1.6
 
+ANNOTATIONS_VERSION = 26.0.1
+DOKKA_BASE_VERSION = 1.9.20
 JUNIT_VERSION   = 4.13.2
-KOTLIN_VERSION  = 1.9.22
-KOTLINX_VERSION = 1.7.3
+KOTLIN_VERSION  = 2.1.0
+KOTLINX_VERSION = 1.9.0
+MARKDOWN_VERSION = 0.7.3
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
@@ -70,9 +73,9 @@ DOKKA_COMPILER_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name k
 DOKKA_INTELLIJ_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name kotlin-analysis-intellij-$(KOTLIN_VERSION).jar)
 DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-gradle-plugin-$(KOTLIN_VERSION).jar)
 KOTLINX_HTML_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx" -name kotlinx-html-jvm-0.9.1.jar)
-MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-0.3.5.jar)
+MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-$(MARKDOWN_VERSION).jar)
 
-ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-23.1.0.jar)
+ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-$(ANNOTATIONS_VERSION).jar)
 ##EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
 ##INTELLIJ_CORE_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name intellij-core-27.1.3.jar)
 ##OPENAPI_JAR        = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name openapi-7.0.3.jar)
@@ -115,7 +118,7 @@ endif
 ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
 	$(eval GROUP_ID := org.jetbrains.dokka)
 	$(eval ARTIFACT_ID := dokka-base)
-	$(eval VERSION := 1.9.10)
+	$(eval VERSION := $(DOKKA_BASE_VERSION))
 	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(WGET) $(WGET_OPTS) $(URL)

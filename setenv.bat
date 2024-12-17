@@ -834,10 +834,10 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,2,3,*" %%i in ('call "%KOTLIN_NATIVE_HOME%\bin\kotlinc-native.bat" -version 2^>^&1 ^| findstr kotlinc-native') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% kotlinc-native %%k,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%KOTLIN_NATIVE_HOME%\bin:kotlinc-native.bat"
 )
-where /q "%KTLINT_HOME%:ktlint.bat"
+where /q "%KTLINT_HOME%\bin:ktlint.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('call "%KTLINT_HOME%\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~i,"
-    set __WHERE_ARGS=%__WHERE_ARGS% "%KTLINT_HOME%:ktlint.bat"
+    for /f "tokens=1-2,3,*" %%i in ('call "%KTLINT_HOME%\bin\ktlint.bat" --version') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% ktlint %%~k,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%KTLINT_HOME%\bin:ktlint.bat"
 )
 where /q "%CFR_HOME%\bin:cfr.bat"
 if %ERRORLEVEL%==0 (

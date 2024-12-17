@@ -67,13 +67,13 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] Properties : _PROJECT_NAME=01_bean _PROJECT_VERSION=0.1-SNAPSHOT
 > [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-11.0.21_9"
-> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc-1.9.21"
-> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows-1.9.21"
-> [build] Variables  : _LANGUAGE_VERSION=1.5 _MAIN_CLASS=_01_bean.BeanKt
+> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-17.0.13_11"
+> [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc"
+> [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows"
+> [build] Variables  : _LANGUAGE_VERSION=1.8 _MAIN_CLASS=_01_bean.BeanKt
 > [build] rmdir /s /q "K:\how-to-kotlin\01_bean\target"
-> [build] "C:\opt\kotlinc-1.9.10\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
-> [build] "C:\opt\kotlinc-1.9.10\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
+> [build] "C:\opt\kotlinc\bin\kotlinc.bat" "@K:\how-to-kotlin\01_bean\target\kotlinc_opts.txt" "@K:\how-to-kotlin\01_bean\target\kotlinc_sources.txt"
+> [build] "C:\opt\kotlinc\bin\kotlin.bat" -cp "K:\how-to-kotlin\01_bean\target\classes" _01_bean.BeanKt
 > fist=Jane, last=Doe
 > [build] _EXITCODE=0
 > </pre>
@@ -93,13 +93,13 @@ Example `01_bean` has the following directory structure :
 |   <a href="./01_bean/gradle.properties">gradle.properties</a>
 |   <a href="./01_bean/Makefile">Makefile</a>
 |   <a href="./01_bean/pom.xml">pom.xml</a>
-\---src
-    +---main
-    |   +---kotlin
+\---<b>src</b>
+    +---<b>main</b>
+    |   +---<b>kotlin</b>
     |   |       <a href="./01_bean/src/main/kotlin/Bean.kt">Bean.kt</a>
-    |   \---resources
-    \---test
-        \---kotlin
+    |   \---<b>resources</b>
+    \---<b>test</b>
+        \---<b>kotlin</b>
                 <a href="./01_bean/src/test/kotlin/BeanJUnitTest.kt">BeanJUnitTest.kt</a>
 </pre>
 
@@ -138,9 +138,9 @@ Example `02_properties` has the following directory structure :
 |   <a href="./02_properties/gradle.properties">gradle.properties</a>
 |   <a href="./02_properties/Makefile">Makefile</a>
 |   <a href="./02_properties/pom.xml">pom.xml</a>
-\---src
-    \---main
-        +---kotlin
+\---<b>src</b>
+    \---<b>main</b>
+        +---<b>kotlin</b>
         |       <a href="./02_properties/src/main/kotlin/MyDelegatedProperties.kt">MyDelegatedProperties.kt</a>
         |       <a href="./02_properties/src/main/kotlin/Observable.kt">Observable.kt</a>
         |       Properties.kt</a>
@@ -177,9 +177,9 @@ Example `03_functions` has the following structure :
 |   <a href="./03_functions/gradle.properties">gradle.properties</a>
 |   <a href="./03_functions/Makefile">Makefile</a>
 |   <a href="./03_functions/pom.xml">pom.xml</a>
-\---src
-    \---main
-        \---kotlin
+\---<b>src</b>
+    \---<b>main</b>
+        \---<b>kotlin</b>
                 <a href="./03_functions/src/main/kotlin/Functions.kt">Functions.kt</a>
 </pre>
 
@@ -234,9 +234,9 @@ Example `04_functional` has the following structure :
 |   <a href="./04_functional/gradle.properties">gradle.properties</a>
 |   <a href="./04_functional/Makefile">Makefile</a>
 |   <a href="./04_functional/pom.xml">pom.xml</a>
-\---src
-    \---main
-        \---kotlin
+\---<b>src</b>
+    \---<b>main</b>
+        \---<b>kotlin</b>
                 <a href="./04_functional/src/main/kotlin/Lambdas.kt">Lambdas.kt</a>
 </pre>
 
@@ -326,7 +326,7 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html

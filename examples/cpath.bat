@@ -29,7 +29,7 @@ if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 @rem library versions
 set __DOKKA_VERSION=1.9.20
 set __DOKKA_ANALYSIS_VERSION=1.8.20
-set __KOTLIN_VERSION=2.0.0
+set __KOTLIN_VERSION=2.1.0
 
 @rem #########################################################################
 @rem ## Libraries to be added to _LIBS_CPATH1

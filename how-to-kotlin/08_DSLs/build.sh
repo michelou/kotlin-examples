@@ -93,7 +93,6 @@ args() {
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
     debug "Variables  : KTLINT_HOME=$KTLINT_HOME"
-    debug "Variables  : LANGUAGE_VERSION=$LANGUAGE_VERSION"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     [[ $TIMER -eq 1 ]] && TIMER_START=$(date +"%s")
 }
@@ -180,7 +179,7 @@ compile_native() {
     local timestamp_file="$TARGET_DIR/.latest-native-build"
 
     local opts_file="$TARGET_DIR/kotlinc-native_opts.txt"
-    local language_version=1.8
+    local language_version=1.6
     local exe_file="$TARGET_DIR/${MAIN_NAME}.exe"
     echo -language-version "$language_version" -o "$(mixed_path $exe_file)" -e "_02_properties.main" > "$opts_file"
 
@@ -266,8 +265,9 @@ compile_java() {
 
 compile_kotlin() {
     local opts_file="$TARGET_DIR/kotlinc_opts.txt"
+    local language_version=1.6
     local cpath="$CLASSES_DIR"
-    echo -language-version "$LANGUAGE_VERSION" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
+    echo -language-version "$language_version" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
 
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
@@ -582,8 +582,6 @@ CLASSES_DIR="$TARGET_DIR/classes"
 
 TEST_CLASSES_DIR="$TARGET_DIR/test-classes"
 
-LANGUAGE_VERSION=1.8
-
 ## We refrain from using `true` and `false` which are Bash commands
 ## (see https://man7.org/linux/man-pages/man1/false.1.html)
 CLEAN=0
@@ -593,8 +591,8 @@ DECOMPILE=0
 DOC=0
 HELP=0
 LINT=0
-MAIN_NAME=Functions
-MAIN_CLASS="_03_functions.${MAIN_NAME}Kt"
+MAIN_NAME=LocalSealedCasts
+MAIN_CLASS="_08_DSLs.${MAIN_NAME}Kt"
 MAIN_ARGS=
 RUN=0
 TARGET=jvm

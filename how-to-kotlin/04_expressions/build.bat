@@ -309,7 +309,7 @@ echo     %__BEG_O%detekt%__END%        analyze Kotlin source files with %__BEG_N
 echo     %__BEG_O%doc%__END%           generate HTML documentation with %__BEG_N%Dokka%__END%
 echo     %__BEG_O%help%__END%          print this help message
 echo     %__BEG_O%lint%__END%          analyze Kotlin source files with %__BEG_N%KtLint%__END%
-echo     %__BEG_O%run[:^<name^>]%__END%   execute the generated program ^(default: %__BEG_O%Properties%__END%^)
+echo     %__BEG_O%run[:^<name^>]%__END%  execute the generated program ^(default: %__BEG_O%Properties%__END%^)
 if %_VERBOSE%==0 goto :eof
 echo.
 echo   %__BEG_P%Build tools:%__END%

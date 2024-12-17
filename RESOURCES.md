@@ -83,7 +83,7 @@
 ## <span id="news">News</span>
 
 - [InfoWorld - Kotlin news and reviews](https://www.infoworld.com/category/kotlin/).
-- [Kotlin Weekly](http://www.kotlinweekly.net/#latest).
+- [Kotlin Weekly](https://kotlinweekly.net/#latest).
 - [The Daily Kotlin](https://twitter.com/dailykotlin) (*Twitter*).
 
 ## <span id="papers">Papers</span> [**&#x25B4;**](#top)
@@ -121,7 +121,7 @@
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/December 2024* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

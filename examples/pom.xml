@@ -13,20 +13,20 @@
         <java.version>17</java.version>
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
-        <kotlin.version>2.0.0</kotlin.version>
+        <kotlin.version>2.1.0</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.9.0-RC</kotlinx.version>
+        <kotlinx.version>1.9.0</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
         <kotlin.compiler.languageVersion>1.6</kotlin.compiler.languageVersion>
 
         <!-- https://gantsign.com/ktlint-maven-plugin/ -->
-        <ktlint.maven.version>3.2.0</ktlint.maven.version>
+        <ktlint.maven.version>3.4.0</ktlint.maven.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
         <maven.jar.version>3.4.2</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <exec.maven.version>3.3.0</exec.maven.version>
+        <exec.maven.version>3.5.0</exec.maven.version>
         <!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-core -->
         <dokka.version>1.9.20</dokka.version>
 		<!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis -->

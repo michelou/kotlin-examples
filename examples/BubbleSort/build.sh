@@ -77,11 +77,11 @@ args() {
             ;;
         esac
     done
-    if $LINT && [[ ! -x "$KTLINT_CMD" ]]; then
+    if [[ $LINT -eq 1 ]] && [[ ! -x "$KTLINT_CMD" ]]; then
         warning "ktLint installation not found"
         LINT=0
     fi
-    if $DECOMPILE && [[ ! -x "$CFR_CMD" ]]; then
+    if [[ $DECOMPILE -eq 1 ]] && [[ ! -x "$CFR_CMD" ]]; then
         warning "cfr installation not found"
         DECOMPILE=0
     fi
@@ -147,7 +147,7 @@ lint() {
     if [[ $? -ne 0 ]]; then
         warning "Ktlint error found"
         if [[ -f "$tmp_file" ]]; then
-            ($DEBUG || $VERBOSE) && cat "$tmp_file"
+            [[ $(($DEBUG + $VERBOSE)) -gt 0 ]] && cat "$tmp_file"
             rm "$tmp_file"
        fi
        # EXITCODE=1
@@ -589,7 +589,6 @@ SOURCE_MAIN_DIR="$SOURCE_DIR/main/kotlin"
 TARGET_DIR="$ROOT_DIR/target"
 TARGET_DOCS_DIR="$TARGET_DIR/docs"
 CLASSES_DIR="$TARGET_DIR/classes"
-
 TEST_CLASSES_DIR="$TARGET_DIR/test-classes"
 
 ## https://kotlinlang.org/docs/compatibility-guide-17.html
@@ -626,8 +625,8 @@ case "$(uname -s)" in
     CYGWIN*) cygwin=1 ;;
     MINGW*)  mingw=1 ;;
     MSYS*)   msys=1 ;;
-    Darwin*) darwin=1 ;;   
-    Linux*)  linux=1 
+    Darwin*) darwin=1 ;;
+    Linux*)  linux=1
 esac
 unset CYGPATH_CMD
 PSEP=":"

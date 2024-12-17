@@ -61,9 +61,9 @@ DOKKA_VERSION   = 1.9.20
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.0.0
+KOTLIN_VERSION  = 2.1.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-KOTLINX_VERSION = 1.9.0-RC
+KOTLINX_VERSION = 1.9.0
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_ANALYSIS_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)

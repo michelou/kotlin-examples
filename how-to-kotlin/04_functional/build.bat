@@ -335,7 +335,7 @@ if not %ERRORLEVEL%==0 (
 goto :eof
 
 :detekt
-for %%f in ("%~dp0\.") do set "__CONFIG_FILE=%%~dpfdetekt-config.yml"
+for /f "delims=" %%f in ("%~dp0\.") do set "__CONFIG_FILE=%%~dpfdetekt-config.yml"
 
 set __DETEKT_OPTS=--language-version %_LANGUAGE_VERSION% --config "%__CONFIG_FILE%" --input "%_SOURCE_DIR%" --report "xml:%_TARGET_DIR%\detekt-report.xml"
 

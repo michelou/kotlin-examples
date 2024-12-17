@@ -42,7 +42,7 @@ set "_LIBS_CPATH1=%_LIBS_CPATH%"
 
 set _LIBS_CPATH=
 
-set __KOTLINX_VERSION=1.8.1
+set __KOTLINX_VERSION=1.9.0
 
 @rem https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-coroutines-core" "%__KOTLINX_VERSION%"
