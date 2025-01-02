@@ -67,9 +67,9 @@ how-to-kotlin\{<a href="how-to-kotlin/README.md">README.md</a>, <a href="how-to-
 kotlin-cookbook\{<a href="kotlin-cookbook/README.md">README.md</a>, <a href="kotlin-cookbook/Example_03-10/">Example_03-10</a>, <a href="kotlin-cookbook/Example_03-13/">Example_03-13</a>, ..}
 learn-kotlin\{<a href="learn-kotlin/README.md">README.md</a>, <a href="learn-kotlin/Unit_02/">Unit_02</a>, <a href="learn-kotlin/Unit_04/">Unit_04</a>, ..}
 <a href="CONTRIBUTIONS.md">CONTRIBUTIONS.md</a>
-<a href="LANGUAGE.md">LANGUAGE.md#top</a>
+<a href="LANGUAGE.md#top">LANGUAGE.md</a>
 README.md
-<a href="RESOURCES.md">RESOURCES.md#top</a>
+<a href="RESOURCES.md#top">RESOURCES.md</a>
 <a href="setenv.bat">setenv.bat</a>
 </pre>
 
