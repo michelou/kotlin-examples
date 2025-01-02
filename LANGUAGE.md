@@ -46,7 +46,7 @@ Reference: [Compatibility guide for Kotlin 1.5](https://kotlinlang.org/docs/comp
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2025* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [kt_27825]: https://youtrack.jetbrains.com/issue/KT-27825

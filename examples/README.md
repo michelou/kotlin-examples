@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>, <a href="https://makefiletutorial.com/" rel="external">Make scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -22,7 +22,7 @@ In this document we present the following [Kotlin] code examples (unless):
 > **:mag_right:** There exist three Kotlin compilers and some code examples are only valid with one of them:
 > - The [Kotlin/JVM][kotlin_jvm] compiler generates class/JAR files.
 > - The [Kotlin/JS][kotlin_js] compiler generates JavaScript code.
-> - The [Kotlin/Native][kotlin_native] compiler generates native codefor the supported targets <sup id="anchor_01"><a href="#footnote_01">[1]</a></sup>.
+> - The [Kotlin/Native][kotlin_native] compiler generates native codefor the supported targets <sup id="anchor_01"><a href="#footnote_01">1</a></sup>.
 
 <!--
 **`kotlin-stdlib`** contains most of the functionality: Collections, Ranges, Math, Regex, File extensions, Locks, etc... Most of what you use daily is in kotlin-stdlib
@@ -77,7 +77,7 @@ Command [**`build.bat clean run`**](HelloWorld/build.bat) compiles source file [
 Hello World!
 &nbsp;
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f target\classes | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v "^[A-Z]"</b>
-+---META-INF
++---<b>META-INF</b>
 |       main.kotlin_module
 \---<b>org</b>
     \---<b>example</b>
@@ -197,7 +197,7 @@ This example has the following directory structure :
 |   <a href="./LanguageFeatures/build.xml">build.xml</a>
 |   <a href="./LanguageFeatures/gradle.properties">gradle.properties</a>
 |   <a href="./LanguageFeatures/Makefile">Makefile</a>
-|   pom.xml</a>
+|   <a href="./LanguageFeatures/pom.xml">pom.xml</a>
 \---<b>src</b>
     +---<b>main</b>
     |   \---<b>kotlin</b>
@@ -210,7 +210,7 @@ This example has the following directory structure :
 Either command [**`build.bat clean run`**](LanguageFeatures/build.bat) or command [**`gradle.bat -q clean run`**](LanguageFeatures/build.gradle) compiles source file  [**`LanguageFeatures.kt`**](LanguageFeatures/src/main/kotlin/LanguageFeatures.kt) and produces the following output:
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> -q clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html" rel="external">gradle</a> -q clean run</b>
 int a: 2
 penDown
 forward 100.0
@@ -239,7 +239,7 @@ null
 This project has the following directory structure :
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
 |   <a href="./QuickSort/00download.txt">00download.txt</a>
 |   <a href="./QuickSort/build.bat">build.bat</a>
 |   <a href="./QuickSort/build.gradle">build.gradle</a>
@@ -248,12 +248,12 @@ This project has the following directory structure :
 |   <a href="./QuickSort/gradle.properties">gradle.properties</a>
 |   <a href="./QuickSort/Makefile">Makefile</a>
 |   <a href="./QuickSort/pom.xml">pom.xml</a>
-\---src
-    +---main
+\---<b>src</b>
+    +---<b>main</b>
     |   \---<b>kotlin</b>
     |           <a href="./QuickSort/src/main/kotlin/QuickSort.kt">QuickSort.kt</a>
-    \---test
-        \---kotlin
+    \---<b>test</b>
+        \---<b>kotlin</b>
                 <a href="./QuickSort/src/test/kotlin/QuickSortJUnitTest.kt">QuickSortJUnitTest.kt</a>
 </pre>
 
@@ -268,11 +268,11 @@ Sorted Array: 11, 12, 22, 25, 34, 64, 90
 Command [**`make TOOLSET=native clean run`**](./QuickSort/Makefile) builds and runs the native main program `QuickSort.exe` :
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://www.gnu.org/software/make/manual/html_node/Running.html">make</a> TOOLSET=native clean run</b>
+<b>&gt; <a href="https://www.gnu.org/software/make/manual/html_node/Running.html" rel="external">make</a> TOOLSET=native clean run</b>
 "/usr/bin/rm.exe" -rf "target"
 ## Check Maven dependencies on https://repo1.maven.org/maven2
 [ -d "target/classes" ] || "/usr/bin/mkdir.exe" -p "target/classes"
-"C:/opt/kotlinc-1.9.23/bin/kotlinc.bat" -language-version 1.7 -d target/classes src/main/kotlin/QuickSort.kt
+"C:/opt/kotlinc/bin/kotlinc.bat" -language-version 1.7 -d target/classes src/main/kotlin/QuickSort.kt
 "C:/opt/jdk-temurin-17.0.11_9/bin/jar.exe" cf target/QuickSort.jar -C target/classes .
 "C:/opt/kotlinc-1.9.23/bin/kotlin.bat" -cp target/QuickSort.jar QuickSortKt
 Original Array: 64, 34, 25, 12, 22, 11, 90
@@ -314,7 +314,7 @@ Elapsed time: 00:00:06
 Alternatively command [**`gradle.bat -q clean run`**][gradle_cli] (build script [**`build.gradle`**](Reflection/build.gradle) and property file [**`gradle.properties`**](Reflection/gradle.properties)) produces the same result:
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html">gradle</a> clean run</b>
+<b>&gt; <a href="https://docs.gradle.org/current/userguide/command_line_interface.html" rel="external">gradle</a> clean run</b>
 
 &gt; Task :run
 Source code:
@@ -352,7 +352,7 @@ BUILD SUCCESSFUL in 3s
 This project has the following directory structure :
 
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> /v /b [A-Z]</b>
+<b>&gt; <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tree" rel="external">tree</a> /a /f . | <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr" rel="external">findstr</a> /v /b [A-Z]</b>
 |   <a href="./SelectionSort/00download.txt">00download.txt</a>
 |   <a href="./SelectionSort/build.bat">build.bat</a>
 |   <a href="./SelectionSort/build.gradle">build.gradle</a>
@@ -361,12 +361,12 @@ This project has the following directory structure :
 |   <a href="./SelectionSort/gradle.properties">gradle.properties</a>
 |   <a href="./SelectionSort/Makefile">Makefile</a>
 |   <a href="./SelectionSort/pom.xml">pom.xml</a>
-\---src
-    +---main
-    |   \---kotlin
+\---<b>src</b>
+    +---<b>main</b>
+    |   \---<b>kotlin</b>
     |           <a href="./SelectionSort/src/main/kotlin/QuickSort.kt">SelectionSort.kt</a>
-    \---test
-        \---kotlin
+    \---<b>test</b>
+        \---<b>kotlin</b>
                 <a href="./SelectionSort/src/test/kotlin/QuickSortJUnitTest.kt">SelectionSortJUnitTest.kt</a>
 </pre>
 
@@ -389,23 +389,19 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 </dd>
 <dd>
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 1.9.20 (JRE 11.0.21+9)
-Kotlin/Native: 1.9.20
+<b>&gt; %KOTLIN_NATIVE_HOME%\bin\<a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
+info: kotlinc-native 2.1.0 (JRE 17.0.13+11)
+Kotlin/Native: 2.1.0
 &nbsp;
-<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
-linux_x64:                              linux
-linux_arm32_hfp:                        raspberrypi
-linux_arm64:
-linux_mips32:
-linux_mipsel32:
-mingw_x86:
-mingw_x64:                    (default) mingw
-android_x86:
-android_x64:
-android_arm32:
-android_arm64:
-wasm32:
+<b>&gt; %KOTLIN_NATIVE_HOME%\bin\<a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
+linux_x64
+linux_arm32_hfp (deprecated)
+linux_arm64
+mingw_x64 (default)
+android_x86
+android_x64
+android_arm32
+android_arm64
 </pre>
 </dd></dl>
 
@@ -416,11 +412,11 @@ The <a href="https://kotlinlang.org/">Kotlin/JVM</a> compiler generates a single
 </dd>
 <dd>
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -d target\HelloWorld.jar src\HelloWorld.kt</b>
-<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir">dir</a> target | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> HelloWorld.jar</b>
+<b>&gt; %KOTLIN_HOME%\bin\<a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -d target\HelloWorld.jar src\main\kotlin\HelloWorld.kt</b>
+<b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir" rel="external">dir</a> target | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> HelloWorld.jar</b>
 02.11.2019  16:45             1 164 HelloWorld.jar
 &nbsp;
-<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
+<b>&gt; %JAVA_HOME%\bin\<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
 META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
@@ -442,18 +438,18 @@ On the JVM platform a <a href="https://kotlinlang.org/">Kotlin</a> program can b
 <tr><td><code>java.exe</code></td><td><code>HelloWorldKt</code></td><td style="font-size:90%;"><code><b>&gt; java -cp %CPATH%;target\classes HelloWorldKt</b></code><br/><code>Hello World!</code></td></tr>
 <tr><td>&nbsp;</td><td><code>HelloWorld.jar</code></td><td style="font-size:90%;"><code><b>&gt; java -Xbootclasspath/a:%CPATH% -jar target\HelloWorld.jar</b></code><br/><code>Hello World!</code></td></tr>
 </table>
-<span style="font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc-1.4.32\lib\kotlin-stdlib.jar</code></b></span>
+<span style="font-size:80%;"><sup>(1)</sup> <b><code>CPATH=c:\opt\kotlinc\lib\kotlin-stdlib.jar</code></b></span>
 </dd>
 <dd>
 The command line is shorter if the <a href="https://kotlinlang.org/">Kotlin</a> runtime is included in archive file <b><code>HelloWorld.jar</code></b> (option <b><code>-include-runtime</code></b>):
 </dd>
 <dd>
 <pre style="font-size:80%;">
-<b>&gt; <a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -include-runtime -d target\HelloWorld.jar src\HelloWorld.kt</b>
+<b>&gt; %KOTLIN_HOME%\bin\<a href="https://kotlinlang.org/docs/reference/compiler-reference.html">kotlinc</a> -include-runtime -d target\HelloWorld.jar src\main\kotlin\HelloWorld.kt</b>
 <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir">dir</a> target | <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/findstr">findstr</a> HelloWorld.jar</b>
 02.11.2019  16:40         1 309 824 HelloWorld.jar
 &nbsp;
-<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
+<b>&gt; %JAVA_HOME%\bin\<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html">jar</a> tf target\HelloWorld.jar</b>
 META-INF/MANIFEST.MF
 HelloWorldKt.class
 META-INF/main.kotlin_module
@@ -464,14 +460,14 @@ kotlin/jvm/internal/CallableReference.class
 kotlin/coroutines/EmptyCoroutineContext.class
 kotlin/coroutines/intrinsics/CoroutineSingletons.class
 &nbsp;
-<b>&gt; <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java</a> -jar target\HelloWorld.jar</b>
+<b>&gt; %JAVA_HOME%\bin\<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java</a> -jar target\HelloWorld.jar</b>
 Hello World!
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/December 2024* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/January 2025* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
