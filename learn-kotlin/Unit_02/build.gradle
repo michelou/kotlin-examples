@@ -5,10 +5,10 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
 }
 
-group "$appGroup"
-version "$appVersion"
+group = "$appGroup"
+version = "$appVersion"
 
-description """Kotlin/JVM example project"""
+description = """Kotlin/JVM example project"""
 
 apply from: "../common.gradle"
 

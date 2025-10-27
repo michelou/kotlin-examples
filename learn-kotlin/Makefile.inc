@@ -36,19 +36,21 @@ RM         = rm
 TOUCH      = touch
 endif
 
-LANGUAGE_VERSION = 1.8
+LANGUAGE_VERSION = 1.9
 JVM_TARGET=11
 
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
-DOKKA_VERSION=1.9.20
+DOKKA_VERSION=2.1.0
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/kotlin-analysis-compiler
 DOKKA_ANALYSIS_VERSION=1.8.20
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.0.0
+KOTLIN_VERSION  = 2.2.21
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-KOTLINX_VERSION = 1.9.0-RC
+KOTLINX_VERSION = 1.10.2
+## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html
+KOTLINX_HTML_VERSION=0.9.1
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -type f -name dokka-analysis-$(DOKKA_ANALYSIS_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)
@@ -61,7 +63,7 @@ KOTLIN_COMPILER_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kot
 KOTLIN_STDLIB_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR        = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
 KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-coroutines-core" -name kotlinx-coroutines-core-$(KOTLINX_VERSION).jar)
-KOTLINX_HTML_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-html-jvm" -name kotlinx-html-0.9.1.jar)
+KOTLINX_HTML_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-html-jvm" -name kotlinx-html-$(KOTLINX_HTML_VERSION).jar)
 HAMCREST_JAR           = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
 JUNIT_JAR              = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 

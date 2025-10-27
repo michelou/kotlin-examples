@@ -273,7 +273,7 @@ Command [**`make TOOLSET=native clean run`**](./QuickSort/Makefile) builds and r
 ## Check Maven dependencies on https://repo1.maven.org/maven2
 [ -d "target/classes" ] || "/usr/bin/mkdir.exe" -p "target/classes"
 "C:/opt/kotlinc/bin/kotlinc.bat" -language-version 1.7 -d target/classes src/main/kotlin/QuickSort.kt
-"C:/opt/jdk-temurin-17.0.11_9/bin/jar.exe" cf target/QuickSort.jar -C target/classes .
+"C:/opt/jdk-temurin-17.0.16_8/bin/jar.exe" cf target/QuickSort.jar -C target/classes .
 "C:/opt/kotlinc-1.9.23/bin/kotlin.bat" -cp target/QuickSort.jar QuickSortKt
 Original Array: 64, 34, 25, 12, 22, 11, 90
 Sorted Array: 11, 12, 22, 25, 34, 64, 90
@@ -390,8 +390,8 @@ Command <b><code>kotlinc-native -list-targets</code></b> displays the list of av
 <dd>
 <pre style="font-size:80%;">
 <b>&gt; %KOTLIN_NATIVE_HOME%\bin\<a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -version</b>
-info: kotlinc-native 2.1.0 (JRE 17.0.13+11)
-Kotlin/Native: 2.1.0
+info: kotlinc-native 2.2.21 (JRE 17.0.16+8)
+Kotlin/Native: 2.2.21
 &nbsp;
 <b>&gt; %KOTLIN_NATIVE_HOME%\bin\<a href="https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options">kotlinc-native</a> -list-targets</b>
 linux_x64
@@ -467,7 +467,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/January 2025* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/October 2025* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

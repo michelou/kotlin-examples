@@ -27,9 +27,10 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 
 @rem library versions
-set __DOKKA_VERSION=1.9.20
+set __DOKKA_VERSION=2.1.0
 set __DOKKA_ANALYSIS_VERSION=1.8.20
-set __KOTLIN_VERSION=2.1.0
+set __FREEMARKER_VERSION=2.3.34
+set __KOTLIN_VERSION=2.2.21
 
 @rem #########################################################################
 @rem ## Libraries to be added to _LIBS_CPATH1
@@ -71,7 +72,7 @@ call :add_maven_jar "org.jetbrains.dokka" "kotlin-analysis-compiler" "%__DOKKA_A
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.11.0"
 
 @rem https://mvnrepository.com/artifact/org.freemarker/freemarker
-call :add_maven_jar "org.freemarker" "freemarker" "2.3.33"
+call :add_maven_jar "org.freemarker" "freemarker" "%__FREEMARKER_VERSION%"
 
 set "_LIBS_CPATH2=%_LIBS_CPATH%"
 

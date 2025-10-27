@@ -6,14 +6,13 @@ plugins {
     id "io.gitlab.arturbosch.detekt" version "$detektVersion"
 }
 
-group "$appGroup"
-version "$appVersion"
+group = "$appGroup"
+version = "$appVersion"
 
-description """Kotlin/JVM example project"""
+description = """Kotlin/JVM example project"""
 
 apply from: "../common.gradle"
 
 run.doFirst {
-    main mainClassName
     args ""
 }

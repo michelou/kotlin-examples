@@ -67,7 +67,7 @@ Usage: build { &lt;option&gt; | &lt;subcommand&gt; }
 > [build] Properties : _PROJECT_NAME=01_bean _PROJECT_VERSION=0.1-SNAPSHOT
 > [build] Options    : _TARGET=jvm _TIMER=0 _VERBOSE=0
 > [build] Subcommands: _CLEAN=1 _COMPILE=1 _DETEKT=0 _DOC=0 _LINT=0 _RUN=1
-> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-17.0.13_11"
+> [build] Variables  : "JAVA_HOME=c:\opt\jdk-temurin-17.0.16_8"
 > [build] Variables  : "KOTLIN_HOME=C:\opt\kotlinc"
 > [buidl] Variables  : "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native-windows"
 > [build] Variables  : _LANGUAGE_VERSION=1.8 _MAIN_CLASS=_01_bean.BeanKt
@@ -326,7 +326,7 @@ abcd
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/January 2025* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/October 2025* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
@@ -340,6 +340,6 @@ abcd
 [kotlin_extensions]: https://kotlinlang.org/docs/tutorials/kotlin-for-py/extension-functionsproperties.html
 [kotlin_lambdas]: https://kotlinlang.org/docs/reference/lambdas.html
 [kotlin_lazy_props]: https://www.kotlindevelopment.com/lazy-property/
-[maven_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
+[maven_cli]: https://maven.apache.org/ref/3.9.11/maven-embedder/cli.html
 [msys2]: https://www.msys2.org/
 [sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html

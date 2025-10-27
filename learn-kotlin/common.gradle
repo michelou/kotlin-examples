@@ -1,9 +1,9 @@
 // overrides default "build"
-buildDir file("target")
+buildDir = file("target")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17 // VERSION_11
-    targetCompatibility = JavaVersion.VERSION_17 // VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 ext {
@@ -34,7 +34,7 @@ clean.doLast {
 }
 
 task lint(type: JavaExec) {
-    description "Analyze Kotlin source files with KtLint"
+    description = "Analyze Kotlin source files with KtLint"
     mainClass = "-jar"
     args files("${ktlintHome}") + ktLintOpts + sourceSets.main.allSource.files
 }
@@ -46,7 +46,7 @@ checkstyle {
 compileKotlin {
     // dependsOn lint
 
-    description "Compile Kotlin source files"
+    description = "Compile Kotlin source files"
 
     kotlinOptions {
         // Tool options
@@ -84,7 +84,7 @@ dokkaHtml.configure {
 task run(type: JavaExec) {
     dependsOn compileKotlin
 
-    description "Execute Kotlin main class $kotlinMain"
+    description = "Execute Kotlin main class $kotlinMain"
 
     classpath sourceSets.main.runtimeClasspath
 
