@@ -54,8 +54,6 @@ args() {
         ## options
         -debug)    DEBUG=1 ;;
         -help)     HELP=1 ;;
-        -jvm)      TARGET=jvm ;;
-        -native)   TARGET=native ;;
         -timer)    TIMER=1 ;;
         -verbose)  VERBOSE=1 ;;
         -*)
@@ -66,11 +64,10 @@ args() {
         clean)     CLEAN=1 ;;
         compile)   COMPILE=1 ;;
         decompile) COMPILE=1 && DECOMPILE=1 ;;
-        doc)       DOC=1 ;;
+        doc)       COMPILE=1 && DOC=1 ;;
         help)      HELP=1 ;;
         lint)      LINT=1 ;;
         run)       COMPILE=1 && RUN=1 ;;
-        test)      COMPILE=1 && TEST=1 ;;
         *)
             error "Unknown subcommand $arg"
             EXITCODE=1 && return 0
@@ -86,14 +83,13 @@ args() {
         DECOMPILE=0
     fi
     debug "Properties : PROJECT_NAME=$PROJECT_NAME PROJECT_VERSION=$PROJECT_VERSION"
-    debug "Options    : TARGET=$TARGET TIMER=$TIMER VERBOSE=$VERBOSE"
-    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN TEST=$TEST"
+    debug "Options    : TIMER=$TIMER VERBOSE=$VERBOSE"
+    debug "Subcommands: CLEAN=$CLEAN COMPILE=$COMPILE DECOMPILE=$DECOMPILE HELP=$HELP LINT=$LINT RUN=$RUN"
     [[ -n "$CFR_HOME" ]] && debug "Variables  : CFR_HOME=$CFR_HOME"
     debug "Variables  : JAVA_HOME=$JAVA_HOME"
     debug "Variables  : KOTLIN_HOME=$KOTLIN_HOME"
     debug "Variables  : KOTLIN_NATIVE_HOME=$KOTLIN_NATIVE_HOME"
     debug "Variables  : KTLINT_HOME=$KTLINT_HOME"
-    debug "Variables  : LANGUAGE_VERSION=$LANGUAGE_VERSION"
     # See http://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
     [[ $TIMER -eq 1 ]] && TIMER_START=$(date +"%s")
 }
@@ -104,8 +100,6 @@ Usage: $BASENAME { <option> | <subcommand> }
 
   Options:
     -debug       print commands executed by this script
-    -jvm         generate JVM executable (default)
-    -native      generate native executable
     -timer       print total execution time
     -verbose     print progress messages
 
@@ -115,18 +109,18 @@ Usage: $BASENAME { <option> | <subcommand> }
     decompile    decompile generated code with CFR
     doc          generate HTML documentation
     help         print this help message
-    run          execute main class "$MAIN_CLASS"
+    run          execute main class "$(MAIN_CLASS)"
 EOS
 }
 
 clean() {
     if [[ -d "$TARGET_DIR" ]]; then
         if [[ $DEBUG -eq 1 ]]; then
-            debug "Delete directory \"$(mixed_path $TARGET_DIR)\""
+            debug "Delete directory \"$TARGET_DIR\""
         elif [[ $VERBOSE -eq 1 ]]; then
             echo "Delete directory \"${TARGET_DIR/$ROOT_DIR\//}\"" 1>&2
         fi
-        rm -rf "$(mixed_path $TARGET_DIR)"
+        rm -rf "$TARGET_DIR"
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
 }
@@ -155,7 +149,7 @@ lint() {
    fi
 }
 
-compile_jvm() {
+compile() {
     [[ -d "$CLASSES_DIR" ]] || mkdir -p "$CLASSES_DIR"
 
     local timestamp_file="$TARGET_DIR/.latest-build"
@@ -166,51 +160,12 @@ compile_jvm() {
         compile_java
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
-    required=$(action_required "$timestamp_file" "$SOURCE_MAIN_DIR/" "*.kt")
+    required=$(action_required "$timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")
     if [[ $required -eq 1 ]]; then
         compile_kotlin
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
     touch "$timestamp_file"
-}
-
-compile_native() {
-    [[ -d "$CLASSES_DIR" ]] || mkdir -p "$CLASSES_DIR"
-
-    local timestamp_file="$TARGET_DIR/.latest-native-build"
-
-    local opts_file="$TARGET_DIR/kotlinc-native_opts.txt"
-    local language_version=1.8
-    local exe_file="$TARGET_DIR/${MAIN_NAME}.exe"
-    echo -language-version "$language_version" -o "$(mixed_path $exe_file)" -e "_02_properties.main" > "$opts_file"
-
-    local sources_file="$TARGET_DIR/kotlinc-native_sources.txt"
-    [[ -f "$sources_file" ]] && rm "$sources_file"
-    local n=0
-    for f in $(find "$SOURCE_DIR/main/kotlin/" -type f -name "*.kt" 2>/dev/null); do
-        echo $(mixed_path $f) >> "$sources_file"
-        n=$((n + 1))
-    done
-    for f in $(find "$SOURCE_DIR/main/kotlin-native/" -type f -name "*.kt" 2>/dev/null); do
-        echo $(mixed_path $f) >> "$sources_file"
-        n=$((n + 1))
-    done
-    if [[ $n -eq 0 ]]; then
-        warning "No Kotlin source file found"
-        return 1
-    fi
-    local s=; [[ $n -gt 1 ]] && s="s"
-    local n_files="$n Kotlin source file$s"
-    if [[ $DEBUG -eq 1 ]]; then
-        debug "$KOTLINC_NATIVE_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
-    elif [[ $VERBOSE -eq 1 ]]; then
-        echo "Compile $n_files to executable \"${exe_file/$ROOT_DIR\//}\"" 1>&2
-    fi
-    eval "$KOTLINC_NATIVE_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
-    if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to executable \"${exe_file/$ROOT_DIR\//}\""
-        cleanup 1
-    fi
 }
 
 action_required() {
@@ -255,11 +210,11 @@ compile_java() {
     if [[ $DEBUG -eq 1 ]]; then
         debug "$JAVAC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
     elif [[ $VERBOSE -eq 1 ]]; then
-        echo "Compile $n_files into directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
+        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
     eval "$JAVAC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
     if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files into directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
+        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
         cleanup 1
     fi
 }
@@ -267,16 +222,12 @@ compile_java() {
 compile_kotlin() {
     local opts_file="$TARGET_DIR/kotlinc_opts.txt"
     local cpath="$CLASSES_DIR"
-    echo -language-version "$LANGUAGE_VERSION" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
+    echo -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
 
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
     local n=0
     for f in $(find "$SOURCE_DIR/main/kotlin/" -type f -name "*.kt" 2>/dev/null); do
-        echo $(mixed_path $f) >> "$sources_file"
-        n=$((n + 1))
-    done
-    for f in $(find "$SOURCE_DIR/main/kotlin-jvm/" -type f -name "*.kt" 2>/dev/null); do
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
@@ -392,33 +343,18 @@ version_string() {
     echo "${arr[@]}"
 }
 
-dokka_cli_jar() {
-    local repo_dir="$HOME/.m2/repository"
-    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
-    jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -type f -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
-        jar_file="$f"
+dokka_cpath() {
+    local path=
+    for f in $(find "$LOCAL_REPO/org/jetbrains/dokka" -type f -name "dokka*.jar|grep -e analysis -e base"); do
+        path="$path$(mixed_path $f)$PSEP"
     done
-    echo "$(mixed_path $jar_file)"
+    echo $path
 }
 
-## output parameter: DOKKA_CPATH
-dokka_cpath() {
-    local repo_dir="$HOME/.m2/repository"
-    local cpath=
-    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
-    jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -type f -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
-        jar_file="$f"
-    done
-	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
-    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
-    jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -type f -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
-        jar_file="$f"
-    done
-	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
-    echo "$cpath"
+dokka_cli_jar() {
+    local path=""
+    for i in $(find "$LOCAL_REPO/org/jetbrains/dokka/dokka-cli" -type f -name "dokka-cli-*.jar"); do path=$i; done
+    echo "$(mixed_path $path)"
 }
 
 doc() {
@@ -426,13 +362,13 @@ doc() {
 
     local doc_timestamp_file="$TARGET_DOCS_DIR/.latest-build"
 
-    local required="$(action_required "$doc_timestamp_file" "$SOURCE_MAIN_DIR/" "*.kt")"
+    local required="$(action_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")"
     [[ $required -eq 0 ]] && return 1
 
     ## see https://github.com/Kotlin/dokka/releases
     DOKKA_CPATH="$(dokka_cpath)$(extra_cpath)"
     DOKKA_CLI_JAR="$(dokka_cli_jar)"
-    local args="-src $(mixed_path $SOURCE_MAIN_DIR)"
+    local args="-src $(mixed_path $MAIN_SOURCE_DIR)"
     local dokka_args="-pluginsClasspath \"$DOKKA_CPATH\" -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir \"$(mixed_path $TARGET_DOCS_DIR)\" -sourceSet \"$args\""
     if [[ $DEBUG -eq 1 ]]; then
         debug "$JAVA_CMD -jar \"$DOKKA_CLI_JAR\" $dokka_args"
@@ -445,7 +381,7 @@ doc() {
         cleanup 1
     fi
     if [[ $DEBUG -eq 1 ]]; then
-        debug "HTML documentation saved into directory \"$(mixed_path $TARGET_DOCS_DIR)\""
+        debug "HTML documentation saved into directory \"$TARGET_DOCS_DIR\""
     elif [[ $VERBOSE -eq 1 ]]; then
         echo "HTML documentation saved into directory \"${TARGET_DOCS_DIR/$ROOT_DIR\//}\"" 1>&2
     fi
@@ -472,97 +408,8 @@ run() {
     fi
 }
 
-test_compile() {
-    [[ -d "$TEST_CLASSES_DIR" ]] || mkdir -p "$TEST_CLASSES_DIR"
-
-    local timestamp_file="$TARGET_DIR/.latest-test-build"
-
-    local required=0
-    required=$(action_required "$timestamp_file" "$SOURCE_DIR/test/java/" "*.java")
-    if [[ $required -eq 1 ]]; then
-        test_compile_java
-        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
-    fi
-    required=$(action_required "$timestamp_file" "$SOURCE_DIR/test/kotlin" "*.kt")
-    if [[ $required -eq 1 ]]; then
-        test_compile_kotlin
-        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
-    fi
-    touch "$timestamp_file"
-}
-
-test_compile_java() {
-    echo "nyi"
-}
-
-## output parameter: LIBS_CPATH
-libs_cpath() {
-    local repo_dir="$HOME/.m2/repository"
-    local cpath=
-    ## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-	local jar_file=
-    for f in $(find "$repo_dir/org/hamcrest/hamcrest" -type f -name "hamcrest-2.2.jar" 2>/dev/null); do 
-        jar_file="$f"
-    done
-	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
-    ## https://mvnrepository.com/artifact/junit/junit
-    jar_file=
-    for f in $(find "$repo_dir/junit/junit" -type f -name "junit-4.13.2.jar" 2>/dev/null); do 
-        jar_file="$f"
-    done
-	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
-    echo "$cpath"
-}
-
-test_compile_kotlin() {
-    local opts_file="$TARGET_DIR/test_kotlinc_opts.txt"
-    local cpath="$(libs_cpath)$PSEP$(mixed_path $CLASSES_DIR)"
-    echo -classpath "$cpath" -d "$(mixed_path $TEST_CLASSES_DIR)" > "$opts_file"
-
-    local sources_file="$TARGET_DIR/test_kotlinc_sources.txt"
-    [[ -f "$sources_file" ]] && rm "$sources_file"
-    local n=0
-    for f in $(find "$SOURCE_DIR/test/kotlin/" -type f -name "*.kt" 2>/dev/null); do
-        echo $(mixed_path $f) >> "$sources_file"
-        n=$((n + 1))
-    done
-    if [[ $n -eq 0 ]]; then
-        warning "No Kotlin testsource file found"
-        return 1
-    fi
-    local s=; [[ $n -gt 1 ]] && s="s"
-    local n_files="$n Kotlin test source file$s"
-    if [[ $DEBUG -eq 1 ]]; then
-        debug "$KOTLINC_CMD @$(mixed_path $opts_file) @$(mixed_path $sources_file)"
-    elif [[ $VERBOSE -eq 1 ]]; then
-        echo "Compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\"" 1>&2
-    fi
-    eval "$KOTLINC_CMD" "@$(mixed_path $opts_file)" "@$(mixed_path $sources_file)"
-    if [[ $? -ne 0 ]]; then
-        error "Failed to compile $n_files to directory \"${CLASSES_DIR/$ROOT_DIR\//}\""
-        cleanup 1
-    fi
-}
-
-test_run() {
-    test_compile
-    [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
-
-    local cpath="$(libs_cpath)$PSEP$(mixed_path $CLASSES_DIR)$PSEP$(mixed_path $TEST_CLASSES_DIR)"
-    local test_kotlin_opts="-classpath \"$cpath\""
-    local test_main_class=""
-
-    ## see https://github.com/junit-team/junit4/wiki/Getting-started
-    for f in $(find "$TEST_CLASSES_DIR/" -type f -name "*JUnitTest.class" 2>/dev/null); do
-        test_main_class="$(basename $f .class)"
-        if [[ $DEBUG -eq 1 ]]; then
-            debug "\"$KOTLIN_CMD\" $test_kotlin_opts org.junit.runner.JUnitCore $test_main_class"
-        elif [[ $VERBOSE -eq 1 ]]; then
-            echo "Execute test $test_main_class" 1>&2
-        fi
-        eval "$KOTLIN_CMD" $test_kotlin_opts org.junit.runner.JUnitCore $test_main_class
-        [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
-    done
+run_tests() {
+    echo "tests"
 }
 
 ##############################################################################
@@ -575,14 +422,10 @@ EXITCODE=0
 ROOT_DIR="$(getHome)"
 
 SOURCE_DIR="$ROOT_DIR/src"
-SOURCE_MAIN_DIR="$SOURCE_DIR/main/kotlin"
+MAIN_SOURCE_DIR="$SOURCE_DIR/main/kotlin"
 TARGET_DIR="$ROOT_DIR/target"
 TARGET_DOCS_DIR="$TARGET_DIR/docs"
 CLASSES_DIR="$TARGET_DIR/classes"
-
-TEST_CLASSES_DIR="$TARGET_DIR/test-classes"
-
-LANGUAGE_VERSION=1.8
 
 ## We refrain from using `true` and `false` which are Bash commands
 ## (see https://man7.org/linux/man-pages/man1/false.1.html)
@@ -593,11 +436,9 @@ DECOMPILE=0
 DOC=0
 HELP=0
 LINT=0
-MAIN_NAME=Functions
-MAIN_CLASS="_03_functions.${MAIN_NAME}Kt"
+MAIN_CLASS="com.makotojava.learn.kotlin.example2.Example2Kt"
 MAIN_ARGS=
 RUN=0
-TARGET=jvm
 TEST=0
 TIMER=0
 VERBOSE=0
@@ -611,11 +452,11 @@ msys=0
 darwin=0
 linux=0
 case "$(uname -s)" in
-    CYGWIN*) cygwin=1 ;;
-    MINGW*)  mingw=1 ;;
-    MSYS*)   msys=1 ;;
-    Darwin*) darwin=1 ;;
-    Linux*)  linux=1
+  CYGWIN*) cygwin=1 ;;
+  MINGW*)  mingw=1 ;;
+  MSYS*)   msys=1 ;;
+  Darwin*) darwin=1 ;;   
+  Linux*)  linux=1 
 esac
 unset CYGPATH_CMD
 PSEP=":"
@@ -625,11 +466,11 @@ if [[ $(($cygwin + $mingw + $msys)) -gt 0 ]]; then
     [[ -n "$CFR_HOME" ]] && CFR_HOME="$(mixed_path $CFR_HOME)"
     [[ -n "$JAVA_HOME" ]] && JAVA_HOME="$(mixed_path $JAVA_HOME)"
     [[ -n "$KOTLIN_HOME" ]] && KOTLIN_HOME="$(mixed_path $KOTLIN_HOME)"
-    [[ -n "$KOTLIN_NATIVE_HOME" ]] && KOTLIN_NATIVE_HOME="$(mixed_path $KOTLIN_NATIVE_HOME)"
     [[ -n "$KTLINT_HOME" ]] && KTLINT_HOME="$(mixed_path $KTLINT_HOME)"
-    DIFF_CMD="$GIT_HOME/usr/bin/diff.exe"
+    [[ -n "$DOKKA_HOME" ]] && DOKKA_HOME="$(mixed_path $DOKKA_HOME)"
+    LOCAL_REPO="$(mixed_path $USERPROFILE/.m2/repository)"
 else
-    DIFF_CMD="$(which diff)"
+    LOCAL_REPO="$USER/.m2/repository"
 fi
 if [[ ! -x "$JAVA_HOME/bin/javac" ]]; then
     error "Java SDK installation not found"
@@ -645,12 +486,6 @@ if [[ ! -x "$KOTLIN_HOME/bin/kotlinc" ]]; then
 fi
 KOTLIN_CMD="$KOTLIN_HOME/bin/kotlin"
 KOTLINC_CMD="$KOTLIN_HOME/bin/kotlinc"
-
-if [[ ! -x "$KOTLIN_NATIVE_HOME/bin/kotlinc-native" ]]; then
-    error "Kotlin/Native installation not found"
-    cleanup 1
-fi
-KOTLINC_NATIVE_CMD="$KOTLIN_NATIVE_HOME/bin/kotlinc-native"
 
 PROJECT_NAME="$(basename $ROOT_DIR)"
 PROJECT_URL="github.com/$USER/kotlin-examples"
@@ -679,7 +514,7 @@ if [[ $LINT -eq 1 ]]; then
     lint || cleanup 1
 fi
 if [[ $COMPILE -eq 1 ]]; then
-    compile_$TARGET || cleanup 1
+    compile || cleanup 1
 fi
 if [[ $DECOMPILE -eq 1 ]]; then
     decompile || cleanup 1
@@ -691,6 +526,6 @@ if [[ $RUN -eq 1 ]]; then
     run || cleanup 1
 fi
 if [[ $TEST -eq 1 ]]; then
-    test_run || cleanup 1
+    run_tests || cleanup 1
 fi
 cleanup

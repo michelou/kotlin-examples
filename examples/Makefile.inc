@@ -51,26 +51,34 @@ RM         = rm
 TOUCH      = touch
 endif
 
+JVM_TARGET = 17
+
 ## https://kotlinlang.org/docs/compatibility-guide-19.html
-LANGUAGE_VERSION = 1.9
+LANGUAGE_VERSION = 2.1
 
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
 DOKKA_ANALYSIS_VERSION = 1.8.20
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
-DOKKA_VERSION   = 2.1.0
+DOKKA_VERSION   = 2.2.0
+## https://mvnrepository.com/artifact/org.freemarker/freemarker
+FREEMARKER_VERSION = 2.3.34
+## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+HAMCREST_VERSION = 3.0
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.2.21
+KOTLIN_VERSION  = 2.3.21
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-KOTLINX_VERSION = 1.10.2
+KOTLINX_VERSION = 1.11.0
+## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
+KOTLINX_HTML_JVM_VERSION = 0.12.0
 
 DOKKA_ANALYSIS_JAR     = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-analysis" -name dokka-analysis-$(DOKKA_ANALYSIS_VERSION).jar)
 DOKKA_BASE_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-base" -name dokka-base-$(DOKKA_VERSION).jar)
 DOKKA_CLI_JAR          = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-cli" -name dokka-cli-$(DOKKA_VERSION).jar)
 DOKKA_PLUGIN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/dokka-gradle-plugin" -name dokka-gradle-plugin-$(DOKKA_VERSION).jar)
 
-FREEMARKER_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/freemarker/freemarker" -name freemarker-2.3.32.jar)
+FREEMARKER_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/org/freemarker/freemarker" -name freemarker-$(FREEMARKER_VERSION).jar)
 KOTLIN_ANALYSIS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/kotlin-analysis-compiler" -name kotlin-analysis-compiler-$(DOKKA_VERSION).jar)
 KOTLIN_INTELLIJ_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka/kotlin-analysis-intellij" -name kotlin-analysis-intellij-$(DOKKA_VERSION).jar)
 
@@ -79,9 +87,9 @@ KOTLIN_COMPILER_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kot
 KOTLIN_STDLIB_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR        = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
 KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-coroutines-core" -name kotlinx-coroutines-core-$(KOTLINX_VERSION).jar)
-KOTLINX_HTML_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-html-jvm" -name kotlinx-html-jvm-0.9.*.jar)
+KOTLINX_HTML_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-html-jvm" -name kotlinx-html-jvm-$(KOTLINX_HTML_JVM_VERSION).*.jar)
 
-HAMCREST_JAR           = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
+HAMCREST_JAR           = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-$(HAMCREST_VERSION).jar)
 JUNIT_JAR              = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
 ## https://kotlin.github.io/dokka/1.7.0/user_guide/cli/usage/
@@ -109,7 +117,7 @@ ifeq (,$(wildcard $(DOKKA_BASE_JAR)))
 	$(eval VERSION := $(DOKKA_VERSION))
 	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
-	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)
+	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar))
 	$(MVN) $(MVN_OPTS) install:install-file -Dfile="$(JAR_FILE)" -DgroupId=$(GROUP_ID) -DartifactId=$(ARTIFACT_ID) -Dversion=$(VERSION) -Dpackaging=jar
 	$(eval DOKKA_BASE_JAR := $(shell $(FIND) "$(LOCAL_REPO)/$(subst .,/,$(GROUP_ID))" -name $(ARTIFACT_ID)-$(VERSION).jar))
 endif
@@ -126,7 +134,7 @@ endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 	$(eval GROUP_ID := org.hamcrest)
 	$(eval ARTIFACT_ID := hamcrest)
-	$(eval VERSION := 2.2)
+	$(eval VERSION := $(HAMCREST_VERSION))
 	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)

@@ -89,8 +89,8 @@ compileKotlin {
         // suppressWarnings = true
         verbose = false
         // Common options
-        apiVersion = "1.9"
-        languageVersion = "1.9"
+        apiVersion = "2.1"
+        languageVersion = "2.1"
         // JVM options
         jvmTarget = "17"  // "11", "1.8"
     }

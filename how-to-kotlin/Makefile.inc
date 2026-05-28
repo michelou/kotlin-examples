@@ -45,24 +45,30 @@ EXT_NATIVE     =
 KOTLINC_NATIVE = $(KOTLIN_NATIVE_HOME)/bin/kotlinc-native
 endif
 
-## https://kotlinlang.org/docs/compatibility-guide-19.html
-LANGUAGE_VERSION = 1.9
+JVM_TARGET = 17
+
+## https://kotlinlang.org/docs/compatibility-guide-21.html
+LANGUAGE_VERSION = 2.1
 
 ## https://mvnrepository.com/artifact/org.jetbrains/annotations
-ANNOTATIONS_VERSION = 26.0.2-1
+ANNOTATIONS_VERSION = 26.1.0
+## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+HAMCREST_VERSION = 3.0
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.1.21
+KOTLIN_VERSION  = 2.3.21
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-KOTLINX_VERSION = 1.10.2
+KOTLINX_VERSION = 1.11.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 KOTLINX_HTML_VERSION = 0.12.0
+## https://mvnrepository.com/artifact/org.jetbrains/markdown
+MARKDOWN_VERSION = 0.7.3
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)
 KOTLINX_COROUTINES_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx/kotlinx-coroutines-core" -name kotlinx-coroutines-core-$(KOTLINX_VERSION).jar)
-HAMCREST_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-2.2.jar)
+HAMCREST_JAR      = $(shell $(FIND) "$(LOCAL_REPO)/org/hamcrest" -name hamcrest-$(HAMCREST_VERSION).jar)
 JUNIT_JAR         = $(shell $(FIND) "$(LOCAL_REPO)/junit/junit" -name junit-$(JUNIT_VERSION).jar)
 
 KOTLIN_DOKKA_VERSION=1.8.20
@@ -73,7 +79,7 @@ DOKKA_COMPILER_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name k
 DOKKA_INTELLIJ_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name kotlin-analysis-intellij-$(KOTLIN_DOKKA_VERSION).jar)
 DOKKA_PLUGIN_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/dokka" -name dokka-gradle-plugin-$(KOTLIN_DOKKA_VERSION).jar)
 KOTLINX_HTML_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlinx" -name kotlinx-html-jvm-$(KOTLINX_HTML_VERSION).jar)
-MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-0.3.5.jar)
+MARKDOWN_JAR       = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name markdown-$(MARKDOWN_VERSION).jar)
 
 ANNOTATIONS_JAR    = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains" -name annotations-$(ANNOTATIONS_VERSION).jar)
 ##EXTENSIONS_JAR     = $(shell $(FIND) "$(DOKKA_HOME)/lib" -name extensions-7.0.3.jar)
@@ -118,7 +124,7 @@ endif
 ifeq (,$(wildcard $(HAMCREST_JAR)))
 	$(eval GROUP_ID := org.hamcrest)
 	$(eval ARTIFACT_ID := hamcrest)
-	$(eval VERSION := 2.2)
+	$(eval VERSION := $(HAMCREST_VERSION))
 	$(eval JAR_FILE := $(TMP)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(eval URL := $(REMOTE_REPO)/$(subst .,/,$(GROUP_ID))/$(ARTIFACT_ID)/$(VERSION)/$(ARTIFACT_ID)-$(VERSION).jar)
 	$(WGET) $(WGET_OPTS) $(URL) || $(error Failed to download $(ARTIFACT_ID)-$(VERSION).jar)

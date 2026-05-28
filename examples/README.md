@@ -102,14 +102,14 @@ Hello World!
 > **:mag_right:** The [**`pelook`**][bytepointer_pelook] utility can help us getting more information about the native executable:
 > <pre style="font-size:80%;">
 > <b>&gt; <a href="http://bytepointer.com/tools/pelook_cmdline.htm">pelook.exe</a> -h target\HelloWorld.exe | <a href="https://man7.org/linux/man-pages/man1/head.1.html">head</a> -7</b>
-> loaded "target\HelloWorld.exe" / 478599 (0x74D87) bytes
+> loaded "target\HelloWorld.exe" / 639488 (0x9C200) bytes
 > signature/type:       PE64 EXE image for amd64
-> image checksum:       0x0007FD9A (OK)
+> image checksum:       0x00000000 (calc=0x0009F0A1)
 > machine:              0x8664 (amd64)
 > subsystem:            3 (Windows Console)
-> minimum os:           4.0 (Win95/NT4)
-> linkver:              2.32
-</pre>
+> minimum os:           6.0 (Vista)
+> linkver:              14.0
+> </pre>
 
 ## <span id="java_kotlin">`JavaToKotlin` Example (JVM only)</span>
 
@@ -467,7 +467,7 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2025* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

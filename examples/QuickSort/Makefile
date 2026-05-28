@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2018-2024 Stéphane Micheloud
+## Copyright (c) 2018-2026 Stéphane Micheloud
 ##
 ## Licensed under the MIT License.
 ##
@@ -87,11 +87,11 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ## test rules
 
 TEST_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/test/kotlin" -type f -name "*.kt")
-TEST_TARGET = $(TARGET_DIR)/ReflectionTest.jar
+TEST_TARGET = $(TARGET_DIR)/QuickSortTest.jar
 
 TEST_CLASSES_DIR = $(TARGET_DIR)/test-classes
 TEST_CPATH       = $(HAMCREST_JAR)$(PSEP)$(JUNIT_JAR)$(PSEP)$(TARGET)
-TEST_MAIN_CLASS  = ReflectionTestKt
+TEST_MAIN_CLASS  = QuickSortTestKt
 
 test: $(TARGET) $(TEST_TARGET)
 	"$(JAVA)" -classpath "$(TEST_CPATH)$(PSEP)$(TEST_TARGET)" org.junit.runner.JUnitCore $(TEST_MAIN_CLASS)

@@ -24,12 +24,12 @@ This example has the following directory structure :
 |   <a href="./Example_03-10/gradle.properties">gradle.properties</a>
 |   <a href="./Example_03-10/Makefile">Makefile</a>
 |   <a href="./Example_03-10/pom.xml">pom.xml</a>
-\---src
-    +---main
-    |   \---kotlin
+\---<b>src</b>
+    +---<b<main</b>
+    |   \---<b>kotlin</b>
     |           <a href="./Example_03-10/src/main/kotlin/Customer.kt">Customer.kt</a>
-    \---test
-        \---kotlin
+    \---<b>test</b>
+        \---<b>kotlin</b>
                 <a href="./Example_03-10/src/test/kotlin/CustomerKtTest.kt">CustomerKtTest.kt</a>
 </pre>
 
@@ -82,12 +82,12 @@ This example has the following directory structure :
 |   <a href="./Example_03-13/gradle.properties">gradle.properties</a>
 |   <a href="./Example_03-13/Makefile">Makefile</a>
 |   <a href="./Example_03-13/pom.xml">pom.xml</a>
-\---src
-    +---main
-    |   \---kotlin
+\---<b>src</b>
+    +---<b>main</b>
+    |   \---<b>kotlin</b>
     |           <a href="./Example_03-13/src/main/kotlin/PointMain.kt">PointMain.kt</a>
-    \---test
-        \---kotlin
+    \---<b>test</b>
+        \---<b>kotlin</b>
                 <a href="./Example_03-13/src/test/kotlin/PointMainKtTest.kt">PointMainKtTest.kt</a>
 </pre>
 
@@ -238,7 +238,7 @@ Test run finished after 100 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2025* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html

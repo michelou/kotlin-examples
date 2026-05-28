@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2018-2025 Stéphane Micheloud
+## Copyright (c) 2018-2026 Stéphane Micheloud
 ##
 ## Licensed under the MIT License.
 ##
@@ -27,13 +27,13 @@ build: $(TARGET)
 $(TARGET): $(SOURCES)
 	[ -d "$(CLASSES_DIR)" ] || "$(MKDIR)" -p "$(CLASSES_DIR)"
 	"$(KOTLINC)" -language-version $(LANGUAGE_VERSION) -d "$(CLASSES_DIR)" $^
-	"$(JAR)" cf $(TARGET) -C $(CLASSES_DIR) .
+	"$(JAR)" cf "$(TARGET)" -C $(CLASSES_DIR) .
 
 clean:
 	"$(RM)" -rf "$(TARGET_DIR)"
 
 run: build
-	"$(KOTLIN)" -cp $(TARGET) $(MAIN_CLASS)
+	"$(KOTLIN)" -cp "$(TARGET)" $(MAIN_CLASS)
 
 help:
 	@$(ECHO) "Usage: make all|build|clean|help|lint|run|test"

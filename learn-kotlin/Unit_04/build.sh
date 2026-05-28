@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018-2025 Stéphane Micheloud
+# Copyright (c) 2018-2026 Stéphane Micheloud
 #
 # Licensed under the MIT License.
 #
@@ -410,9 +410,6 @@ HELP=0
 MAIN_CLASS="PrimitivesKt"
 MAIN_ARGS=
 RUN=0
-SCALA_VERSION=3
-SCALAC_OPTS_PRINT=0
-TASTY=0
 TEST=0
 TIMER=0
 VERBOSE=0

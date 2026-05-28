@@ -1,5 +1,35 @@
 # <span id="top">Kotlin language changes</span> <span style="font-size:90%;">[↩](README.md#top)</span>
-  
+
+## <span id="2.1">2.1</span>
+
+| Issue | Component | Incompatibility | Summary |
+|:------|:----------|:----------------|:--------|
+| <span style="white-space: nowrap;">[KT-60521][kt_60521]</span> | Core | Source | **Kotlin 2.1** introduces language version 2.1 and removes support for language versions 1.4 and 1.5. Language versions 1.6 and 1.7 are deprecated. |
+
+Reference: [Compatibility guide for Kotlin 2.1](https://kotlinlang.org/docs/compatibility-guide-21.html).
+
+## <span id="2.0">2.0</span>
+
+| Issue | Component | Incompatibility | Summary |
+|:------|:----------|:----------------|:--------|
+| <span style="white-space: nowrap;">[KT-57750][kt_57750]</span> | Core | Source  | **Kotlin 2.0** reports an error when resolving a class name that is present in several packages imported with a star import. |
+
+Reference: [Compatibility guide for Kotlin 2.0](https://kotlinlang.org/docs/compatibility-guide-20.html).
+
+## <span id="1.9">1.9</span>
+
+| Issue | Component | Incompatibility | Summary |
+|:------|:----------|:----------------|:--------|
+| <span style="white-space: nowrap;">[KT-61111][kt_61111]</span> | Core | Source | **Kotlin 1.9** introduces language version 1.9 and removes support for language version 1.3. |
+
+Reference: [Compatibility guide for Kotlin 1.9](https://kotlinlang.org/docs/compatibility-guide-19.html).
+
+## <span id="1.8">1.8</span>
+
+| Issue | Component | Incompatibility | Summary |
+|:------|:----------|:----------------|:--------|
+
+Reference: [Compatibility guide for Kotlin 1.8](https://kotlinlang.org/docs/compatibility-guide-18.html).
 
 ## <span id="1.7">1.7</span>
 
@@ -46,7 +76,7 @@ Reference: [Compatibility guide for Kotlin 1.5](https://kotlinlang.org/docs/comp
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2025* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [kt_27825]: https://youtrack.jetbrains.com/issue/KT-27825
@@ -59,3 +89,6 @@ Reference: [Compatibility guide for Kotlin 1.5](https://kotlinlang.org/docs/comp
 [kt_41124]: https://youtrack.jetbrains.com/issue/KT-41124
 [kt_46860]: https://youtrack.jetbrains.com/issue/KT-46860
 [kt_47709]: https://youtrack.jetbrains.com/issue/KT-47709
+[kt_57750]: https://youtrack.jetbrains.com/issue/KT-57750
+[kt_61111]: https://youtrack.jetbrains.com/issue/KT-61111
+[kt_60521]: https://youtrack.jetbrains.com/issue/KT-60521

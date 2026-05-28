@@ -27,13 +27,13 @@ if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 set _LIBS_CPATH=
 
 @rem https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone
-call :add_jar "org.junit.platform" "junit-platform-console-standalone" "6.0.0"
+call :add_jar "org.junit.platform" "junit-platform-console-standalone" "6.1.0"
 
 @rem https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-call :add_jar "org.junit.jupiter" "junit-jupiter-api" "6.0.0"
+call :add_jar "org.junit.jupiter" "junit-jupiter-api" "6.1.0"
 
 @rem https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-call :add_jar "org.hamcrest" "hamcrest" "2.2"
+call :add_jar "org.hamcrest" "hamcrest" "3.0"
 
 @rem https://mvnrepository.com/artifact/org.apache.commons/commons-math3
 call :add_jar "org.apache.commons" "commons-math3" "3.6.1"

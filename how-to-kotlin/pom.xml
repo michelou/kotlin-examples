@@ -13,18 +13,18 @@
         <java.version>17</java.version>
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
-        <kotlin.version>2.1.21</kotlin.version>
+        <kotlin.version>2.3.21</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
-        <kotlinx.version>1.10.2</kotlinx.version>
+        <kotlinx.version>1.11.0</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
-        <kotlin.compiler.languageVersion>1.8</kotlin.compiler.languageVersion>
+        <kotlin.compiler.languageVersion>2.1</kotlin.compiler.languageVersion>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-        <maven.compiler.version>3.14.1</maven.compiler.version>
+        <maven.compiler.version>3.15.0</maven.compiler.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
-        <maven.jar.version>3.4.2</maven.jar.version>
+        <maven.jar.version>3.5.0</maven.jar.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-        <exec.maven.version>3.6.2</exec.maven.version>
+        <exec.maven.version>3.6.3</exec.maven.version>
     </properties>
 
     <dependencies>

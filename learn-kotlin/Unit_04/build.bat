@@ -164,7 +164,8 @@ for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-set _LANGUAGE_VERSION=1.8
+@rem https://kotlinlang.org/docs/compatibility-guide-21.html
+set _LANGUAGE_VERSION=2.1
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -411,7 +412,10 @@ echo. > "%__TIMESTAMP_FILE%"
 goto :eof
 
 :compile_kotlin
-set __KOTLIN_CPATH=
+call :libs_cpath
+if not %_EXITCODE%==0 goto :eof
+
+set __KOTLIN_CPATH=%_CPATH%
 for %%f in (%KOTLIN_HOME%\lib\kotlin-stdlib-*.jar %KOTLIN_HOME%\lib\kotlinx-coroutines-*.jar) do (
     set "__KOTLIN_CPATH=!__KOTLIN_CPATH!%%f;"
 )

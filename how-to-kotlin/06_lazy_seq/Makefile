@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2018-2025 Stéphane Micheloud
+## Copyright (c) 2018-2026 Stéphane Micheloud
 ##
 ## Licensed under the MIT License.
 ##
@@ -15,7 +15,7 @@ CLASSES_DIR = $(TARGET_DIR)/classes
 ## main rules
 
 SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
-TARGET = $(TARGET_DIR)/Functions.jar
+TARGET  = $(TARGET_DIR)/Functions.jar
 
 MAIN_CLASS = _06_lazy_seq.LazySequenceKt
 MAIN_ARGS ?= 

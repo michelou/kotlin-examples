@@ -31,9 +31,9 @@ This example has the following directory structure :
 |   <a href="./ch01/build.gradle">build.gradle</a>
 |   <a href="./ch01/gradle.properties">gradle.properties</a>
 |   <a href="./ch01/pom.xml">pom.xml</a>
-\---src
-    \---main
-        \---kotlin
+\---<b>src</b>
+    \---<b>main</b>
+        \---<b>kotlin</b>
                 <a href="./ch01/src/main/kotlin/Main.kt">Main.kt</a>
 </pre>
 
@@ -80,7 +80,7 @@ Execution took 1034 ms
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/October 2025* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/May 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

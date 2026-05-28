@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018-2025 Stéphane Micheloud
+# Copyright (c) 2018-2026 Stéphane Micheloud
 #
 # Licensed under the MIT License.
 #
@@ -73,7 +73,7 @@ args() {
             ;;
         esac
     done
-    if [[ $DECOMPILE -eq 1 ]] && [ ! -x "$CFR_CMD" ]; then
+    if [[ $DECOMPILE -eq 1 ]] && [[ ! -x "$CFR_CMD" ]]; then
         warning "cfr installation not found"
         DECOMPILE=false
     fi
@@ -109,7 +109,7 @@ EOS
 }
 
 clean() {
-    if [ -d "$TARGET_DIR" ]; then
+    if [[ -d "$TARGET_DIR" ]]; then
         if [[ $DEBUG -eq 1 ]]; then
             debug "Delete directory $TARGET_DIR"
         elif [[ $VERBOSE -eq 1 ]]; then
@@ -213,7 +213,7 @@ compile_kotlin() {
 }
 
 mixed_path() {
-    if [ -x "$CYGPATH_CMD" ]; then
+    if [[ -x "$CYGPATH_CMD" ]]; then
         $CYGPATH_CMD -am $1
     elif [[ $(($mingw + $msys)) -gt 0 ]]; then
         echo $1 | sed 's|/|\\\\|g'
@@ -274,7 +274,7 @@ decompile() {
     local diff_opts=--strip-trailing-cr
 
     local check_file="$SOURCE_DIR/build/cfr-source$VERSION_SUFFIX.java"
-    if [ -f "$check_file" ]; then
+    if [[ -f "$check_file" ]]; then
         if [[ $DEBUG -eq 1 ]]; then
             debug "$DIFF_CMD $diff_opts $(mixed_path $output_file) $(mixed_path $check_file)"
         elif [[ $VERBOSE -eq 1 ]]; then
@@ -429,7 +429,7 @@ JAVA_CMD="$JAVA_HOME/bin/java"
 JAVAC_CMD="$JAVA_HOME/bin/javac"
 JAVADOC_CMD="$JAVA_HOME/bin/javadoc"
 
-if [ ! -x "$KOTLIN_HOME/bin/kotlinc" ]; then
+if [[ ! -x "$KOTLIN_HOME/bin/kotlinc" ]]; then
     error "Kotlin installation not found"
     cleanup 1
 fi

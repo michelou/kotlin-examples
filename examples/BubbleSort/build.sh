@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018-2025 Stéphane Micheloud
+# Copyright (c) 2018-2026 Stéphane Micheloud
 #
 # Licensed under the MIT License.
 #
@@ -66,7 +66,7 @@ args() {
         clean)     CLEAN=1 ;;
         compile)   COMPILE=1 ;;
         decompile) COMPILE=1 && DECOMPILE=1 ;;
-        doc)       DOC=1 ;;
+        doc)       COMPILE=1 && DOC=1 ;;
         help)      HELP=1 ;;
         lint)      LINT=1 ;;
         run)       COMPILE=1 && RUN=1 ;;
@@ -592,7 +592,7 @@ CLASSES_DIR="$TARGET_DIR/classes"
 TEST_CLASSES_DIR="$TARGET_DIR/test-classes"
 
 ## https://kotlinlang.org/docs/compatibility-guide-17.html
-LANGUAGE_VERSION=1.7
+LANGUAGE_VERSION=2.1
 
 MAIN_NAME=BubbleSort
 MAIN_CLASS="${MAIN_NAME}Kt"

@@ -38,8 +38,8 @@ val compileKotlin: KotlinCompile by tasks
 // compileKotlin.kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
 
 // Common options
-compileKotlin.kotlinOptions.apiVersion = "1.5"
-compileKotlin.kotlinOptions.languageVersion = "1.5"
+compileKotlin.kotlinOptions.apiVersion = "2.1"
+compileKotlin.kotlinOptions.languageVersion = "2.1"
 
 // JVM options
 // compileKotlin.kotlinOptions.includeRuntime = false
