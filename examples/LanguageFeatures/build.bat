@@ -70,19 +70,20 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_SOURCE_KOTLIN_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-@rem https://kotlinlang.org/docs/compatibility-guide-18.html
-set _LANGUAGE_VERSION=1.8
+@rem https://kotlinlang.org/docs/compatibility-guide-22.html
+set _LANGUAGE_VERSION=2.2
 
 set _PKG_NAME=org.example
 
 set _MAIN_NAME=LanguageFeatures
 set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
+set _MAIN_ARGS=
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
 set _DETEKT_CMD=
@@ -386,13 +387,13 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
 set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
 
-call :action_required "%__TIMESTAMP_FILE%" "%_KOTLIN_SOURCE_DIR%\*.kt"
+call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_KOTLIN_DIR%\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_KOTLIN_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -425,13 +426,13 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-call :action_required "%_EXE_FILE%" "%_KOTLIN_SOURCE_DIR%\*.kt"
+call :action_required "%_EXE_FILE%" "%_SOURCE_KOTLIN_DIR%\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('dir /s /b "%_SOURCE_DIR%\main\kotlin\*.kt" 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_KOTLIN_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -534,7 +535,7 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __ARGS=-src %_SOURCE_KOTLIN_DIR%
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_CLI_JAR%" %__DOKKA_ARGS% 1>&2
@@ -560,12 +561,12 @@ if not exist "%__MAIN_CLASS_FILE%" (
 
 set __KOTLIN_OPTS=-cp "%_CLASSES_DIR%"
 
-if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% 1>&2
-) else if %_VERBOSE%==1 ( echo Execute Kotlin main class %_MAIN_CLASS%  1>&2
+if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% %_MAIN_ARGS% 1>&2
+) else if %_VERBOSE%==1 ( echo Execute Kotlin main class "%_MAIN_CLASS%"  1>&2
 )
-call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS%
+call "%_KOTLIN_CMD%" %__KOTLIN_OPTS% %_MAIN_CLASS% %_MAIN_ARGS%
 if not %ERRORLEVEL%==0 (
-    echo %_ERROR_LABEL% Execution failure ^(%_MAIN_CLASS%^) 1>&2
+    echo %_ERROR_LABEL% Failed to execute Kotlin main class "%_MAIN_CLASS%" 1>&2
     set _EXITCODE=1
     goto :eof
 )

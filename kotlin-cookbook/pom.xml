@@ -12,11 +12,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
 
-        <kotlin.version>2.3.21</kotlin.version>
+        <kotlin.version>2.4.0</kotlin.version>
         <!-- https://github.com/Kotlin/kotlinx.coroutines/releases -->
         <kotlinx.version>1.11.0</kotlinx.version>
         <!-- <kotlin.compiler.incremental>true</kotlin.compiler.incremental> -->
-        <kotlin.compiler.languageVersion>2.1</kotlin.compiler.languageVersion>
+        <kotlin.compiler.languageVersion>2.2</kotlin.compiler.languageVersion>
 
         <!-- https://gantsign.com/ktlint-maven-plugin/ -->
         <ktlint.maven.version>3.5.0</ktlint.maven.version>

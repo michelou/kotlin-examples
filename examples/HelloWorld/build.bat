@@ -46,7 +46,8 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_MAIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_SOURCE_JAVA_DIR=%_SOURCE_DIR%\main\java"
+set "_SOURCE_KOTLIN_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
@@ -54,8 +55,8 @@ set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
 set _PKG_NAME=org.example
 
-set _MAIN_NAME=HelloWorld
-set _MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt
+set "_MAIN_NAME=HelloWorld
+set "_MAIN_CLASS=%_PKG_NAME%.%_MAIN_NAME%Kt"
 set "_EXE_FILE=%_TARGET_DIR%\%_MAIN_NAME%.exe"
 
 set _DETEKT_CMD=
@@ -150,8 +151,8 @@ for /f "delims=" %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-@rem https://kotlinlang.org/docs/compatibility-guide-21.html
-set _LANGUAGE_VERSION=2.1
+@rem https://kotlinlang.org/docs/compatibility-guide-22.html
+set _LANGUAGE_VERSION=2.2
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (
@@ -266,6 +267,7 @@ echo Usage: %__BEG_O%%_BASENAME% { ^<option^> ^| ^<subcommand^> }%__END%
 echo.
 echo   %__BEG_P%Options:%__END%
 echo     %__BEG_O%-debug%__END%      print commands executed by this script
+echo     %__BEG_O%-help%__END%       print this help message
 echo     %__BEG_O%-native%__END%     generate native executable
 echo     %__BEG_O%-timer%__END%      print total execution time
 echo     %__BEG_O%-verbose%__END%    print progress messages
@@ -363,13 +365,13 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
 set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
 
-call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_KOTLIN_DIR%\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('dir /s /b "%_MAIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_KOTLIN_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -406,13 +408,13 @@ goto :eof
 :compile_native
 if not exist "%_TARGET_DIR%" mkdir "%_TARGET_DIR%"
 
-call :action_required "%_EXE_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+call :action_required "%_EXE_FILE%" "%_SOURCE_KOTLIN_DIR%\*.kt"
 if %_ACTION_REQUIRED%==0 goto :eof
 
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc-native_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('dir /s /b "%_MAIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_KOTLIN_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -515,7 +517,7 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-src %_MAIN_SOURCE_DIR%
+set __ARGS=-src %_SOURCE_KOTLIN_DIR%
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% "%_JAVA_CMD%" %__JAVA_OPTS% -jar "%_DOKKA_CLI_JAR%" %__DOKKA_ARGS% 1>&2

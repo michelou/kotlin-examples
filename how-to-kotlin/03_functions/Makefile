@@ -8,13 +8,14 @@
 include ../Makefile.inc
 
 SOURCE_DIR  = src
+SOURCE_KOTLIN_DIR = $(SOURCE_DIR)/main/kotlin
 TARGET_DIR  = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+SOURCES = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 TARGET = $(TARGET_DIR)/Functions.jar
 
 MAIN_CLASS = _03_functions.FunctionsKt
@@ -61,7 +62,7 @@ $(LINT_TARGET): $(LINT_SOURCES)
 ##############################################################################
 ## doc rules
 
-DOC_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+DOC_SOURCES = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 DOC_TARGET  = $(TARGET_DIR)/.latest-doc
 
 DOKKA_CLI_JAR  = $(shell $(FIND) "$(DOKKA_HOME)/lib" -type f -name "dokka-cli*.jar")

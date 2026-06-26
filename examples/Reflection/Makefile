@@ -8,13 +8,14 @@
 include ../Makefile.inc
 
 SOURCE_DIR  = src
+SOURCE_KOTLIN_DIR = $(SOURCE_DIR)/main/kotlin
 TARGET_DIR  = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+SOURCES = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 TARGET = $(TARGET_DIR)/Reflection.jar
 
 MAIN_CLASS = ReflectionKt
@@ -52,7 +53,7 @@ help:
 ## doc rules
 
 DOC_TARGET_DIR = $(TARGET_DIR)/docs
-DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 DOC_TARGET     = $(TARGET_DIR)/.latest-doc
 
 PROJECT_NAME    ?= $(shell basename $(CURDIR))

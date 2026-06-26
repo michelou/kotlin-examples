@@ -70,14 +70,14 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_SOURCE_KOTLIN_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-@rem https://kotlinlang.org/docs/compatibility-guide-21.html
-set _LANGUAGE_VERSION=2.1
+@rem https://kotlinlang.org/docs/compatibility-guide-22.html
+set _LANGUAGE_VERSION=2.2
 
 set __MAIN_NAME=Reflection
 set _MAIN_CLASS=%__MAIN_NAME%Kt
@@ -374,7 +374,7 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('dir /s /b "%_KOTLIN_SOURCE_DIR%\*.kt" 2^>NUL') do (
+for /f "delims=" %%f in ('dir /s /b "%_SOURCE_KOTLIN_DIR%\*.kt" 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )
@@ -424,7 +424,7 @@ if not %_EXITCODE%==0 goto :eof
 set __JAVA_OPTS=
 
 @rem see https://github.com/Kotlin/dokka/releases
-set __ARGS=-src %_SOURCE_DIR%\main\kotlin
+set __ARGS=-src %_SOURCE_KOLTIN_DIR%
 set __DOKKA_ARGS=-pluginsClasspath "%_DOKKA_CPATH%" -moduleName %_PROJECT_NAME% -moduleVersion %_PROJECT_VERSION%
 set __DOKKA_ARGS=%__DOKKA_ARGS% -outputDir "%_TARGET_DOCS_DIR%" -sourceSet "%__ARGS%"
 

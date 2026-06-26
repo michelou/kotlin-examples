@@ -8,7 +8,7 @@
   </tr>
 </table>
 
-[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Component Pascal][component_pascal_examples], [Dafny][dafny_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Go][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [Rust][rust_examples], [Scala 3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [Standard ML][sml_examples], [TruffleSqueak][trufflesqueak_examples], [WiX Toolset][wix_examples] and [Zig][zig_examples] are other topics we are continuously monitoring.
+[Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Common&nbsp;Lisp][cl_examples], [Component&nbsp;Pascal][component_pascal_examples], [Dafny][dafny_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Go][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [PowerShell][powershell_examples], [Rust][rust_examples], [Scala&nbsp;3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [Standard&nbsp;ML][sml_examples], [TruffleSqueak][trufflesqueak_examples], [WiX&nbsp;Toolset][wix_examples] and [Zig][zig_examples] are other topics we are continuously monitoring.
 
 > **&#9755;** Read the document ["Kotlin Language Specification"](https://kotlinlang.org/spec/introduction.html) to know more about of the design decisions behind the <a href="https://kotlinlang.org/" rel="external">Kotlin</a> programming language.
 
@@ -17,8 +17,8 @@
 This project depends on the following external software for the **Microsoft Windows** platform:
 
 - [Git 2.54][git_downloads] ([*release notes*][git_relnotes])
-- [Kotlin 2.3][kotlin_latest] ([*release notes*][kotlin_relnotes])
-- [Kotlin/Native 2.3][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
+- [Kotlin 2.4][kotlin_latest] ([*release notes*][kotlin_relnotes])
+- [Kotlin/Native 2.4][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
 Optionally one may also install the following software:
 
@@ -26,14 +26,14 @@ Optionally one may also install the following software:
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
 - [ConEmu 2023][conemu_downloads] ([*release notes*][conemu_relnotes])
 - [detekt 2.0][detekt_latest] ([*release notes*][detekt_relnotes])
-- [Gradle 9.5][gradle_latest] ([*release notes*][gradle_relnotes])
-- [KtLint 1.8][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
+- [Gradle 9.6][gradle_latest] ([*release notes*][gradle_relnotes])
+- [Ktlint 1.8][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
-- [Visual Studio Code 1.120][vscode_downloads] ([*release notes*][vscode_relnotes])
+- [Visual Studio Code 1.126][vscode_downloads] ([*release notes*][vscode_relnotes])
 <!--
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 -->
-For instance our development environment looks as follows (*May 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*June 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 45 MB)</i>
@@ -42,7 +42,7 @@ C:\opt\ConEmu\                   <i>( 26 MB)</i>
 C:\opt\detekt-cli\               <i>( 64 MB)</i>
 C:\opt\Git\                      <i>(389 MB)</i>
 C:\opt\gradle\                   <i>(144 MB)</i>
-C:\opt\jdk-temurin-17.0.16_8\    <i>(304 MB)</i>
+C:\opt\jdk-temurin-17.0.19_10\   <i>(304 MB)</i>
 C:\opt\kotlinc\                  <i>( 90 MB)</i>
 C:\opt\kotlin-native\            <i>(637 MB)</i>
 C:\opt\ktlint\                   <i>( 70 MB)</i>
@@ -109,8 +109,8 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.15, bazel 8.5.0, gradle 9.5.1, java 17.0.19, detekt-cli 1.23.7,
-   kotlinc 2.2.21, kotlinc-native 2.2.21, ktlint 1.5.0, cfr 0.152,
+   ant 1.10.17, bazel 9.1.1, gradle 9.6.0, java 17.0.19, detekt-cli 2.0.0,
+   kotlinc 2.4.0, kotlinc-native 2.2.21, ktlint 1.5.0, cfr 0.152,
    make 3.81, mvn 3.9.12, git 2.54.0, diff 3.12, bash 4.4.37(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
@@ -219,24 +219,24 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 </dd>
 <dd>
 <pre style="font-size:80%;">
-<a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.15-bin.zip</a>                         <i>(  9 MB)</i>
+<a href="https://ant.apache.org/bindownload.cgi">apache-ant-1.10.17-bin.zip</a>                         <i>(  9 MB)</i>
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.16-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                               <i>(  5 MB)</i>
-<a href="https://github.com/detekt/detekt/releases">detekt-cli-2.0.0.zip</a>                               <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-9.5.1-bin.zip</a>                               <i>(115 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.3.21">kotlin-compiler-2.3.21.zip</a>                         <i>( 80 MB)</i>
-<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.2.21">kotlin-native-windows-x86_64-2.3.21.zip</a>            <i>(169 MB)</i>
+<a href="https://github.com/detekt/detekt/releases">detekt-cli-2.0.0-alpha.zip</a>                         <i>( 54 MB)</i>
+<a href="https://gradle.org/releases/">gradle-9.6.0-bin.zip</a>                               <i>(115 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.4.0">kotlin-compiler-2.4.0.zip</a>                          <i>( 80 MB)</i>
+<a href="https://github.com/JetBrains/kotlin/releases/tag/v2.4.0">kotlin-native-prebuild-windows-x86_64-2.4.0.zip</a>    <i>(169 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.8.0)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.19_10.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.54.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
-<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.120.0.zip</a>                       <i>(131 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.126.0.zip</a>                       <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2026* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/June 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -245,8 +245,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [akka_examples]: https://github.com/michelou/akka-examples#top
 [apache_ant]: https://ant.apache.org/
 [apache_ant_cli]: https://ant.apache.org/manual/running.html
-[apache_ant_relnotes]: https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.15.html
+[apache_ant_relnotes]: https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.17.html
 [apache_maven_history]: https://maven.apache.org/docs/history.html
+[cl_examples]: https://github.com/michelou/cl-examples#top
 [cobol_examples]: https://github.com/michelou/cobol-examples#top
 [component_pascal_examples]: https://github.com/michelou/component-pascal-examples#top
 [conemu_downloads]: https://github.com/Maximus5/ConEmu/releases
@@ -268,14 +269,14 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [graalvm_examples]: https://github.com/michelou/graalvm-examples#top
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/9.5.0/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/9.6.0/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kafka_examples]: https://github.com/michelou/kafka-examples#top
 [kotlin]: https://kotlinlang.org/
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
-[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.3.21
-[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.3.21
+[kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.4.0
+[kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.4.0
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
 [ktlint]: https://github.com/pinterest/ktlint
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
@@ -286,6 +287,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [maven_latest]: https://maven.apache.org/download.cgi
 [maven_relnotes]: https://maven.apache.org/docs/3.9.16/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples#top
+[powershell_examples]: https://github.com/michelou/powershell-examples#top
 [rust_examples]: https://github.com/michelou/rust-examples#top
 [scala3_examples]: https://github.com/michelou/dotty-examples#top
 [sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html

@@ -8,13 +8,14 @@
 include ../Makefile.inc
 
 SOURCE_DIR  = src
+SOURCE_KOTLIN_DIR = $(SOURCE_DIR)/main/kotlin
 TARGET_DIR  = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+SOURCES = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 TARGET = $(TARGET_DIR)/Customer.jar
 
 MAIN_CLASS = CustomerKt
@@ -59,7 +60,7 @@ PROJECT_NAME    ?= $(shell basename $(CURDIR))
 PROJECT_URL     ?= https://github.com/$(USERNAME)/kotlin-examples
 PROJECT_VERSION ?= 1.0.0
 
-DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -moduleVersion "$(PROJECT_VERSION)" -outputDir "$(DOC_TARGET_DIR)" -sourceSet "-src $(SOURCE_DIR)/main/kotlin"
+DOKKA_ARGS = -pluginsClasspath "$(DOKKA_CPATH)" -moduleName "$(PROJECT_NAME)" -moduleVersion "$(PROJECT_VERSION)" -outputDir "$(DOC_TARGET_DIR)" -sourceSet "-src $(SOURCE_KOTLIN_DIR)"
 
 $(DOC_TARGET): $(DOC_SOURCES)
 	[ -d "$(DOC_TARGET_DIR)" ] || $(MKDIR) -p "$(DOC_TARGET_DIR)"
@@ -102,3 +103,6 @@ $(TEST_TARGET): $(TEST_SOURCES)
 ## phony
 
 .PHONY: all build clean doc help lint run test
+
+.SUFFIXES:
+.SUFFIXES: .class .jar .java .kt

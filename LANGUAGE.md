@@ -1,5 +1,15 @@
 # <span id="top">Kotlin language changes</span> <span style="font-size:90%;">[↩](README.md#top)</span>
 
+## <span id="2.2">2.2</span>
+
+| Issue | Component | Incompatibility | Summary |
+|:------|:----------|:----------------|:--------|
+| <span style="white-space: nowrap;">[KT-71793][kt_71793]</span> | Core | Source | Starting with **Kotlin 2.2**, the compiler no longer supports `-language-version=1.6` or `-language-version=1.7`.  |
+| [KTLC-5][ktlc-5] | Core | Source | The `reified` modifier is no longer allowed on type parameters in type aliases. |
+| [KTLC-21][ktlc-21] | Kotlin | Behavioral | Inline value classes are no longer treated as implementors of `java.lang.Number` or `java.lang.Comparable` in `is` and `as` checks |
+
+Reference: [Compatibility guide for Kotlin 2.2](https://kotlinlang.org/docs/compatibility-guide-22.html).
+
 ## <span id="2.1">2.1</span>
 
 | Issue | Component | Incompatibility | Summary |
@@ -76,7 +86,7 @@ Reference: [Compatibility guide for Kotlin 1.5](https://kotlinlang.org/docs/comp
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/May 2026* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/June 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 [kt_27825]: https://youtrack.jetbrains.com/issue/KT-27825
@@ -92,3 +102,6 @@ Reference: [Compatibility guide for Kotlin 1.5](https://kotlinlang.org/docs/comp
 [kt_57750]: https://youtrack.jetbrains.com/issue/KT-57750
 [kt_61111]: https://youtrack.jetbrains.com/issue/KT-61111
 [kt_60521]: https://youtrack.jetbrains.com/issue/KT-60521
+[kt_71793]: https://youtrack.jetbrains.com/issue/KT-71793 "Drop support in -language-version for 1.6 and 1.7"
+[ktlc-5]: https://youtrack.jetbrains.com/issue/KTLC-5 "Forbid reified type parameters in type aliases"
+[ktlc-21]: https://youtrack.jetbrains.com/issue/KTLC-21 "Correct type checks on inline value classes for Number and Comparable"

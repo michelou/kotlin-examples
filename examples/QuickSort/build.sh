@@ -415,11 +415,11 @@ run() {
     if [[ $DEBUG -eq 1 ]]; then
         debug "$KOTLIN_CMD $kotlin_opts $MAIN_CLASS $MAIN_ARGS"
     elif [[ $VERBOSE -eq 1 ]]; then
-        echo "Execute Kotlin main class $MAIN_CLASS" 1>&2
+        echo "Execute Kotlin main class \"$MAIN_CLASS\"" 1>&2
     fi
     eval "$KOTLIN_CMD" $kotlin_opts $MAIN_CLASS $MAIN_ARGS
     if [[ $? -ne 0 ]]; then
-        error "Program execution failed ($MAIN_CLASS)"
+        error "Failed to execute main class \"$MAIN_CLASS)\""
         cleanup 1
     fi
 }

@@ -30,7 +30,7 @@ if %_DEBUG%==1 echo [%~n0] "__TEMP_DIR=%__TEMP_DIR%"
 set __DOKKA_VERSION=2.2.0
 set __DOKKA_ANALYSIS_VERSION=1.8.20
 set __FREEMARKER_VERSION=2.3.34
-set __KOTLIN_VERSION=2.3.21
+set __KOTLIN_VERSION=2.4.0
 
 @rem #########################################################################
 @rem ## Libraries to be added to _LIBS_CPATH1

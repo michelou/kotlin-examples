@@ -23,7 +23,7 @@ set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
-set __KOTLIN_VERSION=2.3.21
+set __KOTLIN_VERSION=2.4.0
 set __KOTLINX_VERSION=1.11.0
 
 set _LIBS_CPATH=
@@ -54,7 +54,7 @@ set _LIBS_CPATH=
 call :add_maven_jar "org.jetbrains.kotlinx" "kotlinx-html-jvm" "0.12.0"
 
 @rem https://mvnrepository.com/artifact/org.jetbrains/markdown
-call :add_maven_jar "org.jetbrains" "markdown" "0.7.3"
+call :add_maven_jar "org.jetbrains" "markdown" "0.7.5"
 
 set __DOKKA_ANALYSIS_VERSION=1.8.20
 

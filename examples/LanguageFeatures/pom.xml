@@ -28,6 +28,7 @@
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <outputDirectory>target/classes</outputDirectory>
         <plugins>
+            <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-maven-plugin -->
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>

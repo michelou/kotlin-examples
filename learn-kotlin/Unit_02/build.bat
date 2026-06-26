@@ -65,7 +65,7 @@ set _ERROR_LABEL=%_STRONG_FG_RED%Error%_RESET%:
 set _WARNING_LABEL=%_STRONG_FG_YELLOW%Warning%_RESET%:
 
 set "_SOURCE_DIR=%_ROOT_DIR%src"
-set "_KOTLIN_SOURCE_DIR=%_SOURCE_DIR%\main\kotlin"
+set "_SOURCE_KOTLIN_DIR=%_SOURCE_DIR%\main\kotlin"
 set "_TARGET_DIR=%_ROOT_DIR%target"
 set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
@@ -259,10 +259,10 @@ goto :eof
 @rem apply title case to input parameter
 for /f %%i in ('call "%_PWSH_CMD%" -C "(Get-Culture).TextInfo.ToTitleCase(('%~1').ToLower())"') do set __EXAMPLE=%%i
 if "%__EXAMPLE%"=="All" (
-    set "__EXAMPLE_FILE=%_SOURCE_DIR%\main\kotlin\Primitives.kt"
+    set "__EXAMPLE_FILE=%_SOURCE_KOTLIN_DIR%\Primitives.kt"
     set _EXAMPLE=*
 ) else (
-    set "__EXAMPLE_FILE=%_SOURCE_DIR%\main\kotlin\%__EXAMPLE%Example.kt"
+    set "__EXAMPLE_FILE=%_SOURCE_KOTLIN_DIR%\%__EXAMPLE%Example.kt"
     set _EXAMPLE=%__EXAMPLE%Example
 )
 if not exist "%__EXAMPLE_FILE%" (
@@ -374,7 +374,7 @@ if not exist "%_CLASSES_DIR%" mkdir "%_CLASSES_DIR%"
 
 set "__TIMESTAMP_FILE=%_CLASSES_DIR%\.latest-build"
 
-call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_DIR%\main\kotlin\*.kt"
+call :action_required "%__TIMESTAMP_FILE%" "%_SOURCE_KOTLIN_DIR%\*.kt"
 if %_ACTION_REQUIRED%==1 (
     call :compile_kotlin
     if not !_EXITCODE!==0 goto :eof
@@ -386,7 +386,7 @@ goto :eof
 set "__SOURCES_FILE=%_TARGET_DIR%\kotlinc_sources.txt"
 if exist "%__SOURCES_FILE%" del "%__SOURCES_FILE%" 1>NUL
 set __N=0
-for /f "delims=" %%f in ('where /r "%_KOTLIN_SOURCE_DIR%" *.kt 2^>NUL') do (
+for /f "delims=" %%f in ('where /r "%_SOURCE_KOTLIN_DIR%" *.kt 2^>NUL') do (
     echo %%f >> "%__SOURCES_FILE%"
     set /a __N+=1
 )

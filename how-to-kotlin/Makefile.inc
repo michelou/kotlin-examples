@@ -47,8 +47,8 @@ endif
 
 JVM_TARGET = 17
 
-## https://kotlinlang.org/docs/compatibility-guide-21.html
-LANGUAGE_VERSION = 2.1
+## https://kotlinlang.org/docs/compatibility-guide-22.html
+LANGUAGE_VERSION = 2.2
 
 ## https://mvnrepository.com/artifact/org.jetbrains/annotations
 ANNOTATIONS_VERSION = 26.1.0
@@ -57,13 +57,13 @@ HAMCREST_VERSION = 3.0
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.3.21
+KOTLIN_VERSION  = 2.4.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 KOTLINX_VERSION = 1.11.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
 KOTLINX_HTML_VERSION = 0.12.0
 ## https://mvnrepository.com/artifact/org.jetbrains/markdown
-MARKDOWN_VERSION = 0.7.3
+MARKDOWN_VERSION = 0.7.5
 
 KOTLIN_STDLIB_JAR = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib" -name kotlin-stdlib-$(KOTLIN_VERSION).jar)
 KOTLIN_JDK8_JAR   = $(shell $(FIND) "$(LOCAL_REPO)/org/jetbrains/kotlin/kotlin-stdlib-jdk8" -name kotlin-stdlib-jdk8-$(KOTLIN_VERSION).jar)

@@ -1,16 +1,25 @@
-# Compiled class file
+*~
+*.aux
+*.bak
+*.cache
+*.cfg
 *.class
-
-# Log file
+*.config
+*.exe
+*.hi
+*.ho
 *.log
+*.o
+*.obj
+.project
+*.stderr
+*.stdout
+.classpath
+.DS_Store
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# Package files
 *.jar
 *.war
 *.nar
@@ -19,21 +28,25 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-# OSX files
-.DS_Store
-
-# Eclipse project files
-.classpath
-.project
-
-# Android Studio
-*.iml
-.idea
-.gradle
-
-# kotlin-examples project
-*_LOCAL/
+# Directories
+.gradle/
+.idea/
+.settings/
+.vscode/
+obj/
+out/
 target/
+
+# Claude specific
+CLAUDE.md
+CLAUDE*local.md
+.claude/
+
+# Project specific
+.adt
+.ali
+*_LOCAL.ini
+*_LOCAL.json
+*_LOCAL.md
+*_LOCAL.txt
+*_LOCAL/

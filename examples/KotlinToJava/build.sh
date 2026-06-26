@@ -130,12 +130,12 @@ compile() {
     local timestamp_file="$TARGET_DIR/.latest-build"
 
     local required=0
-    required=$(action_required "$timestamp_file" "$SOURCE_DIR/main/java/" "*.java")
+    required=$(action_required "$timestamp_file" "$SOURCE_JAVA_DIR/" "*.java")
     if [[ $required -eq 1 ]]; then
         compile_java
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
     fi
-    required=$(action_required "$timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")
+    required=$(action_required "$timestamp_file" "$SOURCE_KOTLIN_DIR/" "*.kt")
     if [[ $required -eq 1 ]]; then
         compile_kotlin
         [[ $? -eq 0 ]] || ( EXITCODE=1 && return 0 )
@@ -172,7 +172,7 @@ compile_java() {
     local sources_file="$TARGET_DIR/javac_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
     local n=0
-    for f in $(find "$SOURCE_DIR/main/java/" -type f -name "*.java" 2>/dev/null); do
+    for f in $(find "$SOURCE_JAVA_DIR/" -type f -name "*.java" 2>/dev/null); do
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
@@ -191,12 +191,12 @@ compile_java() {
 compile_kotlin() {
     local opts_file="$TARGET_DIR/kotlinc_opts.txt"
     local cpath="$CLASSES_DIR"
-    echo -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
+    echo -language-version "$LANGUAGE_VERSION" -classpath "$(mixed_path $cpath)" -d "$(mixed_path $CLASSES_DIR)" > "$opts_file"
 
     local sources_file="$TARGET_DIR/kotlinc_sources.txt"
     [[ -f "$sources_file" ]] && rm "$sources_file"
     local n=0
-    for f in $(find "$SOURCE_DIR/main/kotlin/" -type f -name "*.kt" 2>/dev/null); do
+    for f in $(find "$SOURCE_KOTLIN_DIR/" -type f -name "*.kt" 2>/dev/null); do
         echo $(mixed_path $f) >> "$sources_file"
         n=$((n + 1))
     done
@@ -311,13 +311,13 @@ doc() {
 
     local doc_timestamp_file="$TARGET_DOCS_DIR/.latest-build"
 
-    local required="$(action_required "$doc_timestamp_file" "$MAIN_SOURCE_DIR/" "*.kt")"
+    local required="$(action_required "$doc_timestamp_file" "$SOURCE_KOTLIN_DIR/" "*.kt")"
     [[ $required -eq 0 ]] && return 1
 
     ## see https://github.com/Kotlin/dokka/releases
     DOKKA_CPATH="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
     DOKKA_JAR="/c/opt/dokka-cli-1.4.0/dokka-cli-1.4.0.jar"
-    local args="-src $(mixed_path $MAIN_SOURCE_DIR)"
+    local args="-src $(mixed_path $SOURCE_KOTLIN_DIR)"
     local dokka_args="-pluginsClasspath $(mixed_path $DOKKA_CPATH) -moduleName $PROJECT_NAME -moduleVersion $PROJECT_VERSION -outputDir $(mixed_path $TARGET_DOCS_DIR) -sourceSet \"$args\""
     if [[ $DEBUG -eq 1 ]]; then
         debug "$JAVA_CMD -jar $(mixed_path $DOKKA_JAR) $dokka_args"
@@ -371,10 +371,14 @@ EXITCODE=0
 ROOT_DIR="$(getHome)"
 
 SOURCE_DIR="$ROOT_DIR/src"
-MAIN_SOURCE_DIR="$SOURCE_DIR/main/kotlin"
+SOURCE_JAVA_DIR="$SOURCE_DIR/main/java"
+SOURCE_KOTLIN_DIR="$SOURCE_DIR/main/kotlin"
 TARGET_DIR="$ROOT_DIR/target"
 TARGET_DOCS_DIR="$TARGET_DIR/docs"
 CLASSES_DIR="$TARGET_DIR/classes"
+
+## https://kotlinlang.org/docs/compatibility-guide-22.html
+LANGUAGE_VERSION=2.2
 
 ## We refrain from using `true` and `false` which are Bash commands
 ## (see https://man7.org/linux/man-pages/man1/false.1.html)
