@@ -76,7 +76,8 @@ set "_CLASSES_DIR=%_TARGET_DIR%\classes"
 set "_TEST_CLASSES_DIR=%_TARGET_DIR%\test-classes"
 set "_TARGET_DOCS_DIR=%_TARGET_DIR%\docs"
 
-set _LANGUAGE_VERSION=1.8
+@rem https://kotlinlang.org/docs/compatibility-guide-22.html
+set _LANGUAGE_VERSION=2.2
 
 @rem derives package name from project directory name
 set _PKG_NAME=

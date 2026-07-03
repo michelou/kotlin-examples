@@ -168,12 +168,12 @@ goto :eof
 
 @rem _PROJECT_NAME, _PROJECT_URL, _PROJECT_VERSION, _LANGUAGE_VERSION
 :props
-for %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
+for /f "delims=" %%i in ("%~dp0\.") do set "_PROJECT_NAME=%%~ni"
 set _PROJECT_URL=github.com/%USERNAME%/kotlin-examples
 set _PROJECT_VERSION=1.0-SNAPSHOT
 
-@rem https://kotlinlang.org/docs/compatibility-guide-21.html
-set _LANGUAGE_VERSION=2.1
+@rem https://kotlinlang.org/docs/compatibility-guide-22.html
+set _LANGUAGE_VERSION=2.2
 
 set "__PROPS_FILE=%_ROOT_DIR%build.properties"
 if exist "%__PROPS_FILE%" (

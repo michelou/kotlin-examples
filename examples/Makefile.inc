@@ -10,6 +10,9 @@ endif
 ifndef KOTLIN_NATIVE_HOME
 $(error Variable KOTLIN_NATIVE_HOME is not set)
 endif
+ifndef KTLINT_HOME
+$(error Variable KTLINT_HOME is not set)
+endif
 ifndef MAVEN_HOME
 $(error Variable MAVEN_HOME is not set)
 endif
@@ -21,6 +24,7 @@ JAVAC      = $(subst \,/,$(JAVA_HOME))/bin/javac.exe
 KOTLIN     = $(subst \,/,$(KOTLIN_HOME))/bin/kotlin.bat
 KOTLINC    = $(subst \,/,$(KOTLIN_HOME))/bin/kotlinc.bat
 KOTLINC_NATIVE = $(subst \,/,$(KOTLIN_NATIVE_HOME))/bin/kotlinc-native.bat
+KTLINT_JAR = $(subst \,/,$(KTLINT_HOME))/ktlint.jar
 MVN        = $(subst \,/,$(MAVEN_HOME))/bin/mvn.cmd
 LOCAL_REPO = $(subst \,/,$(USERPROFILE))/.m2/repository
 PSEP       = ;
@@ -39,6 +43,7 @@ JAVAC      = $(JAVA_HOME)/bin/javac
 KOTLIN     = $(KOTLIN_HOME)/bin/kotlin
 KOTLINC    = $(KOTLIN_HOME)/bin/kotlinc
 KOTLINC_NATIVE = $(KOTLIN_NATIVE_HOME)/bin/kotlinc-native
+KTLINT_JAR = $(KOTLIN_HOME)/ktlint.jar
 LOCAL_REPO = $(HOME)/.m2/repository
 PSEP       = :
 TARGET_EXT =

@@ -59,7 +59,7 @@ args() {
         -timer)    TIMER=1 ;;
         -verbose)  VERBOSE=1 ;;
         -*)
-            error "Unknown option $arg"
+            error "Unknown option \"$arg\""
             EXITCODE=1 && return 0
             ;;
         ## subcommands
@@ -72,7 +72,7 @@ args() {
         run)       COMPILE=1 && RUN=1 ;;
         test)      COMPILE=1 && TEST=1 ;;
         *)
-            error "Unknown subcommand $arg"
+            error "Unknown subcommand \"$arg\""
             EXITCODE=1 && return 0
             ;;
         esac
@@ -391,9 +391,9 @@ version_string() {
 
 dokka_cli_jar() {
     local repo_dir="$HOME/.m2/repository"
-    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
+    ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-cli
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -name "dokka-cli-1.9.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-cli" -type f -name "dokka-cli-2.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
     echo "$(mixed_path $jar_file)"
@@ -405,13 +405,13 @@ dokka_cpath() {
     local cpath=
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -name "dokka-base-1.9.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-base" -type f -name "dokka-base-2.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"
     ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis
     jar_file=
-    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
+    for f in $(find "$repo_dir/org/jetbrains/dokka/dokka-analysis" -type f -name "dokka-analysis-1.8.*.jar" 2>/dev/null); do 
         jar_file="$f"
     done
 	[[ -f "$jar_file" ]] && cpath="$cpath$(mixed_path $jar_file)$PSEP"

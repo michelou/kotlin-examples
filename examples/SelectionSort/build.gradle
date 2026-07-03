@@ -1,6 +1,7 @@
 plugins {
     id "checkstyle"
     id "java"
+    id "org.gradle.reporting-base"
     id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
     id "io.gitlab.arturbosch.detekt" version "$detektVersion"

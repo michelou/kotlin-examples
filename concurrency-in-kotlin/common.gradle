@@ -1,9 +1,9 @@
 // overrides default "build"
-buildDir file("target")
+buildDir = getBaseDirectory).dir("target")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17 // JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_17 // JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 ext {
@@ -11,18 +11,17 @@ ext {
         "--reporter=plain",
         "--reporter=checkstyle,output=${buildDir}/ktlint-report.xml"
     ]
-    moduleName = "XXX"
-    mainSourceDir = file("/src/main/kotlin")
-    classesDir = file("${buildDir}/classes")
-    docsDir = file("${buildDir}/doc")
+    mainSourceDir = getBaseDirectory().dir("/src/main/kotlin")
+    classesDir = getBaseDirectory().dir("${buildDir}/classes")
+    docsDir = getBaseDirectory().dir("${buildDir}/doc")
 
     ktlintHome = System.getenv("KTLINT_HOME")
     if (!project.hasProperty("ktlintHome")) {
         throw new GradleException("Variable KTLINT_HOME is undefined")
     }
     userHome = System.getProperty("user.home")
-    repoDir = file("${userHome}/.m2/repository")
-    libDir  = file("${userHome}/AppData/Local/Temp/lib")
+    repoDir = getBaseDirectory).dir("${userHome}/.m2/repository")
+    libDir  = getBaseDirectory).dir("${userHome}/AppData/Local/Temp/lib")
 
     pluginsClasspath = files(
         "${repoDir}/org/jetbrains/kotlinx/kotlinx-coroutines-core/${kotlinxVersion}/kotlinx-coroutines-core-${kotlinxVersion}.jar",
@@ -40,10 +39,11 @@ ext {
     if (project.hasProperty("javaMainClassName") && javaMainClassName?.trim()) javaMain = javaMainClassName
 }
 
+// see https://detekt.dev/docs/gettingstarted/gradle
 detekt {
+    // source = files("src/main/kotlin")
     config = files("../detekt-config.yml")
     reports {
-        // see https://detekt.github.io/detekt/reporting.html
         html {
             enabled = false
         }
@@ -70,7 +70,7 @@ clean.doLast {
 }
 
 task lint(type: JavaExec) {
-    description "Analyze Kotlin source files with KtLint"
+    description = "Analyze Kotlin source files with KtLint"
     mainClass = "-jar"
     args "${ktlintHome}/ktlint.jar " + ktLintOpts + sourceSets.main.allSource.files
 }
@@ -82,15 +82,15 @@ checkstyle {
 compileKotlin {
     // dependsOn lint
 
-    description "Compile Kotlin source files"
+    description = "Compile Kotlin source files"
 
     kotlinOptions {
         // Tool options
         // suppressWarnings = true
         verbose = false
         // Common options
-        apiVersion = "2.1"
-        languageVersion = "2.1"
+        apiVersion = "2.2"
+        languageVersion = "2.2"
         // JVM options
         jvmTarget = "17"  // "11", "1.8"
     }
@@ -113,7 +113,7 @@ tasks.dokkaHtml.configure {
 task run(type: JavaExec) {
     dependsOn compileKotlin
 
-    description "Execute Kotlin main class $kotlinMain"
+    description = "Execute Kotlin main class $kotlinMain"
 
     classpath sourceSets.main.runtimeClasspath
 
@@ -125,7 +125,7 @@ task runJava(type: JavaExec) {
     doFirst {
         println()
     }
-    description "Execute Java main class $javaMain"
+    description = "Execute Java main class $javaMain"
 
     classpath sourceSets.main.runtimeClasspath
 
@@ -136,10 +136,10 @@ task runJava(type: JavaExec) {
 repositories {
     mavenCentral()
     maven { // e.g. dokka-gradle-plugin
-        url "https://dl.bintray.com/kotlin/dokka"
+        url = "https://dl.bintray.com/kotlin/dokka"
     }
     maven {
-        url "https://dl.bintray.com/kotlin/kotlin-dev"
+        url = "https://dl.bintray.com/kotlin/kotlin-dev"
     }
 }
 

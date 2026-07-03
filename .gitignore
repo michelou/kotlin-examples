@@ -33,11 +33,13 @@ hs_err_pid*
 .idea/
 .settings/
 .vscode/
+build/
 obj/
 out/
 target/
 
 # Claude specific
+.claudeignore
 CLAUDE.md
 CLAUDE*local.md
 .claude/

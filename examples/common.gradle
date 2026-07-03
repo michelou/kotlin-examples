@@ -1,28 +1,27 @@
 // overrides default "build"
-buildDir = file("target")
+buildDir = reporting.getBaseDirectory().dir("target")
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-ext {
+project.ext {
     ktLintOpts = [
         "--reporter=plain",
-        "--reporter=checkstyle,output=${buildDir}/ktlint-report.xml"
+        "--reporter=checkstyle,output=${buildDir}${File.separator}ktlint-report.xml"
     ]
-    moduleName = "XXX"
-    mainSourceDir = file("/src/main/kotlin")
-    classesDir = file("${buildDir}/classes")
-    docsDir = file("${buildDir}/doc")
+    mainSourceDir = reporting.getBaseDirectory().dir("/src/main/kotlin")
+    classesDir = reporting.getBaseDirectory().dir("${buildDir}/classes")
+    docsDir = reporting.getBaseDirectory().dir("${buildDir}/doc")
 
     ktlintHome = System.getenv("KTLINT_HOME")
     if (!project.hasProperty("ktlintHome")) {
         throw new GradleException("Variable KTLINT_HOME is undefined")
     }
     userHome = System.getProperty("user.home")
-    repoDir = file("${userHome}/.m2/repository")
-    libDir  = file("${userHome}/AppData/Local/Temp/lib")
+    repoDir = reporting.getBaseDirectory().dir("${userHome}/.m2/repository")
+    libDir  = reporting.getBaseDirectory().dir("${userHome}/AppData/Local/Temp/lib")
 
     pluginsClasspath = files(
         "${repoDir}/org/jetbrains/kotlinx/kotlinx-coroutines-core/${kotlinxVersion}/kotlinx-coroutines-core-${kotlinxVersion}.jar",
@@ -41,7 +40,7 @@ ext {
 }
 
 detekt {
-    config = files("../detekt-config.yml")
+    config.setFrom("$projectDir/detekt-config.yml")
     reports {
         // see https://detekt.github.io/detekt/reporting.html
         html {
@@ -56,6 +55,7 @@ detekt {
         }
         xml {
             enabled = false
+            destination = file("${buildDir}/detekt-report.xml")
         }
     }
 }
@@ -71,8 +71,8 @@ clean.doLast {
 
 task lint(type: JavaExec) {
     description = "Analyze Kotlin source files with KtLint"
-    mainClass = "-jar"
-    args "${ktlintHome}/ktlint.jar " + ktLintOpts + sourceSets.main.allSource.files
+    classpath = files("${ktlintHome}${File.separator}ktlint.jar")
+    args ktLintOpts.join(" ") + " " + sourceSets.main.allSource.files.join(" ")
 }
 
 checkstyle {
@@ -97,7 +97,7 @@ compileKotlin {
 }
 
 compileKotlin.doFirst {
-    if (!classesDir.exists()) classesDir.mkdirs()
+    if (!classesDir.get().asFile.exists()) classesDir.mkdirs()
 }
 
 build {

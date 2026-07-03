@@ -95,14 +95,13 @@ doc: $(DOC_TARGET)
 LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
-CHECKSTYLE_CONFIG_FILE = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "*.xml")
-CHECKSTYLE_JAR_FILE    = $(shell $(FIND) $(HOME)/.checkstyle -type f -name "checkstyle*.jar")
+KTLINT_ARGS = --reporter=plain --color "--reporter=checkstyle,output=$(TARGET_DIR)/ktlint-report.xml" "src/**/*.kt"
 
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar "$(CHECKSTYLE_JAR_FILE)" -c=$(CHECKSTYLE_CONFIG_FILE) $^
-	@$(TOUCH) $(LINT_TARGET)
+	"$(JAVA)" -jar "$(KTLINT_JAR)" $(KTLINT_ARGS)
+	@"$(TOUCH)" $(LINT_TARGET)
 
 ##############################################################################
 ## test rules

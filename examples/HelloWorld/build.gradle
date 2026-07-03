@@ -1,5 +1,6 @@
 plugins {
     id "checkstyle"
+    id "dev.detekt" version "$detektVersion"
     id "java"
     id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"

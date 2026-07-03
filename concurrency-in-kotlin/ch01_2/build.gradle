@@ -1,20 +1,24 @@
 plugins {
     id "checkstyle"
     id "java"
+    id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
+    id "io.gitlab.arturbosch.detekt" version "$detektVersion"
 }
 
-group "$appGroup"
-version "$appVersion"
+group = "$appGroup"
+version = "$appVersion"
 
-description """Kotlin/JVM code example"""
+description = """Kotlin/JVM code example"""
+
+apply from: "../common.gradle"
 
 sourceSets {
     // Default: srcDirs "src/main/kotlin"
 	main.kotlin.srcDirs "src/main/kotlin"
 }
 // Default: buildDir = "build"
-buildDir "target"
+buildDir = "target"
 
 ext {
     ktLintOpts = [
@@ -24,7 +28,7 @@ ext {
 }
 
 task lint(type: JavaExec) {
-    description "Analyze Kotlin source files with KtLint"
+    description = "Analyze Kotlin source files with KtLint"
     mainClass = "-jar"
     args files("$ktLintJar") + ktLintOpts + sourceSets.main.allSource.files
 }
@@ -34,8 +38,8 @@ checkstyle {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 compileKotlin {
@@ -46,16 +50,16 @@ compileKotlin {
         // suppressWarnings = true
         // verbose = false
         // Common options
-        apiVersion = "1.5"
-        languageVersion = "1.5"
+        apiVersion = "2.2"  // "1.5"
+        languageVersion = "2.2"  // "1.5"
         // JVM options
-        jvmTarget = "1.8"
+        jvmTarget = "17"  // "11", "1.8"
     }
 }
 
 task run(type: JavaExec) {
     dependsOn compileKotlin
-    description "Execute Kotlin main class $mainClassName"
+    description = "Execute Kotlin main class $mainClassName"
     classpath sourceSets.main.runtimeClasspath
     mainClass = mainClassName
     args ""
@@ -66,9 +70,9 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-    api "junit:junit:$junitVersion"
-    testImplementation "junit:junit:$junitVersion"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    api("junit:junit:$junitVersion")
+    testImplementation("junit:junit:$junitVersion")
 }

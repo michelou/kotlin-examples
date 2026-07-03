@@ -59,7 +59,7 @@ args() {
         -timer)    TIMER=1 ;;
         -verbose)  VERBOSE=1 ;;
         -*)
-            error "Unknown option $arg"
+            error "Unknown option \"$arg\""
             EXITCODE=1 && return 0
             ;;
         ## subcommands
@@ -70,7 +70,7 @@ args() {
         help)      HELP=1 ;;
         run)       COMPILE=1 && RUN=1 ;;
         *)
-            error "Unknown subcommand $arg"
+            error "Unknown subcommand \"$arg\""
             EXITCODE=1 && return 0
             ;;
         esac

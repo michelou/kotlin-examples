@@ -3,12 +3,13 @@ plugins {
     id "java"
     id "org.jetbrains.dokka" version "$dokkaVersion"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
+    id "io.gitlab.arturbosch.detekt" version "$detektVersion"
 }
 
-group "$appGroup"
-version "$appVersion"
+group = "$appGroup"
+version = "$appVersion"
 
-description """Kotlin/JVM example project"""
+description = """Kotlin/JVM example project"""
 
 apply from: "../common.gradle"
 
@@ -16,6 +17,7 @@ run.doFirst {
     args ""
 }
 
+// see common dependencies defined in ../common.gradle
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxVersion")
 }

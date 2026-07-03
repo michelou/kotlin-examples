@@ -10,13 +10,14 @@ TOOLSET ?= jvm
 include ../Makefile.inc
 
 SOURCE_DIR  = src
+SOURCE_KOTLIN_DIR = $(SOURCE_DIR)/main/kotlin
 TARGET_DIR  = target
 CLASSES_DIR = $(TARGET_DIR)/classes
 
 ##############################################################################
 ## main rules
 
-SOURCES = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+SOURCES = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 
 PKG_NAME = org.example
 
@@ -75,7 +76,7 @@ help:
 ## doc rules
 
 DOC_TARGET_DIR = $(TARGET_DIR)/docs
-DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_DIR)/main/kotlin" -type f -name "*.kt")
+DOC_SOURCES    = $(shell $(FIND) "$(SOURCE_KOTLIN_DIR)" -type f -name "*.kt")
 DOC_TARGET     = $(TARGET_DIR)/.latest-doc
 
 PROJECT_NAME    ?= $(shell basename $(CURDIR))
@@ -97,11 +98,13 @@ doc: $(DOC_TARGET)
 LINT_SOURCES = $(shell $(FIND) "$(SOURCE_DIR)" -type f -name "*.kt")
 LINT_TARGET  = $(TARGET_DIR)/.latest-lint
 
+KTLINT_ARGS = --reporter=plain --color "--reporter=checkstyle,output=$(TARGET_DIR)/ktlint-report.xml" "src/**/*.kt"
+ 
 lint: $(LINT_TARGET)
 
 $(LINT_TARGET): $(LINT_SOURCES)
-	"$(JAVA)" -jar $(KTLINT_HOME)/ktlint.jar $^
-	@$(TOUCH) $(LINT_TARGET)
+	"$(JAVA)" -jar "$(KTLINT_JAR)" $(KTLINT_ARGS)
+	@"$(TOUCH)" $(LINT_TARGET)
 
 ##############################################################################
 ## test rules

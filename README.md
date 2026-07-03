@@ -16,7 +16,7 @@
 
 This project depends on the following external software for the **Microsoft Windows** platform:
 
-- [Git 2.54][git_downloads] ([*release notes*][git_relnotes])
+- [Git 2.55][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 2.4][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 2.4][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
 
@@ -29,11 +29,11 @@ Optionally one may also install the following software:
 - [Gradle 9.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [Ktlint 1.8][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
 - [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
-- [Visual Studio Code 1.126][vscode_downloads] ([*release notes*][vscode_relnotes])
+- [Visual Studio Code 1.127][vscode_downloads] ([*release notes*][vscode_relnotes])
 <!--
 - [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
 -->
-For instance our development environment looks as follows (*June 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*July 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 45 MB)</i>
@@ -109,9 +109,9 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.17, bazel 9.1.1, gradle 9.6.0, java 17.0.19, detekt-cli 2.0.0,
-   kotlinc 2.4.0, kotlinc-native 2.2.21, ktlint 1.5.0, cfr 0.152,
-   make 3.81, mvn 3.9.12, git 2.54.0, diff 3.12, bash 4.4.37(1)
+   ant 1.10.17, bazel 9.1.1, gradle 9.6.1, java 17.0.19, detekt-cli 2.0.0,
+   kotlinc 2.4.0, kotlinc-native 2.4.0, ktlint 1.8.0, cfr 0.152,
+   make 3.81, mvn 3.9.12, git 2.55.0, diff 3.12, bash 5.3.15(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\gradle\bin\gradle.bat
@@ -156,7 +156,8 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
-<tr><td>2.3.1</td><td></td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew24.html" rel="external" title="https://kotlinlang.org/docs/whatsnew24.html">2.4.0</a></td><td></td></tr>
+<tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v2.3.10" rel="external" title="https://github.com/JetBrains/kotlin/releases/tag/v2.3.10">2.3.10</a>, <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.3.20" rel="external" title="https://github.com/JetBrains/kotlin/releases/tag/v2.3.20">2.3.20</a></td><td></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew2120.html" rel="external">2.0.10</a></td><td><a href="https://releases.llvm.org/16.0.0/docs/ReleaseNotes.html">16.0.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew20.html" rel="external">2.0.0</a> - <a href="https://kotlinlang.org/docs/whatsnew2020.html">2.1.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew1910.html" rel="external">1.9.10</a> - <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.9.23" rel="external">1.9.23</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.20/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
@@ -223,20 +224,20 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://maven.apache.org/download.cgi">apache-maven-3.9.16-bin.zip</a>                        <i>(  9 MB)</i>
 <a href="https://github.com/Maximus5/ConEmu/releases/tag/v23.07.24" rel="external">ConEmuPack.230724.7z</a>                               <i>(  5 MB)</i>
 <a href="https://github.com/detekt/detekt/releases">detekt-cli-2.0.0-alpha.zip</a>                         <i>( 54 MB)</i>
-<a href="https://gradle.org/releases/">gradle-9.6.0-bin.zip</a>                               <i>(115 MB)</i>
+<a href="https://gradle.org/releases/">gradle-9.6.1-bin.zip</a>                               <i>(115 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.4.0">kotlin-compiler-2.4.0.zip</a>                          <i>( 80 MB)</i>
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.4.0">kotlin-native-prebuild-windows-x86_64-2.4.0.zip</a>    <i>(169 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.8.0)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.19_10.zip</a>  <i>( 99 MB)</i>
-<a href="https://git-scm.com/download/win">PortableGit-2.54.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
-<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.126.0.zip</a>                       <i>(131 MB)</i>
+<a href="https://git-scm.com/download/win">PortableGit-2.55.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.127.0.zip</a>                       <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/June 2026* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/July 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
@@ -263,13 +264,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [flix_examples]: https://github.com/michelou/flix-examples#top
 [git_downloads]: https://git-scm.com/download/win
 [git_exe]: https://git-scm.com/docs/git
-[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.54.0.adoc
+[git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.55.0.adoc
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples#top
 [graalvm_examples]: https://github.com/michelou/graalvm-examples#top
 [gradle_bat]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_latest]: https://gradle.org/releases/
-[gradle_relnotes]: https://docs.gradle.org/9.6.0/release-notes.html
+[gradle_relnotes]: https://docs.gradle.org/9.6.1/release-notes.html
 [haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kafka_examples]: https://github.com/michelou/kafka-examples#top
@@ -351,9 +352,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [temurin_openjdk21_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples#top
 [vscode_downloads]: https://code.visualstudio.com/#alt-downloads
-[vscode_relnotes]: https://code.visualstudio.com/updates/
+[vscode_relnotes]: https://code.visualstudio.com/updates/ "https://code.visualstudio.com/updates/"
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
-[windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst
+[windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst "https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst"
 [wix_examples]: https://github.com/michelou/wix-examples#top
 [zig_examples]: https://github.com/michelou/zig-examples#top
 [zip_archive]: https://www.howtogeek.com/178146/htg-explains-everything-you-need-to-know-about-zipped-files/
