@@ -52,7 +52,7 @@ call :gradle
 if not %_EXITCODE%==0 goto end
 
 @rem last call to :java defines variable JAVA_HOME
-call :java 17 "temurin"
+call :java 21 "temurin"
 if not %_EXITCODE%==0 goto end
 
 call :kotlin_jvm
@@ -383,9 +383,9 @@ set _CFR_HOME=
 set __CFR_CMD=
 for /f "delims=" %%f in ('where cfr.bat 2^>NUL') do set "__CFR_CMD=%%f"
 if defined __CFR_CMD (
-    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of cfr executable found in PATH 1>&2
     for /f "delims=" %%i in ("%__CFR_CMD%") do set "__CFR_BIN_DIR=%%~dpi"
     for /f "delims=" %%f in ("!__CFR_BIN_DIR!\.") do set "_CFR_HOME=%%~dpf"
+    if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of CFR executable found in PATH 1>&2
     goto :eof
 ) else if defined CFR_HOME (
     set "_CFR_HOME=%CFR_HOME%"
@@ -397,11 +397,11 @@ if defined __CFR_CMD (
         for /f "delims=" %%f in ('dir /ad /b "!__PATH!\cfr*" 2^>NUL') do set "_CFR_HOME=!__PATH!\%%f"
     )
     if defined _CFR_HOME (
-       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default cfr installation directory "!_CFR_HOME!" 1>&2
+       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default CFR installation directory "!_CFR_HOME!" 1>&2
     )
 )
 if not exist "%_CFR_HOME%\bin\cfr.bat" (
-    echo %_ERROR_LABEL% cfr executable not found ^("%_CFR_HOME%"^) 1>&2
+    echo %_ERROR_LABEL% CFR executable not found ^("%_CFR_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -830,11 +830,12 @@ set _VSCODE_HOME=
 set _VSCODE_PATH=
 
 set __CODE_CMD=
-for /f "delims=" %%f in ('where code.exe 2^>NUL') do set "__CODE_CMD=%%f"
+for /f "delims=" %%f in ('where code.cmd 2^>NUL') do set "__CODE_CMD=%%f"
 if defined __CODE_CMD (
-    for /f "delims=" %%i in ("%__CMD_CMD%") do set "_VSCODE_HOME=%%~dpi"
+    for /f "delims=" %%i in ("%__CODE_CMD%") do set "__CODE_BIN_DIR=%%~dpi"
+    for /f "delims=" %%f in ("!__CODE_BIN_DIR!\.") do set "_VSCODE_HOME=%%~dpf"
     if %_DEBUG%==1 echo %_DEBUG_LABEL% Using path of VSCode executable found in PATH 1>&2
-    @rem keep _VSCODE_PATH undefined since executable already in path
+    @rem keep _VSCODE_PATH untouched since executable already in path
     goto :eof
 ) else if defined VSCODE_HOME (
     set "_VSCODE_HOME=%VSCODE_HOME%"
@@ -843,25 +844,28 @@ if defined __CODE_CMD (
     set __PATH=C:\opt
     if exist "!__PATH!\VSCode\" ( set "_VSCODE_HOME=!__PATH!\VSCode"
     ) else (
-        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\VSCode-1*" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
+        for /f "delims=" %%f in ('dir /ad /b "!__PATH!\VSCode-*" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
         if not defined _VSCODE_HOME (
             set "__PATH=%ProgramFiles%"
-            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\VSCode-1*" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\Microsoft*Code" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
+        )
+        if not defined _VSCODE_HOME (
+            set "__PATH=%LOCALAPPDATA%\Programs"
+            for /f "delims=" %%f in ('dir /ad /b "!__PATH!\Microsoft*Code" 2^>NUL') do set "_VSCODE_HOME=!__PATH!\%%f"
         )
     )
     if defined _VSCODE_HOME (
-       if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default VSCode installation directory "!_VSCODE_HOME!" 1>&2
+        @rem remove trailing path separator if present
+        if "!_VSCODE_HOME:~-1!" == "\" set "_VSCODE_HOME=!_VSCODE_HOME:~0,-1!"
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% Using default VSCode installation directory "!_VSCODE_HOME!" 1>&2
     )
 )
-if not exist "%_VSCODE_HOME%\code.exe" (
-    echo %_WARNING_LABEL% VSCode executable not found ^("%_VSCODE_HOME%"^) 1>&2
-    if exist "%_VSCODE_HOME%\Code - Insiders.exe" (
-        echo %_WARNING_LABEL% It looks like you've installed an Insider version of VSCode 1>&2
-    )
+if not exist "%_VSCODE_HOME%\bin\code.cmd" (
+    echo %_ERROR_LABEL% VSCode command not found ^("%_VSCODE_HOME%"^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
-set "_VSCODE_PATH=;%_VSCODE_HOME%"
+set "_VSCODE_PATH=;%_VSCODE_HOME%\bin"
 goto :eof
 
 @rem %JAVA_HOME%\bin\jar xvf c:\opt\dokka-1.4.20\lib\dokka-cli-1.4.20.jar META-INF/dokka/dokka-version.properties
@@ -873,6 +877,7 @@ set __VERBOSE=%2
 set __VERSIONS_LINE1=
 set __VERSIONS_LINE2=
 set __VERSIONS_LINE3=
+set __VERSIONS_LINE4=
 set __WHERE_ARGS=
 setlocal enabledelayedexpansion
 
@@ -885,13 +890,6 @@ where /q bazel.exe
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('bazel.exe --version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% bazel %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% bazel.exe
-)
-if %__USE_CLAUDE%==1 (
-    where /q "%CLAUDE_HOME%\bin:claude.exe"
-    if !ERRORLEVEL!==0 (
-        for /f "tokens=1,*" %%i in ('call "%CLAUDE_HOME%\bin\claude.exe" --version') do set "__VERSIONS_LINE1=%__VERSIONS_LINE1% Claude %%i,"
-        set __WHERE_ARGS=%__WHERE_ARGS% "%CLAUDE_HOME%\bin:claude.exe"
-    )
 )
 where /q "%GRADLE_HOME%\bin:gradle.bat"
 if %ERRORLEVEL%==0 (
@@ -920,42 +918,59 @@ if %ERRORLEVEL%==0 (
 )
 where /q "%CFR_HOME%\bin:cfr.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,*" %%i in ('call "%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% cfr %%j,"
+    for /f "tokens=1,*" %%i in ('call "%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
+)
+echo 111111111 CFR_HOME=%CFR_HOME%
+if %__USE_CLAUDE%==1 (
+    where /q "%CLAUDE_HOME%\bin:claude.exe"
+    if !ERRORLEVEL!==0 (
+        for /f "tokens=1,*" %%i in ('call "%CLAUDE_HOME%\bin\claude.exe" --version') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% Claude %%i,"
+        set __WHERE_ARGS=%__WHERE_ARGS% "%CLAUDE_HOME%\bin:claude.exe"
+    )
+)
+where /q "%VSCODE_HOME%\bin:code.cmd"
+if %ERRORLEVEL%==0 (
+    set __CODE_VERSION=
+    for /f "tokens=*" %%i in ('"%VSCODE_HOME%\bin\code.cmd" --version 2^>^&1') do (
+         if not defined __CODE_VERSION set "__CODE_VERSION=%%i"
+    )
+    set "__VERSIONS_LINE3=%__VERSIONS_LINE3% code !__CODE_VERSION!,"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%VSCODE_HOME%\bin:code.cmd"
 )
 where /q "%DETEKT_HOME%\bin:detekt-cli.bat"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=*" %%i in ('call "%DETEKT_HOME%\bin\detekt-cli.bat" --version 2^>^&1') do set "__VERSIONS_LINE2=%__VERSIONS_LINE2% detekt-cli %%i,"
+    for /f "tokens=*" %%i in ('call "%DETEKT_HOME%\bin\detekt-cli.bat" --version 2^>^&1') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% detekt-cli %%i,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%DETEKT_HOME%\bin:detekt-cli.bat"
 )
 where /q "%MAKE_HOME%\bin:make.exe"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,*" %%i in ('"%MAKE_HOME%\bin\make.exe" --version 2^>^&1 ^| findstr Make') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% make %%k,"
+    for /f "tokens=1,2,*" %%i in ('"%MAKE_HOME%\bin\make.exe" --version 2^>^&1 ^| findstr Make') do set "__VERSIONS_LINE4=%__VERSIONS_LINE4% make %%k,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%MAKE_HOME%\bin:make.exe"
 )
 where /q "%MAVEN_HOME%\bin:mvn.cmd"
 if %ERRORLEVEL%==0 (
-    for /f "tokens=1,2,3,*" %%i in ('"%MAVEN_HOME%\bin\mvn.cmd" -version ^| findstr Apache') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% mvn %%k,"
+    for /f "tokens=1,2,3,*" %%i in ('"%MAVEN_HOME%\bin\mvn.cmd" -version ^| findstr Apache') do set "__VERSIONS_LINE4=%__VERSIONS_LINE4% mvn %%k,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%MAVEN_HOME%\bin:mvn.cmd"
 )
 where /q "%GIT_HOME%\bin:git.exe"
 if %ERRORLEVEL%==0 (
     for /f "tokens=1,2,*" %%i in ('"%GIT_HOME%\bin\git.exe" --version') do (
-        for /f "delims=. tokens=1,2,3,*" %%a in ("%%k") do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% git %%a.%%b.%%c,"
+        for /f "delims=. tokens=1,2,3,*" %%a in ("%%k") do set "__VERSIONS_LINE4=%__VERSIONS_LINE4% git %%a.%%b.%%c,"
     )
     set __WHERE_ARGS=%__WHERE_ARGS% "%GIT_HOME%\bin:git.exe"
 )
-where /q diff.exe
+where /q "%GIT_HOME%\usr\bin:diff.exe"
 if %ERRORLEVEL%==0 (
-   for /f "tokens=1-3,*" %%i in ('diff.exe --version ^| findstr /B diff') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% diff %%l"
-    set __WHERE_ARGS=%__WHERE_ARGS% diff.exe
+   for /f "tokens=1-3,*" %%i in ('"%GIT_HOME%\usr\bin\diff.exe" --version ^| findstr /B diff') do set "__VERSIONS_LINE4=%__VERSIONS_LINE4% diff %%l"
+    set __WHERE_ARGS=%__WHERE_ARGS% "%GIT_HOME%\usr\bin:diff.exe"
 )
 where /q "%GIT_HOME%\bin:bash.exe"
 if %ERRORLEVEL%==0 (
     for /f "tokens=1-3,4,5,*" %%i in ('"%GIT_HOME%\bin\bash.exe" --version ^| findstr bash') do (
         set "__VERSION=%%l"
         @rem setlocal enabledelayedexpansion
-        set "__VERSIONS_LINE3=%__VERSIONS_LINE3% bash !__VERSION:-release=!"
+        set "__VERSIONS_LINE4=%__VERSIONS_LINE4% bash !__VERSION:-release=!"
     )
     set __WHERE_ARGS=%__WHERE_ARGS% "%GIT_HOME%\bin:bash.exe"
 )
@@ -963,18 +978,18 @@ echo Tool versions:
 echo   %__VERSIONS_LINE1%
 echo   %__VERSIONS_LINE2%
 echo   %__VERSIONS_LINE3%
+echo   %__VERSIONS_LINE4%
 if %__VERBOSE%==1 if defined __WHERE_ARGS (
     @rem if %_DEBUG%==1 echo %_DEBUG_LABEL% where %__WHERE_ARGS%
     echo Tool paths: 1>&2
     for /f "tokens=*" %%p in ('where %__WHERE_ARGS%') do (
         set "__LINE=%%p"
-        @rem setlocal enabledelayedexpansion
         echo    !__LINE:%USERPROFILE%=%%USERPROFILE%%! 1>&2
     )
     echo Environment variables: 1>&2
     if defined ANT_HOME echo    "ANT_HOME=%ANT_HOME%" 1>&2
     if defined CFR_HOME echo    "CFR_HOME=%CFR_HOME%" 1>&2
-    if defined CLAUDE_HOME echo    "CLAUDE_HOME=%CLAUDE_HOME%" 1>&2
+    if defined CLAUDE_HOME echo    "CLAUDE_HOME=!CLAUDE_HOME:%USERPROFILE%=%%USERPROFILE%%! 1>&2
     if defined DETEKT_HOME echo    "DETEKT_HOME=%DETEKT_HOME%" 1>&2
     if defined GIT_HOME echo    "GIT_HOME=%GIT_HOME%" 1>&2
     if defined GRADLE_HOME echo    "GRADLE_HOME=%GRADLE_HOME%" 1>&2
@@ -984,11 +999,10 @@ if %__VERBOSE%==1 if defined __WHERE_ARGS (
     if defined KTLINT_HOME echo    "KTLINT_HOME=%KTLINT_HOME%" 1>&2
     if defined MAKE_HOME echo    "MAKE_HOME=%MAKE_HOME%" 1>&2
     if defined MAVEN_HOME echo    "MAVEN_HOME=%MAVEN_HOME%" 1>&2
-    if defined VSCODE_HOME echo    "VSCODE_HOME=%VSCODE_HOME%" 1>&2
+    if defined VSCODE_HOME echo    "VSCODE_HOME=!VSCODE_HOME:%USERPROFILE%=%%USERPROFILE%%!" 1>&2
     echo Path associations: 1>&2
     for /f "delims=" %%i in ('subst') do (
         set "__LINE=%%i"
-        @rem setlocal enabledelayedexpansion
         echo    !__LINE:%USERPROFILE%=%%USERPROFILE%%! 1>&2
     )
 )
@@ -1017,7 +1031,7 @@ endlocal & (
     if not defined KTLINT_HOME set "KTLINT_HOME=%_KTLINT_HOME%"
     if not defined MAKE_HOME set "MAKE_HOME=%_MAKE_HOME%"
     if not defined MAVEN_HOME set "MAVEN_HOME=%_MAVEN_HOME%"
-    if not defined VSCODE_HOME set "VSCODE_HOME=%VSCODE_HOME%"
+    if not defined VSCODE_HOME set "VSCODE_HOME=%_VSCODE_HOME%"
     set "PATH=%PATH%%_ANT_PATH%%_BAZEL_PATH%%_GRADLE_PATH%%_MAKE_PATH%%_MAVEN_PATH%%_CLAUDE_PATH%%_GIT_PATH%%_VSCODE_PATH%;%~dp0bin"
     call :print_env %_USE_CLAUDE% %_VERBOSE%
     if not "%CD:~0,2%"=="%_DRIVE_NAME%" (
@@ -1026,8 +1040,8 @@ endlocal & (
     )
     if %_BASH%==1 (
         @rem see https://conemu.github.io/en/GitForWindows.html
-        if %_DEBUG%==1 echo %_DEBUG_LABEL% %_GIT_HOME%\bin\bash.exe --login 1>&2
-        call "%_GIT_HOME%\bin\bash.exe --login"
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% "%_GIT_HOME%\bin\bash.exe" --login 1>&2
+        call "%_GIT_HOME%\bin\bash.exe" --login
     )
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

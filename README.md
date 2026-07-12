@@ -2,15 +2,15 @@
 
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
-  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
+  <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external" title="https://kotlinlang.org/"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several build scripts (<a href="https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_02_01.html" rel="external">Bash scripts</a>, <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html" rel="external">Gradle scripts</a>, <a href="https://makefiletutorial.com/" rel="external">Make scripts</a>, <a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html">Maven scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.</td>
+  It also includes several build scripts (<a href="https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_02_01.html" rel="external">Bash scripts</a>, <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html" rel="external">Gradle scripts</a>, <a href="https://makefiletutorial.com/" rel="external">Make scripts</a>, <a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html">Maven scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external" title="https://kotlinlang.org/">Kotlin</a> on a Windows machine.</td>
   </tr>
 </table>
 
 [Ada][ada_examples], [Akka][akka_examples], [C++][cpp_examples], [COBOL][cobol_examples], [Common&nbsp;Lisp][cl_examples], [Component&nbsp;Pascal][component_pascal_examples], [Dafny][dafny_examples], [Dart][dart_examples], [Deno][deno_examples], [Docker][docker_examples], [Erlang][erlang_examples], [Flix][flix_examples], [Go][golang_examples], [GraalVM][graalvm_examples], [Haskell][haskell_examples], [Kafka][kafka_examples], [LLVM][llvm_examples], [Modula-2][m2_examples], [Node.js][nodejs_examples], [PowerShell][powershell_examples], [Rust][rust_examples], [Scala&nbsp;3][scala3_examples], [Spark][spark_examples], [Spring][spring_examples], [Standard&nbsp;ML][sml_examples], [TruffleSqueak][trufflesqueak_examples], [WiX&nbsp;Toolset][wix_examples] and [Zig][zig_examples] are other topics we are continuously monitoring.
 
-> **&#9755;** Read the document ["Kotlin Language Specification"](https://kotlinlang.org/spec/introduction.html) to know more about of the design decisions behind the <a href="https://kotlinlang.org/" rel="external">Kotlin</a> programming language.
+> **&#9755;** Read the document ["Kotlin Language Specification"][kotlin_spec] to know more about of the design decisions behind the [Kotlin] programming language.
 
 ## <span id="proj_deps">Project dependencies</span>
 
@@ -19,35 +19,40 @@ This project depends on the following external software for the **Microsoft Wind
 - [Git 2.55][git_downloads] ([*release notes*][git_relnotes])
 - [Kotlin 2.4][kotlin_latest] ([*release notes*][kotlin_relnotes])
 - [Kotlin/Native 2.4][kotlin_latest] <sup id="anchor_01"><a href="#footnote_01">1</a></sup> ([*release notes*][kotlin_native_relnotes])
+- [Temurin OpenJDK 21 LTS][temurin_openjdk21] ([*release notes*][temurin_openjdk21_relnotes], [*Shipilev's notes*][temurin_openjdk21_shipilev], [*Java 21 API*][oracle_openjdk21_api])
+<!--
+- [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
+- [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
+- [Visual Studio Code 1.127][vscode_downloads] ([*release notes*][vscode_relnotes])
+-->
 
 Optionally one may also install the following software:
 
 - [Apache Ant 1.10][apache_ant] (requires Java 8) ([*release notes*][apache_ant_relnotes])
 - [Apache Maven 3.9][maven_latest] ([requires Java 8+][apache_maven_history]) ([*release notes*][maven_relnotes])
+- [CFR 0.15][cfr_releases] (Java decompiler)
 - [ConEmu 2023][conemu_downloads] ([*release notes*][conemu_relnotes])
 - [detekt 2.0][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 9.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [Ktlint 1.8][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
-- [Temurin OpenJDK 17 LTS][temurin_opendjk17] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk17_relnotes], [*bug fixes*][temurin_opendjk17_bugfixes])
-- [Visual Studio Code 1.127][vscode_downloads] ([*release notes*][vscode_relnotes])
-<!--
-- [Temurin OpenJDK 11 LTS][temurin_opendjk11] <sup id="anchor_01">[1](#footnote_01)</sup> ([*release notes*][temurin_opendjk11_relnotes], [*bug fixes*][temurin_opendjk11_bugfixes])
--->
+- [Visual Studio Code 1.128][vscode_downloads] ([*release notes*][vscode_relnotes])
+
 For instance our development environment looks as follows (*July 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 45 MB)</i>
 C:\opt\apache-maven\             <i>( 10 MB)</i>
+C:\opt\cfr-0.152\                <i>(  2 MB)</i>
 C:\opt\ConEmu\                   <i>( 26 MB)</i>
 C:\opt\detekt-cli\               <i>( 64 MB)</i>
 C:\opt\Git\                      <i>(389 MB)</i>
 C:\opt\gradle\                   <i>(144 MB)</i>
-C:\opt\jdk-temurin-17.0.19_10\   <i>(304 MB)</i>
+C:\opt\jdk-temurin-21.0.11_10\   <i>(327 MB)</i>
 C:\opt\kotlinc\                  <i>( 90 MB)</i>
 C:\opt\kotlin-native\            <i>(637 MB)</i>
 C:\opt\ktlint\                   <i>( 70 MB)</i>
 C:\opt\make-3.81\                <i>(  2 MB)</i>
-C:\opt\VSCode\                   <i>(389 MB)</i>
+%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\  <i>(919 MB)</i>
 </pre>
 
 > **&#9755;** ***Installation policy***<br/>
@@ -95,7 +100,7 @@ We also define a virtual drive &ndash; e.g. drive **`I:`** &ndash; in our workin
 > **:mag_right:** We use the Windows external command [**`subst`**][windows_subst] to create virtual drives; for instance:
 >
 > <pre style="font-size:80%;">
-> <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst">subst</a> I: <a href="https://en.wikipedia.org/wiki/Environment_variable#Default_values">%USERPROFILE%</a>\workspace\kotlin-examples</b>
+> <b>&gt; <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst">subst</a> I: <a href="https://en.wikipedia.org/wiki/Environment_variable#Default_values">%USERPROFILE%</a>\workspace-perso\kotlin-examples</b>
 > </pre>
 
 In the next section we give a brief description of the batch files present in this project.
@@ -109,13 +114,14 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 <pre style="font-size:80%;">
 <b>&gt; <a href="setenv.bat">setenv</a> -verbose</b>
 Tool versions:
-   ant 1.10.17, bazel 9.1.1, gradle 9.6.1, java 17.0.19, detekt-cli 2.0.0,
-   kotlinc 2.4.0, kotlinc-native 2.4.0, ktlint 1.8.0, cfr 0.152,
+   ant 1.10.17, bazel 9.1.1, gradle 9.6.1, java 21.0.11,
+   kotlinc 2.4.0, kotlinc-native 2.4.0, ktlint 1.8.0,
+   cfr 0.152, code 1.128.0, detekt-cli 2.0.0-alpha.5,
    make 3.81, mvn 3.9.12, git 2.55.0, diff 3.12, bash 5.3.15(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\gradle\bin\gradle.bat
-   C:\opt\jdk-temurin-17.0.19_10\bin\java.exe
+   C:\opt\jdk-temurin-21.0.11_10\bin\java.exe
    C:\opt\detekt-cli\bin\detekt-cli.bat
    C:\opt\kotlinc\bin\kotlinc.bat
    C:\opt\kotlin-native\bin\kotlinc-native.bat
@@ -132,12 +138,13 @@ Environment variables:
    "DETEKT_HOME=C:\opt\detekt-cli"
    "GIT_HOME=C:\opt\Git"
    "GRADLE_HOME=C:\opt\gradle"
-   "JAVA_HOME=C:\opt\jdk-temurin-17.0.19_10"
+   "JAVA_HOME=C:\opt\jdk-temurin-21.0.11_10"
    "KOTLIN_HOME=C:\opt\kotlinc"
    "KOTLIN_NATIVE_HOME=C:\opt\kotlin-native"
    "KTLINT_HOME=C:\opt\ktlint"
    "MAKE_HOME=C:\opt\make-3.81"
    "MAVEN_HOME=C:\opt\apache-maven"
+   "VSCODE_HOME=%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code"
 </pre>
 
 ### [**`bin\kotlin\build.bat`**](bin/kotlin/build.bat)
@@ -156,7 +163,7 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <dd>
 <table>
 <tr><th>Kotlin/Native</th><th>LLVM</th></tr>
-<tr><td><a href="https://kotlinlang.org/docs/whatsnew24.html" rel="external" title="https://kotlinlang.org/docs/whatsnew24.html">2.4.0</a></td><td></td></tr>
+<tr><td><a href="https://kotlinlang.org/docs/whatsnew24.html" rel="external" title="https://kotlinlang.org/docs/whatsnew24.html">2.4.0</a></td><td><a href="https://releases.llvm.org/21.1.0/docs/ReleaseNotes.html" rel="external" title="https://releases.llvm.org/21.1.0/docs/ReleaseNotes.html">21.1.6</a></td></tr>
 <tr><td><a href="https://github.com/JetBrains/kotlin/releases/tag/v2.3.10" rel="external" title="https://github.com/JetBrains/kotlin/releases/tag/v2.3.10">2.3.10</a>, <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.3.20" rel="external" title="https://github.com/JetBrains/kotlin/releases/tag/v2.3.20">2.3.20</a></td><td></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew2120.html" rel="external">2.0.10</a></td><td><a href="https://releases.llvm.org/16.0.0/docs/ReleaseNotes.html">16.0.0</a></td></tr>
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew20.html" rel="external">2.0.0</a> - <a href="https://kotlinlang.org/docs/whatsnew2020.html">2.1.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v2.0.0/kotlin-native/konan/konan.properties">11.1.0</a> (<a href="https://youtrack.jetbrains.com/issue/KT-49279/Kotlin-Native-update-LLVM-from-11.1.0-to-16.0.0-or-newer">16.0.0 WIP</a>)</td></tr>
@@ -168,18 +175,71 @@ This batch command generates the [Kotlin] binary distribution on a Windows machi
 <tr><td><a href="https://kotlinlang.org/docs/whatsnew16.html#llvm-and-linker-updates">1.6.0</a></td><td><a href="https://github.com/JetBrains/kotlin/blob/v1.9.10/kotlin-native/konan/konan.properties#L76">11.1.0</a></td></tr>
 <tr><td><a hef="https://github.com/JetBrains/kotlin-native/blob/master/CHANGELOG.md#v1360-oct-2019" rel="external">1.3.60</a></td><td>8.0</td></tr>
 </table>
+Native dependencies are installed on the first run the Kotlin/Native compiler, e.g.
+<pre style="font-size:80%;">
+<b>&gt; "C:\opt\kotlin-native\bin\kotlinc-native.bat" "@I:\examples\BubbleSort\target\kotlinc-native_opts.txt" "@I:\examples\BubbleSort\target\kotlinc-native_sources.txt"</b>
+Downloading native dependencies (LLVM, sysroot etc). This is a one-time action performed only on the first run of the compiler.
+Downloading dependency https://download.jetbrains.com/kotlin/native/resources/llvm/21-x86_64-windows/llvm-21-x86_64-windows-essentials-150.zip to %USERPROFILE\.konan\dependencies\cache\llvm-21-x86_64-windows-essentials-150.zip
+[...]
+(KonanProperties) Downloading dependency: https://download.jetbrains.com/kotlin/native/resources/llvm/21-x86_64-windows/llvm-21-x86_64-windows-essentials-150.zip (275594763/275594763). Done.
+Extracting dependency:%USERPROFILE%\.konan\dependencies\cache\llvm-21-x86_64-windows-essentials-150.zip into%USERPROFILE%\.konan\dependencies</pre>
+Here is the directory structure with the extracted executables:
+<pre style="font-size:80%;">
+<b>&gt; <a href="">tree</a> /a /f  %USERPROFILE%\.konan\dependencies\llvm-21-x86_64-windows-essentials-150 | <a href="">findstr</a> /r ".*--[a-z].* .*\.exe"</b>
++---<b>bin</b>
+|       clang++.exe
+|       clang-cache.exe
+|       clang.exe
+|       ld.lld.exe
+|       <a href="https://lld.llvm.org/" rel="external" title="https://lld.llvm.org/">lld.exe</a>
+|       <a href="https://llvm.org/docs/CommandGuide/llvm-ar.html" title="external" title="https://llvm.org/docs/CommandGuide/llvm-ar.html">llvm-ar.exe</a>
+|       <a href="https://llvm.org/docs/CommandGuide/llvm-cov.html" rel="external" title="https://llvm.org/docs/CommandGuide/llvm-cov.html">llvm-cov.exe</a>
+|       <a href="https://llvm.org/docs/CommandGuide/llvm-profdata.html" rel="external" title="https://llvm.org/docs/CommandGuide/llvm-profdata.html">llvm-profdata.exe</a>
+\---<b>lib</b>
+    \---<b>clang</b>
+            \---<b>include</b>
+                +---cuda_wrappers
+                |   \---bits
+                +---llvm_libc_wrappers
+                +---llvm_offload_wrappers
+                +---openmp_wrappers
+                +---ppc_wrappers
+                \---zos_wrappers</pre>
+As a simple dependency check we temporarily rename directory <code>bin\</code> into <code>bin0\</code> and observe the following :
+<pre style="font-size:80%;">
+<b>&gt; "C:\opt\kotlin-native\bin\kotlinc-native.bat" "@I:\examples\BubbleSort\target\kotlinc-native_opts.txt" "@I:\examples\BubbleSort\target\kotlinc-native_sources.txt"</b>
+error: compilation failed: Cannot run program "%USERPROFILE%\.konan\dependencies\llvm-21-x86_64-windows-essentials-150/bin/clang++": CreateProcess error=2, The system cannot find the file specified
+&nbsp;
+ * Compiler version: 2.4.0
+ * Output kind: PROGRAM
+&nbsp;
+exception: java.io.IOException: Cannot run program "%USERPROFILE%\.konan\dependencies\llvm-21-x86_64-windows-essentials-150/bin/clang++": CreateProcess error=2, The system cannot find the file specified
+        at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1170)
+        at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1089)
+        at org.jetbrains.kotlin.konan.exec.Command.runProcess(ExecuteCommand.kt:68)
+        at org.jetbrains.kotlin.konan.exec.Command.execute(ExecuteCommand.kt:79)
+        [...]
+        at org.jetbrains.kotlin.cli.utilities.MainKt.mainImpl(main.kt:20)
+        at org.jetbrains.kotlin.cli.utilities.MainKt.main(main.kt:40)
+Caused by: java.io.IOException: CreateProcess error=2, The system cannot find the file specified
+        at java.base/java.lang.ProcessImpl.create(Native Method)
+        at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:506)
+        at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:159)
+        at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1126)
+        ... 44 more
+</pre>
 </dd></dl>
 
 <span id="footnote_02">[2]</span> ***KtLint on Windows*** [↩](#anchor_02)
 
 <dl><dd>
-No Windows distribution is available from the <a href="https://github.com/pinterest/ktlint/releases" rel="external">KtLint</a> repository.
+No Windows distribution is available from the <a href="https://github.com/pinterest/ktlint/releases" rel="external" title="https://github.com/pinterest/ktlint/releases">KtLint</a> repository.
 </dd>
 <dd>
 Fortunately the <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> tool is packed into a shell script (i.e. embedded JAR file in binary form), so we simply extracted the JAR file to create a "universal" <a href="https://github.com/pinterest/ktlint/releases">KtLint</a> distribution (in the same way as the <a href="https://com-lihaoyi.github.io/mill/mill/Installation.html#_windows" rel="external">Mill assembly</a> distribution):
 <ul>
 <li>we create an installation directory <b><code>c:\opt\ktlint\bin</code></b>.</li>
-<li>we download the shell script from the Github repository <a href="https://github.com/pinterest/ktlint" rel="external"><code>pinterest/ktlint</code></a>.</i>
+<li>we download the shell script from the Github repository <a href="https://github.com/pinterest/ktlint" rel="external" title="https://github.com/pinterest/ktlint"><code>pinterest/ktlint</code></a>.</i>
 <li>we extract the JAR file from the bash script (and check it with command <b><code><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jar.html" rel="external">jar</a> tf</code></b>).</li>
 <li>we create batch file <b><code>ktlint.bat</code></b> from the binary concatenation of header file <a href="bin/ktlint_header.bin"><b><code>ktlint_header.bin</code></b></a> and the extracted JAR file.</li>
 </ul>
@@ -229,9 +289,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://github.com/JetBrains/kotlin/releases/tag/v2.4.0">kotlin-native-prebuild-windows-x86_64-2.4.0.zip</a>    <i>(169 MB)</i>
 <a href="https://github.com/pinterest/ktlint/releases/">ktlint (1.8.0)</a>                                     <i>( 63 MB)</i>
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
-<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_17.0.19_10.zip</a>  <i>( 99 MB)</i>
+<a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_21.0.11_10.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.55.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
-<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.127.0.zip</a>                       <i>(131 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.128.0.zip</a>                       <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
@@ -244,10 +304,11 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 
 [ada_examples]: https://github.com/michelou/ada-examples#top
 [akka_examples]: https://github.com/michelou/akka-examples#top
-[apache_ant]: https://ant.apache.org/
-[apache_ant_cli]: https://ant.apache.org/manual/running.html
+[apache_ant]: https://ant.apache.org/ "https://ant.apache.org/"
+[apache_ant_cli]: https://ant.apache.org/manual/running.html "https://ant.apache.org/manual/running.html"
 [apache_ant_relnotes]: https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.17.html
 [apache_maven_history]: https://maven.apache.org/docs/history.html
+[cfr_releases]: https://github.com/leibnitz27/cfr/releases/tag/0.152 "https://github.com/leibnitz27/cfr/releases/tag/0.152"
 [cl_examples]: https://github.com/michelou/cl-examples#top
 [cobol_examples]: https://github.com/michelou/cobol-examples#top
 [component_pascal_examples]: https://github.com/michelou/component-pascal-examples#top
@@ -263,7 +324,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [detekt_relnotes]: https://github.com/detekt/detekt/releases/tag/v2.0.0-alpha.3
 [flix_examples]: https://github.com/michelou/flix-examples#top
 [git_downloads]: https://git-scm.com/download/win
-[git_exe]: https://git-scm.com/docs/git
+[git_exe]: https://git-scm.com/docs/git "https://git-scm.com/docs/git"
 [git_relnotes]: https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.55.0.adoc
 [github_markdown]: https://github.github.com/gfm/
 [golang_examples]: https://github.com/michelou/golang-examples#top
@@ -274,12 +335,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [haskell_examples]: https://github.com/michelou/haskell-examples#top
 [jetbrains_kotlin]: https://github.com/JetBrains/kotlin
 [kafka_examples]: https://github.com/michelou/kafka-examples#top
-[kotlin]: https://kotlinlang.org/
+[kotlin]: https://kotlinlang.org/ "https://kotlinlang.org/"
 [kotlin_latest]: https://kotlinlang.org/docs/releases.html#release-details
 [kotlin_native_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.4.0
 [kotlin_relnotes]: https://github.com/JetBrains/kotlin/releases/tag/v2.4.0
+[kotlin_spec]: https://kotlinlang.org/spec/introduction.html "https://kotlinlang.org/spec/introduction.html"
 [kotlinc_bat]: https://kotlinlang.org/docs/tutorials/command-line.html
-[ktlint]: https://github.com/pinterest/ktlint
+[ktlint]: https://github.com/pinterest/ktlint "https://github.com/pinterest/ktlint"
 [ktlint_latest]: https://github.com/pinterest/ktlint/releases
 [ktlint_relnotes]: https://github.com/pinterest/ktlint/releases/tag/1.8.0
 [linux_opt]: https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
@@ -288,6 +350,9 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [maven_latest]: https://maven.apache.org/download.cgi
 [maven_relnotes]: https://maven.apache.org/docs/3.9.16/release-notes.html
 [nodejs_examples]: https://github.com/michelou/nodejs-examples#top
+[oracle_openjdk21]: https://jdk.java.net/21/ "https://jdk.java.net/21/"
+[oracle_openjdk21_api]: https://download.java.net/java/early_access/jdk21/docs/api/
+[oracle_openjdk21_relnotes]: https://jdk.java.net/21/release-notes
 [powershell_examples]: https://github.com/michelou/powershell-examples#top
 [rust_examples]: https://github.com/michelou/rust-examples#top
 [scala3_examples]: https://github.com/michelou/dotty-examples#top
@@ -331,7 +396,7 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 17.0.16 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2025-July/045614.html
 17.0.17 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2025-October/049112.html
 17.0.18 -> https://mail.openjdk.org/pipermail/jdk-updates-dev/2026-January/051740.html
-17.0.19 -> https://adoptium.net/en-GB/temurin/release-notes?version=jdk-17.0.19+10
+21.0.11 -> https://adoptium.net/en-GB/temurin/release-notes?version=jdk-21.0.11+10
 -->
 [temurin_opendjk17]: https://adoptium.net/releases.html?variant=openjdk17&jvmVariant=hotspot
 [temurin_opendjk17_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
@@ -350,8 +415,15 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 [temurin_openjdk21]: https://adoptium.net/releases.html?variant=openjdk21&jvmVariant=hotspot
 [temurin_openjdk21_bugfixes]: https://www.oracle.com/java/technologies/javase/17-0-2-bugfixes.html
 [temurin_openjdk21_relnotes]: https://mail.openjdk.org/pipermail/jdk-updates-dev/2023-October/026351.html
+<!-- #### https://builds.shipilev.net/backports-monitor/
+21.0.5  -> https://builds.shipilev.net/backports-monitor/release-notes-21.0.5.html
+21.0.9  -> https://builds.shipilev.net/backports-monitor/release-notes-21.0.9.html
+21.0.10 -> https://builds.shipilev.net/backports-monitor/release-notes-21.0.10.html
+21.0.11 -> https://builds.shipilev.net/backports-monitor/release-notes-21.0.11.html
+-->
+[temurin_openjdk21_shipilev]: https://builds.shipilev.net/backports-monitor/release-notes-21.0.11.html
 [trufflesqueak_examples]: https://github.com/michelou/trufflesqueak-examples#top
-[vscode_downloads]: https://code.visualstudio.com/#alt-downloads
+[vscode_downloads]: https://code.visualstudio.com/#alt-downloads "https://code.visualstudio.com/#alt-downloads"
 [vscode_relnotes]: https://code.visualstudio.com/updates/ "https://code.visualstudio.com/updates/"
 [windows_limitation]: https://support.microsoft.com/en-gb/help/830473/command-prompt-cmd-exe-command-line-string-limitation
 [windows_subst]: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst "https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst"
