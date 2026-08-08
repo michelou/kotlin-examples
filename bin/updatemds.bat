@@ -10,11 +10,11 @@ set _DEBUG=0
 set _EXITCODE=0
 
 @rem files README.md, RESOURCES.md, etc.
-set _LAST_MODIFIED_OLD=michelou/)/June 2026
-set _LAST_MODIFIED_NEW=michelou/)/July 2026
+set _LAST_MODIFIED_OLD=michelou/)/July 2026
+set _LAST_MODIFIED_NEW=michelou/)/August 2026
 
-set _LAST_DOWNLOAD_OLD=(\*June 2026\*)
-set _LAST_DOWNLOAD_NEW=(*July 2026*)
+set _LAST_DOWNLOAD_OLD=(\*July 2026\*)
+set _LAST_DOWNLOAD_NEW=(*August 2026*)
 
 @rem to be transformed into -not -path "./<dirname>/*"
 set _EXCLUDE_DIRS=bin docs docs_LOCAL kotlin

@@ -22,7 +22,7 @@ if not %_EXITCODE%==0 goto end
 @rem ## Main
 
 if %_HELP%==1 (
-    call :help
+    call :print_help
     goto end
 )
 for %%i in (%_COMMANDS%) do (
@@ -249,7 +249,7 @@ if %_DEBUG%==1 (
 if %_TIMER%==1 for /f "delims=" %%i in ('call "%_PWSH_CMD%" -c "(Get-Date)"') do set _TIMER_START=%%i
 goto :eof
 
-:help
+:print_help
 if %_VERBOSE%==1 (
     set __BEG_P=%_STRONG_FG_CYAN%
     set __BEG_O=%_STRONG_FG_GREEN%
@@ -288,11 +288,11 @@ echo     %__BEG_O%^> mvn -q clean compile exec:java%__END%
 goto :eof
 
 :clean
-call :rmdir "%_TARGET_DIR%"
+call :remove_dir "%_TARGET_DIR%"
 goto :eof
 
 @rem input parameter: %1=directory path
-:rmdir
+:remove_dir
 set "__DIR=%~1"
 if not exist "%__DIR%\" goto :eof
 if %_DEBUG%==1 ( echo %_DEBUG_LABEL% rmdir /s /q "%__DIR%" 1>&2

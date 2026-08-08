@@ -3,7 +3,7 @@
 <table style="font-family:Helvetica,Arial;line-height:1.6;">
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/" rel="external" title="https://kotlinlang.org/"><img src="./docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
-  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
+  <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external" title="https://kotlinlang.org/">Kotlin</a> code examples coming from various websites and books.<br/>
   It also includes several build scripts (<a href="https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_02_01.html" rel="external">Bash scripts</a>, <a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting" rel="external">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html" rel="external">Gradle scripts</a>, <a href="https://makefiletutorial.com/" rel="external">Make scripts</a>, <a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html">Maven scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external" title="https://kotlinlang.org/">Kotlin</a> on a Windows machine.</td>
   </tr>
 </table>
@@ -35,9 +35,9 @@ Optionally one may also install the following software:
 - [detekt 2.0][detekt_latest] ([*release notes*][detekt_relnotes])
 - [Gradle 9.6][gradle_latest] ([*release notes*][gradle_relnotes])
 - [Ktlint 1.8][ktlint_latest] <sup id="anchor_02"><a href="#footnote_02">2</a></sup> ([*release notes*][ktlint_relnotes])
-- [Visual Studio Code 1.128][vscode_downloads] ([*release notes*][vscode_relnotes])
+- [Visual Studio Code 1.132][vscode_downloads] ([*release notes*][vscode_relnotes])
 
-For instance our development environment looks as follows (*July 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
+For instance our development environment looks as follows (*August 2026*) <sup id="anchor_03">[3](#footnote_03)</sup>:
 
 <pre style="font-size:80%;">
 C:\opt\apache-ant\               <i>( 45 MB)</i>
@@ -47,7 +47,7 @@ C:\opt\ConEmu\                   <i>( 26 MB)</i>
 C:\opt\detekt-cli\               <i>( 64 MB)</i>
 C:\opt\Git\                      <i>(389 MB)</i>
 C:\opt\gradle\                   <i>(144 MB)</i>
-C:\opt\jdk-temurin-21.0.11_10\   <i>(327 MB)</i>
+C:\opt\jdk-temurin-21.0.12_8\    <i>(327 MB)</i>
 C:\opt\kotlinc\                  <i>( 90 MB)</i>
 C:\opt\kotlin-native\            <i>(637 MB)</i>
 C:\opt\ktlint\                   <i>( 70 MB)</i>
@@ -116,12 +116,12 @@ We execute command [**`setenv.bat`**](setenv.bat) once to setup our development 
 Tool versions:
    ant 1.10.17, bazel 9.1.1, gradle 9.6.1, java 21.0.11,
    kotlinc 2.4.0, kotlinc-native 2.4.0, ktlint 1.8.0,
-   cfr 0.152, code 1.128.0, detekt-cli 2.0.0-alpha.5,
+   cfr 0.152, code 1.132.0, detekt-cli 2.0.0-alpha.5,
    make 3.81, mvn 3.9.12, git 2.55.0, diff 3.12, bash 5.3.15(1)
 Tool paths:
    C:\opt\apache-ant\bin\ant.bat
    C:\opt\gradle\bin\gradle.bat
-   C:\opt\jdk-temurin-21.0.11_10\bin\java.exe
+   C:\opt\jdk-temurin-21.0.12_8\bin\java.exe
    C:\opt\detekt-cli\bin\detekt-cli.bat
    C:\opt\kotlinc\bin\kotlinc.bat
    C:\opt\kotlin-native\bin\kotlinc-native.bat
@@ -291,13 +291,13 @@ In our case we downloaded the following installation files (see <a href="#proj_d
 <a href="https://sourceforge.net/projects/gnuwin32/files/make/3.81/">make-3.81-bin.zip</a>                                  <i>( 10 MB)</i>
 <a href="https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot">OpenJDK11U-jdk_x64_windows_hotspot_21.0.11_10.zip</a>  <i>( 99 MB)</i>
 <a href="https://git-scm.com/download/win">PortableGit-2.55.0-64-bit.7z.exe</a>                   <i>( 43 MB)</i>
-<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.128.0.zip</a>                       <i>(131 MB)</i>
+<a href="https://code.visualstudio.com/Download#" rel="external">VSCode-win32-x64-1.132.0.zip</a>                       <i>(131 MB)</i>
 </pre>
 </dd></dl>
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2026* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->

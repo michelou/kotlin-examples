@@ -159,11 +159,12 @@ set _RESET=[0m
 goto :eof
 
 @rem input parameter: %*
-@rem output parameters: _BASH, _HELP, _USE_CLAUDE, _VERBOSE
+@rem output parameters: _HELP, _USE_BASH, _USE_CLAUDE, _VERBOSE
 :args
-set _BASH=0
 set _HELP=0
+set _USE_BASH=0
 set _USE_CLAUDE=0
+set _USE_PWSH=0
 set _VERBOSE=0
 :args_loop
 set "__ARG=%~1"
@@ -171,10 +172,11 @@ if not defined __ARG goto args_done
 
 if "%__ARG:~0,1%"=="-" (
     @rem option
-    if "%__ARG%"=="-bash" ( set _BASH=1
+    if "%__ARG%"=="-bash" ( set _USE_BASH=1& set _USE_PWSH=0
     ) else if "%__ARG%"=="-claude" ( set _USE_CLAUDE=1
     ) else if "%__ARG%"=="-debug" ( set _DEBUG=1
     ) else if "%__ARG%"=="-help" ( set _HELP=1
+    ) else if "%__ARG%"=="-pwsh" ( set _USE_PWSH=1& set _USE_BASH=0
     ) else if "%__ARG%"=="-verbose" ( set _VERBOSE=1
     ) else (
         echo %_ERROR_LABEL% Unknown option "%__ARG%" 1>&2
@@ -196,7 +198,7 @@ goto args_loop
 call :drive_name "%_ROOT_DIR%"
 if not %_EXITCODE%==0 goto :eof
 if %_DEBUG%==1 (
-    echo %_DEBUG_LABEL% Options    : _BASH=%_BASH% _USE_CLAUDE=%_USE_CLAUDE% _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Options    : _USE_BASH=%_USE_BASH% _USE_CLAUDE=%_USE_CLAUDE% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _HELP=%_HELP% 1>&2
     echo %_DEBUG_LABEL% Variables  : _DRIVE_NAME=%_DRIVE_NAME% 1>&2
 )
@@ -921,7 +923,6 @@ if %ERRORLEVEL%==0 (
     for /f "tokens=1,*" %%i in ('call "%CFR_HOME%\bin\cfr.bat" 2^>^&1 ^| findstr /b CFR') do set "__VERSIONS_LINE3=%__VERSIONS_LINE3% cfr %%j,"
     set __WHERE_ARGS=%__WHERE_ARGS% "%CFR_HOME%\bin:cfr.bat"
 )
-echo 111111111 CFR_HOME=%CFR_HOME%
 if %__USE_CLAUDE%==1 (
     where /q "%CLAUDE_HOME%\bin:claude.exe"
     if !ERRORLEVEL!==0 (
@@ -1038,10 +1039,13 @@ endlocal & (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% cd /d %_DRIVE_NAME% 1>&2
         cd /d %_DRIVE_NAME%
     )
-    if %_BASH%==1 (
+    if %_USE_BASH%==1 (
         @rem see https://conemu.github.io/en/GitForWindows.html
         if %_DEBUG%==1 echo %_DEBUG_LABEL% "%_GIT_HOME%\bin\bash.exe" --login 1>&2
         call "%_GIT_HOME%\bin\bash.exe" --login
+    ) else if %_USE_PWSH%==1 (
+        if %_DEBUG%==1 echo %_DEBUG_LABEL% "%_PWSH_CMD%" 1>&2
+        call "%_PWSH_CMD%
     )
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

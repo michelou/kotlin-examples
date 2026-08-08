@@ -1,3 +1,5 @@
+package examples;
+
 public final class IntBox {
     private final int value;
 

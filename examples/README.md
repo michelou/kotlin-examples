@@ -4,7 +4,7 @@
   <tr>
   <td style="border:0;padding:0 10px 0 0;min-width:25%;"><a href="https://kotlinlang.org/"><img src="../docs/kotlin.png" width="100" alt="Kotlin project"/></a></td>
   <td style="border:0;padding:0;vertical-align:text-top;">This repository gathers <a href="https://kotlinlang.org/" rel="external">Kotlin</a> code examples coming from various websites and books.<br/>
-  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>, <a href="https://makefiletutorial.com/" rel="external">Make scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external">Kotlin</a> on a Windows machine.
+  It also includes several build scripts (<a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting">batch files</a>, <a href="https://docs.gradle.org/current/userguide/writing_build_scripts.html">Gradle scripts</a>, <a href="https://makefiletutorial.com/" rel="external">Make scripts</a>, <a href="https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/01-getting-started" rel="external" title="https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/01-getting-started">PowerShell scripts</a>) for experimenting with <a href="https://kotlinlang.org/" rel="external" title="https://kotlinlang.org/">Kotlin</a> on a Windows machine.
   </td>
   </tr>
 </table>
@@ -39,6 +39,7 @@ We provide several ways to build/run the [Kotlin] code examples:
 | [**`gradle.exe`**][gradle_cli]    | [`build.gradle.kts`](HelloWorld/build.gradle.kts) <sup><b>d)</b></sup> | &nbsp; | Any |
 | [**`mvn.cmd`**][apache_maven_cli] | [`pom.xml`](HelloWorld/pom.xml) | [`pom.xml`](./pom.xml)  | Any |
 | [**`make.exe`**][gmake_cli] | [`Makefile`](HelloWorld/Makefile) | [`Makefile.inc`](./Makefile.inc)  | Any |
+| [**`pwsh.exe`**][pwsh_cli] | [`build.ps1`](./HelloWorld/build.ps1) | | Any |
 <div style="margin:0 30% 0 8px;font-size:90%;">
 <sup><b>a)</b></sup></b> Here "Any" means "tested on MS Windows / Cygwin / MSYS2 / Unix".<br/>
 <sup><b>b)</b></sup> This utility batch file manages <a href="https://maven.apache.org/">Maven</a> dependencies and returns the associated Java class path (as environment variable).<br/>
@@ -467,27 +468,28 @@ Hello World!
 
 ***
 
-*[mics](https://lampwww.epfl.ch/~michelou/)/July 2026* [**&#9650;**](#top)
+*[mics](https://lampwww.epfl.ch/~michelou/)/August 2026* [**&#9650;**](#top)
 <span id="bottom">&nbsp;</span>
 
 <!-- link refs -->
 
-[apache_ant_cli]: https://ant.apache.org/manual/running.html
+[apache_ant_cli]: https://ant.apache.org/manual/running.html "https://ant.apache.org/manual/running.html"
 [apache_maven_cli]: https://maven.apache.org/ref/3.8.1/maven-embedder/cli.html
 [bytepointer_pelook]: http://bytepointer.com/tools/index.htm#pelook
 [cmd_cli]: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
-[cygwin]: https://cygwin.com/install.html
+[cygwin]: https://cygwin.com/install.html "https://cygwin.com/install.html"
 [gmake_cli]: https://www.gnu.org/software/make/manual/make.html
 [gradle_cli]: https://docs.gradle.org/current/userguide/command_line_interface.html
 [gradle_daemon]: https://docs.gradle.org/current/userguide/gradle_daemon.html
 [groovy_dsl]: https://docs.gradle.org/current/dsl/index.html
 [java_kotlin]: https://kotlinlang.org/docs/reference/java-interop.html#calling-java-code-from-kotlin
-[kotlin]: https://kotlinlang.org/
+[kotlin]: https://kotlinlang.org/ "https://kotlinlang.org/"
 [kotlin_dsl]: https://docs.gradle.org/current/userguide/kotlin_dsl.html
 [kotlin_java]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#calling-kotlin-from-java
 [kotlin_js]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjs-compiler-options
 [kotlin_jvm]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinjvm-compiler-options
 [kotlin_native]: https://kotlinlang.org/docs/reference/compiler-reference.html#kotlinnative-compiler-options
-[maven]: https://maven.apache.org/what-is-maven.html
-[msys2]: https://www.msys2.org/
+[maven]: https://maven.apache.org/what-is-maven.html "https://maven.apache.org/what-is-maven.html"
+[msys2]: https://www.msys2.org/ "https://www.msys2.org/"
+[pwsh_cli]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pwsh "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pwsh"
 [sh_cli]: https://man7.org/linux/man-pages/man1/sh.1p.html

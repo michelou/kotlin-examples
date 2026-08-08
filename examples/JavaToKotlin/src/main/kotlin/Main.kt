@@ -1,5 +1,7 @@
 // see https://developer.android.com/kotlin/interop
 
+import examples.*;
+
 @Suppress("UNUSED_PARAMETER")
 fun main(args: Array<String>) {
     // Property prefixes

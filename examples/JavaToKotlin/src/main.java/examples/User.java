@@ -1,3 +1,5 @@
+package examples;
+
 // For a method to be represented as a property in Kotlin, strict "bean"-style
 // prefixing must be used.
 public class User {
