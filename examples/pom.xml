@@ -32,7 +32,7 @@
 		<!-- https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-analysis -->
 		<dokka-analysis.version>1.8.20</dokka-analysis.version>
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
-        <freemarker.version>2.3.34</freemarker.version>
+        <freemarker.version>2.3.35</freemarker.version>
     </properties>
 
     <dependencies>
