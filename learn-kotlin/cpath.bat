@@ -25,7 +25,7 @@ if not exist "%_TEMP_DIR%" mkdir "%_TEMP_DIR%"
 if %_DEBUG%==1 echo [%~n0] "_TEMP_DIR=%_TEMP_DIR%" 1>&2
 
 @rem library versions
-set __KOTLIN_VERSION=2.4.0
+set __KOTLIN_VERSION=2.4.20
 set __KOTLINX_VERSION=1.11.0
 
 @rem #########################################################################

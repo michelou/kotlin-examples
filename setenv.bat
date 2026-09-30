@@ -159,7 +159,7 @@ set _RESET=[0m
 goto :eof
 
 @rem input parameter: %*
-@rem output parameters: _HELP, _USE_BASH, _USE_CLAUDE, _VERBOSE
+@rem output parameters: _HELP, _USE_BASH, _USE_CLAUDE, _USE_PWSH, _VERBOSE
 :args
 set _HELP=0
 set _USE_BASH=0
@@ -198,7 +198,7 @@ goto args_loop
 call :drive_name "%_ROOT_DIR%"
 if not %_EXITCODE%==0 goto :eof
 if %_DEBUG%==1 (
-    echo %_DEBUG_LABEL% Options    : _USE_BASH=%_USE_BASH% _USE_CLAUDE=%_USE_CLAUDE% _VERBOSE=%_VERBOSE% 1>&2
+    echo %_DEBUG_LABEL% Options    : _USE_BASH=%_USE_BASH% _USE_CLAUDE=%_USE_CLAUDE% _USE_PWSH=%_USE_PWSH% _VERBOSE=%_VERBOSE% 1>&2
     echo %_DEBUG_LABEL% Subcommands: _HELP=%_HELP% 1>&2
     echo %_DEBUG_LABEL% Variables  : _DRIVE_NAME=%_DRIVE_NAME% 1>&2
 )
@@ -296,6 +296,7 @@ echo   %__BEG_P%Options:%__END%
 echo     %__BEG_O%-bash%__END%       start Git bash shell instead of Windows command prompt
 echo     %__BEG_O%-claude%__END%     add Claude command to the project environment
 echo     %__BEG_O%-debug%__END%      print commands executed by this script
+echo     %__BEG_O%-pwsh%__END%       start PowerShell prompt instead of Windows command prompt
 echo     %__BEG_O%-verbose%__END%    print progress messages
 echo.
 echo   %__BEG_P%Subcommands:%__END%
@@ -472,7 +473,7 @@ if not exist "%_GRADLE_HOME%\bin\gradle.bat" (
 set "_GRADLE_PATH=;%_GRADLE_HOME%\bin"
 goto :eof
 
-@rem input parameters:%1=required version %2=vendor 
+@rem input parameters: %1=required version, %2=vendor 
 @rem output parameter: _JAVA_HOME
 :java
 set _JAVA_HOME=
@@ -514,7 +515,7 @@ if defined JAVA_HOME (
     )
 )
 if not exist "%_JAVA_HOME%\bin\javac.exe" (
-    echo %_ERROR_LABEL% Executable javac.exe not found ^("%_JAVA_HOME%"^) 1>&2
+    echo %_ERROR_LABEL% Executable javac.exe not found ^(version: %__VERSION%, vendor: %__VENDOR%^) 1>&2
     set _EXITCODE=1
     goto :eof
 )
@@ -1045,7 +1046,7 @@ endlocal & (
         call "%_GIT_HOME%\bin\bash.exe" --login
     ) else if %_USE_PWSH%==1 (
         if %_DEBUG%==1 echo %_DEBUG_LABEL% "%_PWSH_CMD%" 1>&2
-        call "%_PWSH_CMD%
+        call "%_PWSH_CMD%"
     )
     if %_DEBUG%==1 echo %_DEBUG_LABEL% _EXITCODE=%_EXITCODE% 1>&2
     for /f "delims==" %%i in ('set ^| findstr /b "_"') do set %%i=

@@ -23,7 +23,7 @@ set "__TEMP_DIR=%TEMP%\lib"
 if not exist "%__TEMP_DIR%" mkdir "%__TEMP_DIR%"
 
 @rem library versions
-set __KOTLIN_VERSION=2.4.0
+set __KOTLIN_VERSION=2.4.20
 set __KOTLINX_VERSION=1.11.0
 
 set _LIBS_CPATH=

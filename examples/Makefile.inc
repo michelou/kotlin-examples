@@ -66,13 +66,13 @@ DOKKA_ANALYSIS_VERSION = 1.8.20
 ## https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-base
 DOKKA_VERSION   = 2.2.0
 ## https://mvnrepository.com/artifact/org.freemarker/freemarker
-FREEMARKER_VERSION = 2.3.34
+FREEMARKER_VERSION = 2.3.35
 ## https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 HAMCREST_VERSION = 3.0
 ## https://mvnrepository.com/artifact/junit/junit
 JUNIT_VERSION   = 4.13.2
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler
-KOTLIN_VERSION  = 2.4.0
+KOTLIN_VERSION  = 2.4.20
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
 KOTLINX_VERSION = 1.11.0
 ## https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-html-jvm
